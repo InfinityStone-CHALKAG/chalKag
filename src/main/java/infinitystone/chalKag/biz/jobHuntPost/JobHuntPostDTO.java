@@ -12,7 +12,7 @@ public class JobHuntPostDTO {
 	private String jobHuntPostRole;
 	private String jobHuntPostRegion;
 	private String jobHuntPostPay;
-	private String jobHuntPostWorkdate;
+	private String jobHuntPostWorkDate;
 	private String jobHuntPostConcept;
 	private String jobHuntPostTitle;
 	private String jobHuntPostContent;
