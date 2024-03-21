@@ -164,7 +164,7 @@ public class JobHuntPostDAO {
 	public boolean update(JobHuntPostDTO jobHuntPostDTO) {
 		int result = 0;
 		if (jobHuntPostDTO.getSearchCondition().equals("jobHuntPostViewcntUpdate")) {
-			result = jdbcTemplate.update(UPDATE_VIEWCNT,jobHuntPostDTO.getJobHuntPostViewcnt());
+			result = jdbcTemplate.update(UPDATE_VIEWCNT,jobHuntPostDTO.getJobHuntPostId());
 			System.out.println("JobHuntPostDAO(viewcntUpdate) 로그 = [" + result + "]");
 		} else if(jobHuntPostDTO.getSearchCondition().equals("jobHuntPostUpdate")) {
 			result = jdbcTemplate.update(UPDATE,jobHuntPostDTO.getJobHuntPostRole(),jobHuntPostDTO.getJobHuntPostRegion(),jobHuntPostDTO.getJobHuntPostPay(),jobHuntPostDTO.getJobHuntPostWorkdate(),jobHuntPostDTO.getJobHuntPostConcept(),jobHuntPostDTO.getJobHuntPostTitle(),jobHuntPostDTO.getJobHuntPostContent());
