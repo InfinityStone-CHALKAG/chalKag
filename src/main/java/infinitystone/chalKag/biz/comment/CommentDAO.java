@@ -197,7 +197,7 @@ public class CommentDAO {
 
 	public boolean insert(CommentDTO commentDTO) {
 		System.out.println("commentDTO(insert) 로그 =" + "[" + commentDTO + "]");
-		int result = jdbcTemplate.update(INSERT);
+		int result = jdbcTemplate.update(INSERT,commentDTO.getPostId(),commentDTO.getMemberId(),commentDTO.getCommentContent());
 		if (result <= 0) {
 			return false;
 		}
@@ -206,7 +206,7 @@ public class CommentDAO {
 
 	public boolean update(CommentDTO commentDTO) {
 		System.out.println("commentDTO(update) 로그 =" + "[" + commentDTO + "]");
-		int result = jdbcTemplate.update(UPDATE);
+		int result = jdbcTemplate.update(UPDATE,commentDTO.getCommentContent(),commentDTO.getCommentId());
 		if (result <= 0) {
 			return false;
 		}
@@ -215,7 +215,7 @@ public class CommentDAO {
 
 	public boolean delete(CommentDTO commentDTO) {
 		System.out.println("commentDTO(delete) 로그 =" + "[" + commentDTO + "]");
-		int result = jdbcTemplate.update(DELETE);
+		int result = jdbcTemplate.update(DELETE,commentDTO.getCommentId());
 		if (result <= 0) {
 			return false;
 		}

@@ -39,7 +39,7 @@ public class PostImgDAO {
 	}
 
 	public boolean insert(PostImgDTO postImgDTO) {
-		int result = jdbcTemplate.update(INSERT);
+		int result = jdbcTemplate.update(INSERT,postImgDTO.getPostImgId(),postImgDTO.getPostImgName());
 		System.out.println("PostImgDAO(insert) Out로그 = [" + result + "]");
 		if (result <= 0) {
 			return false;
@@ -49,7 +49,7 @@ public class PostImgDAO {
 	}
 
 	public boolean update(PostImgDTO postImgDTO) {
-		int result = jdbcTemplate.update(UPDATE);
+		int result = jdbcTemplate.update(UPDATE,postImgDTO.getPostImgName());
 		if (result <= 0) {
 			return false;
 		}
