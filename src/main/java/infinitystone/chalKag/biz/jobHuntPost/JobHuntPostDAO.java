@@ -106,7 +106,9 @@ public class JobHuntPostDAO {
 			+ " JOBHUNTPOST_workDate=?," 
 			+ " JOBHUNTPOST_concept=?," 
 			+ " JOBHUNTPOST_title=?,"
-			+ " JOBHUNTPOST_content=?";
+			+ " JOBHUNTPOST_content=?"
+			+ " WHERE "
+			+ " JOBHUNTPOST_id = ?";
 	
 	private static final String UPDATE_VIEWCNT = "UPDATE "
 			+ " JOBHUNTPOST"

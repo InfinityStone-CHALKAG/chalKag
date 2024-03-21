@@ -73,8 +73,10 @@ public class FreePostDAO {
 	// 자유게시판 글 작성 게시판 이미지와 글 내용 인서트를 따로 받음
 	private static final String INSERT = "INSERT INTO JOBHUNTPOST(MEMBER_id,FREEPOST_title,FREEPOST_content,FREEPOST_viewcnt) "
 			+ "							VALUES(?,?,?,0)";
-	private static final String UPDATE = "UPDATE FREEPOST SET FREEPOST_title=?, FREEPOST_content=?";
-	private static final String UPDATE_VIEWCNT = "UPDATE BOARD SET FREEPOST_viewcnt = (FREEPOST_viewcnt+1) WHERE FREEPOST_id=?";
+	private static final String UPDATE = "UPDATE FREEPOST SET FREEPOST_title=?, FREEPOST_content=? "
+										+ "	WHERE "
+										+ " FREEPOST_id = ? ";
+	private static final String UPDATE_VIEWCNT = "UPDATE BOARD SET FREEPOST_viewcnt = (FREEPOST_viewcnt+1) WHERE FREEPOST_id=? ";
 	private static final String DELETE = "DELETE FROM FREEPOST WHERE FREEPOST_id = ?";
 
 	public List<FreePostDTO> selectAll(FreePostDTO freetPostDTO) {
