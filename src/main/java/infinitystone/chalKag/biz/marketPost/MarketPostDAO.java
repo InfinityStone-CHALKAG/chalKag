@@ -109,7 +109,7 @@ public class MarketPostDAO {
 	}
 
 	public boolean insert(MarketPostDTO marketPostDTO) {
-		int result = jdbcTemplate.update(INSERT,marketPostDTO.getMemberId(),marketPostDTO.getMarketPostPrice(),marketPostDTO.getMarketPostCategory(),marketPostDTO.getMarketPostCompany(),marketPostDTO.getMarketPostStatus(),marketPostDTO.getMarketPostTitle(),marketPostDTO.getMarketPostContent(),marketPostDTO.getMarketPostViewcnt());
+		int result = jdbcTemplate.update(INSERT,marketPostDTO.getMemberId(),marketPostDTO.getMarketPostPrice(),marketPostDTO.getMarketPostCategory(),marketPostDTO.getMarketPostCompany(),marketPostDTO.getMarketPostStatus(),marketPostDTO.getMarketPostTitle(),marketPostDTO.getMarketPostContent());
 		if (result <= 0) {
 			return false;
 		}
@@ -119,7 +119,7 @@ public class MarketPostDAO {
 	public boolean update(MarketPostDTO marketPostDTO) {
 		int result = 0;
 		if (marketPostDTO.getSearchCondition().equals("marketPostViewcntUpdate")) {
-			result = jdbcTemplate.update(UPDATE_VIEWCNT,marketPostDTO.getMarketPostViewcnt());
+			result = jdbcTemplate.update(UPDATE_VIEWCNT,marketPostDTO.getMarketPostId());
 		} else if(marketPostDTO.getSearchCondition().equals("marketPostUpdate")){
 			result = jdbcTemplate.update(UPDATE,marketPostDTO.getMarketPostPrice(),marketPostDTO.getMarketPostCategory(),marketPostDTO.getMarketPostCompany(),marketPostDTO.getMarketPostStatus(),marketPostDTO.getMarketPostTitle(),marketPostDTO.getMarketPostContent());
 		}

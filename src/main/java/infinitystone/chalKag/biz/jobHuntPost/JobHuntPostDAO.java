@@ -153,7 +153,7 @@ public class JobHuntPostDAO {
 	}
 
 	public boolean insert(JobHuntPostDTO jobHuntPostDTO) {
-		int result = jdbcTemplate.update(INSERT,jobHuntPostDTO.getMemberId(),jobHuntPostDTO.getJobHuntPostRole(),jobHuntPostDTO.getJobHuntPostRegion(),jobHuntPostDTO.getJobHuntPostPay(),jobHuntPostDTO.getJobHuntPostWorkdate(),jobHuntPostDTO.getJobHuntPostConcept(),jobHuntPostDTO.getJobHuntPostTitle(),jobHuntPostDTO.getJobHuntPostContent(),jobHuntPostDTO.getJobHuntPostViewcnt());
+		int result = jdbcTemplate.update(INSERT,jobHuntPostDTO.getMemberId(),jobHuntPostDTO.getJobHuntPostRole(),jobHuntPostDTO.getJobHuntPostRegion(),jobHuntPostDTO.getJobHuntPostPay(),jobHuntPostDTO.getJobHuntPostWorkDate(),jobHuntPostDTO.getJobHuntPostConcept(),jobHuntPostDTO.getJobHuntPostTitle(),jobHuntPostDTO.getJobHuntPostContent());
 		if (result <= 0) {
 			return false;
 		}
@@ -164,10 +164,10 @@ public class JobHuntPostDAO {
 	public boolean update(JobHuntPostDTO jobHuntPostDTO) {
 		int result = 0;
 		if (jobHuntPostDTO.getSearchCondition().equals("jobHuntPostViewcntUpdate")) {
-			result = jdbcTemplate.update(UPDATE_VIEWCNT,jobHuntPostDTO.getJobHuntPostViewcnt());
+			result = jdbcTemplate.update(UPDATE_VIEWCNT,jobHuntPostDTO.getJobHuntPostId());
 			System.out.println("JobHuntPostDAO(viewcntUpdate) 로그 = [" + result + "]");
 		} else if(jobHuntPostDTO.getSearchCondition().equals("jobHuntPostUpdate")) {
-			result = jdbcTemplate.update(UPDATE,jobHuntPostDTO.getJobHuntPostRole(),jobHuntPostDTO.getJobHuntPostRegion(),jobHuntPostDTO.getJobHuntPostPay(),jobHuntPostDTO.getJobHuntPostWorkdate(),jobHuntPostDTO.getJobHuntPostConcept(),jobHuntPostDTO.getJobHuntPostTitle(),jobHuntPostDTO.getJobHuntPostContent());
+			result = jdbcTemplate.update(UPDATE,jobHuntPostDTO.getJobHuntPostRole(),jobHuntPostDTO.getJobHuntPostRegion(),jobHuntPostDTO.getJobHuntPostPay(),jobHuntPostDTO.getJobHuntPostWorkDate(),jobHuntPostDTO.getJobHuntPostConcept(),jobHuntPostDTO.getJobHuntPostTitle(),jobHuntPostDTO.getJobHuntPostContent());
 			System.out.println("JobHuntPostDAO(update) 로그 = [" + result + "]");
 		}
 		if (result <= 0) {
