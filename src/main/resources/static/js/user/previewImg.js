@@ -1,5 +1,7 @@
+let filesArray = [];
+
 document.getElementById('customButton').addEventListener('click', function() {
-    document.getElementById('imageInput').click();
+    document.getElementById('fileInput').click();
 });
 
 // 슬라이드 버튼의 가시성을 업데이트하는 함수
@@ -21,7 +23,7 @@ function updateSliderButtonsVisibility() {
     }
 }
 
-document.getElementById('imageInput').addEventListener('change', function(e) {
+document.getElementById("fileInput").addEventListener('change', function(e) {
     const imageContainer = document.querySelector('.image-container');
 
 
@@ -55,7 +57,7 @@ document.getElementById('imageInput').addEventListener('change', function(e) {
       		});
             continue; // 현재 파일 처리를 건너뛰고 다음 파일로 넘어감
         }
-
+        
         const reader = new FileReader();
 
         reader.onload = function(e) {
@@ -67,13 +69,20 @@ document.getElementById('imageInput').addEventListener('change', function(e) {
 
             imageContainer.appendChild(img);
             
-             const deleteButton = document.createElement('button');
+            const deleteButton = document.createElement('button');
             deleteButton.textContent = 'X';
             deleteButton.classList.add('delete-btn');
             deleteButton.type = 'button'; 
+            
             deleteButton.onclick = function() {
 				 // 이미지가 추가될 때마다 슬라이드 버튼 가시성 업데이트
                 imgWrapper.remove(); // 해당 이미지를 DOM에서 제거
+                // filesArray에서 이 파일을 제거
+                const index = filesArray.indexOf(file);
+                if (index > -1) {
+                    filesArray.splice(index, 1);
+                }
+                
                 updateSliderButtonsVisibility(); // 슬라이드 버튼 가시성 업데이트
             };
 
@@ -106,6 +115,10 @@ document.getElementById('imageInput').addEventListener('change', function(e) {
             imgWrapper.appendChild(upButton);
             imgWrapper.appendChild(downButton);
             imageContainer.appendChild(imgWrapper);
+            
+            // 선택된 파일을 filesArray에 추가
+        	filesArray.push(file);
+
             
             updateSliderButtonsVisibility();
         };

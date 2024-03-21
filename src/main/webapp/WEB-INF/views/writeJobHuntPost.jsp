@@ -5,8 +5,8 @@
 <html>
 <head>
 
-    <chalKagTags:webCss/>
-    
+<chalKagTags:webCss />
+
 <style>
 #writerForm {
 	width: 70%;
@@ -14,8 +14,10 @@
 
 .selectTags {
 	border-color: rgb(179, 179, 179);
+	padding-left: 8px;;
 	border-radius: 5px;
-	padding-left: 8px;
+	width: 18.4%;
+	margin-right: 2%;
 }
 
 #jobHuntPostWorkDate {
@@ -40,7 +42,7 @@ img {
 	max-height: 400px;
 	margin-right: 10px;
 	margin-left: 10px;
-	object-fit: cover; 
+	object-fit: cover;
 	object-position: center;
 }
 
@@ -81,21 +83,21 @@ img {
 }
 
 .img-wrapper {
-  position: relative;
+	position: relative;
 	width: 400px;
 	height: 400px;
-  display: inline-block; /* 이미지를 옆으로 나열 */
+	display: inline-block; /* 이미지를 옆으로 나열 */
 }
 
 .delete-btn, .move-up-btn, .move-down-btn {
-  position: absolute;
-  cursor: pointer;
+	position: absolute;
+	cursor: pointer;
 }
 
 .delete-btn {
-  top: 0;
-  right: 9%;
-  z-index: 50; /* 확실히 이미지 위에 오도록 설정 */
+	top: 0;
+	right: 9%;
+	z-index: 50; /* 확실히 이미지 위에 오도록 설정 */
 	background-color: transparent;
 	border: 0;
 	color: white;
@@ -105,8 +107,8 @@ img {
 }
 
 .move-up-btn, .move-down-btn {
-  top: 50%;
-  transform: translateY(-50%);
+	top: 50%;
+	transform: translateY(-50%);
 	border: 0;
 	color: white;
 	-webkit-text-stroke-width: 1px;
@@ -115,11 +117,11 @@ img {
 }
 
 .move-up-btn {
-  left: 9%; /* 이미지 왼쪽으로 이동 버튼 위치 조정 */
+	left: 9%; /* 이미지 왼쪽으로 이동 버튼 위치 조정 */
 }
 
 .move-down-btn {
-  right: 9%; /* 이미지 오른쪽으로 이동 버튼 위치 조정 */
+	right: 9%; /* 이미지 오른쪽으로 이동 버튼 위치 조정 */
 }
 </style>
 </head>
@@ -133,34 +135,49 @@ img {
 			<div class="box-wrapper" id="writerForm">
 				<div class="box box-border">
 					<div class="box-body">
-						<div class="form-group">
-								<h4 style="display: flex; justify-content: center; margin-bottom: 0;">Writer : ${memberId}</h4><h5 style="display: flex; justify-content: center;">(LV : 20  |  Grade : nomal )</h5>
-						</div>
-						<br>
-						<form action="/writeJobHuntPost" method="post" onsubmit="return validateForm(event)" enctype="multipart/form-data">
-							<div class="form-group" style="display: flex; justify-content: center;">
-								<input type="text" class="form-control rounded" id="jobHuntPostTitle"
-									name="jobHuntPostTitle" placeholder="Title" />
+						<form action="/writeJobHuntPost" method="post"
+							onsubmit="return validateForm(event)"
+							enctype="multipart/form-data">
+							<div class="form-group"
+								style="display: flex; justify-content: center;">
+								<input type="text" class="form-control rounded"
+									id="jobHuntPostTitle" name="jobHuntPostTitle"
+									placeholder="Title" />
 							</div>
 							<div class="form-group" style="display: flex;">
+
 								<input type="text" id="jobHuntPostPay" name="jobHuntPostPay"
-									class="form-control rounded" style="width: 23.5%; margin-right: 2%;" oninput="trimInput(this); validatePay(this);" placeholder="Pay" />
-								<select class="selectTags" id="jobHuntPostRole" name="jobHuntPostRole"
-									style="width: 23.5%; margin-right: 2%;">
+									class="form-control rounded"
+									style="width: 18.4%; margin-right: 2%;"
+									oninput="trimInput(this); validatePay(this);" placeholder="Pay" />
+								<select class="selectTags" id="jobHuntPostRole"
+									name="jobHuntPostRole">
 									<option value="" disabled selected>Role</option>
 									<option value="모델">모델</option>
 									<option value="사진작가">사진작가</option>
-								</select>
-								
-								<input type="date" id="jobHuntPostWorkDate" name="jobHuntPostWorkDate" style="width: 23.5%; margin-right: 2%; padding-left: 8px;"> 
-								
-								<select class="selectTags" id="jobHuntPostConcept" name="jobHuntPostConcept" style="width: 23.5%;">
+								</select> <input class="selectTags" type="date" id="jobHuntPostWorkDate"
+									name="jobHuntPostWorkDate" style="padding-left: 8px;">
+
+								<select class="selectTags" id="jobHuntPostConcept"
+									name="jobHuntPostConcept">
 									<option value="" disabled selected>WorkConcept</option>
 									<option value="snap">스냅사진</option>
 									<option value="pictorial">화보</option>
 									<option value="studio">내부</option>
 									<option value="outdoor">외부</option>
 									<option value="etc">기타</option>
+								</select> 
+								
+								<select style="width: 18.4%" id="jobHuntPostRegion"
+									name="jobHuntPostRegion">
+									<option value="" disabled selected>선택</option>
+									<option value="SEOUL">SEOUL</option>
+									<option value="GYEONGGI">GYEONGGI</option>
+									<option value="GANGWON">GANGWON</option>
+									<option value="CHUNGCHEONG">CHUNGCHEONG</option>
+									<option value="JEOLLA">JEOLLA</option>
+									<option value="GYEONGSANG">GYEONGSANG</option>
+									<option value="JEJU">JEJU</option>
 								</select>
 							</div>
 
@@ -176,9 +193,11 @@ img {
 								</div>
 								<button class="imgSlidebtn" id="slideRight">▶</button>
 							</div>
-							
-							<div class="form-group" style="display: flex; justify-content: center;">
-								<textarea class="form-control rounded" id="jobHuntPostContent" name="jobHuntPostContent"></textarea>
+
+							<div class="form-group"
+								style="display: flex; justify-content: center;">
+								<textarea class="form-control rounded" id="jobHuntPostContent"
+									name="jobHuntPostContent"></textarea>
 							</div>
 							<button class="btn btn-primary btn-block">Composite</button>
 						</form>
@@ -215,14 +234,15 @@ img {
 			cursor : true
 		});
 	</script>
+	<script src="css/user/js/e-magz.js"></script>
 	<script>
 		// 공백 및 null 입력 막는 함수
 		function trimInput(element) {
 			element.value = element.value.trim();
 		}
-		
+
 		function validatePay(input) {
-			const priceRegex = /^[0-9]*$/;	// 숫자만 입력하는 정규표현식
+			const priceRegex = /^[0-9]*$/; // 숫자만 입력하는 정규표현식
 			if (!priceRegex.test(input.value)) {
 				input.value = input.value.replace(/[^0-9]/g, '');
 				swal("fail", "가격은 숫자만 입력해주세요.", "error", {
@@ -230,7 +250,7 @@ img {
 				});
 			}
 		}
-		
+
 		function validateForm(event) {
 			var title = document.getElementById('jobHuntPostTitle').value;
 			var pay = document.getElementById('jobHuntPostPay').value;
@@ -239,20 +259,21 @@ img {
 			var concept = document.getElementById('jobHuntPostConcept').value;
 			var content = document.getElementById('jobHuntPostContent').value;
 			var imageInput = document.getElementById('fileInput');
-		
-			if (!title.trim() || !pay.trim() || !role || !workDate || !concept || !content.trim()) {
+
+			if (!title.trim() || !pay.trim() || !role || !workDate || !concept
+					|| !content.trim()) {
 				swal("fail", "모든 필드를 채워주세요.", "error", {
-         				button: "OK",
-      				});
+					button : "OK",
+				});
 				event.preventDefault(); // 폼 제출을 막는다.
 				return false; // 폼 제출을 막는다.
-			} else if (!imageInput.files.length) { 	// 이미지가 업로드되었는지 확인
+			} else if (!imageInput.files.length) { // 이미지가 업로드되었는지 확인
 				swal("fail", "이미지를 업로드해주세요.", "error", {
-         				button: "OK",
-      				});
-							event.preventDefault(); // 폼 제출을 막는다.
-       				return false; // 폼 제출을 막는다.
-    			}
+					button : "OK",
+				});
+				event.preventDefault(); // 폼 제출을 막는다.
+				return false; // 폼 제출을 막는다.
+			}
 
 			return true; // 모든 검사를 통과하면 폼 제출을 진행.
 		}
