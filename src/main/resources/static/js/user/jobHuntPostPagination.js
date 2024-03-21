@@ -22,10 +22,10 @@ $(document).ready(function() {
 });
 
 // 데이터를 로드하는 함수 정의
-loadReviewData = function(page) {
+loadReviewData = function(loadPage) {
     var dataToSend = {
         'postDatas': JSON.stringify(postDatas),
-        'page': page,
+        'page': loadPage,
     };
 
     if (isFiltered) {
@@ -34,46 +34,43 @@ loadReviewData = function(page) {
     
     var displayDatas = postDatas; // 출력할 데이터를 일반 데이터로 초기화
     
+    	console.log(displayDatas);
+    
     var pageDataSize = 20; // 페이지당 데이터 크기
     var totalSize = displayDatas.length; // 전체 데이터 크기
     totalPages = Math.ceil(totalSize / pageDataSize); // 전체 페이지 수 계산
 
-    var startIndex = (page - 1) * pageDataSize; // 시작 인덱스 계산
+    var startIndex = (loadPage - 1) * pageDataSize; // 시작 인덱스 계산
     var endIndex = Math.min(startIndex + pageDataSize, totalSize); // 끝 인덱스 계산
 
     var currentPageDatas = displayDatas.slice(startIndex, endIndex); // 현재 페이지에 나타낼 데이터 
 
-    displayReviewData(currentPageDatas); // 데이터 표시 함수 호출
-    
-    // 데이터가 있는 경우에만 페이지네이션 표시 함수 호출
-    if (totalSize > 0) {
-        displayPagination(page);
-    }
+    	displayReviewData(currentPageDatas); // 데이터 표시 함수 호출
+
+        displayPagination(loadPage);
+ 
 }
-
-
     // 데이터를 화면에 표시하는 함수
     function displayReviewData(pageDatas) {
 		console.log(pageDatas);
-        const article = document.createElement('div');
-   	    article.classList.add('jobHuntPostList', 'div');
-   
-        if (pageDatas.length <= 0 || pageDatas == null) {
-            article.innerHTML = '<div class="inner"><p>등록된 글이 없습니다...</p></div>'; // 데이터가 없을 때 메시지 출력
-        } else {
-            pageDatas.forEach(function(jobHuntPostList) { // 각 데이터를 순회하면서 행 추가
-                // 설명 텍스트가 50자를 초과할 경우, 50자까지만 표시하고 "..." 추가
-                let postContent = "${jobHuntPostList.jobHuntPostContent}";
-                if (postContent.length > 50) {
-                    postContent = postContent.substring(0, 50) + "...";
-                    $('#postConten').val(postContent);
-                }
-                var row = document.createElement('div'); // 새로운 행 요소 생성
-                row.innerHTML = 
-                `<div class="inner">
+        const div = document.getElementById('postDatasContainer');
+    	div.classList.add('jobHuntPostList', 'div');
+    
+     let innerHTML = ''; // 새로운 내용을 담을 변수
+    
+        if (pageDatas === null || pageDatas.length <= 0) {
+        innerHTML = '<div class="inner"><p>there are no registered posts...</p></div>'; // 데이터가 없을 때 메시지 출력
+    } else {
+        pageDatas.forEach(function(jobHuntPostList) {
+            let postContent = jobHuntPostList.jobHuntPostContent;
+            if (postContent.length > 50) {
+                postContent = postContent.substring(0, 50) + "...";
+            }
+            
+               innerHTML =  `<div class="inner">
                         <figure>
                             <a href="/jobHuntPostSingle/jobHuntPostId=${jobHuntPostList.jobHuntPostId}">
-                                <img src="${jobHuntPostList.postImgId}">
+                                <img src="/${jobHuntPostList.postImgId}">
                             </a>
                         </figure>
                         <div class="details">
@@ -99,11 +96,12 @@ loadReviewData = function(page) {
                             </footer>
                     </div>
                 </div>`;
-                article.appendChild(row);
+    
             });
         }
+        
+        div.innerHTML = innerHTML;
     }
-
     // 페이징을 화면에 표시하는 함수
     function displayPagination(page) {
         var paginationContainer = $("#paginationContainer"); // 페이지네이션 컨테이너 요소 가져오기
@@ -120,14 +118,12 @@ loadReviewData = function(page) {
             var prevGroupLink = "<ul class='pagination'><li class='prev'><a href='#' class='page' data-page='" + prevGroupPage + "'>&laquo; PREV</a></li>";
             paginationContainer.append(prevGroupLink);
         }
-
         // 페이지 버튼 추가
         for (var i = startPage; i <= endPage; i++) {
             var pageLinkClass = (i === page) ? "page active" : "page";
-            var pageLink = "<li class='active'><a href='i' class='" + pageLinkClass + "' data-page='" + i + "'>" + i + "</a></li>";
+            var pageLink = "<li class='active'><a href='#' class='" + pageLinkClass + "' data-page='" + i + "'>" + i + "</a></li>";
             paginationContainer.append(pageLink);
         }
-
         // 다음 페이지 그룹으로 이동하는 버튼 추가
         if (endPage < totalPages) {
             var nextGroupPage = endPage + 1;
@@ -135,7 +131,6 @@ loadReviewData = function(page) {
             paginationContainer.append(nextGroupLink);
         }
     }
-
     // 초기 페이지 로드
     loadReviewData(1);
 });

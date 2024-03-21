@@ -43,6 +43,11 @@
 	accent-color: red;
 }
 
+div .inner p {
+	margin-left: 5%;
+}
+
+
 </style>
 			
 </head>
@@ -111,8 +116,11 @@
 					</aside>
 				</div>
 
+				<div class="col-md-9" style="text-align: right; margin-bottom: 10px;">
+					<!-- 글 작성 -->
+					<a class="btn btn-primary btn-sm" href="/writeFreePost">Writing</a>
+				</div>
 				<div class="col-md-9">
-				
 					<div class="nav-tabs-group">
 							<ul class="nav-tabs-list">
 							    <li onclick="sortItems('all')">All</li>
@@ -129,8 +137,6 @@
 						</div>
 				
 					<!-- 게시글 전체 갯수가 출력되게 처리 -->
-					<div class="search-result">Search results for keyword "hello"
-						found in 5,200 posts.</div>
 						<div class="row">
 							<!-- 게시글 목록 출력 장소 시작 게시판마다 명이 다르다. -->
 							<div class="postList" id="postDatasContainer" displayReviewData='${freePostList}'></div>

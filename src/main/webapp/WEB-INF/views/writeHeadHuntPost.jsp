@@ -4,20 +4,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <chalKagTags:webCss/>
+<chalKagTags:webCss />
 <style>
-		#writerForm {
-			width: 70%;
-		}
+#writerForm {
+	width: 70%;
+}
 
-		.selectTags {
-			border-color: rgb(179, 179, 179);
-			padding-left: 8px;;
-			border-radius: 5px;
-		}
+.selectTags {
+	border-color: rgb(179, 179, 179);
+	padding-left: 8px;;
+	border-radius: 5px;
+	width: 18.4%;
+	margin-right: 2%;
+}
 
-
-#headHuntPostWorkDate{
+#headHuntPostWorkDate {
 	border-radius: 5px;
 	border: solid 1px rgb(179, 179, 179);
 }
@@ -39,7 +40,7 @@ img {
 	max-height: 400px;
 	margin-right: 10px;
 	margin-left: 10px;
-	object-fit: cover; 
+	object-fit: cover;
 	object-position: center;
 }
 
@@ -63,39 +64,39 @@ img {
 }
 
 #customButton {
-		width: 100%;
-		height: 50px;
-    background-color:  rgb(255, 255, 255);
-		border: solid 1px rgb(245, 63, 82);
-		color:  rgb(245, 63, 82);;
-    margin: 8px 0;
-    border-radius: 5px;
-		font-weight: bold;
-		font-size: large;
+	width: 100%;
+	height: 50px;
+	background-color: rgb(255, 255, 255);
+	border: solid 1px rgb(245, 63, 82);
+	color: rgb(245, 63, 82);;
+	margin: 8px 0;
+	border-radius: 5px;
+	font-weight: bold;
+	font-size: large;
 }
 
 #customButton:hover {
-		background-color:  rgb(245, 63, 82);
-		border: none;
-		color: rgb(255, 255, 255);
+	background-color: rgb(245, 63, 82);
+	border: none;
+	color: rgb(255, 255, 255);
 }
 
 .img-wrapper {
-  position: relative;
+	position: relative;
 	width: 400px;
 	height: 400px;
-  display: inline-block; /* 이미지를 옆으로 나열 */
+	display: inline-block; /* 이미지를 옆으로 나열 */
 }
 
 .delete-btn, .move-up-btn, .move-down-btn {
-  position: absolute;
-  cursor: pointer;
+	position: absolute;
+	cursor: pointer;
 }
 
 .delete-btn {
-  top: 0;
-  right: 9%;
-  z-index: 50; /* 확실히 이미지 위에 오도록 설정 */
+	top: 0;
+	right: 9%;
+	z-index: 50; /* 확실히 이미지 위에 오도록 설정 */
 	background-color: transparent;
 	border: 0;
 	color: white;
@@ -105,8 +106,8 @@ img {
 }
 
 .move-up-btn, .move-down-btn {
-  top: 50%;
-  transform: translateY(-50%);
+	top: 50%;
+	transform: translateY(-50%);
 	border: 0;
 	color: white;
 	-webkit-text-stroke-width: 1px;
@@ -116,11 +117,11 @@ img {
 }
 
 .move-up-btn {
-  left: 9%; /* 이미지 왼쪽으로 이동 버튼 위치 조정 */
+	left: 9%; /* 이미지 왼쪽으로 이동 버튼 위치 조정 */
 }
 
 .move-down-btn {
-  right: 9%; /* 이미지 오른쪽으로 이동 버튼 위치 조정 */
+	right: 9%; /* 이미지 오른쪽으로 이동 버튼 위치 조정 */
 }
 </style>
 </head>
@@ -134,10 +135,6 @@ img {
 			<div class="box-wrapper" id="writerForm">
 				<div class="box box-border">
 					<div class="box-body">
-						<div class="form-group">
-								<h4 style="display: flex; justify-content: center; margin-bottom: 0;">Writer : ${memberId}</h4><h5 style="display: flex; justify-content: center;">(LV : 20  |  Grade : nomal )</h5>
-						</div>
-						<br>
 						<form action="/writeHeadHuntPost" method="post"
 							onsubmit="return validateForm(event)"
 							enctype="multipart/form-data">
@@ -148,26 +145,37 @@ img {
 									placeholder="Title" />
 							</div>
 							<div class="form-group" style="display: flex;">
+
 								<input type="text" id="headHuntPostPay" name="headHuntPostPay"
 									class="form-control rounded"
-									style="width: 23.5%; margin-right: 2%;"
+									style="width: 18.4%; margin-right: 2%;"
 									oninput="trimInput(this); validatePay(this);" placeholder="Pay" />
 								<select class="selectTags" id="headHuntPostRole"
-									name="headHuntPostRole" style="width: 23.5%; margin-right: 2%;">
+									name="headHuntPostRole">
 									<option value="" disabled selected>Role</option>
 									<option value="모델">모델</option>
 									<option value="사진작가">사진작가</option>
-								</select> 
-								
-								<input type="date" id="headHuntPostWorkDate" name="headHuntPostWorkDate" style="width: 23.5%; margin-right: 2%; padding-left: 8px;" > 
-								
-								<select class="selectTags" id="headHuntPostConcept" name="headHuntPostConcept" style="width: 23.5%;">
+								</select> <input class="selectTags" type="date" id="headHuntPostWorkDate"
+									name="headHuntPostWorkDate" style="padding-left: 8px;">
+
+								<select class="selectTags" id="headHuntPostConcept"
+									name="headHuntPostConcept">
 									<option value="" disabled selected>WorkConcept</option>
 									<option value="snap">스냅사진</option>
 									<option value="pictorial">화보</option>
 									<option value="studio">내부</option>
 									<option value="outdoor">외부</option>
 									<option value="etc">기타</option>
+								</select> <select style="width: 18.4%" id="headHuntPostRegion"
+									name="headHuntPostRegion">
+									<option value="" disabled selected>선택</option>
+									<option value="SEOUL">SEOUL</option>
+									<option value="GYEONGGI">GYEONGGI</option>
+									<option value="GANGWON">GANGWON</option>
+									<option value="CHUNGCHEONG">CHUNGCHEONG</option>
+									<option value="JEOLLA">JEOLLA</option>
+									<option value="GYEONGSANG">GYEONGSANG</option>
+									<option value="JEJU">JEJU</option>
 								</select>
 							</div>
 
@@ -210,8 +218,7 @@ img {
 	</script>
 	<script src="css/user/scripts/jquery-number/jquery.number.min.js"></script>
 	<script src="css/user/scripts/owlcarousel/dist/owl.carousel.min.js"></script>
-	<script
-		src="css/user/scripts/magnific-popup/dist/jquery.magnific-popup.min.js"></script>
+	<script src="css/user/scripts/magnific-popup/dist/jquery.magnific-popup.min.js"></script>
 	<script src="css/user/scripts/easescroll/jquery.easeScroll.js"></script>
 	<script src="css/user/scripts/sweetalert/dist/sweetalert.min.js"></script>
 	<script src="css/user/scripts/toast/jquery.toast.min.js"></script>
@@ -224,6 +231,7 @@ img {
 			cursor : true
 		});
 	</script>
+	<script src="css/user/js/e-magz.js"></script>
 	<script>
 		// 공백 및 null 입력 막는 함수
 		// 공백 및 null 입력 막는 함수
