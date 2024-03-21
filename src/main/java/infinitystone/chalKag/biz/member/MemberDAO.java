@@ -41,22 +41,13 @@ public class MemberDAO {
       "LIMIT 10";
 
   // 로그인.안승준
-  private static final String SELECTONE_SIGNIN = "SELECT MEMBER_id , MEMBER_grade " +
-      "FROM MEMBER " +
-      "WHERE MEMBER_id = ? " +
-      "AND MEMBER_pw = ?";
+  private static final String SELECTONE_SIGNIN = "SELECT MEMBER_id , MEMBER_grade " + "FROM MEMBER " + "WHERE MEMBER_id = ? " + "AND MEMBER_pw = ?";
 
   // 아이디 찾기.안승준
-  private static final String SELECTONE_FINDID = "SELECT MEMBER_id " +
-      "FROM MEMBER " +
-      "WHERE MEMBER_name = ? " +
-      "AND MEMBER_ph = ?";
+  private static final String SELECTONE_FINDID = "SELECT MEMBER_id " + "FROM MEMBER " + "WHERE MEMBER_name = ? " + "AND MEMBER_ph = ?";
 
   // 비밀번호 찾기.안승준
-  private static final String SELECTONE_FINDPW = "SELECT MEMBER_pw " +
-      "FROM MEMBER " +
-      "WHERE MEMBER_id = ? " +
-      "AND MEMBER_ph = ? ";
+  private static final String SELECTONE_FINDPW = "SELECT MEMBER_pw " + "FROM MEMBER " + "WHERE MEMBER_id = ? " + "AND MEMBER_ph = ? ";
 
   // 메인페이지 내 정보 출력.안승준
   private static final String SELECTONE_MYPAGESIMPLE = "SELECT MEMBER.MEMBER_id, " +
@@ -87,81 +78,34 @@ public class MemberDAO {
       "WHERE MEMBER.MEMBER_id = ? ";
 
   // 마이페이지(유저페이지) 출력.안승준
-  private static final String SELECTONE_MYPAGE = "SELECT MEMBER.MEMBER_id, " +
-      "MEMBER_pw, " +
-      "MEMBER_name, " +
-      "MEMBER_nickname, " +
-      "MEMBER_ph, " +
-      "MEMBER_birth, " +
-      "MEMBER_gender, " +
-      "MEMBER_introduction, " +
-      "MEMBER_grade, " +
-      "(SELECT AVG(REVIEW_score) " +
-      "FROM REVIEW " +
-      "WHERE MEMBER_id = MEMBER.MEMBER_id) AS CURRENT_score, " +
-      "(SELECT MAX(LEVEL_id) " +
-      "FROM LEVEL " +
-      "WHERE LEVEL_requiredexp <= MEMBER_exp) AS CURRENT_level, " +
-      "(SELECT (MEMBER_exp - MAX(LEVEL_requiredexp)) " +
-      "FROM LEVEL " +
-      "WHERE LEVEL_requiredexp <= MEMBER_exp) AS CURRENT_exp, " +
-      "((SELECT MIN(LEVEL_requiredexp) " +
-      "FROM LEVEL " +
-      "WHERE LEVEL_requiredexp > MEMBER_exp) - " +
-      "(SELECT MAX(LEVEL_requiredexp) " +
-      "FROM LEVEL " +
-      "WHERE LEVEL_requiredexp <= MEMBER_exp)) AS CURRENT_nextexp, " +
-      "PROFILEIMG.PROFILEIMG_name " +
-      "FROM MEMBER " +
-      "LEFT JOIN " +
-      "(SELECT MEMBER_id, PROFILE_id DESC " +
-      "LIMIT 1) AS PROFILEIMG ON MEMBER.MEMBER_id = PROFILEIMG.MEMBER_id " +
-      "PROFILEIMG ON MEMBER.MEMBER_id = PROFILEIMG.MEMBER_id " +
-      "WHERE MEMBER.MEMBER_id = ? ";
+  private static final String SELECTONE_MYPAGE = "SELECT MEMBER.MEMBER_id, " + "MEMBER_pw, " + "MEMBER_name, " + "MEMBER_nickname, " + "MEMBER_ph, " + "MEMBER_birth, " + "MEMBER_gender, " + "MEMBER_introduction, " + "MEMBER_grade, " + "(SELECT AVG(REVIEW_score) " + "FROM REVIEW " + "WHERE MEMBER_id = MEMBER.MEMBER_id) AS CURRENT_score, " + "(SELECT MAX(LEVEL_id) " + "FROM LEVEL " + "WHERE LEVEL_requiredexp <= MEMBER_exp) AS CURRENT_level, " + "(SELECT (MEMBER_exp - MAX(LEVEL_requiredexp)) " + "FROM LEVEL " + "WHERE LEVEL_requiredexp <= MEMBER_exp) AS CURRENT_exp, " + "((SELECT MIN(LEVEL_requiredexp) " + "FROM LEVEL " + "WHERE LEVEL_requiredexp > MEMBER_exp) - " + "(SELECT MAX(LEVEL_requiredexp) " + "FROM LEVEL " + "WHERE LEVEL_requiredexp <= MEMBER_exp)) AS CURRENT_nextexp, " + "PROFILEIMG.PROFILEIMG_name " + "FROM MEMBER " + "LEFT JOIN " + "(SELECT MEMBER_id, PROFILE_id DESC " + "LIMIT 1) AS PROFILEIMG ON MEMBER.MEMBER_id = PROFILEIMG.MEMBER_id " + "PROFILEIMG ON MEMBER.MEMBER_id = PROFILEIMG.MEMBER_id " + "WHERE MEMBER.MEMBER_id = ? ";
 
   // 회원 비밀번호 확인.안승준
   private static final String SELECTONE_CHECKPW = "SELECT MEMBER_pw" +
       "FROM MEMBER" +
       "WHERE MEMBER_id = ?";
 
-  private static final String SELECTONE_OAUTH2SIGNIN = "SELECT MEMBER_grade " +
+  private static final String SELECTONE_OAUTH2SIGNIN = "SELECT MEMBER_id, " +
+      "MEMBER_grade " +
       "FROM MEMBER " +
       "WHERE MEMBER_id = ?";
 
   // 회원가입.안승준
-  private static final String INSERT_SINGUP = "INSERT INTO MEMBER ( MEMBER_id," +
-      "MEMBER_pw," +
-      "MEMBER_name," +
-      "MEMBER_nickname," +
-      "MEMBER_ph," +
-      "MEMBER_birth," +
-      "MEMBER_gender," +
-      "MEMBER_introduction)" +
-      "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?)";
+  private static final String INSERT_SINGUP = "INSERT INTO MEMBER ( MEMBER_id," + "MEMBER_pw," + "MEMBER_name," + "MEMBER_nickname," + "MEMBER_ph," + "MEMBER_birth," + "MEMBER_gender," + "MEMBER_introduction)" + "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?)";
 
   // 비밀번호 변경.안승준
-  private static final String UPDATE_CHANGEPASSWORD = "UPDATE MEMBER" +
-      "SET MEMBER_pw = ?" +
-      "WHERE MEMBER_id = ?";
+  private static final String UPDATE_CHANGEPASSWORD = "UPDATE MEMBER" + "SET MEMBER_pw = ?" + "WHERE MEMBER_id = ?";
 
   // 닉네임 변경.안승준
-  private static final String UPDATE_CHANGENICKNAME = "UPDATE MEMBER" +
-      "SET MEMBER_nickname = ?" +
-      "WHERE MEMBER_id = ?";
+  private static final String UPDATE_CHANGENICKNAME = "UPDATE MEMBER" + "SET MEMBER_nickname = ?" + "WHERE MEMBER_id = ?";
 
-  private static final String UPDATE_CHANGEPH = "UPDATE MEMBER" +
-      "SET MEMBER_ph = ?" +
-      "WHERE MEMBER_id = ?";
+  private static final String UPDATE_CHANGEPH = "UPDATE MEMBER" + "SET MEMBER_ph = ?" + "WHERE MEMBER_id = ?";
 
   // 자기소개 변경.안승준
-  private static final String UPDATE_CHANGEINTRODUCTION = "UPDATE MEMBER" +
-      "SET MEMBER_introduction = ?" +
-      "WHERE MEMBER_id = ?";
+  private static final String UPDATE_CHANGEINTRODUCTION = "UPDATE MEMBER" + "SET MEMBER_introduction = ?" + "WHERE MEMBER_id = ?";
 
   // 회원 탈퇴.안승준
-  private static final String UPDATE_DELETEACCOUNT = "UPDATE MEMBER" +
-      "SET MEMBER_grade = 'delete'" +
-      "WHERE MEMBER_id = ?";
+  private static final String UPDATE_DELETEACCOUNT = "UPDATE MEMBER" + "SET MEMBER_grade = 'delete'" + "WHERE MEMBER_id = ?";
 
   // 사용 안 할 예정.안승준
   private static final String DELETE = "";
@@ -429,6 +373,7 @@ class OAuth2SignInRowMapper implements RowMapper<MemberDTO> {
   @Override
   public MemberDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
     MemberDTO memberDTO = new MemberDTO();
+    memberDTO.setMemberId(rs.getString("MEMBER_id"));
     memberDTO.setMemberGrade(rs.getString("MEMBER_grade"));
     return memberDTO;
   }
