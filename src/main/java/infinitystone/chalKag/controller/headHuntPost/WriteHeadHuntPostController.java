@@ -4,6 +4,7 @@ import infinitystone.chalKag.biz.headHuntPost.HeadHuntPostDTO;
 import infinitystone.chalKag.biz.headHuntPost.HeadHuntPostService;
 import infinitystone.chalKag.biz.postImg.PostImgDTO;
 import infinitystone.chalKag.biz.postImg.PostImgService;
+import jakarta.servlet.http.HttpSession;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,56 +20,58 @@ import java.util.UUID;
 @Controller
 public class WriteHeadHuntPostController {
 
-	@Autowired
-	private HeadHuntPostService headHuntPostService;
+  @Autowired
+  private HeadHuntPostService headHuntPostService;
 
-	@Autowired
-	private PostImgService postImgService;
+  @Autowired
+  private PostImgService postImgService;
 
-	@RequestMapping(value = "/writeHeadHuntPost", method = RequestMethod.GET)
-	public String writeHeadHuntPostPage() {
-		return "writeHeadHuntPost";
-	}
+  @RequestMapping(value = "/writeHeadHuntPost", method = RequestMethod.GET)
+  public String writeHeadHuntPostPage() {
+    return "writeHeadHuntPost";
+  }
 
-	@RequestMapping(value = "/writeHeadHuntPost", method = RequestMethod.POST)
-	public String writeHeadHuntPost(HeadHuntPostDTO headHuntPostDTO, PostImgDTO postImgDTO, @RequestParam("file") MultipartFile[] files) {
+  @RequestMapping(value = "/writeHeadHuntPost", method = RequestMethod.POST)
+  public String writeHeadHuntPost(HeadHuntPostDTO headHuntPostDTO, PostImgDTO postImgDTO, HttpSession session, @RequestParam("file") MultipartFile[] files) {
 
-		System.out.println("WriteHeadHuntPostController In Log = [" + headHuntPostDTO + "]");
-		System.out.println("WriteHeadHuntPostController In Log = [" + postImgDTO + "]");
+    headHuntPostDTO.setMemberId((String) session.getAttribute("member"));
 
-		String uploadDir = this.getClass().getResource("").getPath();
-		System.out.println("WriteHeadHuntPostController Log01 = [" + uploadDir + "]");
+    System.out.println("WriteHeadHuntPostController In Log = [" + headHuntPostDTO + "]");
+    System.out.println("WriteHeadHuntPostController In Log = [" + postImgDTO + "]");
 
-		uploadDir = uploadDir.substring(1, uploadDir.indexOf("chalkag")) + "chalkag/src/main/resources/static/postImg";
-		System.out.println("WriteHeadHuntPostController Log02 = [" + uploadDir + "]");
+    String uploadDir = this.getClass().getResource("").getPath();
+    System.out.println("WriteHeadHuntPostController Log01 = [" + uploadDir + "]");
 
-		for (MultipartFile file : files) {
-			if (file != null && !file.isEmpty()) {
-				String originalFilename = file.getOriginalFilename();
-				String extension = FilenameUtils.getExtension(originalFilename);
-				String newFilename = UUID.randomUUID().toString() + "." + extension;
-				String filePath = uploadDir + File.separator + newFilename;
-				File newFile = new File(filePath);
-				try {
-					file.transferTo(newFile);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				postImgDTO.setPostImgName(newFilename);
-			}
-		}
+    uploadDir = uploadDir.substring(1, uploadDir.indexOf("chalKag")) + "chalKag/src/main/resources/static/postImg";
+    System.out.println("WriteHeadHuntPostController Log02 = [" + uploadDir + "]");
 
-		// Add the user-written post
-		if (!headHuntPostService.insert(headHuntPostDTO)) {
-			System.out.println("WriteHeadHuntPostController insertion of post failed");
-		}
+    for (MultipartFile file : files) {
+      if (file != null && !file.isEmpty()) {
+        String originalFilename = file.getOriginalFilename();
+        String extension = FilenameUtils.getExtension(originalFilename);
+        String newFilename = UUID.randomUUID().toString() + "." + extension;
+        String filePath = uploadDir + File.separator + newFilename;
+        File newFile = new File(filePath);
+        try {
+          file.transferTo(newFile);
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+        postImgDTO.setPostImgName(newFilename);
+      }
+    }
 
-		if (!postImgService.insert(postImgDTO)) {
-			System.out.println("WriteHeadHuntPostController insertion of image failed");
-		}
+    // Add the user-written post
+    if (!headHuntPostService.insert(headHuntPostDTO)) {
+      System.out.println("WriteHeadHuntPostController insertion of post failed");
+    }
 
-		System.out.println("WriteHeadHuntPostController Out Log");
+    if (!postImgService.insert(postImgDTO)) {
+      System.out.println("WriteHeadHuntPostController insertion of image failed");
+    }
 
-		return "headHuntPostList";
-	}
+    System.out.println("WriteHeadHuntPostController Out Log");
+
+    return "redirect:headHuntPostList";
+  }
 }

@@ -2,7 +2,9 @@ package infinitystone.chalKag.controller.headHuntPost;
 
 import java.util.List;
 
+import infinitystone.chalKag.biz.postImg.PostImgDTO;
 import infinitystone.chalKag.biz.postImg.PostImgService;
+import infinitystone.chalKag.biz.profileImg.ProfileImgDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,17 +23,18 @@ public class HeadHuntPostListController {
   private PostImgService postImgService;
 
   @RequestMapping("/headHuntPostList")
-  public String headHuntPostList(Model model, HeadHuntPostDTO headHuntPostDTO) {
+  public String headHuntPostList(Model model, HeadHuntPostDTO headHuntPostDTO, PostImgDTO postImgDTO) {
 
     System.out.println("HeadHuntPostListController In로그");
 
-    headHuntPostDTO.setSearchCondition("selectAllHeadHuntPost");
+    headHuntPostDTO.setSearchCondition("headHuntPostList");
 
-    List<HeadHuntPostDTO> result = headHuntPostService.selectAll(headHuntPostDTO);
+    List<HeadHuntPostDTO> headHuntPostListResult = headHuntPostService.selectAll(headHuntPostDTO);
+    List<PostImgDTO> postImgListResult = postImgService.selectAll(postImgDTO);
 
-    model.addAttribute("headHuntPostList", result);
+    model.addAttribute("headHuntPostList", headHuntPostListResult);
 
-    System.out.println("HeadHuntPostListController Out로그 = [" + result + "]");
+    System.out.println("HeadHuntPostListController Out로그");
 
     return "headHuntPostList";
   }
