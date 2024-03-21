@@ -1,0 +1,14 @@
+<%@ tag language="java" pageEncoding="UTF-8"%>
+
+<script src="css/user/js/jquery.js"></script>
+<script src="css/user/js/jquery.migrate.js"></script>
+<script src="css/user/scripts/bootstrap/bootstrap.min.js"></script>
+<script>var $target_end = $(".best-of-the-week");</script>
+<script src="css/user/scripts/jquery-number/jquery.number.min.js"></script>
+<script src="css/user/scripts/owlcarousel/dist/owl.carousel.min.js"></script>
+<script src="css/user/scripts/magnific-popup/dist/jquery.magnific-popup.min.js"></script>
+<script src="css/user/scripts/easescroll/jquery.easeScroll.js"></script>
+<script src="css/user/scripts/sweetalert/dist/sweetalert.min.js"></script>
+<script src="css/user/scripts/toast/jquery.toast.min.js"></script>
+<script src="css/user/js/demo.js"></script>
+<script src="css/user/js/e-magz.js"></script>
