@@ -71,8 +71,8 @@ public class FreePostDAO {
 			+ " 	PROFILEIMG.PROFILEIMG_name";
 
 	// 자유게시판 글 작성 게시판 이미지와 글 내용 인서트를 따로 받음
-	private static final String INSERT = "INSERT INTO JOBHUNTPOST(MEMBER_id,FREEPOST_date,FREEPOST_title,FREEPOST_content,FREEPOST_viewcnt) "
-			+ "							VALUES(?,CURRENT_TIMESTAMP,?,?,0)";
+	private static final String INSERT = "INSERT INTO JOBHUNTPOST(MEMBER_id,FREEPOST_title,FREEPOST_content,FREEPOST_viewcnt) "
+			+ "							VALUES(?,?,?,0)";
 	private static final String UPDATE = "UPDATE FREEPOST SET FREEPOST_title=?, FREEPOST_content=?";
 	private static final String UPDATE_VIEWCNT = "UPDATE BOARD SET FREEPOST_viewcnt = (FREEPOST_viewcnt+1) WHERE FREEPOST_id=?";
 	private static final String DELETE = "DELETE FROM FREEPOST WHERE FREEPOST_id = ?";
@@ -109,7 +109,7 @@ public class FreePostDAO {
 
 	public boolean insert(FreePostDTO freePostDTO) {
 		int result = 0;
-		result = jdbcTemplate.update(INSERT);
+		result = jdbcTemplate.update(INSERT,freePostDTO.getMemberId(),freePostDTO.getFreePostTitle(),freePostDTO.getFreePostContent(),freePostDTO.getFreePostViewcnt());
 		if (result <= 0) {
 			return false;
 		}
@@ -119,9 +119,9 @@ public class FreePostDAO {
 	public boolean update(FreePostDTO freePostDTO) {
 		int result = 0;								
 		if (freePostDTO.getSearchCondition().equals("freePostViewcntUpdate")) {
-			result = jdbcTemplate.update(UPDATE_VIEWCNT);
+			result = jdbcTemplate.update(UPDATE_VIEWCNT,freePostDTO.getFreePostViewcnt());
 		} else if(freePostDTO.getSearchCondition().equals("freePostUpdate")) {
-			result = jdbcTemplate.update(UPDATE);
+			result = jdbcTemplate.update(UPDATE,freePostDTO.getFreePostTitle(),freePostDTO.getFreePostContent());
 		}
 		if (result <= 0) {
 			return false;
@@ -130,7 +130,7 @@ public class FreePostDAO {
 	}
 
 	public boolean delete(FreePostDTO freePostDTO) {
-		int result = jdbcTemplate.update(DELETE);
+		int result = jdbcTemplate.update(DELETE,freePostDTO.getFreePostId());
 		if (result <= 0) {
 			return false;
 		}

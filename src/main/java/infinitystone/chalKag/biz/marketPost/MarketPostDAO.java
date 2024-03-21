@@ -71,8 +71,8 @@ public class MarketPostDAO {
 			+ "		MARKETPOST.MARKETPOST_id, "
 			+ " 	PROFILEIMG.PROFILEIMG_name";
 	
-	private static final String INSERT = "INSERT INTO MARKETPOST(MEMBER_id,MARKETPOST_date,MARKET_price,MARKET_category,MARKET_company,MARKET_status,MARKET_title,MARKET_content,MARKET_viewcnt)"
-			+ "							VALUES(?,CURRENT_TIMESTAMP,?,?,?,?,?,?,0)";
+	private static final String INSERT = "INSERT INTO MARKETPOST(MEMBER_id,MARKET_price,MARKET_category,MARKET_company,MARKET_status,MARKET_title,MARKET_content,MARKET_viewcnt)"
+			+ "							VALUES(?,?,?,?,?,?,?,0)";
 	private static final String UPDATE = "UPDATE MARKETPOST SET MARKETPOST_PRICE = ? ,MARKETPOST_category = ? ,MARKETPOST_company = ? ,MARKETPOST_status = ? ,MARKETPOST_title = ? ,MARKETPOST_content = ? ";
 	private static final String UPDATE_VIEWCNT = "UPDATE MARKETOPOST SET MARKETPOST_viewcnt = (MARKETPOST_viewcnt+1) WHERE MARKETPOST_id=?";
 	private static final String DELETE = "DELETE FROM MARKETPOST WHERE MARKETPOST_id=? ";
@@ -107,7 +107,7 @@ public class MarketPostDAO {
 	}
 
 	public boolean insert(MarketPostDTO marketPostDTO) {
-		int result = jdbcTemplate.update(INSERT);
+		int result = jdbcTemplate.update(INSERT,marketPostDTO.getMemberId(),marketPostDTO.getMarketPostPrice(),marketPostDTO.getMarketPostCategory(),marketPostDTO.getMarketPostCompany(),marketPostDTO.getMarketPostStatus(),marketPostDTO.getMarketPostTitle(),marketPostDTO.getMarketPostContent(),marketPostDTO.getMarketPostViewcnt());
 		if (result <= 0) {
 			return false;
 		}
@@ -117,9 +117,9 @@ public class MarketPostDAO {
 	public boolean update(MarketPostDTO marketPostDTO) {
 		int result = 0;
 		if (marketPostDTO.getSearchCondition().equals("marketPostViewcntUpdate")) {
-			result = jdbcTemplate.update(UPDATE_VIEWCNT);
+			result = jdbcTemplate.update(UPDATE_VIEWCNT,marketPostDTO.getMarketPostViewcnt());
 		} else if(marketPostDTO.getSearchCondition().equals("marketPostUpdate")){
-			result = jdbcTemplate.update(UPDATE);
+			result = jdbcTemplate.update(UPDATE,marketPostDTO.getMarketPostPrice(),marketPostDTO.getMarketPostCategory(),marketPostDTO.getMarketPostCompany(),marketPostDTO.getMarketPostStatus(),marketPostDTO.getMarketPostTitle(),marketPostDTO.getMarketPostContent());
 		}
 		if (result <= 0) {
 			return false;

@@ -88,7 +88,7 @@ public class JobHuntPostDAO {
 
 	private static final String INSERT = "INSERT "
 			+ " INTO JOBHUNTPOST" 
-			+ "(MEMBER_id," + "JOBHUNTPOST_date,"
+			+ "(MEMBER_id," 
 			+ "JOBHUNTPOST_role," 
 			+ "JOBHUNTPOST_region," 
 			+ "JOBHUNTPOST_pay," 
@@ -97,7 +97,7 @@ public class JobHuntPostDAO {
 			+ "JOBHUNTPOST_title," 
 			+ "JOBHUNTPOST_content," 
 			+ "JOBHUNTPOST_viewcnt) "
-			+ "VALUES(?,CURRENT_TIMESTAMP,?,?,?,?,?,?,?,0)";
+			+ "VALUES(?,?,?,?,?,?,?,?,0)";
 	
 	
 	private static final String UPDATE = "UPDATE " 
@@ -151,7 +151,7 @@ public class JobHuntPostDAO {
 	}
 
 	public boolean insert(JobHuntPostDTO jobHuntPostDTO) {
-		int result = jdbcTemplate.update(INSERT);
+		int result = jdbcTemplate.update(INSERT,jobHuntPostDTO.getMemberId(),jobHuntPostDTO.getJobHuntPostRole(),jobHuntPostDTO.getJobHuntPostRegion(),jobHuntPostDTO.getJobHuntPostPay(),jobHuntPostDTO.getJobHuntPostWorkdate(),jobHuntPostDTO.getJobHuntPostConcept(),jobHuntPostDTO.getJobHuntPostTitle(),jobHuntPostDTO.getJobHuntPostContent(),jobHuntPostDTO.getJobHuntPostViewcnt());
 		if (result <= 0) {
 			return false;
 		}
@@ -162,10 +162,10 @@ public class JobHuntPostDAO {
 	public boolean update(JobHuntPostDTO jobHuntPostDTO) {
 		int result = 0;
 		if (jobHuntPostDTO.getSearchCondition().equals("jobHuntPostViewcntUpdate")) {
-			result = jdbcTemplate.update(UPDATE_VIEWCNT);
+			result = jdbcTemplate.update(UPDATE_VIEWCNT,jobHuntPostDTO.getJobHuntPostViewcnt());
 			System.out.println("JobHuntPostDAO(viewcntUpdate) 로그 = [" + result + "]");
 		} else if(jobHuntPostDTO.getSearchCondition().equals("jobHuntPostUpdate")) {
-			result = jdbcTemplate.update(UPDATE);
+			result = jdbcTemplate.update(UPDATE,jobHuntPostDTO.getJobHuntPostRole(),jobHuntPostDTO.getJobHuntPostRegion(),jobHuntPostDTO.getJobHuntPostPay(),jobHuntPostDTO.getJobHuntPostWorkdate(),jobHuntPostDTO.getJobHuntPostConcept(),jobHuntPostDTO.getJobHuntPostTitle(),jobHuntPostDTO.getJobHuntPostContent());
 			System.out.println("JobHuntPostDAO(update) 로그 = [" + result + "]");
 		}
 		if (result <= 0) {
@@ -175,7 +175,7 @@ public class JobHuntPostDAO {
 	}
 
 	public boolean delete(JobHuntPostDTO jobHuntPostDTO) {
-		int result = jdbcTemplate.update(DELETE);
+		int result = jdbcTemplate.update(DELETE,jobHuntPostDTO.getJobHuntPostId());
 		if (result <= 0) {
 			return false;
 		}
