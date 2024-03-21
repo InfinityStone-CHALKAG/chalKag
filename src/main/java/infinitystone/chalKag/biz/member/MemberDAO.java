@@ -124,6 +124,10 @@ public class MemberDAO {
       "FROM MEMBER" +
       "WHERE MEMBER_id = ?";
 
+  private static final String SELECTONE_OAUTH2SIGNIN = "SELECT MEMBER_grade " +
+      "FROM MEMBER " +
+      "WHERE MEMBER_id = ?";
+
   // 회원가입.안승준
   private static final String INSERT_SINGUP = "INSERT INTO MEMBER ( MEMBER_id," +
       "MEMBER_pw," +
@@ -225,7 +229,12 @@ public class MemberDAO {
         return result;
       } else if (memberDTO.getSearchCondition().equals("checkPw")) {
         Object[] args = {memberDTO.getMemberId(), memberDTO.getMemberPw()};
-        result = jdbcTemplate.queryForObject(SELECTONE_CHECKPW, new CheckPwRowMapper());
+        result = jdbcTemplate.queryForObject(SELECTONE_CHECKPW, args, new CheckPwRowMapper());
+        System.out.println("MemberDAO(selectOne) Out로그 = [" + result + "]");
+        return result;
+      } else if (memberDTO.getSearchCondition().equals("OAuth2SignIn")) {
+        Object[] args = {memberDTO.getMemberId()};
+        result = jdbcTemplate.queryForObject(SELECTONE_OAUTH2SIGNIN, args, new OAuth2SignInRowMapper());
         System.out.println("MemberDAO(selectOne) Out로그 = [" + result + "]");
         return result;
       }
@@ -416,3 +425,11 @@ class CheckPwRowMapper implements RowMapper<MemberDTO> {
   }
 }
 
+class OAuth2SignInRowMapper implements RowMapper<MemberDTO> {
+  @Override
+  public MemberDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+    MemberDTO memberDTO = new MemberDTO();
+    memberDTO.setMemberGrade(rs.getString("MEMBER_grade"));
+    return memberDTO;
+  }
+}
