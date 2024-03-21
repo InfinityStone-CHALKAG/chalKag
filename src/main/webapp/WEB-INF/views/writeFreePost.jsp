@@ -75,6 +75,7 @@
       radioClass: 'iradio_square-red',
       cursor: true
 		});</script>
+			<script src="css/user/js/e-magz.js"></script>
 	<script>
 			// 에디터에 입력한 값을 받아서 유효성을 처리할 수 있는 변수
 			let editorInstance;

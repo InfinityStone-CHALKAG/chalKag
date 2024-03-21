@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <chalKagTags:webCss/>
+<chalKagTags:webCss />
 <style>
 #writerForm {
 	width: 70%;
@@ -38,13 +38,13 @@ img {
 	max-height: 400px;
 	margin-right: 10px;
 	margin-left: 10px;
-	object-fit: cover; 
+	object-fit: cover;
 	object-position: center;
 }
 
 .imgSlidebtn {
 	border: 0;
-	height: 150px;
+	height: 400px;
 	color: white;
 	background-color: rgb(245, 63, 82);
 }
@@ -79,21 +79,21 @@ img {
 }
 
 .img-wrapper {
-  position: relative;
+	position: relative;
 	width: 400px;
 	height: 400px;
-  display: inline-block; /* 이미지를 옆으로 나열 */
+	display: inline-block; /* 이미지를 옆으로 나열 */
 }
 
 .delete-btn, .move-up-btn, .move-down-btn {
-  position: absolute;
-  cursor: pointer;
+	position: absolute;
+	cursor: pointer;
 }
 
 .delete-btn {
-  top: 0;
-  right: 9%;
-  z-index: 50; /* 확실히 이미지 위에 오도록 설정 */
+	top: 0;
+	right: 9%;
+	z-index: 50; /* 확실히 이미지 위에 오도록 설정 */
 	background-color: transparent;
 	border: 0;
 	color: white;
@@ -103,8 +103,8 @@ img {
 }
 
 .move-up-btn, .move-down-btn {
-  top: 50%;
-  transform: translateY(-50%);
+	top: 50%;
+	transform: translateY(-50%);
 	border: 0;
 	color: white;
 	-webkit-text-stroke-width: 1px;
@@ -113,11 +113,11 @@ img {
 }
 
 .move-up-btn {
-  left: 9%; /* 이미지 왼쪽으로 이동 버튼 위치 조정 */
+	left: 9%; /* 이미지 왼쪽으로 이동 버튼 위치 조정 */
 }
 
 .move-down-btn {
-  right: 9%; /* 이미지 오른쪽으로 이동 버튼 위치 조정 */
+	right: 9%; /* 이미지 오른쪽으로 이동 버튼 위치 조정 */
 }
 </style>
 </head>
@@ -131,10 +131,6 @@ img {
 			<div class="box-wrapper" id="writerForm">
 				<div class="box box-border">
 					<div class="box-body">
-						<div class="form-group">
-								<h4 style="display: flex; justify-content: center; margin-bottom: 0;">Writer : ${memberId}</h4><h5 style="display: flex; justify-content: center;">(LV : 20  |  Grade : nomal )</h5>
-						</div>
-						<br>
 						<form action="/writeMarketPost" method="post"
 							onsubmit="return validateForm(event)"
 							enctype="multipart/form-data">
@@ -144,9 +140,11 @@ img {
 									id="marketPosttitle" name="marketPosttitle" placeholder="Title" />
 							</div>
 							<div class="form-group" style="display: flex;">
-								<input type="text" id="marketPostPrice" name="marketPostPrice" class="form-control rounded" style="width: 32%; margin-right: 2%;" oninput="trimInput(this); validatePrice(this);"
-									placeholder="productPrice" /> 
-									<select class="selectTags"
+								<input type="text" id="marketPostPrice" name="marketPostPrice"
+									class="form-control rounded"
+									style="width: 32%; margin-right: 2%;"
+									oninput="trimInput(this); validatePrice(this);"
+									placeholder="productPrice" /> <select class="selectTags"
 									id="marketPostCompany" name="marketPostCompany"
 									style="width: 32%; margin-right: 2%;">
 									<option value="" disabled selected>Company</option>
@@ -177,14 +175,14 @@ img {
 								<textarea class="form-control rounded" id="marketPostContent"
 									name="marketPostContent"></textarea>
 							</div>
-							<button class="btn btn-primary btn-block" id="marketPostContent"
-								name="marketPostContent">Composite</button>
+							<button class="btn btn-primary btn-block">Composite</button>
 						</form>
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
+
 	<!-- Start footer tag로 출력 -->
 	<chalKagTags:webFooter />
 	<!-- End Footer -->
@@ -240,20 +238,20 @@ img {
 			if (!title.trim() || !price.trim() || !company || !category
 					|| !content.trim()) {
 				swal("fail", "모든 필드를 채워주세요.", "error", {
-     				button: "OK",
-  				});
+					button : "OK",
+				});
 				event.preventDefault(); // 폼 제출을 막는다.
-				return false; 
-			} else if (!imageInput.files.length) { 	// 이미지가 업로드되었는지 확인
+				return false;
+			} else if (!imageInput.files.length) { // 이미지가 업로드되었는지 확인
 				swal("fail", "이미지를 업로드해주세요.", "error", {
-     				button: "OK",
-  				});
+					button : "OK",
+				});
 				event.preventDefault(); // 폼 제출을 막는다.
-   				return false; // 폼 제출을 막는다.
+				return false; // 폼 제출을 막는다.
 			}
 
-		return true; // 모든 검사를 통과하면 폼 제출을 진행.
-	}
+			return true; // 모든 검사를 통과하면 폼 제출을 진행.
+		}
 	</script>
 </body>
 </html>

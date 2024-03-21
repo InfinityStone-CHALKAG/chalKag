@@ -42,14 +42,20 @@
 [type="range"] {
 	accent-color: red;
 }
+
+div .inner p {
+	margin-left: 5%;
+}
+
 </style>
 </head>
 
 <body>
 	<!-- Start header tag로 출력 -->
-	<chalKagTags:webHeader /> 
+	<chalKagTags:webHeader />
 	<!-- End header tag로 출력 -->
 
+	
 	<!-- 필터 검색 용 메뉴 -->
 	<section class="search">
 		<div class="container">
@@ -198,8 +204,6 @@
 					</div>
 
 					<!-- 게시글 전체 갯수가 출력되게 처리 -->
-					<div class="search-result">Search results for keyword "hello"
-						found in 5,200 posts.</div>
 					<div class="row">
 						<!-- 게시글 목록 출력 장소 시작 게시판마다 명이 다르다. -->
 						<div id="postDatasContainer" displayReviewData="${headHuntPostList}"></div>
@@ -238,11 +242,11 @@
 	<script src="css/user/js/e-magz.js"></script>
 	<script src="css/user/js/demo.js"></script>
 	<script>
-	/* 	$("input").iCheck({
+ 	$("input").iCheck({
 			checkboxClass : 'icheckbox_square-red',
 			radioClass : 'iradio_square-red',
 			cursor : true
-		}); */
+		}); 
 	</script>
 </body>
 </html>

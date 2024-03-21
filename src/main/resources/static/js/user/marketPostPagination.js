@@ -40,27 +40,27 @@ $(document).ready(function() {
         displayPagination(currentPage); // 페이지네이션 표시 함수 호출
     }
 
-    // 데이터를 화면에 표시하는 함수
-    function displayReviewData(currentPageDatas) {
-        const article = document.createElement('div');
-   	    article.classList.add('postList', 'div');
-        article.innerHTML = ''; // article 초기화
-        if (currentPageDatas.length === 0) {
-            article.innerHTML = '<div class="inner"><p>등록된 글이 없습니다...</p></div>'; // 데이터가 없을 때 메시지 출력
-        } else {
-            currentPageDatas.forEach(function(marketPostList) { // 각 데이터를 순회하면서 행 추가
-                // 설명 텍스트가 50자를 초과할 경우, 50자까지만 표시하고 "..." 추가
-                let postContent = "${marketPostList.marketPostContent}";
-                if (postContent.length > 50) {
-                    postContent = postContent.substring(0, 50) + "...";
-                    $('#postConten').val(postContent);
-                }
-                var row = document.createElement('div'); // 새로운 행 요소 생성
-                row.innerHTML = 
-                `<div class="inner">
+      // 데이터를 화면에 표시하는 함수
+    function displayReviewData(pageDatas) {
+		console.log(pageDatas);
+        const div = document.getElementById('postDatasContainer');
+    	div.classList.add('marketPostList', 'div');
+    
+     let innerHTML = ''; // 새로운 내용을 담을 변수
+    
+        if (pageDatas === null || pageDatas.length <= 0) {
+        innerHTML = '<div class="inner"><p>there are no registered posts...</p></div>'; // 데이터가 없을 때 메시지 출력
+    } else {
+        pageDatas.forEach(function(marketPostList) {
+            let postContent = marketPostList.marketPostContent;
+            if (postContent.length > 50) {
+                postContent = postContent.substring(0, 50) + "...";
+            }
+            
+               innerHTML =  `<div class="inner">
                         <figure>
                             <a href="/marketPostSingle/marketPostId=${marketPostList.marketPostId}">
-                                <img src="${marketPostList.postImgId}">
+                                <img src="/${marketPostList.postImgId}">
                             </a>
                         </figure>
                         <div class="details">
@@ -86,18 +86,19 @@ $(document).ready(function() {
                             </footer>
                     </div>
                 </div>`;
-                article.appendChild(row);
+    
             });
         }
+        
+        div.innerHTML = innerHTML;
     }
-
     // 페이징을 화면에 표시하는 함수
-    function displayPagination(currentPage) {
+    function displayPagination(page) {
         var paginationContainer = $("#paginationContainer"); // 페이지네이션 컨테이너 요소 가져오기
         paginationContainer.empty(); // 컨테이너 초기화
 
         var pageSize = 10; // 한 페이지 그룹에 표시할 페이지 수
-        var currentGroup = Math.floor((currentPage - 1) / pageSize); // 현재 페이지 그룹
+        var currentGroup = Math.floor((page - 1) / pageSize); // 현재 페이지 그룹
         var startPage = currentGroup * pageSize + 1; // 시작 페이지
         var endPage = Math.min((currentGroup + 1) * pageSize, totalPages); // 끝 페이지
 
@@ -107,14 +108,12 @@ $(document).ready(function() {
             var prevGroupLink = "<ul class='pagination'><li class='prev'><a href='#' class='page' data-page='" + prevGroupPage + "'>&laquo; PREV</a></li>";
             paginationContainer.append(prevGroupLink);
         }
-
         // 페이지 버튼 추가
         for (var i = startPage; i <= endPage; i++) {
-            var pageLinkClass = (i === currentPage) ? "page active" : "page";
-            var pageLink = "<li class='active'><a href='i' class='" + pageLinkClass + "' data-page='" + i + "'>" + i + "</a></li>";
+            var pageLinkClass = (i === page) ? "page active" : "page";
+            var pageLink = "<li class='active'><a href='#' class='" + pageLinkClass + "' data-page='" + i + "'>" + i + "</a></li>";
             paginationContainer.append(pageLink);
         }
-
         // 다음 페이지 그룹으로 이동하는 버튼 추가
         if (endPage < totalPages) {
             var nextGroupPage = endPage + 1;
@@ -122,7 +121,8 @@ $(document).ready(function() {
             paginationContainer.append(nextGroupLink);
         }
     }
-
     // 초기 페이지 로드
     loadReviewData(1);
 });
+
+
