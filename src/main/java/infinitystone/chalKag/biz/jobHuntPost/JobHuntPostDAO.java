@@ -153,7 +153,7 @@ public class JobHuntPostDAO {
 	}
 
 	public boolean insert(JobHuntPostDTO jobHuntPostDTO) {
-		int result = jdbcTemplate.update(INSERT,jobHuntPostDTO.getMemberId(),jobHuntPostDTO.getJobHuntPostRole(),jobHuntPostDTO.getJobHuntPostRegion(),jobHuntPostDTO.getJobHuntPostPay(),jobHuntPostDTO.getJobHuntPostWorkdate(),jobHuntPostDTO.getJobHuntPostConcept(),jobHuntPostDTO.getJobHuntPostTitle(),jobHuntPostDTO.getJobHuntPostContent(),jobHuntPostDTO.getJobHuntPostViewcnt());
+		int result = jdbcTemplate.update(INSERT,jobHuntPostDTO.getMemberId(),jobHuntPostDTO.getJobHuntPostRole(),jobHuntPostDTO.getJobHuntPostRegion(),jobHuntPostDTO.getJobHuntPostPay(),jobHuntPostDTO.getJobHuntPostWorkdate(),jobHuntPostDTO.getJobHuntPostConcept(),jobHuntPostDTO.getJobHuntPostTitle(),jobHuntPostDTO.getJobHuntPostContent());
 		if (result <= 0) {
 			return false;
 		}

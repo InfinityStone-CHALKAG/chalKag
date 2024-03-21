@@ -111,7 +111,7 @@ public class FreePostDAO {
 
 	public boolean insert(FreePostDTO freePostDTO) {
 		int result = 0;
-		result = jdbcTemplate.update(INSERT,freePostDTO.getMemberId(),freePostDTO.getFreePostTitle(),freePostDTO.getFreePostContent(),freePostDTO.getFreePostViewcnt());
+		result = jdbcTemplate.update(INSERT,freePostDTO.getMemberId(),freePostDTO.getFreePostTitle(),freePostDTO.getFreePostContent());
 		if (result <= 0) {
 			return false;
 		}
