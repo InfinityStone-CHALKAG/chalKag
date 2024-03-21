@@ -6,9 +6,6 @@ const postDatas = JSON.parse(dataContainer.getAttribute('displayReviewData')); /
 var currentPage = 0;        // 첫 페이지
 var totalPages = 0;         // 총 페이지
 
-console.log("check 1 : " + dataContainer);
-console.log("check 2 : " + postDatas);
-
 $(document).ready(function() {
     $(document).on("click", "#paginationContainer .page", function(event) {
         event.preventDefault(); // 기본 동작 방지
@@ -49,22 +46,21 @@ loadReviewData = function(loadPage) {
     // 데이터를 화면에 표시하는 함수
     function displayReviewData(pageDatas) {
 		console.log(pageDatas);
-        const article = document.createElement('div');
-   	    article.classList.add('headHuntPostList', 'div');
-  
+        const div = document.getElementById('postDatasContainer');
+    	div.classList.add('headHuntPostList', 'div');
+    
+     let innerHTML = ''; // 새로운 내용을 담을 변수
+    
         if (pageDatas === null || pageDatas.length <= 0) {
-            article.innerHTML = '<div class="inner"><p>등록된 글이 없습니다...</p></div>'; // 데이터가 없을 때 메시지 출력
-            dataContainer.appendChild(article);
-        } else {
-            pageDatas.forEach(function(headHuntPostList) { // 각 데이터를 순회하면서 행 추가
-                // 설명 텍스트가 50자를 초과할 경우, 50자까지만 표시하고 "..." 추가
-                let postContent = "${headHuntPostList.headHuntPostContent}";
-                if (postContent.length > 50) {
-                    postContent = postContent.substring(0, 50) + "...";
-                }
-     
+        innerHTML = '<div class="inner"><p>there are no registered posts...</p></div>'; // 데이터가 없을 때 메시지 출력
+    } else {
+        pageDatas.forEach(function(headHuntPostList) {
+            let postContent = headHuntPostList.headHuntPostContent;
+            if (postContent.length > 50) {
+                postContent = postContent.substring(0, 50) + "...";
+            }
             
-                article.innerHTML =  `<div class="inner">
+               innerHTML =  `<div class="inner">
                         <figure>
                             <a href="/headHuntPostSingle/headHuntPostId=${headHuntPostList.headHuntPostId}">
                                 <img src="/${headHuntPostList.postImgId}">
@@ -94,9 +90,10 @@ loadReviewData = function(loadPage) {
                     </div>
                 </div>`;
     
-                dataContainer.appendChild(article);
             });
         }
+        
+        div.innerHTML = innerHTML;
     }
     // 페이징을 화면에 표시하는 함수
     function displayPagination(page) {
