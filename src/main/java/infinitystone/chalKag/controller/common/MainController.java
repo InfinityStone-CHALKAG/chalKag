@@ -12,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Controller
 public class MainController {
 
@@ -44,9 +46,11 @@ public class MainController {
 
       model.addAttribute("memberInfo", myPageSimpleResult);
 
-      System.out.println("MainController Out로그 = [" + myPageSimpleResult + "]");
-
     }
+
+    memberDTO.setSearchCondition("levelRank");
+    List<MemberDTO> levelRankResult = memberService.selectAll(memberDTO);
+    model.addAttribute("levelRank", levelRankResult);
 
     System.out.println("MainController Out로그");
 

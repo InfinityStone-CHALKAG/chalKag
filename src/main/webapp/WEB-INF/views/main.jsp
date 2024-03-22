@@ -257,16 +257,10 @@
                         <h1 class="title-col">Rank</h1>
                         <div class="body-col">
                             <ol class="tags-list">
-                                <li><a href="#">HTML5</a></li>
-                                <li><a href="#">CSS3</a></li>
-                                <li><a href="#">JavaScript</a></li>
-                                <li><a href="#">jQuery</a></li>
-                                <li><a href="#">Bootstrap</a></li>
-                                <li><a href="#">Responsive</a></li>
-                                <li><a href="#">AuteIrure</a></li>
-                                <li><a href="#">Voluptate</a></li>
-                                <li><a href="#">Veit</a></li>
-                                <li><a href="#">Reprehenderit</a></li>
+                                <c:forEach var="member" items="${levelRank}" varStatus="status">
+                                    <li><a href="memberPage">${member.memberNickname} (LV.${member.currentLevel})</a>
+                                    </li>
+                                </c:forEach>
                             </ol>
                         </div>
                     </div>
@@ -407,6 +401,126 @@
                         </div>
                     </div>
                 </div>
+                <div class="line top">
+                    <div>Just Another News</div>
+                </div>
+                <div class="row">
+                    <article class="col-md-12 article-list">
+                        <div class="inner">
+                            <figure>
+                                <a href="single.html">
+                                    <img src="images/news/img11.jpg" alt="Sample Article">
+                                </a>
+                            </figure>
+                            <div class="details">
+                                <div class="detail">
+                                    <div class="category">
+                                        <a href="#">Film</a>
+                                    </div>
+                                    <div class="time">December 19, 2016</div>
+                                </div>
+                                <h1><a href="single.html">Donec consequat arcu at ultrices sodales quam erat aliquet diam</a></h1>
+                                <p>
+                                    Donec consequat, arcu at ultrices sodales, quam erat aliquet diam, sit amet interdum libero nunc accumsan nisi.
+                                </p>
+                                <footer>
+                                    <a href="#" class="love"><i class="ion-android-favorite-outline"></i> <div>273</div></a>
+                                    <a class="btn btn-primary more" href="single.html">
+                                        <div>More</div>
+                                        <div><i class="ion-ios-arrow-thin-right"></i></div>
+                                    </a>
+                                </footer>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="col-md-12 article-list">
+                        <div class="inner">
+                            <div class="badge">
+                                Sponsored
+                            </div>
+                            <figure>
+                                <a href="single.html">
+                                    <img src="images/news/img02.jpg" alt="Sample Article">
+                                </a>
+                            </figure>
+                            <div class="details">
+                                <div class="detail">
+                                    <div class="category">
+                                        <a href="#">Travel</a>
+                                    </div>
+                                    <div class="time">December 18, 2016</div>
+                                </div>
+                                <h1><a href="single.html">Maecenas accumsan tortor ut velit pharetra mollis</a></h1>
+                                <p>
+                                    Maecenas accumsan tortor ut velit pharetra mollis. Proin eu nisl et arcu iaculis placerat sollicitudin ut est. In fringilla dui.
+                                </p>
+                                <footer>
+                                    <a href="#" class="love"><i class="ion-android-favorite-outline"></i> <div>4209</div></a>
+                                    <a class="btn btn-primary more" href="single.html">
+                                        <div>More</div>
+                                        <div><i class="ion-ios-arrow-thin-right"></i></div>
+                                    </a>
+                                </footer>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="col-md-12 article-list">
+                        <div class="inner">
+                            <figure>
+                                <a href="single.html">
+                                    <img src="images/news/img03.jpg" alt="Sample Article">
+                                </a>
+                            </figure>
+                            <div class="details">
+                                <div class="detail">
+                                    <div class="category">
+                                        <a href="#">Travel</a>
+                                    </div>
+                                    <div class="time">December 16, 2016</div>
+                                </div>
+                                <h1><a href="single.html">Nulla facilisis odio quis gravida vestibulum Proin venenatis pellentesque arcu</a></h1>
+                                <p>
+                                    Nulla facilisis odio quis gravida vestibulum. Proin venenatis pellentesque arcu, ut mattis nulla placerat et.
+                                </p>
+                                <footer>
+                                    <a href="#" class="love active"><i class="ion-android-favorite"></i> <div>302</div></a>
+                                    <a class="btn btn-primary more" href="single.html">
+                                        <div>More</div>
+                                        <div><i class="ion-ios-arrow-thin-right"></i></div>
+                                    </a>
+                                </footer>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="col-md-12 article-list">
+                        <div class="inner">
+                            <figure>
+                                <a href="single.html">
+                                    <img src="images/news/img09.jpg" alt="Sample Article">
+                                </a>
+                            </figure>
+                            <div class="details">
+                                <div class="detail">
+                                    <div class="category">
+                                        <a href="#">Healthy</a>
+                                    </div>
+                                    <div class="time">December 16, 2016</div>
+                                </div>
+                                <h1><a href="single.html">Maecenas blandit ultricies lorem id tempor enim pulvinar at</a></h1>
+                                <p>
+                                    Maecenas blandit ultricies lorem, id tempor enim pulvinar at. Curabitur sit amet tortor eu ipsum lacinia malesuada.
+                                </p>
+                                <footer>
+                                    <a href="#" class="love"><i class="ion-android-favorite-outline"></i> <div>783</div></a>
+                                    <a class="btn btn-primary more" href="single.html">
+                                        <div>More</div>
+                                        <div><i class="ion-ios-arrow-thin-right"></i></div>
+                                    </a>
+                                </footer>
+                            </div>
+                        </div>
+                    </article>
+                </div>
             </div>
             <div class="col-xs-6 col-md-4 sidebar" id="sidebar">
                 <div class="sidebar-title for-tablet">Sidebar</div>
@@ -449,7 +563,12 @@
                                             <div class="item">
                                                 <a href="#">
                                                     <div class="name">Posts</div>
-                                                    <div class="value">208</div>
+                                                    <c:if test="${memberInfo.postCount != null}">
+                                                        <div class="value">${memberInfo.postCount}</div>
+                                                    </c:if>
+                                                    <c:if test="${memberInfo.postCount == null}">
+                                                        <div class="value">0</div>
+                                                    </c:if>
                                                 </a>
                                             </div>
                                             <div class="item">
@@ -473,9 +592,11 @@
                                             </div>
                                         </div>
                                         <div class="featured-author-quote">
-                                            "${memberInfo.memberIntroduction}"
-                                            <c:if test="${memberInfo.memberIntroduction == null}">
-                                                " Write a self-introduction to showcase yourself "
+                                            <c:if test="${not empty memberInfo.memberIntroduction}">
+                                                " ${memberInfo.memberIntroduction} "
+                                            </c:if>
+                                            <c:if test="${empty memberInfo.memberIntroduction}">
+                                                " Write self-introduction to showcase yourself "
                                             </c:if>
                                         </div>
                                     </div>
