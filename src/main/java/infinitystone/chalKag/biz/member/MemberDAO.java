@@ -32,12 +32,12 @@ public class MemberDAO {
       "WHERE MEMBER_nickname = ?";
 
   // 메인페이지 레벨순위 맴버 출력.안승준
-  private static final String SELECTALL_LEVELRANK = "SELECT MEMBER_nickname," +
-      "(SELECT MAX(LEVEL_id)" +
-      "FROM LEVEL" +
-      "WHERE LEVEL_requiredexp <= MEMBER_exp) AS CURRENT_LEVEL" +
-      "FROM MEMBER" +
-      "ORDER BY MEMBER_exp DESC" +
+  private static final String SELECTALL_LEVELRANK = "SELECT MEMBER_nickname, " +
+      "(SELECT MAX(LEVEL_id) " +
+      "FROM LEVEL " +
+      "WHERE LEVEL_requiredexp <= MEMBER_exp) AS CURRENT_LEVEL " +
+      "FROM MEMBER " +
+      "ORDER BY MEMBER_exp DESC " +
       "LIMIT 10";
 
   // 로그인.안승준
@@ -71,14 +71,78 @@ public class MemberDAO {
       "(SELECT MAX(LEVEL_requiredexp) " +
       "FROM LEVEL " +
       "WHERE LEVEL_requiredexp <= MEMBER_exp)) AS CURRENT_nextexp, " +
-      "PROFILEIMG.PROFILEIMG_name " +
+      "(SELECT PROFILEIMG.PROFILEIMG_name " +
+      "FROM PROFILEIMG " +
+      "WHERE MEMBER_id = MEMBER.MEMBER_id " +
+      "ORDER BY PROFILEIMG_id DESC " +
+      "LIMIT 1) AS PROFILEIMG_name, " +
+      "((SELECT " +
+      "COUNT(*) " +
+      "FROM HEADHUNTPOST " +
+      "WHERE MEMBER_id = MEMBER.MEMBER_id) + " +
+      "(SELECT " +
+      "COUNT(*) " +
+      "FROM JOBHUNTPOST " +
+      "WHERE MEMBER_id = MEMBER.MEMBER_id) + " +
+      "(SELECT " +
+      "COUNT(*) " +
+      "FROM FREEPOST " +
+      "WHERE MEMBER_id = MEMBER.MEMBER_id) + " +
+      "(SELECT " +
+      "COUNT(*) " +
+      "FROM MARKETPOST " +
+      "WHERE MEMBER_id = MEMBER.MEMBER_id)) AS POSTCOUNT " +
       "FROM MEMBER " +
-      "LEFT JOIN " +
-      "PROFILEIMG ON MEMBER.MEMBER_id = PROFILEIMG.MEMBER_id " +
-      "WHERE MEMBER.MEMBER_id = ? ";
+      "WHERE MEMBER_id = ? ";
 
   // 마이페이지(유저페이지) 출력.안승준
-  private static final String SELECTONE_MYPAGE = "SELECT MEMBER.MEMBER_id, " + "MEMBER_pw, " + "MEMBER_name, " + "MEMBER_nickname, " + "MEMBER_ph, " + "MEMBER_birth, " + "MEMBER_gender, " + "MEMBER_introduction, " + "MEMBER_grade, " + "(SELECT AVG(REVIEW_score) " + "FROM REVIEW " + "WHERE MEMBER_id = MEMBER.MEMBER_id) AS CURRENT_score, " + "(SELECT MAX(LEVEL_id) " + "FROM LEVEL " + "WHERE LEVEL_requiredexp <= MEMBER_exp) AS CURRENT_level, " + "(SELECT (MEMBER_exp - MAX(LEVEL_requiredexp)) " + "FROM LEVEL " + "WHERE LEVEL_requiredexp <= MEMBER_exp) AS CURRENT_exp, " + "((SELECT MIN(LEVEL_requiredexp) " + "FROM LEVEL " + "WHERE LEVEL_requiredexp > MEMBER_exp) - " + "(SELECT MAX(LEVEL_requiredexp) " + "FROM LEVEL " + "WHERE LEVEL_requiredexp <= MEMBER_exp)) AS CURRENT_nextexp, " + "PROFILEIMG.PROFILEIMG_name " + "FROM MEMBER " + "LEFT JOIN " + "(SELECT MEMBER_id, PROFILE_id DESC " + "LIMIT 1) AS PROFILEIMG ON MEMBER.MEMBER_id = PROFILEIMG.MEMBER_id " + "PROFILEIMG ON MEMBER.MEMBER_id = PROFILEIMG.MEMBER_id " + "WHERE MEMBER.MEMBER_id = ? ";
+  private static final String SELECTONE_MYPAGE = "SELECT MEMBER.MEMBER_id, " +
+      "MEMBER_pw, " +
+      "MEMBER_name, " +
+      "MEMBER_nickname, " +
+      "MEMBER_ph, " +
+      "MEMBER_birth, " +
+      "MEMBER_gender, " +
+      "MEMBER_introduction, " +
+      "MEMBER_grade, " +
+      "(SELECT AVG(REVIEW_score) " +
+      "FROM REVIEW " +
+      "WHERE MEMBER_id = MEMBER.MEMBER_id) AS CURRENT_score, " +
+      "(SELECT MAX(LEVEL_id) " +
+      "FROM LEVEL " +
+      "WHERE LEVEL_requiredexp <= MEMBER_exp) AS CURRENT_level, " +
+      "(SELECT (MEMBER_exp - MAX(LEVEL_requiredexp)) " +
+      "FROM LEVEL " +
+      "WHERE LEVEL_requiredexp <= MEMBER_exp) AS CURRENT_exp, " +
+      "((SELECT MIN(LEVEL_requiredexp) " +
+      "FROM LEVEL " +
+      "WHERE LEVEL_requiredexp > MEMBER_exp) - " +
+      "(SELECT MAX(LEVEL_requiredexp) " +
+      "FROM LEVEL " +
+      "WHERE LEVEL_requiredexp <= MEMBER_exp)) AS CURRENT_nextexp, " +
+      "(SELECT PROFILEIMG.PROFILEIMG_name " +
+      "FROM PROFILEIMG " +
+      "WHERE MEMBER_id = MEMBER.MEMBER_id " +
+      "ORDER BY PROFILEIMG_id DESC " +
+      "LIMIT 1) AS PROFILEIMG_name, " +
+      "((SELECT " +
+      "COUNT(*) " +
+      "FROM HEADHUNTPOST " +
+      "WHERE MEMBER_id = MEMBER.MEMBER_id) + " +
+      "(SELECT " +
+      "COUNT(*) " +
+      "FROM JOBHUNTPOST " +
+      "WHERE MEMBER_id = MEMBER.MEMBER_id) + " +
+      "(SELECT " +
+      "COUNT(*) " +
+      "FROM FREEPOST " +
+      "WHERE MEMBER_id = MEMBER.MEMBER_id) + " +
+      "(SELECT " +
+      "COUNT(*) " +
+      "FROM MARKETPOST " +
+      "WHERE MEMBER_id = MEMBER.MEMBER_id)) AS POSTCOUNT " +
+      "FROM MEMBER " +
+      "WHERE MEMBER_id = ? ";
 
   // 회원 비밀번호 확인.안승준
   private static final String SELECTONE_CHECKPW = "SELECT MEMBER_pw" +
@@ -247,7 +311,7 @@ class LevelRankRowMapper implements RowMapper<MemberDTO> {
   @Override
   public MemberDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
     MemberDTO memberDTO = new MemberDTO();
-    memberDTO.setMemberId(rs.getString("MEMBER_nickname"));
+    memberDTO.setMemberNickname(rs.getString("MEMBER_nickname"));
     memberDTO.setCurrentLevel(rs.getString("CURRENT_level"));
     return memberDTO;
   }
@@ -332,6 +396,7 @@ class MyPageSimpleRowMapper implements RowMapper<MemberDTO> {
     memberDTO.setCurrentExp(rs.getString("CURRENT_exp"));
     memberDTO.setCurrentNextExp(rs.getString("CURRENT_nextexp"));
     memberDTO.setProfileImgName(rs.getString("PROFILEIMG_name"));
+    memberDTO.setPostCount(rs.getString("POSTCOUNT"));
     return memberDTO;
   }
 }
@@ -355,6 +420,7 @@ class MyPageRowMapper implements RowMapper<MemberDTO> {
     memberDTO.setCurrentExp(rs.getString("CURRENT_exp"));
     memberDTO.setCurrentNextExp(rs.getString("CURRENT_nextexp"));
     memberDTO.setProfileImgName(rs.getString("PROFILEIMG_name"));
+    memberDTO.setPostCount(rs.getString("POSTCOUNT"));
     return memberDTO;
   }
 }

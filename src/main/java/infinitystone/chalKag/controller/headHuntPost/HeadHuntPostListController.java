@@ -2,6 +2,7 @@ package infinitystone.chalKag.controller.headHuntPost;
 
 import java.util.List;
 
+import com.google.gson.Gson;
 import infinitystone.chalKag.biz.postImg.PostImgDTO;
 import infinitystone.chalKag.biz.postImg.PostImgService;
 import infinitystone.chalKag.biz.profileImg.ProfileImgDTO;
@@ -23,16 +24,18 @@ public class HeadHuntPostListController {
   private PostImgService postImgService;
 
   @RequestMapping("/headHuntPostList")
-  public String headHuntPostList(Model model, HeadHuntPostDTO headHuntPostDTO, PostImgDTO postImgDTO) {
+  public String headHuntPostList(Model model, HeadHuntPostDTO headHuntPostDTO, PostImgDTO postImgDTO, Gson gson) {
 
     System.out.println("HeadHuntPostListController In로그");
 
     headHuntPostDTO.setSearchCondition("headHuntPostList");
+    postImgDTO.setSearchCondition("headHuntPostListImg");
 
-    List<HeadHuntPostDTO> headHuntPostListResult = headHuntPostService.selectAll(headHuntPostDTO);
-    List<PostImgDTO> postImgListResult = postImgService.selectAll(postImgDTO);
+    String headHuntPostListResult = gson.toJson(headHuntPostService.selectAll(headHuntPostDTO));
+    String headHuntPostListImgResult = gson.toJson(postImgService.selectAll(postImgDTO));
 
     model.addAttribute("headHuntPostList", headHuntPostListResult);
+    model.addAttribute("headHuntPostListImg", headHuntPostListImgResult);
 
     System.out.println("HeadHuntPostListController Out로그");
 
