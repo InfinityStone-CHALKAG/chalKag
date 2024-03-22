@@ -17,6 +17,7 @@ public class JobHuntPostDAO {
 
 	private static final String SELECTALL_JOBHUNTPOST = "SELECT " 
 			+ "	JOBHUNTPOST.JOBHUNTPOST_id, "
+	        + "	MEMBER.MEMBER_nickname, "
 			+ "	JOBHUNTPOST.JOBHUNTPOST_title," 
 			+ "	JOBHUNTPOST.JOBHUNTPOST_content,"
 			+ "	JOBHUNTPOST.JOBHUNTPOST_date,"
@@ -32,27 +33,28 @@ public class JobHuntPostDAO {
 			+ "	FROM" 
 			+ "		JOBHUNTPOST" 
 			+ " INNER JOIN "
-		    + "		MEMBER ON JOBHUNTPOST.MEMBER_id = MEMBER.member_id "
+		    + "		MEMBER "
 			+ "	LEFT JOIN "
 			+ "		RECOMMEND ON JOBHUNTPOST.JOBHUNTPOST_id = RECOMMEND.POST_id " 
 			+ "	GROUP BY"
-			+ "		JOBHUNTPOST.JOBHUNTPOST_id "
+			+ "		JOBHUNTPOST.JOBHUNTPOST_id,"
+			+ "		MEMBER.MEMBER_nickname "
 			+ "ORDER BY "
 			+ "		JOBHUNTPOST_id DESC ";
 	
 	// 메인페이지 프리미엄 회원글 출력
-	private static final String JOBHUNT_SELECTALL_PREMIUM= "SELECT"
-			+ "    JOBHUNTPOST.JOBHUNTPOST_title,"
-			+ "	   MEMBER.MEMBER_grade , "
-			+ "    POSTIMG.POSTIMG_name "
-			+ "FROM  "
-			+ "    JOBHUNTPOST "
-			+ "LEFT JOIN  "
-			+ "    POSTIMG ON JOBHUNTPOST.JOBHUNTPOST_id = POSTIMG.POST_id  "
-			+ "INNER JOIN "
-			+ "    MEMBER ON JOBHUNTPOST.MEMBER_id = MEMBER.MEMBER_id "
-			+ "WHERE  "
-			+ "    MEMBER.MEMBER_grade = 'premium'";
+	private static final String JOBHUNT_SELECTALLPREMIUM= "SELECT "
+			+ "			    JOBHUNTPOST.JOBHUNTPOST_title, "
+			+ "				   MEMBER.MEMBER_grade ,  "
+			+ "			    POSTIMG.POSTIMG_name  "
+			+ "			FROM   "
+			+ "			    JOBHUNTPOST  "
+			+ "			LEFT JOIN   "
+			+ "			    POSTIMG ON JOBHUNTPOST.JOBHUNTPOST_id = POSTIMG.POST_id   "
+			+ "			INNER JOIN  "
+			+ "			    MEMBER ON MEMBER.MEMBER_id = JOBHUNTPOST.MEMBER_id "
+			+ "			WHERE   "
+			+ "			    MEMBER.MEMBER_grade = 'PREMIUM'";
 
 	
 	
@@ -74,7 +76,7 @@ public class JobHuntPostDAO {
 			+ "	FROM "
 			+ "		JOBHUNTPOST " 
 			+ " INNER JOIN "
-		    + "		MEMBER ON JOBHUNTPOST.MEMBER_id = MEMBER.member_id "
+		    + "		MEMBER "
 			+ "	LEFT JOIN "
 			+ "		RECOMMEND ON JOBHUNTPOST.JOBHUNTPOST_id = RECOMMEND.POST_id"
 			+ " LEFT JOIN "
@@ -82,7 +84,8 @@ public class JobHuntPostDAO {
 			+ " WHERE "
 			+ "		JOBHUNTPOST.JOBHUNTPOST_id = ? " 
 			+ "	GROUP BY "
-			+ "		JOBHUNTPOST.JOBHUNTPOST_id, "
+			+ "		JOBHUNTPOST.JOBHUNTPOST_id,"
+			+ "		MEMBER.MEMBER_nickname, "
 			+ " 	PROFILEIMG.PROFILEIMG_name";
 	
 	
@@ -129,8 +132,8 @@ public class JobHuntPostDAO {
 				System.out.println("JobHuntPostDAO(selectAll) 로그 = [" + result + "]");
 				return result;
 			}
-			else if(jobHuntPostDTO.getSearchCondition().equals("headHuntPostPremiumList")) {
-				result = (List<JobHuntPostDTO>) jdbcTemplate.query(JOBHUNT_SELECTALL_PREMIUM, new JobHuntPostPremiumSellectAllRowMapper());
+			else if(jobHuntPostDTO.getSearchCondition().equals("jobHuntPostPremiumList")) {
+				result = (List<JobHuntPostDTO>) jdbcTemplate.query(JOBHUNT_SELECTALLPREMIUM, new JobHuntPostPremiumSellectAllRowMapper());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -33,11 +33,11 @@ public class FreePostDAO {
 			+ " FROM " 
 			+ " 	FREEPOST " 
 			+ " INNER JOIN "
-		    + "		MEMBER ON FREEPOST.MEMBER_id = MEMBER.member_id "
+		    + "		MEMBER "
 			+ " LEFT JOIN "
 			+ " 	RECOMMEND ON FREEPOST.FREEPOST_id = RECOMMEND.POST_id "
 			+ " GROUP BY " 
-			+ " 	FREEPOST.FREEPOST_id "
+			+ " 	FREEPOST.FREEPOST_id"
 			+ "ORDER BY "
 		    + "		FREEPOST_id DESC ";
 	
@@ -61,7 +61,7 @@ public class FreePostDAO {
 			+ " FROM " 
 			+ "		FREEPOST " 
 			+ " INNER JOIN "
-		    + "		MEMBER ON FREEPOST.MEMBER_id = MEMBER.member_id "
+		    + "		MEMBER "
 			+ " LEFT JOIN "
 			+ "		RECOMMEND ON FREEPOST.FREEPOST_id = RECOMMEND.POST_id "
 			+ " LEFT JOIN "
@@ -73,7 +73,7 @@ public class FreePostDAO {
 			+ " 	PROFILEIMG.PROFILEIMG_name";
 
 	// 자유게시판 글 작성 게시판 이미지와 글 내용 인서트를 따로 받음
-	private static final String INSERT = "INSERT INTO JOBHUNTPOST(MEMBER_id,FREEPOST_title,FREEPOST_content,FREEPOST_viewcnt) "
+	private static final String INSERT = "INSERT INTO FREEPOST(MEMBER_id,FREEPOST_title,FREEPOST_content,FREEPOST_viewcnt) "
 			+ "							VALUES(?,?,?,0)";
 	private static final String UPDATE = "UPDATE FREEPOST SET FREEPOST_title=?, FREEPOST_content=? "
 										+ "	WHERE "
