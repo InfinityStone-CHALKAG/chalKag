@@ -186,6 +186,11 @@
 			var content = document.getElementById('jobHuntPostContent').value;
 			var imageInput = document.getElementById('fileInput');
 
+
+			// 여기서 pay의 값을 쉼표 없는 숫자로 변환
+		    var cleanPay = pay.replace(/,/g, '');
+		    document.getElementById('jobHuntPostPay').value = cleanPay;
+			
 			if (!title.trim() || !pay.trim() || !role || !workDate || !concept
 					|| !content.trim()) {
 				swal("fail", "모든 필드를 채워주세요.", "error", {

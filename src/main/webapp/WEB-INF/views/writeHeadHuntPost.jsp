@@ -167,6 +167,16 @@
 		    }
 		}
 		
+		document.getElementById('paymentForm').addEventListener('submit', function(event) {
+		    // 폼 제출 이벤트를 잡아서 처리
+		    var input = document.getElementById('payInput');
+		  
+
+		    // 이 시점에서 폼 데이터는 쉼표가 제거된 숫자로 제출됩니다.
+		    // 필요한 경우 여기에서 event.preventDefault()를 호출하여 폼의 기본 제출을 방지하고,
+		    // AJAX 등을 사용하여 데이터를 처리할 수 있습니다.
+		});
+		
 		function formatNumber(input) {
 		    var num = input.value.replace(/,/g, '');
 
@@ -186,6 +196,11 @@
 			var content = document.getElementById('headHuntPostContent').value;
 			var imageInput = document.getElementById('fileInput');
 
+			// 여기서 pay의 값을 쉼표 없는 숫자로 변환
+		    var cleanPay = pay.replace(/,/g, '');
+		    document.getElementById('headHuntPostPay').value = cleanPay;
+
+			
 			if (!title.trim() || !pay.trim() || !role || !workDate || !concept
 					|| !content.trim()) {
 				swal("fail", "모든 필드를 채워주세요.", "error", {

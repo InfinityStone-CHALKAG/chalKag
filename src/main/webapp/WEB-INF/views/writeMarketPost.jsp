@@ -156,6 +156,11 @@
 			var category = document.getElementById('marketPostCategory').value;
 			var content = document.getElementById('marketPostContent').value;
 			var imageInput = document.getElementById('fileInput');
+			
+
+			// 여기서 pay의 값을 쉼표 없는 숫자로 변환
+		    var cleanPay = price.replace(/,/g, '');
+		    document.getElementById('marketPostPrice').value = cleanPay;
 
 			if (!title.trim() || !price.trim() || !company || !category
 					|| !content.trim()) {
