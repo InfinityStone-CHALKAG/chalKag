@@ -16,7 +16,7 @@ public class CommentDAO {
 
 
 	// 댓글 전체 출력 댓글, 게시판,회원 조인 쿼리문
-	private static final String SELECTALL_JOBHUNTPOST_COMMENT = "SELECT " 
+	private static final String SELECTALL_JOBHUNTPOSTCOMMENT = "SELECT " 
 			+ "    COMMENT.COMMENT_id, "
 			+ "    COMMENT.POST_id," 
 			+ "    COMMENT.MEMBER_id, "
@@ -39,7 +39,7 @@ public class CommentDAO {
 			+ " ORDER BY "
 			+ "    COMMENT.COMMENT_date DESC ";
 
-	private static final String SELECTALL_HEADHUNTPOST_COMMENT = "SELECT  " 
+	private static final String SELECTALL_HEADHUNTPOSTCOMMENT = "SELECT  " 
 			+ "    COMMENT.COMMENT_id, "
 			+ "    COMMENT.POST_id, " 
 			+ "    COMMENT.MEMBER_id, "
@@ -65,7 +65,7 @@ public class CommentDAO {
 	
 	
 	
-	private static final String SELECTALL_FREEPOST_COMMENT = "SELECT  " 
+	private static final String SELECTALL_FREEPOSTCOMMENT = "SELECT  " 
 			+ "    COMMENT.COMMENT_id, "
 			+ "    COMMENT.POST_id, " 
 			+ "    COMMENT.MEMBER_id, "
@@ -88,7 +88,7 @@ public class CommentDAO {
 			+ " ORDER BY "
 			+ "    COMMENT.COMMENT_date DESC ";
 
-	private static final String SELECTALL_MARKETPOST_COMMENT = "SELECT  " 
+	private static final String SELECTALL_MARKETPOSTCOMMENT = "SELECT  " 
 			+ "    COMMENT.COMMENT_id, "
 			+ "    COMMENT.POST_id, " 
 			+ "    COMMENT.MEMBER_id, "
@@ -154,25 +154,27 @@ public class CommentDAO {
 		List<CommentDTO> result = null;
 		try {
 			if (commentDTO.getSearchCondition().equals("jobHuntPostSelectAllComment")) {
-				result = (List<CommentDTO>) jdbcTemplate.query(SELECTALL_JOBHUNTPOST_COMMENT,
+				result = (List<CommentDTO>) jdbcTemplate.query(SELECTALL_JOBHUNTPOSTCOMMENT,
 						new CommentSellectAllRowMapper());
 				System.out.println("commentDTO(jobHuntPostSelectAll) 로그 =" + "[" + result + "]");
 				return result;
 			} else if (commentDTO.getSearchCondition().equals("headHuntPostSelectAllComment")) {
-				result = (List<CommentDTO>) jdbcTemplate.query(SELECTALL_HEADHUNTPOST_COMMENT,
+				result = (List<CommentDTO>) jdbcTemplate.query(SELECTALL_HEADHUNTPOSTCOMMENT,
 						new CommentSellectAllRowMapper());
 				System.out.println("commentDTO(freePostSelectAll) 로그 =" + "[" + result + "]");
 				return result;
 			} else if (commentDTO.getSearchCondition().equals("freePostSelectAllComment")) {
-				result = (List<CommentDTO>) jdbcTemplate.query(SELECTALL_FREEPOST_COMMENT,
+				result = (List<CommentDTO>) jdbcTemplate.query(SELECTALL_FREEPOSTCOMMENT,
 						new CommentSellectAllRowMapper());
 				System.out.println("commentDTO(freePostSelectAll) 로그 =" + "[" + result + "]");
 				return result;
 			} else if (commentDTO.getSearchCondition().equals("marketPostSelectAllComment")) {
-				result = (List<CommentDTO>) jdbcTemplate.query(SELECTALL_MARKETPOST_COMMENT,
+				result = (List<CommentDTO>) jdbcTemplate.query(SELECTALL_MARKETPOSTCOMMENT,
 						new CommentSellectAllRowMapper());
 				System.out.println("commentDTO(marketPostSelectAll) 로그 =" + "[" + result + "]");
 				return result;
+			}else {
+				// 표시용
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

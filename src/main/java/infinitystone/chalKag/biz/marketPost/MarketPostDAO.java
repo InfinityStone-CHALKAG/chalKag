@@ -15,7 +15,7 @@ public class MarketPostDAO {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-	private static final String SELECTALL = "SELECT " 
+	private static final String SELECTALL_MARKETPOST = "SELECT " 
 			+ "	MARKETPOST.MARKETPOST_id, "
 			+ "	MARKETPOST.MEMBER_id, " 
 			+ " MEMBER.MEMBER_nickname, "
@@ -36,9 +36,11 @@ public class MarketPostDAO {
 			+ " LEFT JOIN " 
 			+ "		RECOMMEND ON MARKETPOST.MARKETPOST_id = RECOMMEND.POST_id "
 			+ " GROUP BY "
-			+ "		MARKETPOST.MARKETPOST_id ";
+			+ "		MARKETPOST.MARKETPOST_id "
+			+ "ORDER BY "
+	        + "		MARKETPOST_id DESC ";
 
-	private static final String SELECTONE = "SELECT " 
+	private static final String SELECTONE_MARKETPOST = "SELECT " 
 			+ "	MARKETPOST.MARKETPOST_id, "   
 			+ "	MARKETPOST.MEMBER_id, "
 			+ " MEMBER.MEMBER_nickname, " 
@@ -82,8 +84,8 @@ public class MarketPostDAO {
 	public List<MarketPostDTO> selectAll(MarketPostDTO marketPostDTO) {
 		List<MarketPostDTO> result = null;
 		try {
-			if (marketPostDTO.getSearchCondition().equals("slectAllMarketPost")) {
-				result = (List<MarketPostDTO>) jdbcTemplate.query(SELECTALL, new MarketPostSellectAllRowMapper());
+			if (marketPostDTO.getSearchCondition().equals("marketPostList")) {
+				result = (List<MarketPostDTO>) jdbcTemplate.query(SELECTALL_MARKETPOST, new MarketPostSellectAllRowMapper());
 				System.out.println("MarketPostDAO(selectAll) 로그 = [" + result + "]");
 				return result;
 			}
@@ -98,8 +100,8 @@ public class MarketPostDAO {
 		MarketPostDTO result = null;
 		Object[] args = { marketPostDTO.getMarketPostId() };
 		try {
-			if(marketPostDTO.getSearchCondition().equals("selectOneMarketPost")) {
-				result = jdbcTemplate.queryForObject(SELECTONE, args, new MarketPostSellectOneRowMapper());
+			if(marketPostDTO.getSearchCondition().equals("marketPostSingle")) {
+				result = jdbcTemplate.queryForObject(SELECTONE_MARKETPOST, args, new MarketPostSellectOneRowMapper());
 				return result;
 			}
 		} catch (Exception e) {

@@ -15,7 +15,7 @@ public class JobHuntPostDAO {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-	private static final String SELECTALL = "SELECT " 
+	private static final String SELECTALL_JOBHUNTPOST = "SELECT " 
 			+ "	JOBHUNTPOST.JOBHUNTPOST_id, "
 			+ "	JOBHUNTPOST.JOBHUNTPOST_title," 
 			+ "	JOBHUNTPOST.JOBHUNTPOST_content,"
@@ -36,7 +36,9 @@ public class JobHuntPostDAO {
 			+ "	LEFT JOIN "
 			+ "		RECOMMEND ON JOBHUNTPOST.JOBHUNTPOST_id = RECOMMEND.POST_id " 
 			+ "	GROUP BY"
-			+ "		JOBHUNTPOST.JOBHUNTPOST_id ";
+			+ "		JOBHUNTPOST.JOBHUNTPOST_id "
+			+ "ORDER BY "
+			+ "		JOBHUNTPOST_id DESC ";
 	
 	// 메인페이지 프리미엄 회원글 출력
 	private static final String JOBHUNT_SELECTALL_PREMIUM= "SELECT"
@@ -54,7 +56,7 @@ public class JobHuntPostDAO {
 
 	
 	
-	private static final String SELECTONE = "SELECT" 
+	private static final String SELECTONE_JOBHUNTPOST = "SELECT" 
 			+ " JOBHUNTPOST.JOBHUNTPOST_id, "
 			+ "	JOBHUNTPOST.JOBHUNTPOST_title, " 
 			+ "	JOBHUNTPOST.JOBHUNTPOST_content, "
@@ -122,12 +124,12 @@ public class JobHuntPostDAO {
 		List<JobHuntPostDTO> result = null;
 
 		try {
-			if (jobHuntPostDTO.getSearchCondition().equals("selectAllJobHuntPost")) {
-				result = (List<JobHuntPostDTO>) jdbcTemplate.query(SELECTALL, new JobHuntPostSellecAllRowMapper());
+			if (jobHuntPostDTO.getSearchCondition().equals("jobHuntPostList")) {
+				result = (List<JobHuntPostDTO>) jdbcTemplate.query(SELECTALL_JOBHUNTPOST, new JobHuntPostSellecAllRowMapper());
 				System.out.println("JobHuntPostDAO(selectAll) 로그 = [" + result + "]");
 				return result;
 			}
-			else if(jobHuntPostDTO.getSearchCondition().equals("selectAllJobHuntPremiumPost")) {
+			else if(jobHuntPostDTO.getSearchCondition().equals("headHuntPostPremiumList")) {
 				result = (List<JobHuntPostDTO>) jdbcTemplate.query(JOBHUNT_SELECTALL_PREMIUM, new JobHuntPostPremiumSellectAllRowMapper());
 			}
 		} catch (Exception e) {
@@ -141,8 +143,8 @@ public class JobHuntPostDAO {
 		JobHuntPostDTO result = null;
 		Object[] args = { jobHuntPostDTO.getJobHuntPostId() };
 		try {
-			if (jobHuntPostDTO.getSearchCondition().equals("selectOneJobHuntPost")) {
-				result = jdbcTemplate.queryForObject(SELECTONE, args, new JobHuntPostSellectOneRowMapper());
+			if (jobHuntPostDTO.getSearchCondition().equals("jobHuntPostSingle")) {
+				result = jdbcTemplate.queryForObject(SELECTONE_JOBHUNTPOST, args, new JobHuntPostSellectOneRowMapper());
 				System.out.println("JobHuntPostDAO(selectOne) 로그 = [" + result + "]");
 				return result;
 			}

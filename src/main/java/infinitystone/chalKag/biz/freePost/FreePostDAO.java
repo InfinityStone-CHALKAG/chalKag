@@ -16,7 +16,7 @@ public class FreePostDAO {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	// 게시글 전체 보기 자유게시판, 게시판 이미지, 좋아요 테이블 조인문
-	private static final String SELECTALL = "SELECT " 
+	private static final String SELECTALL_FREEPOST = "SELECT " 
 			+ "	FREEPOST.FREEPOST_id, " 
 			+ " FREEPOST.FREEPOST_title, "
 			+ " FREEPOST.FREEPOST_content, " 
@@ -37,11 +37,13 @@ public class FreePostDAO {
 			+ " LEFT JOIN "
 			+ " 	RECOMMEND ON FREEPOST.FREEPOST_id = RECOMMEND.POST_id "
 			+ " GROUP BY " 
-			+ " 	FREEPOST.FREEPOST_id ";
+			+ " 	FREEPOST.FREEPOST_id "
+			+ "ORDER BY "
+		    + "		FREEPOST_id DESC ";
 	
 	
 	// 게시글 상세보기 게시글 전체 보기 자유게시판, 게시판 이미지, 좋아요 테이블 조인문
-	private static final String SELECTONE = "SELECT " 
+	private static final String SELECTONE_FREEPOST = "SELECT " 
 			+ "	FREEPOST.FREEPOST_id, "
 			+ "	FREEPOST.FREEPOST_title, " 
 			+ "	FREEPOST.FREEPOST_content, "
@@ -83,8 +85,8 @@ public class FreePostDAO {
 		List<FreePostDTO> result = null;
 
 		try { // 게시판 전체 출력해주는 행동이라면 selectAll 쿼리문 실행
-			if (freetPostDTO.getSearchCondition().equals("slectAllFreePost")) {
-				result = (List<FreePostDTO>) jdbcTemplate.query(SELECTALL, new FreePostSelectAllRowMapper());
+			if (freetPostDTO.getSearchCondition().equals("freePostList")) {
+				result = (List<FreePostDTO>) jdbcTemplate.query(SELECTALL_FREEPOST, new FreePostSelectAllRowMapper());
 				return result;
 			}
 		} catch (Exception e) {
@@ -98,9 +100,9 @@ public class FreePostDAO {
 		FreePostDTO result = null;
 		// preparestatement 에 셋하는 애들 sql 에 ? 자리에 들어가는애들
 		try {											
-			if (freePostDTO.getSearchCondition().equals("slectOneFreePost")) {
+			if (freePostDTO.getSearchCondition().equals("freePostSingle")) {
 				Object[] args = { freePostDTO.getFreePostId() };
-				result = jdbcTemplate.queryForObject(SELECTONE, args, new FreePostSelectOneRowMapper());
+				result = jdbcTemplate.queryForObject(SELECTONE_FREEPOST, args, new FreePostSelectOneRowMapper());
 				return result;
 			}
 		} catch (Exception e) {
