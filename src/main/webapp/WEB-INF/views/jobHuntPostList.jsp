@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="chalKagTags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <!-- 페이지 이동 및 필터검색 CSS 파일 링크 달기 & Jsp로 작성할때 링크 프로젝트내 링크와 맞추기 -->
-    <chalKagTags:webCss/>
+<chalKagTags:webCss />
 <style>
 [type="radio"], span {
 	vertical-align: middle;
@@ -45,7 +46,6 @@
 div .inner p {
 	margin-left: 5%;
 }
-
 </style>
 </head>
 
@@ -54,7 +54,7 @@ div .inner p {
 	<chalKagTags:webHeader />
 	<!-- End header tag로 출력 -->
 
-		<!-- 필터 검색 용 메뉴 -->
+	<!-- 필터 검색 용 메뉴 -->
 	<section class="search">
 		<div class="container">
 			<div class="row">
@@ -75,8 +75,8 @@ div .inner p {
 							<div class="form-group">
 								<div class="input-group">
 									<!-- 검색어 입력 -->
-									<input type="text" id="searchInput" name="searchInput" class="form-control"
-										placeholder="Type something ...">
+									<input type="text" id="searchInput" name="searchInput"
+										class="form-control" placeholder="Type something ...">
 									<div class="input-group-btn">
 										<button class="btn btn-primary">
 											<i class="ion-search"></i>
@@ -90,38 +90,42 @@ div .inner p {
 						<!-- 날짜 필터검색 -->
 						<h2 class="aside-title">Filter</h2>
 						<div class="aside-body">
-							<div class="group-title" style="font-weight: bold; margin-bottom: 2%;">Date</div>
+							<div class="group-title"
+								style="font-weight: bold; margin-bottom: 2%;">Date</div>
 							<div class="form-group">
 								<!-- 모든 시간 selectAll -->
-								<label><input type="radio" name="date" checked>&nbsp; Anytime</label>
+								<label><input type="radio" name="date" checked>&nbsp;
+									Anytime</label>
 							</div>
 							<div class="form-group">
 								<!-- 오늘 하루 동안 작성한 글들 selectAll_today -->
-								<label><input type="radio" name="date">&nbsp; Today</label>
+								<label><input type="radio" name="date">&nbsp;
+									Today</label>
 							</div>
 							<div class="form-group">
 								<!-- 지난주 동안 작성한 글들 selectAll_today -->
-								<label><input type="radio" name="date">&nbsp; Last
-									Week</label>
+								<label><input type="radio" name="date">&nbsp;
+									Last Week</label>
 							</div>
 							<div class="form-group">
 								<!-- 전 달동안 작성한 글들 selectAll_today -->
-								<label><input type="radio" name="date">&nbsp; Last
-									Month</label>
+								<label><input type="radio" name="date">&nbsp;
+									Last Month</label>
 							</div>
 
 							<!-- 구직 정보 필터 검색 -->
-							<div class="group-title" style="font-weight: bold; margin-bottom: 2%;">Head Hunt</div>
+							<div class="group-title"
+								style="font-weight: bold; margin-bottom: 2%;">Head Hunt</div>
 							<!-- 모든 글 -->
 							<div class="form-group">
-								<label><input type="checkbox" id="jobHunt" name="jobHunt" checked>
-									&nbsp; All Job Hunt</label>
+								<label><input type="checkbox" id="jobHunt"
+									name="jobHunt" checked> &nbsp; All Job Hunt</label>
 							</div>
-				
+
 							<!-- 직업 필터 -->
 							<div class="form-group">
-								<label for="role">직업 :</label> <select  style="width: 100%; height: 40px;"
-									id="role" name="role">
+								<label for="role">직업 :</label> <select
+									style="width: 100%; height: 40px;" id="role" name="role">
 									<option value="" disabled selected>선택</option>
 									<option value="모델">모델</option>
 									<option value="사진작가">사진작가</option>
@@ -130,8 +134,8 @@ div .inner p {
 
 							<!-- 지역 필터 -->
 							<div class="form-group">
-								<label for="region">작업 지역:</label> <select  style="width: 100%; height: 40px;"
-									id="region" name="region">
+								<label for="region">작업 지역:</label> <select
+									style="width: 100%; height: 40px;" id="region" name="region">
 									<option value="" disabled selected>선택</option>
 									<option value="SEOUL">서울</option>
 									<option value="GYEONGGI">경기</option>
@@ -142,28 +146,33 @@ div .inner p {
 									<option value="JEJU">제주</option>
 								</select>
 							</div>
-							
+
 							<!-- Pay 필터 -->
 							<div class="form-group">
 								<label for="minPrice" style="margin-bottom: 2%;">최소 Pay:</label>
-								<input type="range" style="margin-bottom: 2%;" id="minPay" name="minPay" min="0" max="1000000" value="1">
-								<label for="maxPrice" style="margin-bottom: 2%;">최대 Pay:</label> 
-								<input type="range" style="margin-bottom: 2%;" id="maxPay" name="maxPay" min="0" max="1000000" value="1">
+								<input type="range" style="margin-bottom: 2%;" id="minPay"
+									name="minPay" min="0" max="1000000" value="1"> <label
+									for="maxPrice" style="margin-bottom: 2%;">최대 Pay:</label> <input
+									type="range" style="margin-bottom: 2%;" id="maxPay"
+									name="maxPay" min="0" max="1000000" value="1">
 							</div>
 
 							<!--  작업 날짜 필터 -->
-							<div class="group-title" style="font-weight: bold; margin-bottom: 2%;">Work Date</div>
-							<div class="form-group" >
-								<label for="workdate" style="margin-bottom: 2%;">시작일</label> 
-								<input style="width: 100%; height: 40px; margin-bottom: 2%;" type="date" id="startDate" name="startDate">
-								<label for="workdate" style="margin-bottom: 2%;">종료일</label> 
-								<input style="width: 100%; height: 40px; margin-bottom: 2%;" type="date" id="endDate" name="endDate">
+							<div class="group-title"
+								style="font-weight: bold; margin-bottom: 2%;">Work Date</div>
+							<div class="form-group">
+								<label for="workdate" style="margin-bottom: 2%;">시작일</label> <input
+									style="width: 100%; height: 40px; margin-bottom: 2%;"
+									type="date" id="startDate" name="startDate"> <label
+									for="workdate" style="margin-bottom: 2%;">종료일</label> <input
+									style="width: 100%; height: 40px; margin-bottom: 2%;"
+									type="date" id="endDate" name="endDate">
 							</div>
-							
+
 							<!-- 촬영 컨셉 필터 -->
 							<div class="form-group">
-								<label for="concept">촬영 컨셉:</label> 
-								<select id="concept" name="concept"  style="width: 100%; height: 40px;">
+								<label for="concept">촬영 컨셉:</label> <select id="concept"
+									name="concept" style="width: 100%; height: 40px;">
 									<option value="" disabled selected>선택</option>
 									<option value="snap">스냅사진</option>
 									<option value="pictorial">화보</option>
@@ -176,9 +185,15 @@ div .inner p {
 					</aside>
 				</div>
 
-				<div class="col-md-9" style="text-align: right; margin-bottom: 10px;">
+				<div class="col-md-9"
+					style="text-align: right; margin-bottom: 10px;">
 					<!-- 글 작성 -->
-					<a class="btn btn-primary btn-sm" href="/writeJobHuntPost">Writing</a>
+					<c:if test="${member != null }">
+						<a class="btn btn-primary btn-sm" href="/writeJobHuntPost">Writing</a>
+					</c:if>
+					<c:if test="${member == null }">
+						<a class="btn btn-primary btn-sm" onclick="message()">Writing</a>
+					</c:if>
 				</div>
 				<div class="col-md-9">
 					<div class="nav-tabs-group">
@@ -189,7 +204,7 @@ div .inner p {
 						</ul>
 						<div class="nav-tabs-right">
 							<!-- 오름차순, 내림차순 정렬 -->
-							<select class="form-control" id="sortOrder" >
+							<select class="form-control" id="sortOrder">
 								<option value="desc">Descending</option>
 								<option value="asc">Ascending</option>
 							</select>
@@ -199,7 +214,8 @@ div .inner p {
 					<!-- 게시글 전체 갯수가 출력되게 처리 -->
 					<div class="row">
 						<!-- 게시글 목록 출력 장소 시작 게시판마다 명이 다르다. -->
-						<div id="postDatasContainer" displayReviewData='${jobHuntPostList}'></div>
+						<div id="postDatasContainer"
+							displayReviewData='${jobHuntPostList}'></div>
 						<!-- 게시글 목록 출력 장소 종료-->
 
 						<!-- 페이지 이동 버튼 -->
@@ -233,6 +249,7 @@ div .inner p {
 	<script src="css/user/scripts/toast/jquery.toast.min.js"></script>
 	<script src="js/user/jobHuntPostPagination.js"></script>
 	<script src="js/user/jobHuntPostFilterSearch.js"></script>
+	<script src="css/user/js/e-magz.js"></script>
 	<script src="css/user/js/demo.js"></script>
 	<script>
 		$("input").iCheck({
@@ -241,6 +258,12 @@ div .inner p {
 			cursor : true
 		});
 	</script>
-	<script src="css/user/js/e-magz.js"></script>
+	<script>
+		function message() {
+			swal("fail", "로그인 후 이용해주세요.", "error", {
+				button : "OK",
+			});
+		}
+	</script>
 </body>
 </html>

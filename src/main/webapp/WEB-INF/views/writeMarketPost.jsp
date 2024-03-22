@@ -6,120 +6,18 @@
 <head>
 <chalKagTags:webCss />
 <style>
-#writerForm {
-	width: 70%;
-}
-
-.selectTags {
-	border-color: rgb(179, 179, 179);
-	border-radius: 5px;
-	padding-left: 8px;
-}
 
 #marketPostWorkDate {
 	border-radius: 5px;
 	border: solid 1px rgb(179, 179, 179);
 }
 
-#preview {
-	display: flex;
-	overflow: hidden;
-	width: 100%; /* 슬라이드 컨테이너의 너비를 설정 */
-}
-
-.image-container {
-	display: flex;
-	transition: transform 0.5s ease;
-}
-
-img {
-	transform: translate(50, 50);
-	max-width: 400px;
-	max-height: 400px;
-	margin-right: 10px;
-	margin-left: 10px;
-	object-fit: cover;
-	object-position: center;
-}
-
-.imgSlidebtn {
-	border: 0;
-	height: 400px;
-	color: white;
-	background-color: rgb(245, 63, 82);
-}
-
-#marketPostTitle {
-	margin-bottom: 1%;
-}
 
 #marketPostContent {
 	height: 300px;
 }
-
-#inputCol {
-	margin-bottom: 2%;
-}
-
-#customButton {
-	width: 100%;
-	height: 50px;
-	background-color: rgb(255, 255, 255);
-	border: solid 1px rgb(245, 63, 82);
-	color: rgb(245, 63, 82);;
-	margin: 8px 0;
-	border-radius: 5px;
-	font-weight: bold;
-}
-
-#customButton:hover {
-	background-color: rgb(245, 63, 82);
-	border: none;
-	color: rgb(255, 255, 255);
-}
-
-.img-wrapper {
-	position: relative;
-	width: 400px;
-	height: 400px;
-	display: inline-block; /* 이미지를 옆으로 나열 */
-}
-
-.delete-btn, .move-up-btn, .move-down-btn {
-	position: absolute;
-	cursor: pointer;
-}
-
-.delete-btn {
-	top: 0;
-	right: 9%;
-	z-index: 50; /* 확실히 이미지 위에 오도록 설정 */
-	background-color: transparent;
-	border: 0;
-	color: white;
-	-webkit-text-stroke-width: 1px;
-	-webkit-text-stroke-color: rgb(245, 63, 82);
-	text-shadow: 1px 0px rgb(245, 63, 82);
-}
-
-.move-up-btn, .move-down-btn {
-	top: 50%;
-	transform: translateY(-50%);
-	border: 0;
-	color: white;
-	-webkit-text-stroke-width: 1px;
-	-webkit-text-stroke-color: rgb(245, 63, 82);
-	background-color: transparent;
-}
-
-.move-up-btn {
-	left: 9%; /* 이미지 왼쪽으로 이동 버튼 위치 조정 */
-}
-
-.move-down-btn {
-	right: 9%; /* 이미지 오른쪽으로 이동 버튼 위치 조정 */
-}
 </style>
+<link rel="stylesheet" href="/css/user/css/postImg.css">
 </head>
 <body>
 	<!-- Start header tag로 출력 -->
@@ -135,11 +33,11 @@ img {
 							onsubmit="return validateForm(event)"
 							enctype="multipart/form-data">
 							<div class="form-group"
-								style="display: flex; justify-content: center;">
+								style="display: flex; justify-content: center; margin-bottom: 4%;">
 								<input type="text" class="form-control rounded"
 									id="marketPosttitle" name="marketPosttitle" placeholder="Title" />
 							</div>
-							<div class="form-group" style="display: flex;">
+							<div class="form-group" style="display: flex; margin-bottom:  4%;">
 								<input type="text" id="marketPostPrice" name="marketPostPrice"
 									class="form-control rounded"
 									style="width: 32%; margin-right: 2%;"
@@ -158,7 +56,8 @@ img {
 									<option value="미러리스">미러리스</option>
 								</select>
 							</div>
-							<div class="form-group">
+							<p>※ 이미지 사이즈는 30MB 이하만 올릴 수 있습니다.</p>
+							<div class="form-group" style="margin-bottom: 4%;">
 								<input type="file" name="file" id="fileInput" accept="image/*"
 									style="display: none;" multiple> <input type="button"
 									id="customButton" value="Upload">
@@ -170,12 +69,17 @@ img {
 								</div>
 								<button class="imgSlidebtn" id="slideRight">▶</button>
 							</div>
-							<div class="form-group"
+
+							<div class="big-image-container">
+							    <img id="big-image" src="" alt="큰 이미지 미리보기" />
+							</div>
+
+							<div class="form-group" style="margin-bottom: 4%;"
 								style="display: flex; justify-content: center;">
 								<textarea class="form-control rounded" id="marketPostContent"
 									name="marketPostContent"></textarea>
 							</div>
-							<button class="btn btn-primary btn-block">Composite</button>
+							<button class="btn btn-primary btn-rounded btn-block">Composite</button>
 						</form>
 					</div>
 				</div>
@@ -217,14 +121,32 @@ img {
 			element.value = element.value.trim();
 		}
 
-		function validatePrice(input) {
+		function validatePay(input) {
+			var cleanInput = input.value.replace(/,/g, '');
+			
 			const priceRegex = /^[0-9]*$/; // 숫자만 입력하는 정규표현식
-			if (!priceRegex.test(input.value)) {
-				input.value = input.value.replace(/[^0-9]/g, '');
-				swal("fail", "가격은 숫자만 입력해주세요.", "error", {
-					button : "OK",
-				});
-			}
+			if (!priceRegex.test(cleanInput)) {
+				input.value = cleanInput.replace(/[^0-9]/g, '');
+				if(input.value) {
+					swal("fail", "가격은 숫자만 입력해주세요.", "error", {
+						button : "OK",
+					});
+				}
+			}  else {
+		        // 숫자만 입력된 경우, 천 단위로 구분하여 표시.
+		        // 쉼표를 제거하고 숫자로 변환한 후, 다시 포맷하여 입력값을 업데이트.
+		        formatNumber(input);
+		    }
+		}
+		
+		function formatNumber(input) {
+		    var num = input.value.replace(/,/g, '');
+
+		    // 숫자로 변환 가능한지 확인하고, 가능하다면 포맷을 적용.
+		    if (!isNaN(num)) {
+		        // 정수로 변환한 후 로케일 문자열로 변환.
+		        input.value = parseInt(num, 10).toLocaleString();
+		    }
 		}
 
 		function validateForm(event) {

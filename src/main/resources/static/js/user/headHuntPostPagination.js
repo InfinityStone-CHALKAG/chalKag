@@ -3,6 +3,7 @@ var filterData; // 필터 데이터를 저장함는 함수
 var loadReviewData; // 데이터를 로드하는 함수
 const dataContainer = document.getElementById('postDatasContainer'); // 데이터 컨테이너 요소를 가져옴
 const postDatas = JSON.parse(dataContainer.getAttribute('displayReviewData')); // 게시글 데이터를 가져옴 
+console.log(postDatas);
 var currentPage = 0;        // 첫 페이지
 var totalPages = 0;         // 총 페이지
 

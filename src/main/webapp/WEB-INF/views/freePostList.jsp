@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="chalKagTags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <!-- 페이지 이동 및 필터검색 CSS 파일 링크 달기 & Jsp로 작성할때 링크 프로젝트내 링크와 맞추기 -->
-    <chalKagTags:webCss/>
+<chalKagTags:webCss />
 <style>
-
 [type="radio"], span {
 	vertical-align: middle;
 }
@@ -46,10 +46,8 @@
 div .inner p {
 	margin-left: 5%;
 }
-
-
 </style>
-			
+
 </head>
 
 <body>
@@ -96,7 +94,8 @@ div .inner p {
 							<div class="group-title">Date</div>
 							<div class="form-group">
 								<!-- 모든 시간 selectAll -->
-								<label><input type="radio" name="date" checked> Anytime</label>
+								<label><input type="radio" name="date" checked>
+									Anytime</label>
 							</div>
 							<div class="form-group">
 								<!-- 오늘 하루 동안 작성한 글들 selectAll_today -->
@@ -116,40 +115,49 @@ div .inner p {
 					</aside>
 				</div>
 
-				<div class="col-md-9" style="text-align: right; margin-bottom: 10px;">
+				<div class="col-md-9"
+					style="text-align: right; margin-bottom: 10px;">
 					<!-- 글 작성 -->
-					<a class="btn btn-primary btn-sm" href="/writeFreePost">Writing</a>
+					<c:if test="${member != null }">
+						<a class="btn btn-primary btn-sm" href="/writeFreePost">Writing</a>
+					</c:if>
+					<c:if test="${member == null }">
+						<a class="btn btn-primary btn-sm" onclick="message()">Writing</a>
+					</c:if>
+
 				</div>
+
 				<div class="col-md-9">
 					<div class="nav-tabs-group">
-							<ul class="nav-tabs-list">
-							    <li onclick="sortItems('all')">All</li>
-							    <li onclick="sortItems('recommendCnt')">Popular</li>
-							    <li onclick="sortItems('freePostViewCnt')">Trending</li>
-							</ul>
-							<div class="nav-tabs-right">
+						<ul class="nav-tabs-list">
+							<li onclick="sortItems('all')">All</li>
+							<li onclick="sortItems('recommendCnt')">Popular</li>
+							<li onclick="sortItems('freePostViewCnt')">Trending</li>
+						</ul>
+						<div class="nav-tabs-right">
 							<!-- 오름차순, 내림차순 정렬 -->
-								<select class="form-control" id="sortOrder">
-									<option value="desc">Descending</option>
-									<option value="asc">Ascending</option>
-								</select>
-							</div>
+							<select class="form-control" id="sortOrder">
+								<option value="desc">Descending</option>
+								<option value="asc">Ascending</option>
+							</select>
 						</div>
-				
-					<!-- 게시글 전체 갯수가 출력되게 처리 -->
-						<div class="row">
-							<!-- 게시글 목록 출력 장소 시작 게시판마다 명이 다르다. -->
-							<div class="postList" id="postDatasContainer" displayReviewData='${freePostList}'></div>
-							<!-- 게시글 목록 출력 장소 종료-->
+					</div>
 
-							<!-- 페이지 이동 버튼 -->
-							<!-- 페이징처리 시 1~10 까지 출력 글이 적으면 1~a 만 출력할 수 있게 처리  -->
-							<div class="col-md-12 text-center" id="paginationContainer"></div>
-							<!-- 페이징 끝 -->
-						</div>
+					<!-- 게시글 전체 갯수가 출력되게 처리 -->
+					<div class="row">
+						<!-- 게시글 목록 출력 장소 시작 게시판마다 명이 다르다. -->
+						<div class="postList" id="postDatasContainer"
+							displayReviewData='${freePostList}'></div>
+						<!-- 게시글 목록 출력 장소 종료-->
+
+						<!-- 페이지 이동 버튼 -->
+						<!-- 페이징처리 시 1~10 까지 출력 글이 적으면 1~a 만 출력할 수 있게 처리  -->
+						<div class="col-md-12 text-center" id="paginationContainer"></div>
+						<!-- 페이징 끝 -->
 					</div>
 				</div>
 			</div>
+		</div>
 	</section>
 
 	<!-- Start footer tag로 출력 -->
@@ -173,6 +181,7 @@ div .inner p {
 	<script src="css/user/scripts/toast/jquery.toast.min.js"></script>
 	<script src="js/user/freePostPagination.js"></script>
 	<script src="js/user/freePostFilterSearch.js"></script>
+	<script src="css/user/js/e-magz.js"></script>
 	<script src="css/user/js/demo.js"></script>
 	<script>
 		$("input").iCheck({
@@ -181,6 +190,12 @@ div .inner p {
 			cursor : true
 		});
 	</script>
-	<script src="css/user/js/e-magz.js"></script>
+	<script>
+		function message() {
+			swal("fail", "로그인 후 이용해주세요.", "error", {
+				button : "OK",
+			});
+		}
+	</script>
 </body>
 </html>

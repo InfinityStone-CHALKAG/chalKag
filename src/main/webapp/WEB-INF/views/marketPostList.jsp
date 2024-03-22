@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="chalKagTags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <!-- 페이지 이동 및 필터검색 CSS 파일 링크 달기 & Jsp로 작성할때 링크 프로젝트내 링크와 맞추기 -->
-    <chalKagTags:webCss/>
+<chalKagTags:webCss />
 <style>
 [type="radio"], span {
 	vertical-align: middle;
@@ -45,7 +46,6 @@
 div .inner p {
 	margin-left: 5%;
 }
-
 </style>
 </head>
 
@@ -55,7 +55,7 @@ div .inner p {
 	<!-- End header tag로 출력 -->
 
 	<!-- 필터 검색 용 메뉴 -->
-		<section class="search">
+	<section class="search">
 		<div class="container">
 			<div class="row">
 				<!-- 열 -->
@@ -136,7 +136,8 @@ div .inner p {
 							<!-- 종류 필터 -->
 							<div class="form-group">
 								<label for="region">상품 종류 :</label> <select
-									style="width: 100%; height: 40px;" id="region" name="productCategory">
+									style="width: 100%; height: 40px;" id="region"
+									name="productCategory">
 									<option value="" disabled selected>선택</option>
 									<option value="DSLR">DSLR</option>
 									<option value="미러리스">미러리스</option>
@@ -153,12 +154,18 @@ div .inner p {
 						</div>
 					</aside>
 				</div>
-				
-				<div class="col-md-9" style="text-align: right; margin-bottom: 10px;">
+
+				<div class="col-md-9"
+					style="text-align: right; margin-bottom: 10px;">
 					<!-- 글 작성 -->
-					<a class="btn btn-primary btn-sm" href="/writeMarketPost">Writing</a>
+					<c:if test="${member != null }">
+						<a class="btn btn-primary btn-sm" href="/writeMarketPost">Writing</a>
+					</c:if>
+					<c:if test="${member == null }">
+						<a class="btn btn-primary btn-sm" onclick="message()">Writing</a>
+					</c:if>
 				</div>
-				
+
 				<div class="col-md-9">
 					<div class="nav-tabs-group">
 						<ul class="nav-tabs-list">
@@ -221,5 +228,12 @@ div .inner p {
 		});
 	</script>
 	<script src="css/user/js/e-magz.js"></script>
+	<script>
+		function message() {
+			swal("fail", "로그인 후 이용해주세요.", "error", {
+				button : "OK",
+			});
+		}
+	</script>
 </body>
 </html>
