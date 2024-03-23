@@ -105,18 +105,16 @@
                                             <div class="featured-author-cover"
                                                 style="background-image: url('css/user/images/news/img15.jpg');">
                                                 <div class="badges">
-                                                    <c:if test="${memberInfo.memberGrade eq 'PREMIUM'}">
-                                                        <div class="badge-item"><i class="ion-star"></i> PREMIUM</div>
+                                                    <c:if test="${memberInfo.memberGrade} == premium ">
+                                                    <div class="badge-item"><i class="ion-star"></i> PREMIUM</div>
                                                     </c:if>
-                                                    <c:if test="${memberInfo.memberGrade eq 'USER'}">
-                                                        <div class="badge-item"><i class="ion-star"></i> PREMIUM...할래?
-                                                        </div>
+                                                    <c:if test="${memberInfo.memberGrade} == user">
+                                         
                                                     </c:if>
                                                 </div>
                                                 <div class="featured-author-center">
                                                     <figure class="featured-author-picture">
-                                                        <img src="profileImg/${memberInfo.profileImgName}"
-                                                            alt="Sample Article">
+                                                        <img src="profileImg/${memberInfo.profileImgName}" alt="Sample Article">
                                                     </figure>
                                                     <div class="featured-author-info">
                                                         <h2 class="name">${memberInfo.memberNickname}</h2>
@@ -145,13 +143,12 @@
                                                     </div>
                                                 </div>
                                                 <div class="featured-author-quote"
-                                                    style="font-weight: bold; font-family: 'Lato'; font-size:19px ;">
-                                                    LV : ${memberInfo.currentLevel}
+                                                    style="font-weight: bold; font-family: 'Lato'; font-size:19px ;">Lv
+                                                    : 5
                                                 </div>
                                                 <div style="display: flex; justify-content: center;">
-                                                    <input type="range" id="Exp" name="Exp" min="0"
-                                                        max="${memberInfo.currentNextExp}"
-                                                        value="${memberInfo.currentExp}" style="width: 250px;">
+                                                    <input type="range" id="Exp" name="Exp" min="0" max="1000"
+                                                        value="500" style="width: 250px;">
                                                 </div>
                                                 <div class="featured-author-quote"
                                                     style="font-weight: bold; font-family: 'inherit'; margin-top: 10px;">
@@ -167,11 +164,7 @@
                                                 </div>
                                                 <div class="featured-author-quote">
                                                     <ul class="changeList">
-                                                        <li><a href="myPage" class="active">MY INFORMATION</a></li>
-                                                        <li><a href="changeInformation">CHANGE INFORMATION</a></li>
-                                                        <li><a href="changeNickname">CHANGE NICKNAME</a></li>
-                                                        <li><a href="changePassword">CHANGE PASSWORD</a></li>
-                                                        <li><a href="changePhoneNumber">CHANGE PHONENUMBER</a></li>
+                                                        <li><a href="myPage" class="active">MEMBER INFORMATION</a></li>
                                                     </ul>
                                                 </div>
 
@@ -184,24 +177,18 @@
                         <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="box box-border">
                                 <div class="box-body">
-                                    <div>Basic Information <i class="ion-ios-information-outline"
-                                            style="font-size: 16px; margin-bottom:15px"></i></div>
+                                    기본정보 <i class="ion-ios-information-outline"
+                                            style="font-size: 16px; margin-bottom:15px"></i>
+                                            <a href="writeReport" class="btn btn-primary btn-sm" style="margin-left:325px"><i class="ion-alert-circled" style="font-size: 12px;"></i>Reprot</a>
 
                                     <div style="display: flex; align-items: center;">
-                                        <figure class="featured-author-picture">
-                                            <img src="profileImg/${memberInfo.profileImgName}" id="ImgPreview"
-                                                alt="Image Not Loaded" style="width: 76px; 
-                                    height: 76px; 
-                                    border-radius: 50%; 
-                                    object-fit: cover; 
-                                    border: 1px solid rgb(168, 168, 168);"> 
-                                        </figure>
+                                        <i class="ion-android-person" style="font-size: 58px;"></i>
                                         <div style="margin-left: 10px;">
                                             <div class="memberName" id="memberName"
-                                                style="font-size: 30px; font-weight: bold;">
-                                                ${memberInfo.memberName}
+                                                style="font-size: 25px; font-weight: bold;">
+                                                정석진
                                             </div>
-                                            <div class="memberId" id="memberId"  style="font-size: 20px; font-weight:20px" >${memberInfo.memberId}</div>
+                                            <div class="memberId" id="memberId">csjin1689@naver.com</div>
                                         </div>
                                     </div>
 
@@ -210,29 +197,28 @@
                                     <div style="display: flex; align-items: center; margin-bottom: 8px">
                                         <i class="ion-social-snapchat-outline"
                                             style="margin-right: 10px; font-size: 18px;"></i>
-                                        <div class="memberNickname" id="memberNickname">${memberInfo.memberNickname}
-                                        </div>
+                                        <div class="memberNickname" id="memberNickname">디버깅하다죽은너구리</div>
                                     </div>
 
                                     <div style="display: flex; align-items: center; margin-bottom: 8px">
                                         <i class="ion-iphone" style="margin-right: 17px; font-size: 18px;"></i>
-                                        <div class="memberPh" id="memberPh">${memberInfo.memberPh}</div>
+                                        <div class="memberPh" id="memberPh">010-6622-1689</div>
                                     </div>
 
                                     <div style="display: flex; align-items: center; margin-bottom: 8px">
                                         <i class="ion-ios-color-wand" style="margin-right: 12px; font-size: 18px;"></i>
-                                        <div class="memberBirth" id="memberBirth">${memberInfo.memberBirth}</div>
+                                        <div class="memberBirth" id="memberBirth">1993-09-10</div>
                                     </div>
 
                                     <div style="display: flex; align-items: center; margin-bottom: 8px">
                                         <i class="ion-female" style="font-size: 18px;"></i><i class="ion-male"
                                             style="margin-right: 8px; font-size: 10px;"></i>
-                                        <div class="memberGender" id="memberGender">${memberInfo.memberGender}</div>
+                                        <div class="memberGender" id="memberGender">Male</div>
                                     </div>
 
                                     <div style="display: flex; align-items: center; margin-bottom: 8px">
                                         <i class="ion-ribbon-b" style="margin-right: 13px; font-size: 18px;"></i>
-                                        <div class="memberGrade" id="memberGrade">${memberInfo.memberGrade}</div>
+                                        <div class="memberGrade" id="memberGrade">PREMIUM</div>
                                     </div>
                                 </div>
                             </div>
@@ -274,7 +260,6 @@
                         </div>
                     </div>
                 </section>
-                <h2><a href="memberPage" style="font-size: 40px">memberPageTEST</a></h2>
 
                 <chalKagTags:webFooter />
 
@@ -305,20 +290,6 @@
                         }
                     });
                 });
-
-                // 레벨업시 경험치 초기화
-                // memberInfo 객체를 JavaScript에서 사용할 수 있도록 변수에 할당합니다.
-                // 실제 사용 시에는 서버 사이드 코드에서 해당 값을 JavaScript 변수로 전달해야 합니다.
-                var currentExp = parseInt('${memberInfo.currentExp}', 10); // 현재 경험치
-                var currentNextExp = parseInt('${memberInfo.currentNextExp}', 10); // 다음 레벨까지 필요한 경험치
-
-                // 경험치가 같아지는 순간을 감지하고, min 값을 변경합니다.
-                if (currentExp >= currentNextExp) {
-                    document.getElementById('Exp').min = currentExp.toString();
-                }
-
-
-
             </script>
 
 
