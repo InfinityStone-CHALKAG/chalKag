@@ -1,8 +1,6 @@
 <%@ tag language="java" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<%@ attribute name="member" %>
-
 	<header class="primary">
 			<div class="firstbar">
 				<div class="container">

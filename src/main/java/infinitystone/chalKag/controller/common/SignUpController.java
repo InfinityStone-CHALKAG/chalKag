@@ -52,7 +52,7 @@ public class SignUpController {
 //		uploadDir = uploadDir.substring(0, uploadDir.indexOf("/WEB-INF")) + "/memberProfileImages"; // 맥북 경로
 
 // 업로드 파일이 존재할 때
-    if (file != null) {
+    if (file.isEmpty()) {
       String originalFilename = file.getOriginalFilename();            // 파일명을 저장하는 변수
       String extension = FilenameUtils.getExtension(originalFilename);    // 확장자 저장 변수
       String newFilename = UUID.randomUUID().toString() + "." + extension;  // 새 파일명 및 확장자 저장 변수
