@@ -11,38 +11,6 @@
             border-radius: 50%;
             border: 1px solid gray;
         }
-
-        [type="radio"],
-        span {
-            vertical-align: middle;
-        }
-
-        [type="radio"] {
-            appearance: none;
-            border: max(2px, 0.1em) solid gray;
-            border-radius: 50%;
-            width: 1.25em;
-            height: 1.25em;
-            transition: border 0.5s ease-in-out;
-        }
-
-        [type="radio"]:checked {
-            border: 0.4em solid #F73F52;
-        }
-
-        [type="radio"]:focus-visible {
-            outline-offset: max(2px, 0.1em);
-            outline: max(2px, 0.1em) dotted #F73F52;
-        }
-
-        [type="radio"]:hover {
-            box-shadow: 0 0 0 max(4px, 0.2em) lightgray;
-            cursor: pointer;
-        }
-
-        [type="radio"]:hover + span {
-            cursor: pointer;
-        }
     </style>
 </head>
 
@@ -159,14 +127,11 @@
                         <!-- 회원 성별 체크 -->
                         <div class="form-group">
                             <label>Gender</label>
-                            <div style="text-align: center;">
-                                <input type="radio" name="memberGender" value='male'
-                                       style="margin-right: 8px;"> <span
-                                    style="margin-right: 8%;">Male</span></input> <input type="radio"
-                                                                                         name="memberGender"
-                                                                                         value='female'
-                                                                                         style="margin-right: 8px;">
-                                <span>Female</span></input>
+                            <div class="form-group text-center">
+                                <label style="margin-right: 10%"><input type="radio" name="memberGender" value="male">
+                                    Male</label>
+                                <label style="margin-left: 5%"><input type="radio" name="memberGender" value="female">
+                                    Female</label>
                             </div>
                         </div>
                         <!-- 회원 자기 소개말 입력  -->
@@ -220,10 +185,12 @@
                             </div>
                         </div>
                         <!-- 약관 동의 체크 동의 후 이용가능 -->
-                        <div class="form-group text-left">
-                            <input type="checkbox" id="agreeTerms1" name="agreeTerms1"/> <label
-                                for="horns">I accept terms of use</label>
+                        <div class="form-group text-center">
+                            <div>
+                                <label><input type="checkbox" id="agreeTerms1" name="agreeTerms1"> I accept terms of use</label>
+                            </div>
                         </div>
+
                         <!-- 회원 가입 버튼 -->
                         <div class="form-group">
                             <button class="btn btn-primary btn-block" id="joinButton">JOIN</button>
