@@ -46,34 +46,38 @@ public class ChangeInformationController {
 
     System.out.println("ChangeInformationController In로그 = [" + memberDTO + "]");
 
-    String uploadDir = this.getClass().getResource("").getPath();
-    System.out.println("ChangeInformationController 로그01 = [" + uploadDir + "]");
+    if (!file.isEmpty()) {
 
-    uploadDir = uploadDir.substring(1, uploadDir.indexOf("chalKag")) +
-        "chalKag/src/main/resources/static/profileImg"; // 윈도우 경로
-    System.out.println("SignUpController 로그02 = [" + uploadDir + "]");
-    // uploadDir = uploadDir.substring(0, uploadDir.indexOf("/WEB-INF")) + "/memberProfileImages"; // 맥북 경로
+      String uploadDir = this.getClass().getResource("").getPath();
+      System.out.println("ChangeInformationController 로그01 = [" + uploadDir + "]");
 
-    String originalFilename = file.getOriginalFilename();            // 파일명을 저장하는 변수
-    String extension = FilenameUtils.getExtension(originalFilename);    // 확장자 저장 변수
-    String newFilename = UUID.randomUUID().toString() + "." + extension;  // 새 파일명 및 확장자 저장 변수
-    String filePath = uploadDir + File.separator + newFilename;        // 위의 내용을 모두 통합하여 저장하는 변수
-    File newFile = new File(filePath);
-    try {
-      file.transferTo(newFile); // 지정한 위치에 파일 데이터를 저장합니다
-    } catch (IOException e) {
-      e.printStackTrace();
+      uploadDir = uploadDir.substring(1, uploadDir.indexOf("chalKag")) +
+          "chalKag/src/main/resources/static/profileImg"; // 윈도우 경로
+      System.out.println("SignUpController 로그02 = [" + uploadDir + "]");
+      // uploadDir = uploadDir.substring(0, uploadDir.indexOf("/WEB-INF")) + "/memberProfileImages"; // 맥북 경로
+
+      String originalFilename = file.getOriginalFilename();            // 파일명을 저장하는 변수
+      String extension = FilenameUtils.getExtension(originalFilename);    // 확장자 저장 변수
+      String newFilename = UUID.randomUUID().toString() + "." + extension;  // 새 파일명 및 확장자 저장 변수
+      String filePath = uploadDir + File.separator + newFilename;        // 위의 내용을 모두 통합하여 저장하는 변수
+      File newFile = new File(filePath);
+      try {
+        file.transferTo(newFile); // 지정한 위치에 파일 데이터를 저장합니다
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+      profileImgDTO.setProfileImgName(newFilename);
+
+      if (!profileImgService.insert(profileImgDTO)) {
+        System.out.println("ChangeInformationController Out로그");
+        return "refirect:error";
+      }
+
     }
-    profileImgDTO.setProfileImgName(newFilename);
 
     if (!memberService.update(memberDTO)) {
       System.out.println("ChangeInformationController Out로그");
       return "redirect:error";
-    }
-
-    if (!profileImgService.insert(profileImgDTO)) {
-      System.out.println("ChangeInformationController Out로그");
-      return "refirect:error";
     }
 
     System.out.println("ChangeInformationController Out로그");
