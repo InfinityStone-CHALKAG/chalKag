@@ -4,6 +4,8 @@ document.getElementById('customButton').addEventListener('click', function() {
     document.getElementById('fileInput').click();
 });
 
+const bigImage = document.getElementById('big-image');
+
 // 슬라이드 버튼의 가시성을 업데이트하는 함수
 function updateSliderButtonsVisibility() {
     const imageContainer = document.querySelector('.image-container');
@@ -25,15 +27,13 @@ function updateSliderButtonsVisibility() {
 
 document.getElementById("fileInput").addEventListener('change', function(e) {
     const imageContainer = document.querySelector('.image-container');
-
-
     // 이전에 업로드된 이미지와 현재 선택된 파일의 총 개수를 확인
     const existingImages = imageContainer.querySelectorAll('img').length;
     const selectedFiles = e.target.files;
     const totalImages = existingImages + selectedFiles.length;
 
     if (totalImages > 10) {
-	swal("fail", "'최대 10장의 이미지만 업로드할 수 있습니다.'", "error", {
+		swal("fail", "'최대 10장의 이미지만 업로드할 수 있습니다.'", "error", {
          button: "OK",
       	});
         return; // 추가 이미지 업로드 방지
@@ -69,6 +69,11 @@ document.getElementById("fileInput").addEventListener('change', function(e) {
 
             imageContainer.appendChild(img);
             
+            img.onclick = function() {
+				    bigImage.style.display = 'block';
+		        document.getElementById('big-image').src = e.target.result;
+		    };
+            
             const deleteButton = document.createElement('button');
             deleteButton.textContent = 'X';
             deleteButton.classList.add('delete-btn');
@@ -82,7 +87,6 @@ document.getElementById("fileInput").addEventListener('change', function(e) {
                 if (index > -1) {
                     filesArray.splice(index, 1);
                 }
-                
                 updateSliderButtonsVisibility(); // 슬라이드 버튼 가시성 업데이트
             };
 
@@ -95,10 +99,17 @@ document.getElementById("fileInput").addEventListener('change', function(e) {
                  // 현재 이미지를 위로 이동
                  if (imgWrapper.previousElementSibling) {
                      imageContainer.insertBefore(imgWrapper, imgWrapper.previousElementSibling);
+                     // 이미지 순서를 변경하면 업로드 되는 순서도 변경
+					 const index = filesArray.indexOf(file);
+			         if (index > 0) {
+			            const temp = filesArray[index];
+			            filesArray[index] = filesArray[index - 1];
+			            filesArray[index - 1] = temp;
+			        }
                  }
              };
 
-             const downButton = document.createElement('button');
+            const downButton = document.createElement('button');
             downButton.textContent = '▶';
             downButton.classList.add('move-down-btn');
             downButton.type = 'button';
@@ -106,6 +117,13 @@ document.getElementById("fileInput").addEventListener('change', function(e) {
                 // 현재 이미지를 아래로 이동
                 if (imgWrapper.nextElementSibling) {
                     imageContainer.insertBefore(imgWrapper.nextElementSibling, imgWrapper);
+					// filesArray 내의 파일 순서를 변경
+				    const index = filesArray.indexOf(file);
+				    if (index > -1 && index < filesArray.length - 1) {
+				        const temp = filesArray[index];
+				        filesArray[index] = filesArray[index + 1];
+				        filesArray[index + 1] = temp;
+				    }
                 }
             };
 
@@ -119,7 +137,6 @@ document.getElementById("fileInput").addEventListener('change', function(e) {
             // 선택된 파일을 filesArray에 추가
         	filesArray.push(file);
 
-            
             updateSliderButtonsVisibility();
         };
 
@@ -166,7 +183,7 @@ document.getElementById('slideRight').addEventListener('click', function(event) 
     }
 });
 
-// // 초기 페이지 로드 시 슬라이드 버튼 가시성을 업데이트합니다.
+// // 초기 페이지 로드 시 슬라이드 버튼 가시성을 업데이트.
 document.addEventListener('DOMContentLoaded', function() {
     updateSliderButtonsVisibility();
 });
