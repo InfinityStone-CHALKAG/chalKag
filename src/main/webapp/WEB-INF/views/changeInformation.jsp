@@ -205,8 +205,8 @@
                                                         <li><a href="myPage" class="active">MY INFORMATION</a></li>
                                                         <li><a href="changeInformation">CHANGE INFORMATION</a></li>
                                                         <li><a href="changeNickname">CHANGE NICKNAME</a></li>
-                                                        <li><a href="changePassword">CHANGE PASSWORD</a></li>
-                                                        <li><a href="changePhoneNumber">CHANGE PHONENUMBER</a></li>
+                                                        <li><a href="changePw">CHANGE PASSWORD</a></li>
+                                                        <li><a href="changePh">CHANGE PHONENUMBER</a></li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -240,9 +240,12 @@
                                                         </figure>
                                                         <input type="file" name="file" id="imageInput" accept="image/*"
                                                             style="display: none;">
-                                                        <button type="button" id="ImgSelectButton"
+                                                        <button type="button" id="imgSelectButton"
                                                             class="btn btn-primary btn-sm btn-rounded">Select
                                                             Img</button>
+
+                                                            <button type="button" id="cancelButton"
+                                                            class="btn btn-primary btn-sm btn-rounded">Cancle</button>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -295,7 +298,7 @@
                     });
                 });
 
-                document.getElementById('ImgSelectButton').addEventListener('click', function () {
+                document.getElementById('imgSelectButton').addEventListener('click', function () {
                     document.getElementById('imageInput').click();
                 });
 
@@ -317,6 +320,14 @@
                     this.style.height = 'auto';
                     this.style.height = this.scrollHeight + 'px';
                 }
+            // JavaScript 코드 예시
+const initialImgSrc = "profileImg/${memberInfo.profileImgName}"; // 초기 이미지 소스
+const imgElement = document.getElementById("changeImgPreview"); // 이미지 요소 선택
+const cancelButton = document.getElementById("cancelButton"); // 취소 버튼 요소 선택
+
+cancelButton.addEventListener("click", function() {
+  imgElement.src = initialImgSrc; // 이미지 소스를 초기 상태로 변경
+});
 
             </script>
 

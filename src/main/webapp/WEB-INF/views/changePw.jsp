@@ -162,8 +162,8 @@
                                                         <li><a href="myPage" class="active">MY INFORMATION</a></li>
                                                         <li><a href="changeInformation">CHANGE INFORMATION</a></li>
                                                         <li><a href="changeNickname">CHANGE NICKNAME</a></li>
-                                                        <li><a href="changePassword">CHANGE PASSWORD</a></li>
-                                                        <li><a href="changePhoneNumber">CHANGE PHONENUMBER</a></li>
+                                                        <li><a href="changePw">CHANGE PASSWORD</a></li>
+                                                        <li><a href="changePh">CHANGE PHONENUMBER</a></li>
                                                     </ul>
                                                 </div>
                                             </div>
