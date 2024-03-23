@@ -46,8 +46,8 @@ public class SignUpController {
     System.out.println("SignUpController 로그01 = [" + uploadDir + "]");
 
 // .metadata 앞까지 문자열잘라서 이미지가 저장되는 폴더인 memberProfileImages까지의 절대경로 부여
-    uploadDir = uploadDir.substring(1, uploadDir.indexOf("chalkag")) +
-        "chalkag/src/main/resources/static/profileImg"; // 윈도우 경로
+    uploadDir = uploadDir.substring(1, uploadDir.indexOf("chalKag")) +
+        "chalKag/src/main/resources/static/profileImg"; // 윈도우 경로
     System.out.println("SignUpController 로그02 = [" + uploadDir + "]");
 //		uploadDir = uploadDir.substring(0, uploadDir.indexOf("/WEB-INF")) + "/memberProfileImages"; // 맥북 경로
 

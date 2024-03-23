@@ -21,11 +21,12 @@ public class CheckNicknameController {
     memberDTO.setSearchCondition("checkNickname");
 
     MemberDTO result = memberService.selectOne(memberDTO);
+
     if (result == null) {
-      System.out.println("CheckNicknameController Out로그 = [" + result + "]");
+      System.out.println("CheckNicknameController Out로그");
       return 1;
     }
-    System.out.println("CheckNicknameController Out로그 = [" + result + "]");
+    System.out.println("CheckNicknameController Out로그");
     return 0;
   }
 
