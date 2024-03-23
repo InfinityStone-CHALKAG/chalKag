@@ -166,7 +166,9 @@ public class MemberDAO {
   private static final String UPDATE_CHANGEPH = "UPDATE MEMBER" + "SET MEMBER_ph = ?" + "WHERE MEMBER_id = ?";
 
   // 자기소개 변경.안승준
-  private static final String UPDATE_CHANGEINTRODUCTION = "UPDATE MEMBER" + "SET MEMBER_introduction = ?" + "WHERE MEMBER_id = ?";
+  private static final String UPDATE_CHANGEINTRODUCTION = "UPDATE MEMBER " +
+      "SET MEMBER_introduction = ? " +
+      "WHERE MEMBER_id = ?";
 
   // 회원 탈퇴.안승준
   private static final String UPDATE_DELETEACCOUNT = "UPDATE MEMBER" + "SET MEMBER_grade = 'delete'" + "WHERE MEMBER_id = ?";

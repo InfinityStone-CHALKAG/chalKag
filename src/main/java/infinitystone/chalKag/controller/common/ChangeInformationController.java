@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpSession;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,7 +28,12 @@ public class ChangeInformationController {
   public ProfileImgService profileImgService;
 
   @RequestMapping(value = "changeInformation", method = RequestMethod.GET)
-  public String changeInformationPage() {
+  public String changeInformationPage(Model model, MemberDTO memberDTO, ProfileImgDTO profileImgDTO, HttpSession session) {
+    memberDTO.setMemberId((String) session.getAttribute("member"));
+    memberDTO.setSearchCondition("myPage");
+
+    model.addAttribute("memberInfo", memberService.selectOne(memberDTO));
+
     return "changeInformation";
   }
 
@@ -58,6 +64,7 @@ public class ChangeInformationController {
     } catch (IOException e) {
       e.printStackTrace();
     }
+    profileImgDTO.setProfileImgName(newFilename);
 
     if (!memberService.update(memberDTO)) {
       System.out.println("ChangeInformationController Out로그");
