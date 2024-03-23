@@ -14,12 +14,12 @@ public class ChangePwController {
   @Autowired
   public MemberService memberService;
 
-  @RequestMapping(value = "/changePwController", method = RequestMethod.GET)
+  @RequestMapping(value = "/changePw", method = RequestMethod.GET)
   public String changePwPage() {
     return "changePw";
   }
 
-  @RequestMapping(value = "/changePwController", method = RequestMethod.POST)
+  @RequestMapping(value = "/changePw", method = RequestMethod.POST)
   public String changePw(MemberDTO memberDTO, HttpSession session) {
 
     memberDTO.setMemberId((String) session.getAttribute("member"));
