@@ -13,7 +13,7 @@ public class DeleteMarketPostController {
 	@Autowired
 	private MarketPostService marketPostService;
 	
-	@RequestMapping(value = "/DeleteMarketPost", method = RequestMethod.POST)
+	@RequestMapping(value = "/deleteMarketPost", method = RequestMethod.POST)
 	public String writeMarketPost(MarketPostDTO marketPostDTO) {
 		// 사용자의 글을 삭제
 		if(!marketPostService.delete(marketPostDTO)) {
