@@ -13,10 +13,10 @@ public class UpdateFreePostController {
 	@Autowired
 	private FreePostService freePostService;
 	
-	@RequestMapping(value = "/UpdateFreePost", method = RequestMethod.POST)
+	@RequestMapping(value = "/updateFreePost", method = RequestMethod.POST)
 	public String writeFreePost(FreePostDTO freePostDTO) {
 		// 사용자의 글을 수정
-		if(!freePostService.delete(freePostDTO)) {
+		if(!freePostService.update(freePostDTO)) {
 			System.out.println("[UpdateFreePostController] 수정 실패");
 		}
 		System.out.println("[UpdateFreePostController] 수정 성공");

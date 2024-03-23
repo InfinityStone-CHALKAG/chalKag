@@ -13,10 +13,10 @@ public class UpdateHeadHuntPostController {
 	@Autowired
 	private HeadHuntPostService headHuntPostService;
 	
-	@RequestMapping(value = "/UpdateHeadHuntPost", method = RequestMethod.POST)
+	@RequestMapping(value = "/updateHeadHuntPost", method = RequestMethod.POST)
 	public String writeHeadHuntPost(HeadHuntPostDTO headHuntPostDTO) {
 		// 사용자의 글을 수정
-		if(!headHuntPostService.delete(headHuntPostDTO)) {
+		if(!headHuntPostService.update(headHuntPostDTO)) {
 			System.out.println("[UpdateHeadHuntPostController] 수정 실패");
 		}
 		System.out.println("[UpdateHeadHuntPostController] 수정 성공");

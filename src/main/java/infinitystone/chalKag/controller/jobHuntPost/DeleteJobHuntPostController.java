@@ -13,7 +13,7 @@ public class DeleteJobHuntPostController {
 	@Autowired
 	private JobHuntPostService jobHuntPostService;
 	
-	@RequestMapping(value = "/DeleteJobHuntPost", method = RequestMethod.POST)
+	@RequestMapping(value = "/deleteJobHuntPost", method = RequestMethod.POST)
 	public String writeJobHuntPost(JobHuntPostDTO jobHuntPostDTO) {
 		// 사용자의 글을 삭제
 		if(!jobHuntPostService.delete(jobHuntPostDTO)) {
