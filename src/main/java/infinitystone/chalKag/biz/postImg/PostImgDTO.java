@@ -14,4 +14,5 @@ public class PostImgDTO {
 	
 	private List<Image> postImages = new ArrayList<>();		// 여러 이미지 파일 업로드 
 
+	private String searchCondition;
 }
