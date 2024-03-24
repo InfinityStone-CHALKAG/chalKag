@@ -116,7 +116,7 @@
                                                 <div class="featured-author-center">
                                                     <figure class="featured-author-picture">
                                                         <img src="profileImg/${memberInfo.profileImgName}"
-                                                            alt="Sample Article">
+                                                            alt="Sample Article" style="width: 100%; height: 100%; object-fit: cover;">
                                                     </figure>
                                                     <div class="featured-author-info">
                                                         <h2 class="name">${memberInfo.memberNickname}</h2>
@@ -193,7 +193,7 @@
                                                 alt="Image Not Loaded" style="width: 76px; 
                                     height: 76px; 
                                     border-radius: 50%; 
-                                    object-fit: cover; 
+                                    object-fit: cover;
                                     border: 1px solid rgb(168, 168, 168);"> 
                                         </figure>
                                         <div style="margin-left: 10px;">
