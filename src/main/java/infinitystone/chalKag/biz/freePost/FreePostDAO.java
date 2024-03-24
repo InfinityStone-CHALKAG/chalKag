@@ -96,12 +96,17 @@ public class FreePostDAO {
 	private static final String UPDATE_VIEWCNT = "UPDATE BOARD SET FREEPOST_viewcnt = (FREEPOST_viewcnt+1) WHERE FREEPOST_id=? ";
 	private static final String DELETE = "DELETE FROM FREEPOST WHERE FREEPOST_id = ?";
 
-	public List<FreePostDTO> selectAll(FreePostDTO freetPostDTO) {
+	public List<FreePostDTO> selectAll(FreePostDTO freePostDTO) {
 		List<FreePostDTO> result = null;
 
 		try { // 게시판 전체 출력해주는 행동이라면 selectAll 쿼리문 실행
-			if (freetPostDTO.getSearchCondition().equals("freePostList")) {
+			if (freePostDTO.getSearchCondition().equals("freePostList")) {
 				result = (List<FreePostDTO>) jdbcTemplate.query(SELECTALL_FREEPOST, new FreePostSelectAllRowMapper());
+				return result;
+			}
+			else if(freePostDTO.getSearchCondition().equals("freePostPremiumList")) {
+				result = (List<FreePostDTO>) jdbcTemplate.query(FREEPOST_SELECTALLPREMIUM, new FreePostPremiumSellectAllRowMapper());
+				System.out.println("FreePostDAO(premiumSelectAll) 로그 = [" + result + "]");
 				return result;
 			}
 		} catch (Exception e) {

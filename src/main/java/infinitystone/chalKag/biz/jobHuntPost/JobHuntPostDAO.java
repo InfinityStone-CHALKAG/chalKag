@@ -42,7 +42,7 @@ public class JobHuntPostDAO {
 			+ "ORDER BY "
 			+ "		JOBHUNTPOST_id DESC ";
 	
-	// 메인페이지 프리미엄 회원글 출력
+	// 메인페이지 프리미엄 회원글 출력(이미지 포함)
 	private static final String JOBHUNTPOST_SELECTALLPREMIUM= "SELECT "
 			+ "			    JOBHUNTPOST.JOBHUNTPOST_title, "
 			+ "				   MEMBER.MEMBER_grade ,  "
@@ -59,20 +59,25 @@ public class JobHuntPostDAO {
 	
 	
 	private static final String SELECTONE_JOBHUNTPOST = "SELECT" 
-			+ " JOBHUNTPOST.JOBHUNTPOST_id, "
-			+ "	JOBHUNTPOST.JOBHUNTPOST_title, " 
-			+ "	JOBHUNTPOST.JOBHUNTPOST_content, "
-			+ "	JOBHUNTPOST.JOBHUNTPOST_date, "
+			+ " 	JOBHUNTPOST.JOBHUNTPOST_id, "
+			+ "		JOBHUNTPOST.JOBHUNTPOST_date, "
 			+ " CASE "
 			+ "        WHEN TIMESTAMPDIFF(MINUTE, JOBHUNTPOST.JOBHUNTPOST_date, NOW()) < 60 THEN CONCAT(TIMESTAMPDIFF(MINUTE, JOBHUNTPOST.JOBHUNTPOST_date, NOW()), ' 분 전') "
 			+ "        WHEN TIMESTAMPDIFF(HOUR, JOBHUNTPOST.JOBHUNTPOST_date, NOW()) < 24 THEN CONCAT(TIMESTAMPDIFF(HOUR, JOBHUNTPOST.JOBHUNTPOST_date, NOW()), ' 시간 전') "
 			+ "        ELSE CONCAT(TIMESTAMPDIFF(DAY, JOBHUNTPOST.JOBHUNTPOST_date, NOW()), ' 일 전') "
 			+ "    END AS COMMENT_date," 
-			+ "	JOBHUNTPOST.MEMBER_id, "
-			+ " MEMBER.MEMBER_nickname, " 
-			+ "	JOBHUNTPOST.JOBHUNTPOST_viewcnt, "
-			+ "	COUNT(RECOMMEND.POST_id) AS RECOMMEND_cnt,"
-			+ " PROFILEIMG.PROFILEIMG_name AS PROFILEIMG_name"
+			+ "		JOBHUNTPOST.MEMBER_id, "
+			+ " 	MEMBER.MEMBER_nickname, "
+			+ " 	PROFILEIMG.PROFILEIMG_name, "
+			+ "		JOBHUNTPOST.JOBHUNTPOST_role, "
+		    + "		JOBHUNTPOST.JOBHUNTPOST_region, "
+		    + "		JOBHUNTPOST.JOBHUNTPOST_pay, "
+		    + "		JOBHUNTPOST.JOBHUNTPOST_workDate, "
+		    + "		JOBHUNTPOST.JOBHUNTPOST_concept, "
+		    + "		JOBHUNTPOST.JOBHUNTPOST_title, " 
+		    + "		JOBHUNTPOST.JOBHUNTPOST_content, "
+			+ "		JOBHUNTPOST.JOBHUNTPOST_viewcnt, "
+			+ "		COUNT(RECOMMEND.POST_id) AS RECOMMEND_cnt "
 			+ "	FROM "
 			+ "		JOBHUNTPOST " 
 			+ " INNER JOIN "
@@ -133,7 +138,7 @@ public class JobHuntPostDAO {
 				return result;
 			}
 			else if(jobHuntPostDTO.getSearchCondition().equals("jobHuntPostPremiumList")) {
-				result = (List<JobHuntPostDTO>) jdbcTemplate.query(JOBHUNTPOST_SELECTALLPREMIUM, new JobHuntPostPremiumSellectAllRowMapper());
+				result = (List<JobHuntPostDTO>) jdbcTemplate.query(JOBHUNTPOST_SELECTALLPREMIUM, new JobHuntPostPremiumSelectAllRowMapper());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -232,7 +237,7 @@ class JobHuntPostSellectOneRowMapper implements RowMapper<JobHuntPostDTO> {
 	}
 }
 
-class JobHuntPostPremiumSellectAllRowMapper implements RowMapper<JobHuntPostDTO>{
+class JobHuntPostPremiumSelectAllRowMapper implements RowMapper<JobHuntPostDTO>{
 
 	@Override
 	public JobHuntPostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {

@@ -104,6 +104,12 @@ public class MarketPostDAO {
 				System.out.println("MarketPostDAO(selectAll) 로그 = [" + result + "]");
 				return result;
 			}
+			//  프리미엄 회원 글 출력
+			else if(marketPostDTO.getSearchCondition().equals("marketPostPremiumList")) {
+				result = (List<MarketPostDTO>) jdbcTemplate.query(MARKETPOST_SELECTALLPREMIUM, new MarketPostPremiumSelectAllRowMapper());
+				System.out.println("MarketPostDAO(premiumSelectAll) 로그 = [" + result + "]");
+				return result;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -200,7 +206,7 @@ class MarketPostSellectOneRowMapper implements RowMapper<MarketPostDTO> {
 }
 
 
-class MarketPostPremiumSellectAllRowMapper implements RowMapper<MarketPostDTO>{
+class MarketPostPremiumSelectAllRowMapper implements RowMapper<MarketPostDTO>{
 
 	@Override
 	public MarketPostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -213,3 +219,5 @@ class MarketPostPremiumSellectAllRowMapper implements RowMapper<MarketPostDTO>{
 	}
 	
 }
+
+
