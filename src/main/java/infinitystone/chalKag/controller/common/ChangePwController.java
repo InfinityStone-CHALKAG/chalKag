@@ -34,8 +34,10 @@ public class ChangePwController {
       return "redirect:error";
     }
 
+    session.invalidate();
+
     System.out.println("ChangePwController Out로그");
 
-    return "redirect:myPage";
+    return "redirect:main";
   }
 }
