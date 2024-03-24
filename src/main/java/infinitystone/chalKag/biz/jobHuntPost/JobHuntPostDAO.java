@@ -43,7 +43,7 @@ public class JobHuntPostDAO {
 			+ "		JOBHUNTPOST_id DESC ";
 	
 	// 메인페이지 프리미엄 회원글 출력
-	private static final String JOBHUNT_SELECTALLPREMIUM= "SELECT "
+	private static final String JOBHUNTPOST_SELECTALLPREMIUM= "SELECT "
 			+ "			    JOBHUNTPOST.JOBHUNTPOST_title, "
 			+ "				   MEMBER.MEMBER_grade ,  "
 			+ "			    POSTIMG.POSTIMG_name  "
@@ -133,7 +133,7 @@ public class JobHuntPostDAO {
 				return result;
 			}
 			else if(jobHuntPostDTO.getSearchCondition().equals("jobHuntPostPremiumList")) {
-				result = (List<JobHuntPostDTO>) jdbcTemplate.query(JOBHUNT_SELECTALLPREMIUM, new JobHuntPostPremiumSellectAllRowMapper());
+				result = (List<JobHuntPostDTO>) jdbcTemplate.query(JOBHUNTPOST_SELECTALLPREMIUM, new JobHuntPostPremiumSellectAllRowMapper());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
