@@ -158,7 +158,9 @@ public class MemberDAO {
   private static final String INSERT_SINGUP = "INSERT INTO MEMBER ( MEMBER_id," + "MEMBER_pw," + "MEMBER_name," + "MEMBER_nickname," + "MEMBER_ph," + "MEMBER_birth," + "MEMBER_gender," + "MEMBER_introduction)" + "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?)";
 
   // 비밀번호 변경.안승준
-  private static final String UPDATE_CHANGEPASSWORD = "UPDATE MEMBER" + "SET MEMBER_pw = ?" + "WHERE MEMBER_id = ?";
+  private static final String UPDATE_CHANGEPW = "UPDATE MEMBER " +
+      "SET MEMBER_pw = ? " +
+      "WHERE MEMBER_id = ?";
 
   // 닉네임 변경.안승준
   private static final String UPDATE_CHANGENICKNAME = "UPDATE MEMBER" + "SET MEMBER_nickname = ?" + "WHERE MEMBER_id = ?";
@@ -271,7 +273,7 @@ public class MemberDAO {
   public boolean update(MemberDTO memberDTO) {
     System.out.println("MemberDAO(update) In로그 = [" + memberDTO + "]");
     if (memberDTO.getSearchCondition().equals("changePw")) {
-      if (jdbcTemplate.update(UPDATE_CHANGEPASSWORD, memberDTO.getMemberPw(), memberDTO.getMemberId()) <= 0) {
+      if (jdbcTemplate.update(UPDATE_CHANGEPW, memberDTO.getMemberPw(), memberDTO.getMemberId()) <= 0) {
         return false;
       }
       return true;
