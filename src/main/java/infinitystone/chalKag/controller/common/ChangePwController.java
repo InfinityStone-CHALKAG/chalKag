@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class ChangePwController {
@@ -20,9 +21,10 @@ public class ChangePwController {
   }
 
   @RequestMapping(value = "/changePw", method = RequestMethod.POST)
-  public String changePw(MemberDTO memberDTO, HttpSession session) {
+  public String changePw(MemberDTO memberDTO, @RequestParam("newPw") String newPw, HttpSession session) {
 
     memberDTO.setMemberId((String) session.getAttribute("member"));
+    memberDTO.setMemberPw(newPw);
     memberDTO.setSearchCondition("changePw");
 
     System.out.println("ChangePwController In로그");
