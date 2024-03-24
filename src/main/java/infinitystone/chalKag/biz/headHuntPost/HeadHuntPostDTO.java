@@ -11,7 +11,7 @@ public class HeadHuntPostDTO { // 구인글 게시판 DTO 생성.전미지
 	private String headHuntPostDate;		// 구인글 작성 시간
 	private String headHuntPostRole;		// 구인글 직업 (모델/사진작가)
 	private String headHuntPostRegion;		// 구인글 작업 지역
-	private String headHuntPostPay;			// 구인글 작업 페이
+	private int	   headHuntPostPay;			// 구인글 작업 페이
 	private String headHuntPostWorkDate;	// 구인글 작업 날짜
 	private String headHuntPostConcept;		// 구인글 촬영 컨셉
 	private String headHuntPostTitle;		// 구인글 제목
@@ -80,11 +80,11 @@ public class HeadHuntPostDTO { // 구인글 게시판 DTO 생성.전미지
 		this.headHuntPostRegion = headHuntPostRegion;
 	}
 
-	public String getHeadHuntPostPay() {
+	public int getHeadHuntPostPay() {
 		return headHuntPostPay;
 	}
 
-	public void setHeadHuntPostPay(String headHuntPostPay) {
+	public void setHeadHuntPostPay(int headHuntPostPay) {
 		this.headHuntPostPay = headHuntPostPay;
 	}
 
@@ -163,5 +163,5 @@ public class HeadHuntPostDTO { // 구인글 게시판 DTO 생성.전미지
 				+ ", PostCategory=" + PostCategory + ", recommendCnt=" + recommendCnt + ", searchCondition="
 				+ searchCondition + "]";
 	}
-
+	
 }	

@@ -23,7 +23,7 @@ public class ReportDAO { // 신고 DAO
 			+ "		REPORT_date, "
 			+ "		REPORT_content "
 			+ "FROM "
-			+ "		REPORT"
+			+ "		REPORT "
 			+ "ORDER BY "
 			+ "		REPORT_id DESC ";
 	// 사용한 테이블 : 신고 테이블
@@ -32,13 +32,13 @@ public class ReportDAO { // 신고 DAO
 	
 	// 신고글 상세 출력.전미지
 	private static final String SELECTONE_REPORT = "SELECT "
-			+ "		REPORT_id,"
+			+ "		REPORT_id, "
 			+ "		MEMBER_id, "		
-			+ "		REPORT_suspector,"
-			+ "		REPORT_date,"
+			+ "		REPORT_suspector, "
+			+ "		REPORT_date, "
 			+ "		REPORT_content "
 			+ "FROM "
-			+ "		REPORT"
+			+ "		REPORT "
 			+ "WHERE "
 			+ "		REPORT_id = ? ";
 	// 사용한 테이블 : 신고 테이블
@@ -49,9 +49,8 @@ public class ReportDAO { // 신고 DAO
 	private static final String INSERT_REPORT = "INSERT INTO REPORT ( "
 			+ "MEMBER_id, "
 			+ "REPORT_suspector, "
-			+ "REPORT_date, "
 			+ "REPORT_content) "
-			+ "VALUES(?,?,CURRENT_TIMESTAMP,?) ";	
+			+ "VALUES(?,?,?) ";	
 	// 사용한 테이블 : 신고 테이블
 	// 사용한 컬럼 (작성 내용) :
 	// 회원 아이디(회원 테이블), 피신고자 아이디, 신고글 작성 시간, 신고 내용
@@ -104,7 +103,7 @@ public class ReportDAO { // 신고 DAO
 		int result = 0;
 		System.out.println("ReportDAO(insert) In로그 = [" + reportDTO + "]");
 		// INSERT_REPORT 쿼리를 실행해 데이터베이스에 신고글 데이터를 저장
-		result = jdbcTemplate.update(INSERT_REPORT);
+		result = jdbcTemplate.update(INSERT_REPORT, reportDTO.getMemberId(), reportDTO.getReportSuspector(), reportDTO.getReportContent());
 		if (result <= 0) {
 			System.out.println("ReportDAO(insert) Out로그 = [" + result + "]");
 			return false; // 신고글 작성 실패 시 false 반환
@@ -117,12 +116,12 @@ public class ReportDAO { // 신고 DAO
 		return false;
 	}
 
-	// 신고글 작성
+	// 신고글 삭제
 	public boolean delete(ReportDTO reportDTO) {
 		int result = 0;
 		System.out.println("ReportDAO(delete) In로그 = [" + reportDTO + "]");
 		// DELETE_REPORT 쿼리를 실행해 데이터베이스에 신글 데이터를 삭제
-		result = jdbcTemplate.update(DELETE_REPORT);
+		result = jdbcTemplate.update(DELETE_REPORT, reportDTO.getReportId());
 		if (result <= 0) {
 			System.out.println("ReportDAO(delete) Out로그 = [" + result + "]");
 			return false; // 신고글 작성 실패 시 false 반환
