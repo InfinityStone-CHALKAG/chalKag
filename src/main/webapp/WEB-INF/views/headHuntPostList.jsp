@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="chalKagTags"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -185,7 +185,13 @@ div .inner p {
 
 				<div class="col-md-9" style="text-align: right; margin-bottom: 10px;">
 					<!-- 글 작성 -->
-					<a class="btn btn-primary btn-sm" href="/writeHeadHuntPost">Writing</a>
+					<c:if test="${member != null }">
+						<a class="btn btn-primary btn-sm" href="/writeHeadHuntPost">Writing</a>
+					</c:if>
+					<c:if test="${member == null }">
+						<a class="btn btn-primary btn-sm" onclick="message()">Writing</a>
+					</c:if>
+					
 				</div>
 				<div class="col-md-9">
 					<div class="nav-tabs-group">
@@ -247,6 +253,13 @@ div .inner p {
 			radioClass : 'iradio_square-red',
 			cursor : true
 		}); 
+	</script>
+	<script>
+		function message() {
+			swal("fail", "로그인 후 이용해주세요.", "error", {
+				button : "OK",
+			});
+		}
 	</script>
 </body>
 </html>

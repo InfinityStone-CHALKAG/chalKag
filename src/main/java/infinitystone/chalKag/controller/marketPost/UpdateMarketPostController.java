@@ -13,7 +13,7 @@ public class UpdateMarketPostController {
 	@Autowired
 	private MarketPostService marketPostService;
 	
-	@RequestMapping(value = "/UpdateMarketPost", method = RequestMethod.POST)
+	@RequestMapping(value = "/updateMarketPost", method = RequestMethod.POST)
 	public String writeMarketPost(MarketPostDTO marketPostDTO) {
 		// 사용자의 글을 수정
 		if(!marketPostService.delete(marketPostDTO)) {

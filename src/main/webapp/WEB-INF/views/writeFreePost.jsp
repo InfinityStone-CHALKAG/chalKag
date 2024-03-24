@@ -32,14 +32,11 @@
 				<div class="box-wrapper" id="writerForm">
 					<div class="box box-border">
 						<div class="box-body">
-							<div class="form-group">
-								<h4 style="display: flex; justify-content: center; margin-bottom: 0;">Writer : ${memberId}</h4><h5 style="display: flex; justify-content: center;">(LV : 20  |  Grade : nomal )</h5>
-							</div>
-							<br>
 							<form action="/writeFreePost" method="post" onsubmit="return validateForm()">
 								<div class="form-group" style="display: flex; justify-content: center;">
 									<input type="text" id="freePostTitle" name="freePostTitle" class="form-control rounded" placeholder="Title" />
 								</div>
+										<p>※ 이미지 사이즈는 30MB 이하만 올릴 수 있습니다.</p>
 									<textarea id="freePostContent" name="freePostContent" class="form-control rounded" ></textarea>
 								<button class="btn btn-primary btn-block">Composite</button>
 							</form>	

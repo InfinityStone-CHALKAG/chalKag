@@ -42,17 +42,19 @@ public class SignUpController {
 
     memberDTO.setSearchCondition("signUp");
 
+    if (!file.isEmpty()) {
+
     String uploadDir = this.getClass().getResource("").getPath();
     System.out.println("SignUpController 로그01 = [" + uploadDir + "]");
 
 // .metadata 앞까지 문자열잘라서 이미지가 저장되는 폴더인 memberProfileImages까지의 절대경로 부여
-    uploadDir = uploadDir.substring(1, uploadDir.indexOf("chalkag")) +
-        "chalkag/src/main/resources/static/profileImg"; // 윈도우 경로
+    uploadDir = uploadDir.substring(1, uploadDir.indexOf("chalKag")) +
+        "chalKag/src/main/resources/static/profileImg"; // 윈도우 경로
     System.out.println("SignUpController 로그02 = [" + uploadDir + "]");
 //		uploadDir = uploadDir.substring(0, uploadDir.indexOf("/WEB-INF")) + "/memberProfileImages"; // 맥북 경로
 
 // 업로드 파일이 존재할 때
-    if (file != null) {
+
       String originalFilename = file.getOriginalFilename();            // 파일명을 저장하는 변수
       String extension = FilenameUtils.getExtension(originalFilename);    // 확장자 저장 변수
       String newFilename = UUID.randomUUID().toString() + "." + extension;  // 새 파일명 및 확장자 저장 변수

@@ -48,7 +48,6 @@
                 }
 
                 .changeList li {
-                    /* 텍스트를 양쪽 정렬한다. */
                     margin-bottom: 15px;
                     /* 리스트 아이템 사이의 간격을 조정한다. 필요에 따라 조정할 수 있습니다. */
                 }
@@ -116,7 +115,7 @@
                                                 <div class="featured-author-center">
                                                     <figure class="featured-author-picture">
                                                         <img src="profileImg/${memberInfo.profileImgName}"
-                                                            alt="Sample Article" style="width: 100%; height: 100%; object-fit: cover;">
+                                                            alt="Sample Article">
                                                     </figure>
                                                     <div class="featured-author-info">
                                                         <h2 class="name">${memberInfo.memberNickname}</h2>
@@ -135,12 +134,7 @@
                                                     <div class="item" style="width: -webkit-calc(100% / 2);">
                                                         <a href="#">
                                                             <div class="name">Score</div>
-                                                            <c:if test="${memberInfo.currentScore != null}">
-                                                                <div class="value">${memberInfo.currentScore}</div>
-                                                            </c:if>
-                                                            <c:if test="${memberInfo.currentScore == null}">
-                                                                <div class="value">0.0</div>
-                                                            </c:if>
+                                                            <div class="value">${memberInfo.currentScore}</div>
                                                         </a>
                                                     </div>
                                                 </div>
@@ -155,8 +149,7 @@
                                                 </div>
                                                 <div class="featured-author-quote"
                                                     style="font-weight: bold; font-family: 'inherit'; margin-top: 10px;">
-                                                    INTRODUCTION
-                                                </div>
+                                                    INTRODUCTION</div>
                                                 <div class="featured-author-quote" id="Introdudction">
                                                     <c:if test="${memberInfo.memberIntroduction != null}">
                                                         "${memberInfo.memberIntroduction}"
@@ -165,6 +158,8 @@
                                                         " Write a self-introduction to showcase yourself "
                                                     </c:if>
                                                 </div>
+
+
                                                 <div class="featured-author-quote">
                                                     <ul class="changeList">
                                                         <li><a href="myPage" class="active">MY INFORMATION</a></li>
@@ -174,107 +169,66 @@
                                                         <li><a href="changePh">CHANGE PHONENUMBER</a></li>
                                                     </ul>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </aside>
                         </div>
-                        <div class="col-md-6 col-sm-12 col-xs-12">
+                        <div class="col-md-5 col-sm-12 col-xs-12">
+
+
                             <div class="box box-border">
                                 <div class="box-body">
-                                    <div>Basic Information <i class="ion-ios-information-outline"
-                                            style="font-size: 16px; margin-bottom:15px"></i></div>
-
-                                    <div style="display: flex; align-items: center;">
-                                        <figure class="featured-author-picture">
-                                            <img src="profileImg/${memberInfo.profileImgName}" id="ImgPreview"
-                                                alt="Image Not Loaded" style="width: 76px; 
-                                    height: 76px; 
-                                    border-radius: 50%; 
-                                    object-fit: cover;
-                                    border: 1px solid rgb(168, 168, 168);"> 
-                                        </figure>
-                                        <div style="margin-left: 10px;">
-                                            <div class="memberName" id="memberName"
-                                                style="font-size: 30px; font-weight: bold;">
-                                                ${memberInfo.memberName}
+                                    <h4>Change PhoneNumber</h4>
+                                    <form id="changePhoneNumber" method="post" action="changePhoneNumber"
+                                        onsubmit="return true">
+                                        <!-- 회원 폰번호 입력 -->
+                                        <div class="form-group">
+                                            <label>Present</label>
+                                            <div style="display: flex;">
+                                                <input type="text" id="memberPh" name="memberPh" class="form-control"
+                                                    placeholder="-빼고 입력" maxlength="11"
+                                                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                                <a id="phCheckBtn"
+                                                    style="text-align: center; padding-top: 3%; width: 7rem;"
+                                                    class="btn btn-magz btn-sm">send</a>
                                             </div>
-                                            <div class="memberId" id="memberId"  style="font-size: 20px; font-weight:20px" >${memberInfo.memberId}</div>
+                                            <p id="phErrMsg1" class="error"></p>
+                                            <br>
+                                            <div id="memberPhCheckContainer" style="display: flex; display: none;">
+                                                <!-- 동적으로 인증번호 입력란과 확인 버튼 생성-->
+                                            </div>
+                                            <p class="successPhCheck1"></p>
                                         </div>
-                                    </div>
-
-                                    <hr style="border-top: 0.1px solid #cdcdcd; margin-top: 5px; margin-bottom: 10px;">
-
-                                    <div style="display: flex; align-items: center; margin-bottom: 8px">
-                                        <i class="ion-social-snapchat-outline"
-                                            style="margin-right: 10px; font-size: 18px;"></i>
-                                        <div class="memberNickname" id="memberNickname">${memberInfo.memberNickname}
+                                        <div class="form-group">
+                                            <label>New PhoneNumber</label>
+                                            <div style="display: flex;">
+                                                <input type="text" id="memberPhNew" name="memberPhNew"
+                                                    class="form-control" placeholder="-빼고 입력" maxlength="11"
+                                                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                                <a id="phNewCheckBtn"
+                                                    style="text-align: center; padding-top: 3%; width: 7rem;"
+                                                    class="btn btn-magz btn-sm">send</a>
+                                            </div>
+                                            <p id="phErrMsg2" class="error"></p>
+                                            <br>
+                                            <div id="memberPhNewCheckContainer" style="display: flex; display: none;">
+                                                <!-- 동적으로 인증번호 입력란과 확인 버튼 생성-->
+                                            </div>
+                                            <p class="successPhCheck2"></p>
                                         </div>
-                                    </div>
-
-                                    <div style="display: flex; align-items: center; margin-bottom: 8px">
-                                        <i class="ion-iphone" style="margin-right: 17px; font-size: 18px;"></i>
-                                        <div class="memberPh" id="memberPh">${memberInfo.memberPh}</div>
-                                    </div>
-
-                                    <div style="display: flex; align-items: center; margin-bottom: 8px">
-                                        <i class="ion-ios-color-wand" style="margin-right: 12px; font-size: 18px;"></i>
-                                        <div class="memberBirth" id="memberBirth">${memberInfo.memberBirth}</div>
-                                    </div>
-
-                                    <div style="display: flex; align-items: center; margin-bottom: 8px">
-                                        <i class="ion-female" style="font-size: 18px;"></i><i class="ion-male"
-                                            style="margin-right: 8px; font-size: 10px;"></i>
-                                        <div class="memberGender" id="memberGender">${memberInfo.memberGender}</div>
-                                    </div>
-
-                                    <div style="display: flex; align-items: center; margin-bottom: 8px">
-                                        <i class="ion-ribbon-b" style="margin-right: 13px; font-size: 18px;"></i>
-                                        <div class="memberGrade" id="memberGrade">${memberInfo.memberGrade}</div>
-                                    </div>
+                                        <div class="form-group text-right">
+                                            <button class="btn btn-primary btn-block">Confirm</button>
+                                        </div>
+                                    </form>
                                 </div>
+
                             </div>
                         </div>
-
-                        <!-- Start nav -->
-                        <div class="col-md-6 col-sm-12 col-xs-12" style="margin-left: 30px;">
-                            <nav class="menu" style="border-top:0px; border-bottom:0px">
-                                <div class="container">
-                                    <div id="menu-list">
-                                        <ul class="nav-list">
-                                            <li class="dropdown magz-dropdown" ">
-                            </i><a href=" category.html">My Posts<i class="ion-android-create"></i></a>
-                                                <ul class="dropdown-menu">
-                                                    <li><a href="marketPost">MarketPost</a></li>
-                                                    <li><a href="HeadHuntPost">HeadHuntPost</a></li>
-                                                    <li><a href="JobHuntPost">JobHuntPost</a></li>
-                                                    <li><a href="FreePost">FreePost</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="dropdown magz-dropdown">
-                                                <a href="category.html">My Recommend
-                                                    Posts<i class="ion-ios-heart"></i></a>
-                                                <ul class="dropdown-menu">
-                                                    <li><a href="marketPost">MarketPost</a></li>
-                                                    <li><a href="HeadHuntPost">HeadHuntPost</a></li>
-                                                    <li><a href="JobHuntPost">JobHuntPost</a></li>
-                                                    <li><a href="FreePost">FreePost</a></li>
-                                                </ul>
-                                            </li>
-                                            <li><a href="myReview">My Review List<i class="ion-ios-star"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <a href="#" class="btn btn-magz"
-                                    style="text-transform: uppercase; font-weight: 500; margin-top:100px">BOOST<i
-                                        class="ion-ios-fastforward" style="font-size: 20px;"></i></a>
-                            </nav>
-                        </div>
+                    </div>
                     </div>
                 </section>
-                <h2><a href="memberPage" style="font-size: 40px">memberPageTEST</a></h2>
 
                 <chalKagTags:webFooter />
 
@@ -285,6 +239,7 @@
                 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
             </body>
             <script>
+
                 // 마이페이지 side바 하단 active Js
                 document.addEventListener("DOMContentLoaded", function () {
                     // 현재 페이지의 URL을 가져옵니다.
@@ -306,16 +261,157 @@
                     });
                 });
 
-                // 레벨업시 경험치 초기화
-                // memberInfo 객체를 JavaScript에서 사용할 수 있도록 변수에 할당합니다.
-                // 실제 사용 시에는 서버 사이드 코드에서 해당 값을 JavaScript 변수로 전달해야 합니다.
-                var currentExp = parseInt('${memberInfo.currentExp}', 10); // 현재 경험치
-                var currentNextExp = parseInt('${memberInfo.currentNextExp}', 10); // 다음 레벨까지 필요한 경험치
 
-                // 경험치가 같아지는 순간을 감지하고, min 값을 변경합니다.
-                if (currentExp >= currentNextExp) {
-                    document.getElementById('Exp').min = currentExp.toString();
+
+
+                var memberPhId;
+                var phErrMsg;
+                var successPhCheck;
+                var containerId;
+                document.getElementById("phCheckBtn").addEventListener("click", function () {
+                    memberPhId = "memberPh";
+                    phErrMsg = "phErrMsg1";
+                    successPhCheck = "successPhCheck1";
+                    containerId = "memberPhCheckContainer";
+
+                    sendAuthenticationSMS(memberPhId, phErrMsg, successPhCheck, containerId);
+
+                });
+
+                document.getElementById("phNewCheckBtn").addEventListener("click", function () {
+                    memberPhId = "memberPhNew";
+                    phErrMsg = "phErrMsg2";
+                    successPhCheck = "successPhCheck2";
+                    containerId = "memberPhNewCheckContainer";
+                    sendAuthenticationSMS(memberPhId, phErrMsg, successPhCheck, containerId);
+
+                });
+
+
+                //인증번호 송신이 확인되면 인증번호 입력 란 생성 Js
+                var serverGeneratedCode = "";
+                var checkPhFlag = false;
+                var phRegex = /^010\d{8}$/i;
+
+                function sendAuthenticationSMS(memberPhId, phErrMsg, successPhCheck, containerId) {
+                    $("." + successPhCheck).text("");
+                    var memberPh = $("#" + memberPhId).val();
+                    // 사용자가 입력한 전화번호 가져오기
+
+                    console.log("[로그] : ")
+                    console.log("[로그] memberPhId: " + memberPhId);
+                    console.log("[로그] phRegex: " + phRegex.test(memberPhId));
+                    if (!phRegex.test(memberPh)) {
+                        $("#" + phErrMsg).text('올바른 번호 형식이 아닙니다.');
+                        $("#" + phErrMsg).css('color', 'red');
+                        return checkPhFlag;
+                    }
+
+
+
+
+
+                    // AJAX를 사용하여 서버에 전화번호 전송
+                    $.ajax({
+                        url: "/sendAuthenticationSMS",
+                        type: "POST",
+                        dataType: "text",
+                        data: { memberPh: memberPh },
+                        success: function (data) {
+                            // 서버 응답에 따른 처리
+                            if (data !== "fail") {
+                                console.log("data " + data);
+                                $("#" + phErrMsg).text('');
+                                swal("success", "인증번호 발송이 완료되었습니다.", "success", {
+                                    button: "OK",
+                                });
+                                createMemberPhCheckInput(containerId);
+
+                                document.getElementById("memberPhNewCheckContainer").style.display = "flex"; //
+                                console.log("[로그] serverGeneratedCode :" + data)
+                                // 성공적으로 SMS를 보낸 경우 추가 동작을 수행할 수 있습니다.
+                                serverGeneratedCode = data;
+                            } else {
+                                swal("fail", "인증번호 발송 실패", "error", {
+                                    button: "OK",
+                                });
+                                // SMS 전송 실패 시 사용자에게 알림을 표시할 수 있습니다.
+                            }
+                        },
+                        error: function (error) {
+                            console.log(error);
+                            alert("ajax 요청오류");
+                            // AJAX 요청 중 오류가 발생한 경우에 대한 처리
+                        }
+                    });
                 }
+
+                document.getElementById("memberPh").addEventListener("input", function () {
+                    // input 내용이 바뀔 때마다 checkPhFlag를 false로 설정 다시인증하기
+                    checkPhFlag = false;
+                });
+
+                function createMemberPhCheckInput(containerId) {
+                    var container = document.getElementById(containerId); // 동적으로 컨테이너 선택
+
+                    // 기존에 생성된 입력란과 버튼이 있다면 제거
+                    container.innerHTML = '';
+
+                    // 인증번호 입력란 생성
+                    var input = document.createElement("input");
+                    input.type = "text";
+                    input.id = containerId + "Input"; // 고유 ID 부여
+                    input.name = "memberPhCheck";
+                    input.className = "form-control";
+                    input.placeholder = "인증번호 입력";
+
+                    // 확인 버튼 생성
+                    var button = document.createElement("a");
+                    button.id = containerId + "Button"; // 고유 ID 부여
+                    button.className = "btn btn-magz btn-sm";
+                    button.style.textAlign = "center";
+                    button.style.paddingTop = "3%";
+                    button.style.width = "7rem";
+                    button.textContent = "check";
+
+                    // 생성된 요소를 부모 컨테이너에 추가
+                    container.appendChild(input);
+                    container.appendChild(button);
+
+                    // 컨테이너 표시
+                    container.style.display = "flex";
+                    console.log("[로그] input.id : " + input.id);
+
+
+
+
+                    //SMS check.js
+
+                    $(document).ready(function () {
+                        $("#" + button.id).on('click', function () {
+
+
+                            console.log("smsCheck 동작함");
+                            console.log(serverGeneratedCode);
+                            if ($("#" + input.id).val() == serverGeneratedCode) {
+                                $("#" + input.id).prop('disabled', true);
+                                $("." + successPhCheck).text("인증번호가 일치합니다.");
+                                $("." + successPhCheck).css("color", "green");
+                                checkPhFlag = true;
+                                return checkPhFlag;
+                            } else {
+                                $("." + successPhCheck).text("인증번호가 일치하지 않습니다. 확인해주시기 바랍니다.");
+                                $("." + successPhCheck).css("color", "red");
+                                $(this).attr("autofocus", true);
+                                checkPhflag = false;
+                                return checkPhFlag;
+
+                            }
+                        });
+                    });
+                }
+
+
 
 
 

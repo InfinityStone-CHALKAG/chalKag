@@ -13,7 +13,7 @@ public class UpdateJobHuntPostController {
 	@Autowired
 	private JobHuntPostService jobHuntPostService;
 	
-	@RequestMapping(value = "/UpdateJobHuntPost", method = RequestMethod.POST)
+	@RequestMapping(value = "/updateJobHuntPost", method = RequestMethod.POST)
 	public String writeJobHuntPost(JobHuntPostDTO jobHuntPostDTO) {
 		// 사용자의 글을 수정
 		if(!jobHuntPostService.delete(jobHuntPostDTO)) {

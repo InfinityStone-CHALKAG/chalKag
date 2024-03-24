@@ -48,8 +48,6 @@
                 }
 
                 .changeList li {
-                    text-align: left;
-                    /* 텍스트를 양쪽 정렬한다. */
                     margin-bottom: 15px;
                     /* 리스트 아이템 사이의 간격을 조정한다. 필요에 따라 조정할 수 있습니다. */
                 }
@@ -106,16 +104,16 @@
                                             <div class="featured-author-cover"
                                                 style="background-image: url('css/user/images/news/img15.jpg');">
                                                 <div class="badges">
-                                                    <div class="badge-item"><i class="ion-star"></i> PREMIUM</div>
+                                                    <c:if test="${memberInfo.memberGrade eq 'PREMIUM'}">
+                                                        <div class="badge-item"><i class="ion-star"></i> PREMIUM</div>
+                                                    </c:if>
+                                                    <c:if test="${memberInfo.memberGrade eq 'USER'}">
+                                                        <div class="badge-item"><i class="ion-star"></i> PREMIUM...할래?</div>
+                                                    </c:if>
                                                 </div>
                                                 <div class="featured-author-center">
                                                     <figure class="featured-author-picture">
-                                                        <!-- <img src="profileImg/${memberInfo.profileImgName}" -->
-                                                        <img src="css/user/images/sponsored.png" alt="Sample Article"
-                                                            data-input="fileInput" style="cursor: pointer;">
-                                                        <!-- data-input 태그를 통해 이미지를 누르면 파일 선택 진행 -->
-                                                        <input type="file" id="fileInput" class="fileInput"
-                                                            accept="image/*" style="display: none;">
+                                                        <img src="profileImg/${memberInfo.profileImgName}" alt="Sample Article">
                                                     </figure>
                                                     <div class="featured-author-info">
                                                         <h2 class="name">${memberInfo.memberNickname}</h2>
@@ -123,6 +121,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                       
                                             <div class="featured-author-body">
                                                 <div class="featured-author-count">
                                                     <div class="item" style="width: -webkit-calc(100% / 2);">
@@ -138,12 +137,12 @@
                                                         </a>
                                                     </div>
                                                 </div>
-                                                <div class="featured-author-quote"
-                                                    style="font-weight: bold; font-family: 'Lato'; font-size:19px ;">Lv
-                                                    : 5</div>
+                                                <div class="featured-author-quote" style="font-weight: bold; font-family: 'Lato'; font-size:19px ;">
+                                                    LV : ${memberInfo.currentLevel}
+                                                </div>
                                                 <div style="display: flex; justify-content: center;">
-                                                    <input type="range" id="Exp" name="Exp" min="0" max="1000"
-                                                        value="500" style="width: 250px;">
+                                                    <input type="range" id="Exp" name="Exp" min="0" max="${memberInfo.currentNextExp}" value="${memberInfo.currentExp}"
+                                                        style="width: 250px;">
                                                 </div>
                                                 <div class="featured-author-quote"
                                                     style="font-weight: bold; font-family: 'inherit'; margin-top: 10px;">
@@ -156,40 +155,41 @@
                                                         " Write a self-introduction to showcase yourself "
                                                     </c:if>
                                                 </div>
-                                                <div class="featured-author-quote" style="margin-top: 11px;">
-                                                    <button class="btn btn-primary" id="ChangeIntroductionButton">Change
-                                                        Introduction</button>
+
+
+                                                <div class="featured-author-quote">
+                                                    <ul class="changeList">
+                                                        <li><a href="myPage" class="active">MY INFORMATION</a></li>
+                                                        <li><a href="changeInformation">CHANGE INFORMATION</a></li>
+                                                        <li><a href="changeNickname">CHANGE NICKNAME</a></li>
+                                                        <li><a href="changePw">CHANGE PASSWORD</a></li>
+                                                        <li><a href="changePh">CHANGE PHONENUMBER</a></li>
+                                                    </ul>
                                                 </div>
                                             </div>
-                                            <ul class="changeList">
-                                                <li><a href="myPage">MY INFORMATION</a></li>
-                                                <li><a href="changeNickname" class="active">CHANGE NICKNAME</a></li>
-                                                <li><a href="changePassword">CHANGE PASSWORD</a></li>
-                                                <li><a href="changePhoneNumber">CHANGE PHONENUMBER</a></li>
-                                            </ul>
                                         </div>
                                     </div>
                                 </div>
                             </aside>
                         </div>
-                        <div class="col-md-5 col-sm-12 col-xs-12"
-                            style="border: 2px solid #F73F52; padding-top: 10px; padding-bottom: 10px; border-radius: 10px; margin-left: 20px;">
-
-
+                        <div class="col-md-5 col-sm-12 col-xs-12">
                             <div class="box box-border">
                                 <div class="box-body">
-                                    <h4>Change PhoneNumber</h4>
-                                    <form>
+                                    <h4>Change Password</h4>
+                                    <form id="changePassword" method="post" action="changePassword"
+                                    onsubmit="return true">
                                         <div class="form-group">
-                                            <label>Before</label>
-                                            <input type="text" name="memberNickname" class="form-control">
+                                            <label>Present</label>
+                                            <input type="text" name="memberPw" class="form-control">
                                         </div>
                                         <div class="form-group">
-                                            <label>After</label>
-                                            <input type="text" name="memberNickname" class="form-control">
+                                            <label>New Password</label>
+                                            <input type="text" name="memberPwNew" class="form-control">
+                                            <label>New Password Check</label>
+                                            <input type="text" name="memberPwNewCheck" class="form-control">
                                         </div>
                                         <div class="form-group text-right">
-                                            <button class="btn btn-primary btn-block">Confrim</button>
+                                            <button class="btn btn-primary btn-block">Confirm</button>
                                         </div>
                                     </form>
                                 </div>
@@ -207,88 +207,28 @@
                 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
             </body>
             <script>
-                $(document).ready(function () {
-                    $("#ChangeIntroductionButton").click(function () {
-                        if ($(this).text() === "Change Introduction") {
-                            // 버튼이 'Change Introduction' 상태일 때
-                            var currentIntroduction = $("#Introdudction").text().trim();
-                            // 쌍따옴표 제거
-                            currentIntroduction = currentIntroduction.replace(/^"|"$/g, '');
-                            console.log("[로그] currentIntroduction: " + currentIntroduction);
-                            $("#Introdudction").html('<input type="text" id="introductionInput" value="' + currentIntroduction + '" style="border: 2px solid #F73F52; width: 100%; height: 25px; color: black; text-align: center;" />');
-                            $(this).text("Confirm");
-                            $(this).css({
-                                'width': '188.25px',
-                                'height': '43.42px'
-                            });
+                // 마이페이지 side바 하단 active Js
+                document.addEventListener("DOMContentLoaded", function () {
+                    // 현재 페이지의 URL을 가져옵니다.
+                    var currentPage = window.location.href;
+
+                    // 모든 메뉴 항목을 찾습니다.
+                    var menuItems = document.querySelectorAll('li a');
+
+                    // 각 메뉴 항목을 순회하면서
+                    menuItems.forEach(function (item) {
+                        // 만약 현재 페이지의 URL이 메뉴 항목의 href 속성과 일치한다면
+                        if (currentPage.includes(item.getAttribute('href'))) {
+                            // 해당 메뉴 항목에 'active' 클래스를 추가합니다.
+                            item.classList.add('active');
                         } else {
-                            // 버튼이 'Confirm' 상태일 때
-                            var updatedIntroduction = $("#introductionInput").val().trim();
-                            if (updatedIntroduction === "") {
-                                updatedIntroduction = "Write a self-introduction to showcase yourself";
-                            }
-                            // 입력된 문구 양 끝에 쌍따옴표 추가
-                            updatedIntroduction = '"' + updatedIntroduction + '"';
-                            $("#Introdudction").text(updatedIntroduction);
-                            $(this).text("Change Introduction");
-                            // 버튼에 width와 height 스타일 적용
-                            $(this).css({
-                                'width': '188.25px',
-                                'height': '43.42px'
-                            });
+                            // 일치하지 않는 경우, 'active' 클래스를 제거합니다.
+                            item.classList.remove('active');
                         }
                     });
                 });
 
 
-                // 마이페이지 side바 하단 active Js
-                document.addEventListener("DOMContentLoaded", function () {
-                    // 모든 링크에 대한 참조를 가져옵니다.
-                    var links = document.querySelectorAll('.changeList a');
-
-                    // 각 링크에 클릭 이벤트 리스너를 추가합니다.
-                    links.forEach(function (link) {
-                        link.addEventListener('click', function () {
-                            // 먼저, 모든 링크에서 'active' 클래스를 제거합니다.
-                            links.forEach(function (item) {
-                                item.classList.remove('active');
-                            });
-
-                            // 클릭된 링크에 'active' 클래스를 추가합니다.
-                            this.classList.add('active');
-                        });
-                    });
-                });
-
-                //마이페이지 프로필 이미지 변경
-                document.addEventListener('DOMContentLoaded', function () {
-                    // 이미지 요소를 선택합니다.
-                    const image = document.querySelector('.featured-author-picture img');
-
-                    // 이미지에 클릭 이벤트 리스너를 추가합니다.
-                    image.addEventListener('click', function () {
-                        // 해당 이미지에 매칭되는 파일 입력 필드의 id를 가져옵니다.
-                        const fileInputId = image.getAttribute('data-input');
-                        const fileInput = document.getElementById(fileInputId);
-
-                        // 파일 입력 필드를 클릭하게 합니다.
-                        fileInput.click();
-
-                        // 파일 입력 필드에 onchange 이벤트 리스너를 추가합니다.
-                        fileInput.onchange = function (event) {
-                            const file = event.target.files[0]; // 선택된 파일을 가져옵니다.
-                            if (file) {
-                                // FileReader 객체를 생성하여 파일을 읽습니다.
-                                const reader = new FileReader();
-                                reader.onload = function (e) {
-                                    // 읽기 작업이 완료되면 이미지의 src 속성을 변경합니다.
-                                    image.src = e.target.result;
-                                };
-                                reader.readAsDataURL(file); // 파일을 Data URL 형식으로 읽습니다.
-                            }
-                        };
-                    });
-                });
             </script>
 
 
