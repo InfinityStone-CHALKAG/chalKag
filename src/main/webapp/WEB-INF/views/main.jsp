@@ -8,6 +8,20 @@
     <chalKagTags:webCss/>
 </head>
 
+<style>
+    input[type='range']::-webkit-slider-thumb {
+        opacity: 0;
+    }
+
+    input[type='range'] {
+        pointer-events: none;
+    }
+
+    input[type="range"] {
+        accent-color: #F73F52;
+    }
+</style>
+
 <body class="skin-orange">
 
 <chalKagTags:webHeader/>
@@ -565,7 +579,8 @@
                                         </div>
                                         <div class="featured-author-center">
                                             <figure class="featured-author-picture">
-                                                <img src="profileImg/${memberInfo.profileImgName}" alt="Sample Article" style="width: 100%; height: 100%; object-fit: cover;">
+                                                <img src="profileImg/${memberInfo.profileImgName}" alt="Sample Article"
+                                                     style="width: 100%; height: 100%; object-fit: cover;">
                                             </figure>
                                             <div class="featured-author-info">
                                                 <h2 class="name">${memberInfo.memberNickname}</h2>
@@ -605,6 +620,22 @@
                                                     </div>
                                                 </a>
                                             </div>
+                                        </div>
+                                        <div class="featured-author-quote"
+                                             style="font-weight: bold; font-family: 'Lato'; font-size:19px ;">
+                                            LV . ${memberInfo.currentLevel}
+                                        </div>
+                                        <div style="display: flex; justify-content: center;">
+                                            <input type="range" id="Exp" name="Exp" min="0"
+                                                   max="${memberInfo.currentNextExp}"
+                                                   value="${memberInfo.currentExp}" style="width: 250px;">
+                                        </div>
+                                        <div class="detail" style="text-align: center">
+
+                                            <a style="text-transform: uppercase; color: #F73F52; text-decoration-line: none;">
+                                                    ${memberInfo.currentExp} / ${memberInfo.currentNextExp}
+                                            </a>
+
                                         </div>
                                         <div class="featured-author-quote">
                                             <c:if test="${not empty memberInfo.memberIntroduction}">
