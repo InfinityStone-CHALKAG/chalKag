@@ -17,17 +17,17 @@ public class MemberDAO {
   private JdbcTemplate jdbcTemplate;
 
   // 아이디 중복검사.안승준
-  private static final String SELECTALL_CHECKID = "SELECT MEMBER_id " +
+  private static final String SELECTONE_CHECKID = "SELECT MEMBER_id " +
       "FROM MEMBER " +
       "WHERE MEMBER_id = ?";
 
   // 전화번호 중복검사 .안승준
-  private static final String SELECTALL_CHECKPH = "SELECT MEMBER_ph " +
+  private static final String SELECTONE_CHECKPH = "SELECT MEMBER_ph " +
       "FROM MEMBER " +
       "WHERE MEMBER_PH = ?";
 
   // 닉네임 중복검사.안승준
-  private static final String SELECTALL_CHECKNICKNAME = "SELECT MEMBER_nickname " +
+  private static final String SELECTONE_CHECKNICKNAME = "SELECT MEMBER_nickname " +
       "FROM MEMBER " +
       "WHERE MEMBER_nickname = ?";
 
@@ -41,13 +41,22 @@ public class MemberDAO {
       "LIMIT 10";
 
   // 로그인.안승준
-  private static final String SELECTONE_SIGNIN = "SELECT MEMBER_id , MEMBER_grade " + "FROM MEMBER " + "WHERE MEMBER_id = ? " + "AND MEMBER_pw = ?";
+  private static final String SELECTONE_SIGNIN = "SELECT MEMBER_id , MEMBER_grade " +
+      "FROM MEMBER " +
+      "WHERE MEMBER_id = ? " +
+      "AND MEMBER_pw = ?";
 
   // 아이디 찾기.안승준
-  private static final String SELECTONE_FINDID = "SELECT MEMBER_id " + "FROM MEMBER " + "WHERE MEMBER_name = ? " + "AND MEMBER_ph = ?";
+  private static final String SELECTONE_FINDID = "SELECT MEMBER_id " +
+      "FROM MEMBER " +
+      "WHERE MEMBER_name = ? " +
+      "AND MEMBER_ph = ?";
 
   // 비밀번호 찾기.안승준
-  private static final String SELECTONE_FINDPW = "SELECT MEMBER_pw " + "FROM MEMBER " + "WHERE MEMBER_id = ? " + "AND MEMBER_ph = ? ";
+  private static final String SELECTONE_FINDPW = "SELECT MEMBER_pw " +
+      "FROM MEMBER " +
+      "WHERE MEMBER_id = ? " +
+      "AND MEMBER_ph = ? ";
 
   // 메인페이지 내 정보 출력.안승준
   private static final String SELECTONE_MYPAGESIMPLE = "SELECT MEMBER.MEMBER_id, " +
@@ -145,8 +154,8 @@ public class MemberDAO {
       "WHERE MEMBER_id = ? ";
 
   // 회원 비밀번호 확인.안승준
-  private static final String SELECTONE_CHECKPW = "SELECT MEMBER_pw" +
-      "FROM MEMBER" +
+  private static final String SELECTONE_CHECKPW = "SELECT MEMBER_pw " +
+      "FROM MEMBER " +
       "WHERE MEMBER_id = ?";
 
   private static final String SELECTONE_OAUTH2SIGNIN = "SELECT MEMBER_id, " +
@@ -155,7 +164,15 @@ public class MemberDAO {
       "WHERE MEMBER_id = ?";
 
   // 회원가입.안승준
-  private static final String INSERT_SINGUP = "INSERT INTO MEMBER ( MEMBER_id," + "MEMBER_pw," + "MEMBER_name," + "MEMBER_nickname," + "MEMBER_ph," + "MEMBER_birth," + "MEMBER_gender," + "MEMBER_introduction)" + "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?)";
+  private static final String INSERT_SINGUP = "INSERT INTO MEMBER ( MEMBER_id, " +
+      "MEMBER_pw, " +
+      "MEMBER_name, " +
+      "MEMBER_nickname, " +
+      "MEMBER_ph, " +
+      "MEMBER_birth, " +
+      "MEMBER_gender, " +
+      "MEMBER_introduction) " +
+      "VALUES ( ?, ?, ?, ?, ?, ?, ?, ?)";
 
   // 비밀번호 변경.안승준
   private static final String UPDATE_CHANGEPW = "UPDATE MEMBER " +
@@ -163,9 +180,13 @@ public class MemberDAO {
       "WHERE MEMBER_id = ?";
 
   // 닉네임 변경.안승준
-  private static final String UPDATE_CHANGENICKNAME = "UPDATE MEMBER" + "SET MEMBER_nickname = ?" + "WHERE MEMBER_id = ?";
+  private static final String UPDATE_CHANGENICKNAME = "UPDATE MEMBER " +
+      "SET MEMBER_nickname = ? " +
+      "WHERE MEMBER_id = ?";
 
-  private static final String UPDATE_CHANGEPH = "UPDATE MEMBER" + "SET MEMBER_ph = ?" + "WHERE MEMBER_id = ?";
+  private static final String UPDATE_CHANGEPH = "UPDATE MEMBER " +
+      "SET MEMBER_ph = ? " +
+      "WHERE MEMBER_id = ? ";
 
   // 자기소개 변경.안승준
   private static final String UPDATE_CHANGEINTRODUCTION = "UPDATE MEMBER " +
@@ -173,7 +194,9 @@ public class MemberDAO {
       "WHERE MEMBER_id = ?";
 
   // 회원 탈퇴.안승준
-  private static final String UPDATE_DELETEACCOUNT = "UPDATE MEMBER" + "SET MEMBER_grade = 'delete'" + "WHERE MEMBER_id = ?";
+  private static final String UPDATE_DELETEACCOUNT = "UPDATE MEMBER " +
+      "SET MEMBER_grade = 'delete' " +
+      "WHERE MEMBER_id = ?";
 
   // 사용 안 할 예정.안승준
   private static final String DELETE = "";
@@ -201,17 +224,17 @@ public class MemberDAO {
     try {
       if (memberDTO.getSearchCondition().equals("checkId")) {
         Object[] args = {memberDTO.getMemberId()};
-        result = jdbcTemplate.queryForObject(SELECTALL_CHECKID, args, new CheckIdRowMapper());
+        result = jdbcTemplate.queryForObject(SELECTONE_CHECKID, args, new CheckIdRowMapper());
         System.out.println("MemberDAO(selectOne) Out로그 = [" + result + "]");
         return result;
       } else if (memberDTO.getSearchCondition().equals("checkPh")) {
         Object[] args = {memberDTO.getMemberId()};
-        result = jdbcTemplate.queryForObject(SELECTALL_CHECKPH, args, new CheckPhRowMapper());
+        result = jdbcTemplate.queryForObject(SELECTONE_CHECKPH, args, new CheckPhRowMapper());
         System.out.println("MemberDAO(selectOne) Out로그 = [" + result + "]");
         return result;
       } else if (memberDTO.getSearchCondition().equals("checkNickname")) {
         Object[] args = {memberDTO.getMemberNickname()};
-        result = jdbcTemplate.queryForObject(SELECTALL_CHECKNICKNAME, args, new CheckNicknameRowMapper());
+        result = jdbcTemplate.queryForObject(SELECTONE_CHECKNICKNAME, args, new CheckNicknameRowMapper());
         System.out.println("MemberDAO(selectOne) Out로그 = [" + result + "]");
         return result;
       } else if (memberDTO.getSearchCondition().equals("signIn")) {
@@ -240,7 +263,7 @@ public class MemberDAO {
         System.out.println("MemberDAO(selectOne) Out로그 = [" + result + "]");
         return result;
       } else if (memberDTO.getSearchCondition().equals("checkPw")) {
-        Object[] args = {memberDTO.getMemberId(), memberDTO.getMemberPw()};
+        Object[] args = {memberDTO.getMemberId()};
         result = jdbcTemplate.queryForObject(SELECTONE_CHECKPW, args, new CheckPwRowMapper());
         System.out.println("MemberDAO(selectOne) Out로그 = [" + result + "]");
         return result;

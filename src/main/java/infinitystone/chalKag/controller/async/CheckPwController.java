@@ -22,7 +22,7 @@ public class CheckPwController {
 
     MemberDTO result = memberService.selectOne(memberDTO);
 
-    if (result == null) {
+    if (result != null) {
       System.out.println("CheckPwController Out로그");
       return 1;
     }
