@@ -229,7 +229,7 @@ public class MemberDAO {
         System.out.println("MemberDAO(selectOne) Out로그 = [" + result + "]");
         return result;
       } else if (memberDTO.getSearchCondition().equals("checkPh")) {
-        Object[] args = {memberDTO.getMemberId()};
+        Object[] args = {memberDTO.getMemberPh()};
         result = jdbcTemplate.queryForObject(SELECTONE_CHECKPH, args, new CheckPhRowMapper());
         System.out.println("MemberDAO(selectOne) Out로그 = [" + result + "]");
         return result;
