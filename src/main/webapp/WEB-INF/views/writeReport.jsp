@@ -23,7 +23,7 @@
                           <li><a href="main">Home</a></li>
                         <li class="active">Report Us</li>
                       </ol>
-                                <h1 class="page-title">Report Us</h1>
+                                <h1 class="page-title">Report</h1>
                                 <p class="page-subtitle">We hear you for better community</p>
                                 <div class="line thin"></div>
                                 <div class="page-description">

@@ -70,7 +70,7 @@ public class ChangeInformationController {
 
       if (!profileImgService.insert(profileImgDTO)) {
         System.out.println("ChangeInformationController Out로그");
-        return "refirect:error";
+        return "redirect:error";
       }
 
     }
@@ -82,6 +82,14 @@ public class ChangeInformationController {
 
     System.out.println("ChangeInformationController Out로그");
 
+    try {
+		Thread.sleep(1000);
+	} catch (InterruptedException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		return "redirect:myPage";
+	}
+    
     return "redirect:myPage";
   }
 

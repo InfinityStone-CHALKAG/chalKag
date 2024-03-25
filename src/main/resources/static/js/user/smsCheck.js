@@ -13,7 +13,7 @@ $(document).ready(function() {
             $(".successPhCheck").text("인증번호가 일치하지 않습니다. 확인해주시기 바랍니다.");
             $(".successPhCheck").css("color", "red");
             $(this).attr("autofocus", true);
-            checkPhflag = false;
+            checkPhFlag = false;
 			return checkPhFlag;
             
         }
