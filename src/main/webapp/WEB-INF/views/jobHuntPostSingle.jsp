@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="chalKagTags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,11 +49,13 @@
 								</ul>
 							</header>
 							<div class="main">
-								<p>직업 : ${jobHuntPostSingle.jobHuntPostRole}</p>
-								<p>지역 : ${jobHuntPostSingle.jobHuntPostRegion}</p>
-								<p>작업 페이 : ${jobHuntPostSingle.jobHuntPostPay}</p>
-								<p>작업 날짜 : ${jobHuntPostSingle.jobHuntPostWorkdate}</p>
-								<p>쵤영 컨셉 : ${jobHuntPostSingle.jobHuntPostConcept}</p>
+								<div style="display: flex;">
+									<p>직업 : ${jobHuntPostSingle.jobHuntPostRole}</p>
+									<p>지역 : ${jobHuntPostSingle.jobHuntPostRegion}</p>
+									<p>작업 페이 : ${jobHuntPostSingle.jobHuntPostPay}</p>
+									<p>작업 날짜 : ${jobHuntPostSingle.jobHuntPostWorkdate}</p>
+									<p>쵤영 컨셉 : ${jobHuntPostSingle.jobHuntPostConcept}</p>
+								</div>
 								<!-- 게시글 이미지 출력 추후 추가 -->
 								<div class="featured">
 									<figure>
@@ -193,6 +196,7 @@
 					</div>
 				</div>
 			</div>
+		</div>
 		</section>
 
 		<!-- Start footer tag로 출력 -->

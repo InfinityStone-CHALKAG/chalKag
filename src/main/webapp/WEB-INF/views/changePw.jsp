@@ -108,12 +108,14 @@
                                                         <div class="badge-item"><i class="ion-star"></i> PREMIUM</div>
                                                     </c:if>
                                                     <c:if test="${memberInfo.memberGrade eq 'USER'}">
-                                                        <div class="badge-item"><i class="ion-star"></i> PREMIUM...할래?</div>
+                                                        <div class="badge-item"><i class="ion-star"></i> PREMIUM...할래?
+                                                        </div>
                                                     </c:if>
                                                 </div>
                                                 <div class="featured-author-center">
                                                     <figure class="featured-author-picture">
-                                                        <img src="profileImg/${memberInfo.profileImgName}" alt="Sample Article">
+                                                        <img src="profileImg/${memberInfo.profileImgName}"
+                                                            alt="Sample Article">
                                                     </figure>
                                                     <div class="featured-author-info">
                                                         <h2 class="name">${memberInfo.memberNickname}</h2>
@@ -121,7 +123,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                       
+
                                             <div class="featured-author-body">
                                                 <div class="featured-author-count">
                                                     <div class="item" style="width: -webkit-calc(100% / 2);">
@@ -137,12 +139,14 @@
                                                         </a>
                                                     </div>
                                                 </div>
-                                                <div class="featured-author-quote" style="font-weight: bold; font-family: 'Lato'; font-size:19px ;">
+                                                <div class="featured-author-quote"
+                                                    style="font-weight: bold; font-family: 'Lato'; font-size:19px ;">
                                                     LV : ${memberInfo.currentLevel}
                                                 </div>
                                                 <div style="display: flex; justify-content: center;">
-                                                    <input type="range" id="Exp" name="Exp" min="0" max="${memberInfo.currentNextExp}" value="${memberInfo.currentExp}"
-                                                        style="width: 250px;">
+                                                    <input type="range" id="Exp" name="Exp" min="0"
+                                                        max="${memberInfo.currentNextExp}"
+                                                        value="${memberInfo.currentExp}" style="width: 250px;">
                                                 </div>
                                                 <div class="featured-author-quote"
                                                     style="font-weight: bold; font-family: 'inherit'; margin-top: 10px;">
@@ -176,17 +180,22 @@
                             <div class="box box-border">
                                 <div class="box-body">
                                     <h4>Change Password</h4>
-                                    <form id="changePassword" method="post" action="changePassword"
-                                    onsubmit="return true">
-                                        <div class="form-group">
-                                            <label>Present</label>
-                                            <input type="text" name="memberPw" class="form-control">
+                                    <form id="changePwForm" method="post" action="changePw">
+
+                                        <label>Present</label>
+                                        <div style="display: flex;">
+                                            <input type="text" id="memberPw" name="memberPw" class="form-control">
+                                            <a id="pwCheckBtn" style="text-align: center; padding-top: 3%; width: 7rem;"
+                                                class="btn btn-magz btn-sm" onclick="checkPresentPw()">check</a>
                                         </div>
+                                        <p id="PresentPwErrMsg" class="error"></p>
                                         <div class="form-group">
                                             <label>New Password</label>
-                                            <input type="text" name="memberPwNew" class="form-control">
+                                            <input type="text" id="newPw" name="newPw" class="form-control"
+                                                placeholder="8자 이상 영문, 숫자, 특수문자포함">
+                                            <p id="pwError" class="error"></p>
                                             <label>New Password Check</label>
-                                            <input type="text" name="memberPwNewCheck" class="form-control">
+                                            <input type="text" id="newPwCheck" name="newPwCheck" class="form-control">
                                         </div>
                                         <div class="form-group text-right">
                                             <button class="btn btn-primary btn-block">Confirm</button>
@@ -229,7 +238,82 @@
                 });
 
 
+
+                // 비밀번호 확인 함수
+                var checkPasswordFlag = false;
+                function checkPassword() {
+                    var password = document.getElementById("newPw").value;
+                    var confirmPassword = document.getElementById("newPwCheck").value;
+                    var errorElement = document.getElementById("pwError");
+
+                    // 비밀번호 형식 검사
+                    var pwRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+
+
+
+                    if (!pwRegex.test(password)) {
+                        errorElement.textContent = "비밀번호는 최소 8자 이상이며 영문, 숫자, 특수문자를 포함해야 합니다."; // 에러 메시지 표시
+                        errorElement.style.color = "red";
+                        checkPasswordFlag = false;
+                        return checkPasswordFlag;
+                    }
+
+
+                    // 비밀번호와 비밀번호 확인이 일치하는지 확인
+                    if (password === confirmPassword) {
+                        errorElement.textContent = "비밀번호가 일치합니다."; // 에러 메시지를 초기화
+                        errorElement.style.color = "green";
+                        checkPasswordFlag = true;
+                        return checkPasswordFlag;
+                    }
+                    else {
+                        errorElement.textContent = "비밀번호가 일치하지 않습니다."; // 에러 메시지 표시
+                        errorElement.style.color = "red";
+                        checkPasswordFlag = false;
+                        return checkPasswordFlag;
+                    }
+
+
+                }
+
+                // 비밀번호 확인 필드 입력 시 체크 함수 호출
+                document.getElementById("newPw").addEventListener("input", checkPassword);
+                document.getElementById("newPwCheck").addEventListener("input", checkPassword);
+
+                var changePwForm = document.getElementById('changePwForm');
+
+                if (changePwForm) {
+                    changePwForm.onsubmit = function () {
+                        return validateForm();
+                    };
+                }
+
+                function validateForm() {
+
+                    if (checkPresentPwFlag == false) {
+                        swal("fail", "본인획인을 해주세요.", "error", {
+                            button: "OK",
+                        });
+                        return false;
+                    }
+
+                    if (checkPasswordFlag == false) {
+                        swal("fail", "변경할 비밀번호를 확인해주세요.", "error", {
+                            button: "OK",
+                        });
+                        return false;
+                    }
+                    // 모든 검증이 통과했을 경우
+                    return true;
+                }
+
+
+
             </script>
+
+
+            <script src="js/user/checkPresentPw.js"></script>
+
 
 
             </html>

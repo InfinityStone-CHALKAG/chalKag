@@ -155,7 +155,8 @@
                                                 <div class="featured-author-center">
                                                     <figure class="featured-author-picture">
                                                         <img src="profileImg/${memberInfo.profileImgName}"
-                                                            alt="Sample Article">
+                                                            alt="Sample Article"
+                                                            style="width: 100%; height: 100%; object-fit: cover;">
                                                     </figure>
                                                     <div class="featured-author-info">
                                                         <h2 class="name">${memberInfo.memberNickname}</h2>
@@ -231,21 +232,20 @@
 
                                                         <figure class="featured-author-picture">
                                                             <img src="profileImg/${memberInfo.profileImgName}"
-                                                                id="changeImgPreview" alt="Image Not Loaded" style="width: 76px; 
+                                                                id="preview" alt="Image Not Loaded" style="width: 76px; 
                                                 height: 76px; 
                                                 border-radius: 50%; 
                                                 object-fit: cover;
                                                 border: 1px solid rgb(168, 168, 168); 
                                                 margin-bottom: 10px">
                                                         </figure>
-                                                        <input type="file" name="file" id="imageInput" accept="image/*"
+                                                        <input type="file" name="file" id="fileInput" accept="image/*"
                                                             style="display: none;">
-                                                        <button type="button" id="imgSelectButton"
-                                                            class="btn btn-primary btn-sm btn-rounded">Select
-                                                            Img</button>
+                                                        <button type="button" id="uploadButton"
+                                                            class="btn btn-primary btn-sm btn-rounded">Upload</button>
 
-                                                            <button type="button" id="cancelButton"
-                                                            class="btn btn-primary btn-sm btn-rounded">Cancle</button>
+                                                        <button type="button" id="defaultButton"
+                                                            class="btn btn-primary btn-sm btn-rounded">Default</button>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -298,38 +298,47 @@
                     });
                 });
 
-                document.getElementById('imgSelectButton').addEventListener('click', function () {
-                    document.getElementById('imageInput').click();
-                });
-
-                document.getElementById('imageInput').addEventListener('change', function (event) {
-                    var reader = new FileReader();
-                    reader.onload = function () {
-                        var output = document.getElementById('changeImgPreview');
-                        output.src = reader.result;
-                    }
-                    reader.readAsDataURL(event.target.files[0]);
-                });
 
 
 
-                const textarea = document.getElementById('autoresizing');
+                // 텍스트박스 길이 초과시 스크롤생성
+                const textarea = document.getElementById('memberIntroduction');
                 textarea.addEventListener('input', autoResize, false);
 
                 function autoResize() {
                     this.style.height = 'auto';
                     this.style.height = this.scrollHeight + 'px';
                 }
-            // JavaScript 코드 예시
-const initialImgSrc = "profileImg/${memberInfo.profileImgName}"; // 초기 이미지 소스
-const imgElement = document.getElementById("changeImgPreview"); // 이미지 요소 선택
-const cancelButton = document.getElementById("cancelButton"); // 취소 버튼 요소 선택
 
-cancelButton.addEventListener("click", function() {
-  imgElement.src = initialImgSrc; // 이미지 소스를 초기 상태로 변경
-});
+
+                // Default 버튼 클릭 시 미리보기를 default 이미지로 변경 및 파일 설정
+                defaultButton.addEventListener('click', function () {
+                    preview.src = 'profileImg/default.png';
+
+                    // 파일 입력 요소 가져오기
+                    var fileInput = document.getElementById('fileInput');
+
+                    // default.png 파일을 가져오기
+                    fetch('profileImg/default.png')
+                        .then(response => response.blob()) // 응답을 Blob으로 변환
+                        .then(blob => {
+                            // default.png와 해당 내용을 포함한 새로운 File 객체 생성
+                            var defaultFile = new File([blob], "default.png", { type: "image/png" });
+
+                            // default 파일을 포함하는 새로운 FileList 객체 생성
+                            var fileList = new DataTransfer();
+                            fileList.items.add(defaultFile);
+
+                            // 파일 입력의 files 속성을 생성된 FileList 객체로 설정
+                            fileInput.files = fileList.files;
+                        })
+                        .catch(error => console.error('파일 가져오기 오류:', error));
+
+                });
 
             </script>
+            <!-- 이미지 등록 및 유효성 signUp.js 재활용 -->
+            <script src="js/user/signUp.js"></script>
 
 
             </html>

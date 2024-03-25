@@ -116,7 +116,8 @@
                                                 <div class="featured-author-center">
                                                     <figure class="featured-author-picture">
                                                         <img src="profileImg/${memberInfo.profileImgName}"
-                                                            alt="Sample Article" style="width: 100%; height: 100%; object-fit: cover;">
+                                                            alt="Sample Article"
+                                                            style="width: 100%; height: 100%; object-fit: cover;">
                                                     </figure>
                                                     <div class="featured-author-info">
                                                         <h2 class="name">${memberInfo.memberNickname}</h2>
@@ -194,14 +195,15 @@
                                     height: 76px; 
                                     border-radius: 50%; 
                                     object-fit: cover;
-                                    border: 1px solid rgb(168, 168, 168);"> 
+                                    border: 1px solid rgb(168, 168, 168);">
                                         </figure>
                                         <div style="margin-left: 10px;">
                                             <div class="memberName" id="memberName"
                                                 style="font-size: 30px; font-weight: bold;">
                                                 ${memberInfo.memberName}
                                             </div>
-                                            <div class="memberId" id="memberId"  style="font-size: 20px; font-weight:20px" >${memberInfo.memberId}</div>
+                                            <div class="memberId" id="memberId"
+                                                style="font-size: 20px; font-weight:20px">${memberInfo.memberId}</div>
                                         </div>
                                     </div>
 
@@ -274,6 +276,7 @@
                         </div>
                     </div>
                 </section>
+                <h3>${memberInfo}</h3>
                 <h2><a href="memberPage" style="font-size: 40px">memberPageTEST</a></h2>
 
                 <chalKagTags:webFooter />

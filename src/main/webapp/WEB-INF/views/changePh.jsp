@@ -181,8 +181,7 @@
                             <div class="box box-border">
                                 <div class="box-body">
                                     <h4>Change PhoneNumber</h4>
-                                    <form id="changePhoneNumber" method="post" action="changePhoneNumber"
-                                        onsubmit="return true">
+                                    <form id="changePhForm" method="post" action="changePh">
                                         <!-- 회원 폰번호 입력 -->
                                         <div class="form-group">
                                             <label>Present</label>
@@ -192,31 +191,14 @@
                                                     oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
                                                 <a id="phCheckBtn"
                                                     style="text-align: center; padding-top: 3%; width: 7rem;"
-                                                    class="btn btn-magz btn-sm">send</a>
+                                                    class="btn btn-magz btn-sm" onclick="checkPh()">send</a>
                                             </div>
-                                            <p id="phErrMsg1" class="error"></p>
+                                            <p id="phErrMsg" class="error"></p>
                                             <br>
                                             <div id="memberPhCheckContainer" style="display: flex; display: none;">
                                                 <!-- 동적으로 인증번호 입력란과 확인 버튼 생성-->
                                             </div>
-                                            <p class="successPhCheck1"></p>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>New PhoneNumber</label>
-                                            <div style="display: flex;">
-                                                <input type="text" id="memberPhNew" name="memberPhNew"
-                                                    class="form-control" placeholder="-빼고 입력" maxlength="11"
-                                                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
-                                                <a id="phNewCheckBtn"
-                                                    style="text-align: center; padding-top: 3%; width: 7rem;"
-                                                    class="btn btn-magz btn-sm">send</a>
-                                            </div>
-                                            <p id="phErrMsg2" class="error"></p>
-                                            <br>
-                                            <div id="memberPhNewCheckContainer" style="display: flex; display: none;">
-                                                <!-- 동적으로 인증번호 입력란과 확인 버튼 생성-->
-                                            </div>
-                                            <p class="successPhCheck2"></p>
+                                            <p class="successPhCheck"></p>
                                         </div>
                                         <div class="form-group text-right">
                                             <button class="btn btn-primary btn-block">Confirm</button>
@@ -262,94 +244,50 @@
                 });
 
 
-
-
-                var memberPhId;
-                var phErrMsg;
-                var successPhCheck;
-                var containerId;
-                document.getElementById("phCheckBtn").addEventListener("click", function () {
-                    memberPhId = "memberPh";
-                    phErrMsg = "phErrMsg1";
-                    successPhCheck = "successPhCheck1";
-                    containerId = "memberPhCheckContainer";
-
-                    sendAuthenticationSMS(memberPhId, phErrMsg, successPhCheck, containerId);
-
-                });
-
-                document.getElementById("phNewCheckBtn").addEventListener("click", function () {
-                    memberPhId = "memberPhNew";
-                    phErrMsg = "phErrMsg2";
-                    successPhCheck = "successPhCheck2";
-                    containerId = "memberPhNewCheckContainer";
-                    sendAuthenticationSMS(memberPhId, phErrMsg, successPhCheck, containerId);
-
-                });
-
-
-                //인증번호 송신이 확인되면 인증번호 입력 란 생성 Js
-                var serverGeneratedCode = "";
                 var checkPhFlag = false;
+                var successPhCheck = "successPhCheck";
+                var containerId = "memberPhCheckContainer";
                 var phRegex = /^010\d{8}$/i;
+                function checkPh() {
+                    var memberPh = $('#memberPh').val();
 
-                function sendAuthenticationSMS(memberPhId, phErrMsg, successPhCheck, containerId) {
-                    $("." + successPhCheck).text("");
-                    var memberPh = $("#" + memberPhId).val();
-                    // 사용자가 입력한 전화번호 가져오기
-
-                    console.log("[로그] : ")
-                    console.log("[로그] memberPhId: " + memberPhId);
-                    console.log("[로그] phRegex: " + phRegex.test(memberPhId));
                     if (!phRegex.test(memberPh)) {
-                        $("#" + phErrMsg).text('올바른 번호 형식이 아닙니다.');
-                        $("#" + phErrMsg).css('color', 'red');
+                        $("#phErrMsg").text('올바른 번호 형식이 아닙니다.');
+                        $("#phErrMsg").css('color', 'red');
                         return checkPhFlag;
                     }
 
-
-
-
-
-                    // AJAX를 사용하여 서버에 전화번호 전송
                     $.ajax({
-                        url: "/sendAuthenticationSMS",
                         type: "POST",
-                        dataType: "text",
-                        data: { memberPh: memberPh },
+                        url: "/checkPh",
+                        data: { 'memberPh': memberPh },
+                        dataType: 'text',
                         success: function (data) {
-                            // 서버 응답에 따른 처리
-                            if (data !== "fail") {
-                                console.log("data " + data);
-                                $("#" + phErrMsg).text('');
-                                swal("success", "인증번호 발송이 완료되었습니다.", "success", {
-                                    button: "OK",
-                                });
-                                createMemberPhCheckInput(containerId);
+                            if (data == '1') {
 
-                                document.getElementById("memberPhNewCheckContainer").style.display = "flex"; //
-                                console.log("[로그] serverGeneratedCode :" + data)
-                                // 성공적으로 SMS를 보낸 경우 추가 동작을 수행할 수 있습니다.
-                                serverGeneratedCode = data;
-                            } else {
-                                swal("fail", "인증번호 발송 실패", "error", {
+                                sendAuthenticationSMS();
+                                createMemberPhCheckInput(containerId);
+                                document.getElementById("memberPhCheckContainer").style.display = "flex"; //
+
+                            }
+                            else {
+                                swal("fail", "이미 가입되어있는 회원입니다.", "error", {
                                     button: "OK",
                                 });
-                                // SMS 전송 실패 시 사용자에게 알림을 표시할 수 있습니다.
+
+
                             }
                         },
                         error: function (error) {
-                            console.log(error);
-                            alert("ajax 요청오류");
-                            // AJAX 요청 중 오류가 발생한 경우에 대한 처리
+                            console.log('에러' + error);
                         }
                     });
                 }
-
                 document.getElementById("memberPh").addEventListener("input", function () {
-                    // input 내용이 바뀔 때마다 checkPhFlag를 false로 설정 다시인증하기
+                    // input 내용이 바뀔 때마다 checkPhflag를 false로 설정 다시인증하기
                     checkPhFlag = false;
                 });
+
 
                 function createMemberPhCheckInput(containerId) {
                     var container = document.getElementById(containerId); // 동적으로 컨테이너 선택
@@ -389,8 +327,6 @@
 
                     $(document).ready(function () {
                         $("#" + button.id).on('click', function () {
-
-
                             console.log("smsCheck 동작함");
                             console.log(serverGeneratedCode);
                             if ($("#" + input.id).val() == serverGeneratedCode) {
@@ -403,12 +339,34 @@
                                 $("." + successPhCheck).text("인증번호가 일치하지 않습니다. 확인해주시기 바랍니다.");
                                 $("." + successPhCheck).css("color", "red");
                                 $(this).attr("autofocus", true);
-                                checkPhflag = false;
+                                checkPhFlag = false;
                                 return checkPhFlag;
 
                             }
                         });
                     });
+                }
+
+                var changePhForm = document.getElementById('changePhForm');
+                console.log("로그]" + changePhForm);
+
+                if (changePhForm) {
+                    console.log("onsubmit 진입")
+                    changePhForm.onsubmit = function () {
+                        return validateForm();
+                    }
+                }
+
+
+                function validateForm() {
+                    if (checkPhFlag == false) {
+                        swal("fail", "전화번호를 인증해주세요.", "error", {
+                            button: "OK",
+                        });
+                        return false;
+                    }
+                    // 모든 검증이 통과했을 경우
+                    return true;
                 }
 
 
@@ -417,5 +375,6 @@
 
             </script>
 
+            <script src="js/user/sendAuthentication.js"></script>
 
             </html>

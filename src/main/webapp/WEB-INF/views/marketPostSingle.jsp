@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="chalKagTags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,10 +48,12 @@
 								</ul>
 							</header>
 							<div class="main">
-								<p>가격 : ${marketPostSingle.marketPostPrice}</p>
-								<p>상품 종류 : ${marketPostSingle.marketPostCategory}</p>
-								<p>제조사 : ${marketPostSingle.marketPostCompany}</p>
-								<p>판매상태 : ${marketPostSingle.marketPostStatus}</p>
+								<div style="display: flex;">
+									<p>가격 : ${marketPostSingle.marketPostPrice}</p>
+									<p>상품 종류 : ${marketPostSingle.marketPostCategory}</p>
+									<p>제조사 : ${marketPostSingle.marketPostCompany}</p>
+									<p>판매상태 : ${marketPostSingle.marketPostStatus}</p>
+								</div>
 								<!-- 게시글 이미지 출력 추후 추가 -->
 								<div class="featured">
 									<figure>
@@ -191,6 +194,7 @@
 					</div>
 				</div>
 			</div>
+		</div>
 		</section>
 
 		<!-- Start footer tag로 출력 -->
