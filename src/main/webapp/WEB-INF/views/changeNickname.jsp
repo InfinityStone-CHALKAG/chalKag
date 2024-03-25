@@ -179,17 +179,17 @@
                             <div class="box box-border">
                                 <div class="box-body">
                                     <h4>Change Nickname</h4>
-                                    <form id="changeNickname" method="post" action="changeNickname"
-                                        onsubmit="return true">
+                                    <form id="changeNicknameForm" method="post" action="changeNickname">
                                         <div class="form-group">
                                             <label>Nickname</label>
                                             <div style="display: flex;">
-                                                <input type="text" name="memberNickname" value="${memberInfo.nickname}"
-                                                    class="form-control" required>
+                                                <input type="text" id="memberNickname" name="memberNickname"
+                                                    value="${memberInfo.nickname}" class="form-control" >
                                                 <a id="nicknameCheckBtn"
                                                     style="text-align: center; padding-top: 3%; width: 7rem;"
-                                                    class="btn btn-magz btn-sm">check</a>
+                                                    class="btn btn-magz btn-sm" onclick="checkNickname()">check</a>
                                             </div>
+                                            <p id="nicknameErrMsg"></p>
                                         </div>
 
                                         <div class="form-group text-right">
@@ -236,10 +236,29 @@
                 });
 
 
+                //닉네임 유효성~
+                var changeNicknameForm = document.getElementById('changeNicknameForm');
+                if (changeNicknameForm) {
+                    changeNicknameForm.onsubmit = function () {
+                        return validateForm();
+                    }
+                }
 
+                function validateForm() {
 
+                    if (checkNicknameFlag == false) {
+                        console.log("checkNicknameFlag 진입");
+                        $("#nicknameErrMsg").text("");
+                        swal("fail", "닉네임을 확인해주세요.", "error", {
+                            button: "OK",
+                        });
+                        return false;
+                    }
+                    // 모든 검증이 통과했을 경우
+                    return true;
+                }
 
             </script>
-
+            <script src="js/user/checkNickname.js"></script>
 
             </html>

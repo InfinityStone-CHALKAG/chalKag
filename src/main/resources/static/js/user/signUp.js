@@ -1,13 +1,16 @@
 document.addEventListener('DOMContentLoaded', function () {
+	
     var uploadButton = document.getElementById('uploadButton');
     var fileInput = document.getElementById('fileInput');
-    var joinButton = document.getElementById('joinButton');
 
+// uploadButton이 존재할 때만 코드 실행
+if (uploadButton) {
     uploadButton.addEventListener('click', function (event) {
         event.preventDefault(); // 폼 제출 방지
         fileInput.click();
     });
-
+}
+if (fileInput) {
     fileInput.addEventListener('change', function () {
         var file = this.files[0];
         if (file) {
@@ -38,11 +41,17 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
     });
+}
+var signUpForm = document.getElementById('yourFormId');
 
-    // 폼 제출 이벤트 핸들러
-    document.getElementById('yourFormId').onsubmit = function () {
+if (signUpForm) {
+    signUpForm.onsubmit = function () {
         return validateForm();
     };
+}
+
+
+
 
     function validateForm() {
         if (checkIdFlag == false) {
@@ -52,13 +61,14 @@ document.addEventListener('DOMContentLoaded', function () {
             });
             return false;
         }
-        if (checkPassword() == false) {
+        if (checkPasswordFlag == false) {
             swal("fail", "비밀번호를 확인해주세요.", "error", {
                 button: "OK",
             });
             return false;
         }
         if (checkNicknameFlag == false) {
+			console.log("checkNicknameFlag 진입");
             $("#nicknameErrMsg").text("");
             swal("fail", "닉네임을 확인해주세요.", "error", {
                 button: "OK",
