@@ -5,6 +5,7 @@ import infinitystone.chalKag.biz.member.MemberService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -15,11 +16,12 @@ public class ChangeNicknameController {
   public MemberService memberService;
 
   @RequestMapping(value = "/changeNickname", method = RequestMethod.GET)
-  public String changeNicknamePage(HttpSession session) {
+  public String changeNicknamePage(MemberDTO memberDTO, Model model, HttpSession session) {
 
-    if (session.getAttribute("memberGrade") != "premium") {
-      return "redirect:myPage";
-    }
+    memberDTO.setMemberId((String) session.getAttribute("member"));
+    memberDTO.setSearchCondition("myPage");
+
+
 
     return "changeNickname";
   }
