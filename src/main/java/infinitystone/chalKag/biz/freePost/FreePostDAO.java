@@ -37,9 +37,24 @@ public class FreePostDAO {
 			+ " LEFT JOIN "
 			+ " 	RECOMMEND ON FREEPOST.FREEPOST_id = RECOMMEND.POST_id "
 			+ " GROUP BY " 
-			+ " 	FREEPOST.FREEPOST_id"
+			+ " 	FREEPOST.FREEPOST_id, "
+			+ "		MEMBER.MEMBER_nickname"
 			+ "ORDER BY "
 		    + "		FREEPOST_id DESC ";
+	
+	// 메인페이지 프리미엄 회원글 출력
+		private static final String FREEPOST_SELECTALLPREMIUM= "SELECT "
+				+ "			    FREEPOST.FREEPOST_title, "
+				+ "				   MEMBER.MEMBER_grade ,  "
+				+ "			    POSTIMG.POSTIMG_name  "
+				+ "			FROM   "
+				+ "			    FREEPOST  "
+				+ "			LEFT JOIN   "
+				+ "			    POSTIMG ON FREEPOST.FREEPOST_id = POSTIMG.POST_id   "
+				+ "			INNER JOIN  "
+				+ "			    MEMBER ON MEMBER.MEMBER_id = FREEPOST.MEMBER_id "
+				+ "			WHERE   "
+				+ "			    MEMBER.MEMBER_grade = 'PREMIUM'";
 	
 	
 	// 게시글 상세보기 게시글 전체 보기 자유게시판, 게시판 이미지, 좋아요 테이블 조인문
@@ -81,12 +96,17 @@ public class FreePostDAO {
 	private static final String UPDATE_VIEWCNT = "UPDATE BOARD SET FREEPOST_viewcnt = (FREEPOST_viewcnt+1) WHERE FREEPOST_id=? ";
 	private static final String DELETE = "DELETE FROM FREEPOST WHERE FREEPOST_id = ?";
 
-	public List<FreePostDTO> selectAll(FreePostDTO freetPostDTO) {
+	public List<FreePostDTO> selectAll(FreePostDTO freePostDTO) {
 		List<FreePostDTO> result = null;
 
 		try { // 게시판 전체 출력해주는 행동이라면 selectAll 쿼리문 실행
-			if (freetPostDTO.getSearchCondition().equals("freePostList")) {
+			if (freePostDTO.getSearchCondition().equals("freePostList")) {
 				result = (List<FreePostDTO>) jdbcTemplate.query(SELECTALL_FREEPOST, new FreePostSelectAllRowMapper());
+				return result;
+			}
+			else if(freePostDTO.getSearchCondition().equals("freePostPremiumList")) {
+				result = (List<FreePostDTO>) jdbcTemplate.query(FREEPOST_SELECTALLPREMIUM, new FreePostPremiumSellectAllRowMapper());
+				System.out.println("FreePostDAO(premiumSelectAll) 로그 = [" + result + "]");
 				return result;
 			}
 		} catch (Exception e) {
@@ -183,4 +203,18 @@ class FreePostSelectOneRowMapper implements RowMapper<FreePostDTO> {
 		return data;
 	}
 
+}
+
+class FreePostPremiumSellectAllRowMapper implements RowMapper<FreePostDTO>{
+
+	@Override
+	public FreePostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+		FreePostDTO data = new FreePostDTO();
+
+		data.setFreePostId(rs.getString("freePost_id"));
+		data.setFreePostTitle(rs.getString("freePost_title"));
+
+		return data;
+	}
+	
 }

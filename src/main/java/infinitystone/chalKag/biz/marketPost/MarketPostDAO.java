@@ -36,9 +36,24 @@ public class MarketPostDAO {
 			+ " LEFT JOIN " 
 			+ "		RECOMMEND ON MARKETPOST.MARKETPOST_id = RECOMMEND.POST_id "
 			+ " GROUP BY "
-			+ "		MARKETPOST.MARKETPOST_id "
+			+ "		MARKETPOST.MARKETPOST_id,"
+			+ "		MEMBER.MEMBER_nickname "
 			+ "ORDER BY "
 	        + "		MARKETPOST_id DESC ";
+	
+	// 메인페이지 프리미엄 회원글 출력
+			private static final String MARKETPOST_SELECTALLPREMIUM= "SELECT "
+					+ "			    MARKETPOST.MARKETPOST_title, "
+					+ "				   MEMBER.MEMBER_grade ,  "
+					+ "			    POSTIMG.POSTIMG_name  "
+					+ "			FROM   "
+					+ "			    MARKETPOST  "
+					+ "			LEFT JOIN   "
+					+ "			    POSTIMG ON MARKETPOST.MARKETPOST_id = POSTIMG.POST_id   "
+					+ "			INNER JOIN  "
+					+ "			    MEMBER ON MEMBER.MEMBER_id = MARKETPOST.MEMBER_id "
+					+ "			WHERE   "
+					+ "			    MEMBER.MEMBER_grade = 'PREMIUM'";
 
 	private static final String SELECTONE_MARKETPOST = "SELECT " 
 			+ "	MARKETPOST.MARKETPOST_id, "   
@@ -87,6 +102,12 @@ public class MarketPostDAO {
 			if (marketPostDTO.getSearchCondition().equals("marketPostList")) {
 				result = (List<MarketPostDTO>) jdbcTemplate.query(SELECTALL_MARKETPOST, new MarketPostSellectAllRowMapper());
 				System.out.println("MarketPostDAO(selectAll) 로그 = [" + result + "]");
+				return result;
+			}
+			//  프리미엄 회원 글 출력
+			else if(marketPostDTO.getSearchCondition().equals("marketPostPremiumList")) {
+				result = (List<MarketPostDTO>) jdbcTemplate.query(MARKETPOST_SELECTALLPREMIUM, new MarketPostPremiumSelectAllRowMapper());
+				System.out.println("MarketPostDAO(premiumSelectAll) 로그 = [" + result + "]");
 				return result;
 			}
 		} catch (Exception e) {
@@ -183,3 +204,20 @@ class MarketPostSellectOneRowMapper implements RowMapper<MarketPostDTO> {
 	}
 
 }
+
+
+class MarketPostPremiumSelectAllRowMapper implements RowMapper<MarketPostDTO>{
+
+	@Override
+	public MarketPostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+		MarketPostDTO data = new MarketPostDTO();
+
+		data.setMarketPostId(rs.getString("marketPost_id"));
+		data.setMarketPostTitle(rs.getString("marketPost_title"));
+
+		return data;
+	}
+	
+}
+
+
