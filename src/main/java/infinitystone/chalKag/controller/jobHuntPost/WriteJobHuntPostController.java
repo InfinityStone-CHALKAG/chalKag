@@ -1,9 +1,9 @@
 package infinitystone.chalKag.controller.jobHuntPost;
 
-import infinitystone.chalKag.biz.jobHuntPost.JobHuntPostDTO;
-import infinitystone.chalKag.biz.jobHuntPost.JobHuntPostService;
-import infinitystone.chalKag.biz.postImg.PostImgDTO;
-import infinitystone.chalKag.biz.postImg.PostImgService;
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
+
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.UUID;
+import infinitystone.chalKag.biz.jobHuntPost.JobHuntPostDTO;
+import infinitystone.chalKag.biz.jobHuntPost.JobHuntPostService;
+import infinitystone.chalKag.biz.postImg.PostImgDTO;
+import infinitystone.chalKag.biz.postImg.PostImgService;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class WriteJobHuntPostController {
@@ -31,44 +33,46 @@ public class WriteJobHuntPostController {
   }
 
   @RequestMapping(value = "/writeJobHuntPost", method = RequestMethod.POST)
-  public String writeJobHuntPost(JobHuntPostDTO jobHuntPostDTO, PostImgDTO postImgDTO, @RequestParam("file") MultipartFile[] files) {
+  public String writeJobHuntPost(JobHuntPostDTO jobHuntPostDTO, PostImgDTO postImgDTO, HttpSession session, @RequestParam("file") MultipartFile[] files) {
 
-    System.out.println("WriteJobHuntPostController In로그 = [" + jobHuntPostDTO + "]");
-    System.out.println("WriteJobHuntPostController In로그 = [" + postImgDTO + "]");
+	  jobHuntPostDTO.setMemberId((String) session.getAttribute("member"));
 
-    String uploadDir = this.getClass().getResource("").getPath();
-    System.out.println("WriteJobHuntPostController 로그01 = [" + uploadDir + "]");
+	    System.out.println("WriteJobHuntPostController In Log = [" + jobHuntPostDTO + "]");
+	    System.out.println("WriteJobHuntPostController In Log = [" + postImgDTO + "]");
 
-    uploadDir = uploadDir.substring(1, uploadDir.indexOf("chalkag")) + "chalKag/src/main/resources/static/postImg";
-    System.out.println("WriteJobHuntPostController 로그02 = [" + uploadDir + "]");
+	    String uploadDir = this.getClass().getResource("").getPath();
+	    System.out.println("WriteJobHuntPostController Log01 = [" + uploadDir + "]");
 
-    for (MultipartFile file : files) {
-      if (file != null && !file.isEmpty()) {
-        String originalFilename = file.getOriginalFilename();
-        String extension = FilenameUtils.getExtension(originalFilename);
-        String newFilename = UUID.randomUUID().toString() + "." + extension;
-        String filePath = uploadDir + File.separator + newFilename;
-        File newFile = new File(filePath);
-        try {
-          file.transferTo(newFile);
-        } catch (IOException e) {
-          e.printStackTrace();
-        }
-        postImgDTO.setPostImgName(newFilename);
-      }
-    }
+	    uploadDir = uploadDir.substring(1, uploadDir.indexOf("chalKag")) + "chalKag/src/main/resources/static/postImg";
+	    System.out.println("WriteJobHuntPostController Log02 = [" + uploadDir + "]");
 
-    // 사용자가 작성한 글을 추가
-    if (!jobHuntPostService.insert(jobHuntPostDTO)) {
-      System.out.println("WriteJobHuntPostController 작성 실패");
-    }
+	    for (MultipartFile file : files) {
+	      if (file != null && !file.isEmpty()) {
+	        String originalFilename = file.getOriginalFilename();
+	        String extension = FilenameUtils.getExtension(originalFilename);
+	        String newFilename = UUID.randomUUID().toString() + "." + extension;
+	        String filePath = uploadDir + File.separator + newFilename;
+	        File newFile = new File(filePath);
+	        try {
+	          file.transferTo(newFile);
+	        } catch (IOException e) {
+	          e.printStackTrace();
+	        }
+	        postImgDTO.setPostImgName(newFilename);
+	      }
+	    }
 
-    if (!postImgService.insert(postImgDTO)) {
-      System.out.println("WriteJobHuntPostController 사진 추가 실패");
-    }
+	    // Add the user-written post
+	    if (!jobHuntPostService.insert(jobHuntPostDTO)) {
+	      System.out.println("WriteJobHuntPostController insertion of post failed");
+	    }
 
-    System.out.println("WriteJobHuntPostController Out로그");
+	    if (!postImgService.insert(postImgDTO)) {
+	      System.out.println("WriteJobHuntPostController insertion of image failed");
+	    }
 
-    return "jobHuntPostList";
+	    System.out.println("WriteJobHuntPostController Out Log");
+
+	    return "redirect:jobHuntPostList";
   }
 }
