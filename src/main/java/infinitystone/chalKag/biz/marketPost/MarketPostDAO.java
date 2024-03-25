@@ -31,8 +31,8 @@ public class MarketPostDAO {
 			+ "	COUNT(RECOMMEND.POST_id) AS RECOMMEND_cnt, "
 			+ " FROM " 
 			+ "		MARKETPOST "
-			+ " INNER JOIN "
-		    + "		MEMBER "
+			+ " LEFT JOIN " 
+		    + " 	MEMBER ON MARKETHUNTPOST.MEMBER_id = MEMBER.MEMBER_id "
 			+ " LEFT JOIN " 
 			+ "		RECOMMEND ON MARKETPOST.MARKETPOST_id = RECOMMEND.POST_id "
 			+ " GROUP BY "
@@ -42,7 +42,7 @@ public class MarketPostDAO {
 	        + "		MARKETPOST_id DESC ";
 	
 	// 메인페이지 프리미엄 회원글 출력
-			private static final String MARKETPOST_SELECTALLPREMIUM= "SELECT "
+			private static final String SELECTALL_PREMIUMMARKETPOST= "SELECT "
 					+ "			    MARKETPOST.MARKETPOST_title, "
 					+ "				   MEMBER.MEMBER_grade ,  "
 					+ "			    POSTIMG.POSTIMG_name  "
@@ -53,7 +53,10 @@ public class MarketPostDAO {
 					+ "			INNER JOIN  "
 					+ "			    MEMBER ON MEMBER.MEMBER_id = MARKETPOST.MEMBER_id "
 					+ "			WHERE   "
-					+ "			    MEMBER.MEMBER_grade = 'PREMIUM'";
+					+ "			    MEMBER.MEMBER_grade = 'PREMIUM'"
+					+ "			ORDER BY "
+					+ "    			MARKETPOST.MARKETPOST_date DESC "
+					+ "			LIMIT 2 ";
 
 	private static final String SELECTONE_MARKETPOST = "SELECT " 
 			+ "	MARKETPOST.MARKETPOST_id, "   
@@ -72,8 +75,7 @@ public class MarketPostDAO {
 			+ "	MARKETPOST.MARKETPOST_title, " 
 			+ "	MARKETPOST.MARKETPOST_content, "
 			+ "	MARKETPOST.MARKETPOST_viewcnt, " 
-			+ "	COUNT(RECOMMEND.POST_id) AS RECOMMEND_cnt, "
-			+ " GROUP_CONCAT(POSTIMG.POSTIMG_name) AS POSTIMG_name "
+			+ "	COUNT(RECOMMEND.POST_id) AS RECOMMEND_cnt "
 			+ " FROM " 
 			+ "		MARKETPOST " 
 			+ " INNER JOIN "
@@ -86,6 +88,7 @@ public class MarketPostDAO {
 			+ "	 	MARKETPOST.MARKETPOST_id =? " 
 			+ " GROUP BY "
 			+ "		MARKETPOST.MARKETPOST_id, "
+			+ "		MEMBER.MEMBER_nickname, "
 			+ " 	PROFILEIMG.PROFILEIMG_name";
 	
 	private static final String INSERT = "INSERT INTO MARKETPOST(MEMBER_id,MARKET_price,MARKET_category,MARKET_company,MARKET_status,MARKET_title,MARKET_content,MARKET_viewcnt)"
@@ -106,7 +109,7 @@ public class MarketPostDAO {
 			}
 			//  프리미엄 회원 글 출력
 			else if(marketPostDTO.getSearchCondition().equals("marketPostPremiumList")) {
-				result = (List<MarketPostDTO>) jdbcTemplate.query(MARKETPOST_SELECTALLPREMIUM, new MarketPostPremiumSelectAllRowMapper());
+				result = (List<MarketPostDTO>) jdbcTemplate.query(SELECTALL_PREMIUMMARKETPOST, new MarketPostPremiumSelectAllRowMapper());
 				System.out.println("MarketPostDAO(premiumSelectAll) 로그 = [" + result + "]");
 				return result;
 			}
