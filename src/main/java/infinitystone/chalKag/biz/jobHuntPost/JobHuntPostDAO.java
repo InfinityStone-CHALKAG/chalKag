@@ -15,38 +15,36 @@ public class JobHuntPostDAO {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-	private static final String SELECTALL_JOBHUNTPOST = "SELECT " 
-			+ "	JOBHUNTPOST.JOBHUNTPOST_id, "
-	        + "	MEMBER.MEMBER_nickname, "
-			+ "	JOBHUNTPOST.JOBHUNTPOST_title," 
-			+ "	JOBHUNTPOST.JOBHUNTPOST_content,"
-			+ "	JOBHUNTPOST.JOBHUNTPOST_date,"
+	private static final String SELECTALL_JOBHUNTPOST ="SELECT "
+			+ "     JOBHUNTPOST.JOBHUNTPOST_id, "
+			+ "     JOBHUNTPOST.MEMBER_id, "
+			+ "     MEMBER.MEMBER_nickname, "
+			+ "     JOBHUNTPOST.JOBHUNTPOST_title, "
+			+ "     JOBHUNTPOST.JOBHUNTPOST_content, "
+			+ "     JOBHUNTPOST.JOBHUNTPOST_date, "
 			+ " CASE "
-			+ "        WHEN TIMESTAMPDIFF(MINUTE, JOBHUNTPOST.JOBHUNTPOST_date, NOW()) < 60 THEN CONCAT(TIMESTAMPDIFF(MINUTE, JOBHUNTPOST.JOBHUNTPOST_date, NOW()), ' 분 전') "
-			+ "        WHEN TIMESTAMPDIFF(HOUR, JOBHUNTPOST.JOBHUNTPOST_date, NOW()) < 24 THEN CONCAT(TIMESTAMPDIFF(HOUR, JOBHUNTPOST.JOBHUNTPOST_date, NOW()), ' 시간 전') "
-			+ "        ELSE CONCAT(TIMESTAMPDIFF(DAY, JOBHUNTPOST.JOBHUNTPOST_date, NOW()), ' 일 전') "
-			+ "    END AS COMMENT_date," 
-			+ "	JOBHUNTPOST.MEMBER_id,"
-			+ " MEMBER.MEMBER_nickname," 	
-			+ "	JOBHUNTPOST.JOBHUNTPOST_viewcnt,"
-			+ "	COUNT(RECOMMEND.POST_id) AS RECOMMEND_cnt," 
-			+ "	FROM" 
-			+ "		JOBHUNTPOST" 
-			+ " INNER JOIN "
-		    + "		MEMBER "
-			+ "	LEFT JOIN "
-			+ "		RECOMMEND ON JOBHUNTPOST.JOBHUNTPOST_id = RECOMMEND.POST_id " 
-			+ "	GROUP BY"
-			+ "		JOBHUNTPOST.JOBHUNTPOST_id,"
-			+ "		MEMBER.MEMBER_nickname "
-			+ "ORDER BY "
-			+ "		JOBHUNTPOST_id DESC ";
+			+ "     WHEN TIMESTAMPDIFF(MINUTE, JOBHUNTPOST.JOBHUNTPOST_date, NOW()) < 60 THEN CONCAT(TIMESTAMPDIFF(MINUTE, JOBHUNTPOST.JOBHUNTPOST_date, NOW()), ' 분 전') "
+			+ "     WHEN TIMESTAMPDIFF(HOUR, JOBHUNTPOST.JOBHUNTPOST_date, NOW()) < 24 THEN CONCAT(TIMESTAMPDIFF(HOUR, JOBHUNTPOST.JOBHUNTPOST_date, NOW()), ' 시간 전') "
+			+ "     ELSE CONCAT(TIMESTAMPDIFF(DAY, JOBHUNTPOST.JOBHUNTPOST_date, NOW()), ' 일 전') \n"
+			+ " END AS JOBHUNTPOST_date,"
+			+ "     JOBHUNTPOST.JOBHUNTPOST_viewcnt, "
+			+ "     COUNT(RECOMMEND.POST_id) AS RECOMMEND_cnt "
+			+ " FROM "
+			+ "     JOBHUNTPOST "
+			+ " LEFT JOIN "
+			+ "     MEMBER ON JOBHUNTPOST.MEMBER_id = MEMBER.MEMBER_id "
+			+ " LEFT JOIN "
+			+ " 	RECOMMEND ON JOBHUNTPOST.JOBHUNTPOST_id = RECOMMEND.POST_id "
+			+ " GROUP BY "
+			+ "     JOBHUNTPOST.JOBHUNTPOST_id, "
+			+ "     MEMBER.MEMBER_nickname "
+			+ " ORDER BY "
+			+ "       JOBHUNTPOST_id DESC;";
 	
 	// 메인페이지 프리미엄 회원글 출력(이미지 포함)
-	private static final String JOBHUNTPOST_SELECTALLPREMIUM= "SELECT "
+	private static final String SELECTALL_PREMIUMJOBHUNTPOST= "SELECT "
 			+ "			    JOBHUNTPOST.JOBHUNTPOST_title, "
 			+ "				   MEMBER.MEMBER_grade ,  "
-			+ "			    POSTIMG.POSTIMG_name  "
 			+ "			FROM   "
 			+ "			    JOBHUNTPOST  "
 			+ "			LEFT JOIN   "
@@ -54,18 +52,15 @@ public class JobHuntPostDAO {
 			+ "			INNER JOIN  "
 			+ "			    MEMBER ON MEMBER.MEMBER_id = JOBHUNTPOST.MEMBER_id "
 			+ "			WHERE   "
-			+ "			    MEMBER.MEMBER_grade = 'PREMIUM'";
+			+ "			    MEMBER.MEMBER_grade = 'PREMIUM'"
+			+ "			ORDER BY "
+			+ "    			JOBHUNTPOST.JOBHUNTPOST_date DESC "
+			+ "			LIMIT 2 ";
 
 	
 	
 	private static final String SELECTONE_JOBHUNTPOST = "SELECT" 
 			+ " 	JOBHUNTPOST.JOBHUNTPOST_id, "
-			+ "		JOBHUNTPOST.JOBHUNTPOST_date, "
-			+ " CASE "
-			+ "        WHEN TIMESTAMPDIFF(MINUTE, JOBHUNTPOST.JOBHUNTPOST_date, NOW()) < 60 THEN CONCAT(TIMESTAMPDIFF(MINUTE, JOBHUNTPOST.JOBHUNTPOST_date, NOW()), ' 분 전') "
-			+ "        WHEN TIMESTAMPDIFF(HOUR, JOBHUNTPOST.JOBHUNTPOST_date, NOW()) < 24 THEN CONCAT(TIMESTAMPDIFF(HOUR, JOBHUNTPOST.JOBHUNTPOST_date, NOW()), ' 시간 전') "
-			+ "        ELSE CONCAT(TIMESTAMPDIFF(DAY, JOBHUNTPOST.JOBHUNTPOST_date, NOW()), ' 일 전') "
-			+ "    END AS COMMENT_date," 
 			+ "		JOBHUNTPOST.MEMBER_id, "
 			+ " 	MEMBER.MEMBER_nickname, "
 			+ " 	PROFILEIMG.PROFILEIMG_name, "
@@ -76,6 +71,12 @@ public class JobHuntPostDAO {
 		    + "		JOBHUNTPOST.JOBHUNTPOST_concept, "
 		    + "		JOBHUNTPOST.JOBHUNTPOST_title, " 
 		    + "		JOBHUNTPOST.JOBHUNTPOST_content, "
+		    + "		JOBHUNTPOST.JOBHUNTPOST_date, "
+		    + " CASE "
+		    + "        WHEN TIMESTAMPDIFF(MINUTE, JOBHUNTPOST.JOBHUNTPOST_date, NOW()) < 60 THEN CONCAT(TIMESTAMPDIFF(MINUTE, JOBHUNTPOST.JOBHUNTPOST_date, NOW()), ' 분 전') "
+		    + "        WHEN TIMESTAMPDIFF(HOUR, JOBHUNTPOST.JOBHUNTPOST_date, NOW()) < 24 THEN CONCAT(TIMESTAMPDIFF(HOUR, JOBHUNTPOST.JOBHUNTPOST_date, NOW()), ' 시간 전') "
+		    + "        ELSE CONCAT(TIMESTAMPDIFF(DAY, JOBHUNTPOST.JOBHUNTPOST_date, NOW()), ' 일 전') "
+		    + " END AS JOBHUNTPOST_date," 
 			+ "		JOBHUNTPOST.JOBHUNTPOST_viewcnt, "
 			+ "		COUNT(RECOMMEND.POST_id) AS RECOMMEND_cnt "
 			+ "	FROM "
@@ -138,7 +139,7 @@ public class JobHuntPostDAO {
 				return result;
 			}
 			else if(jobHuntPostDTO.getSearchCondition().equals("jobHuntPostPremiumList")) {
-				result = (List<JobHuntPostDTO>) jdbcTemplate.query(JOBHUNTPOST_SELECTALLPREMIUM, new JobHuntPostPremiumSelectAllRowMapper());
+				result = (List<JobHuntPostDTO>) jdbcTemplate.query(SELECTALL_PREMIUMJOBHUNTPOST, new JobHuntPostPremiumSelectAllRowMapper());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -205,10 +206,11 @@ class JobHuntPostSellecAllRowMapper implements RowMapper<JobHuntPostDTO> {
 		data.setJobHuntPostId(rs.getString("JOBHUNTPOST_id"));
 		data.setMemberId(rs.getString("MEMBER_id"));
 		data.setMemberNickname(rs.getString("MEMBER_nickname"));
-		data.setJobHuntPostDate(rs.getString("JOBHUNTPOST_date"));
 		data.setJobHuntPostTitle(rs.getString("JOBHUNTPOST_title"));
 		data.setJobHuntPostContent(rs.getString("JOBHUNTPOST_content"));
+		data.setJobHuntPostDate(rs.getString("JOBHUNTPOST_date"));
 		data.setJobHuntPostViewcnt(rs.getString("JOBHUNTPOST_viewcnt"));
+		data.setRecommendCnt(rs.getString("RECOMMEND_cnt"));
 
 		return data;
 	}

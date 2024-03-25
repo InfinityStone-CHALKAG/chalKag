@@ -17,7 +17,6 @@ public class PostImgDAO {
 								// 해당 카테고리 전체 출력 (이미지만)
 	private static final String SELECTALL_HEADHUNTPOSTIMG = "SELECT POSTIMG.POSTIMG_name, HEADHUNTPOST.HEADHUNTPOST_id "
 			+ "FROM POSTIMG "
-			// inner or left?
 			+ "INNER JOIN HEADHUNTPOST ON POSTIMG.POST_id = HEADHUNTPOST.HEADHUNTPOST_id "
 			+ "ORDER BY POSTIMG.POSTIMG_id DESC "
 			+ "LIMIT 1";
@@ -85,44 +84,44 @@ public class PostImgDAO {
 		List<PostImgDTO> result = null;
 		try {
 					// 구직글 전체 불러오기 이미지
-			if(postImgDTO.getSearchCondition().equals("headHuntPostImgList")) {
+			if(postImgDTO.getSearchCondition().equals("headHuntPostListImg")) {
 				result = (List<PostImgDTO>) jdbcTemplate.query(SELECTALL_HEADHUNTPOSTIMG, new PostImgRowMapper());
 				System.out.println("PostImgDAO(headHuntPostImgSellectAll) 로그 = [" + result + "]");
 				
 			}
 					// 구인글 전체 불러오기 이미지
-			else if(postImgDTO.getSearchCondition().equals("jobHuntPostImgList")) {
+			else if(postImgDTO.getSearchCondition().equals("jobHuntPostListImg")) {
 				result = (List<PostImgDTO>) jdbcTemplate.query(SELECTALL_JOBHUNTPOSTIMG, new PostImgRowMapper());
 				System.out.println("PostImgDAO(jobHuntPostImgSellectAll) 로그 = [" + result + "]");
 			}
 					// 자유글 전체 불러오기 이미지
-			else if(postImgDTO.getSearchCondition().equals("freePostImgList")) {
+			else if(postImgDTO.getSearchCondition().equals("freePostListImg")) {
 				result = (List<PostImgDTO>) jdbcTemplate.query(SELECTALL_FREEPOSTIMG, new PostImgRowMapper());
 				System.out.println("PostImgDAO(freePostImgSellectAll) 로그 = [" + result + "]");
 			}
 					// 장터글 전체 불러오기 이미지
-			else if(postImgDTO.getSearchCondition().equals("marketPostImgList")) {
+			else if(postImgDTO.getSearchCondition().equals("marketPostListImg")) {
 				result = (List<PostImgDTO>) jdbcTemplate.query(SELECTALL_MARKETPOSTIMG, new PostImgRowMapper());
 				System.out.println("PostImgDAO(marektPostImgSellectAll) 로그 = [" + result + "]");
 	 		}
 					// 프리미엄 회원 구인글 불러오기 이미지
-			else if(postImgDTO.getSearchCondition().equals("headHuntPostPremiumImgList")){
+			else if(postImgDTO.getSearchCondition().equals("headHuntPostPremiumListImg")){
 	 			result = (List<PostImgDTO>) jdbcTemplate.query(SELECTALL_PREMIUMHEADHUNTPOSTIMG, new PostImgRowMapper());
 	 			System.out.println("PostImgDAO(headHuntPostPremiumImgSellectAll) 로그 = [" + result + "]");
 			}
 			
 					// 프리미엄 회원 구직글 불러오기 이미지
-			else if(postImgDTO.getSearchCondition().equals("jobHuntPostPremiumImgList")){
+			else if(postImgDTO.getSearchCondition().equals("jobHuntPostPremiumListImg")){
 	 			result = (List<PostImgDTO>) jdbcTemplate.query(SELECTALL_PREMIUMJOBHUNTPOSTIMG, new PostImgRowMapper());
 	 			System.out.println("PostImgDAO(jobHuntPostPremiumImgSellectAll) 로그 = [" + result + "]");
 			}
 					// 프리미엄 회원 자유글 불러오기 이미지
-			else if(postImgDTO.getSearchCondition().equals("freePostPremiumImgList")){
+			else if(postImgDTO.getSearchCondition().equals("freePostPremiumListImg")){
 	 			result = (List<PostImgDTO>) jdbcTemplate.query(SELECTALL_PREMIUMFREEPOSTIMG, new PostImgRowMapper());
 	 			System.out.println("PostImgDAO(freePostPremiumImgSellectAll) 로그 = [" + result + "]");
 			}
 					// 프리미엄 회원 장터글 불러오기 이미지
-			else if(postImgDTO.getSearchCondition().equals("marketPostPremiumImgList")){
+			else if(postImgDTO.getSearchCondition().equals("marketPostPremiumListImg")){
 	 			result = (List<PostImgDTO>) jdbcTemplate.query(SELECTALL_PREMIUMMARKETPOSTIMG, new PostImgRowMapper());
 	 			System.out.println("PostImgDAO(marketPostPremiumImgSellectAll) 로그 = [" + result + "]");
 			}

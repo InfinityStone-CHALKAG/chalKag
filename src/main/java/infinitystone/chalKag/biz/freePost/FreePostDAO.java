@@ -17,23 +17,23 @@ public class FreePostDAO {
 	private JdbcTemplate jdbcTemplate;
 	// 게시글 전체 보기 자유게시판, 게시판 이미지, 좋아요 테이블 조인문
 	private static final String SELECTALL_FREEPOST = "SELECT " 
-			+ "	FREEPOST.FREEPOST_id, " 
-			+ " FREEPOST.FREEPOST_title, "
-			+ " FREEPOST.FREEPOST_content, " 
-			+ " FREEPOST.FREEPOST_date, "
+			+ "		FREEPOST.FREEPOST_id, " 
+			+ " 	FREEPOST.FREEPOST_title, "
+			+ " 	FREEPOST.FREEPOST_content, " 
+			+ " 	FREEPOST.FREEPOST_date, "
 			+ " CASE "
-			+ "        WHEN TIMESTAMPDIFF(MINUTE, FREEPOST.FREEPOST_date, NOW()) < 60 THEN CONCAT(TIMESTAMPDIFF(MINUTE, FREEPOST.FREEPOST_date, NOW()), ' 분 전') "
-			+ "        WHEN TIMESTAMPDIFF(HOUR, FREEPOST.FREEPOST_date, NOW()) < 24 THEN CONCAT(TIMESTAMPDIFF(HOUR, FREEPOST.FREEPOST_date, NOW()), ' 시간 전') "
-			+ "        ELSE CONCAT(TIMESTAMPDIFF(DAY, FREEPOST.FREEPOST_date, NOW()), ' 일 전') "
-			+ "    END AS FREEPOST_date,"
-			+ " FREEPOST.MEMBER_id, "
-			+ " MEMBER.MEMBER_nickname, " 
-			+ " FREEPOST.FREEPOST_viewcnt, "
-			+ " COUNT(RECOMMEND.POST_id) AS RECOMMEND_cnt, " 
+			+ "     WHEN TIMESTAMPDIFF(MINUTE, FREEPOST.FREEPOST_date, NOW()) < 60 THEN CONCAT(TIMESTAMPDIFF(MINUTE, FREEPOST.FREEPOST_date, NOW()), ' 분 전') "
+			+ "     WHEN TIMESTAMPDIFF(HOUR, FREEPOST.FREEPOST_date, NOW()) < 24 THEN CONCAT(TIMESTAMPDIFF(HOUR, FREEPOST.FREEPOST_date, NOW()), ' 시간 전') "
+			+ "     ELSE CONCAT(TIMESTAMPDIFF(DAY, FREEPOST.FREEPOST_date, NOW()), ' 일 전') "
+			+ "    	END AS FREEPOST_date,"
+			+ " 	FREEPOST.MEMBER_id, "
+			+ " 	MEMBER.MEMBER_nickname, " 
+			+ " 	FREEPOST.FREEPOST_viewcnt, "
+			+ " 	COUNT(RECOMMEND.POST_id) AS RECOMMEND_cnt, " 
 			+ " FROM " 
 			+ " 	FREEPOST " 
-			+ " INNER JOIN "
-		    + "		MEMBER "
+			+ " LEFT JOIN " 
+		    + " 	MEMBER ON FREEPOST.MEMBER_id = MEMBER.MEMBER_id "
 			+ " LEFT JOIN "
 			+ " 	RECOMMEND ON FREEPOST.FREEPOST_id = RECOMMEND.POST_id "
 			+ " GROUP BY " 
@@ -43,10 +43,9 @@ public class FreePostDAO {
 		    + "		FREEPOST_id DESC ";
 	
 	// 메인페이지 프리미엄 회원글 출력
-		private static final String FREEPOST_SELECTALLPREMIUM= "SELECT "
+		private static final String SELECTALL_PREMIUMFREEPOST= "SELECT "
 				+ "			    FREEPOST.FREEPOST_title, "
 				+ "				   MEMBER.MEMBER_grade ,  "
-				+ "			    POSTIMG.POSTIMG_name  "
 				+ "			FROM   "
 				+ "			    FREEPOST  "
 				+ "			LEFT JOIN   "
@@ -54,12 +53,16 @@ public class FreePostDAO {
 				+ "			INNER JOIN  "
 				+ "			    MEMBER ON MEMBER.MEMBER_id = FREEPOST.MEMBER_id "
 				+ "			WHERE   "
-				+ "			    MEMBER.MEMBER_grade = 'PREMIUM'";
-	
+				+ "			    MEMBER.MEMBER_grade = 'PREMIUM'"
+				+ "			ORDER BY "
+				+ "    			FREEPOST.FREEPOST_date DESC "
+				+ "			LIMIT 2 "; 
 	
 	// 게시글 상세보기 게시글 전체 보기 자유게시판, 게시판 이미지, 좋아요 테이블 조인문
 	private static final String SELECTONE_FREEPOST = "SELECT " 
 			+ "	FREEPOST.FREEPOST_id, "
+			+ "	FREEPOST.MEMBER_id, " 
+			+ " FREEPOST.MEMBER_nickname, "
 			+ "	FREEPOST.FREEPOST_title, " 
 			+ "	FREEPOST.FREEPOST_content, "
 			+ "	FREEPOST.FREEPOST_date, "
@@ -68,11 +71,8 @@ public class FreePostDAO {
 			+ "        WHEN TIMESTAMPDIFF(HOUR, FREEPOST.FREEPOST_date, NOW()) < 24 THEN CONCAT(TIMESTAMPDIFF(HOUR, FREEPOST.FREEPOST_date, NOW()), ' 시간 전') "
 			+ "        ELSE CONCAT(TIMESTAMPDIFF(DAY, FREEPOST.FREEPOST_date, NOW()), ' 일 전') "
 			+ "    END AS FREEPOST_date,"
-			+ "	FREEPOST.MEMBER_id, " 
-			+ " FREEPOST.MEMBER_nickname, "
 			+ " FREEPOST.FREEPOST_viewcnt, " 
-			+ "	COUNT(RECOMMEND.POST_id) AS RECOMMEND_cnt, "
-			+ " PROFILEIMG.PROFILEIMG_name AS PROFILEIMG_name"
+			+ "	COUNT(RECOMMEND.POST_id) AS RECOMMEND_cnt "
 			+ " FROM " 
 			+ "		FREEPOST " 
 			+ " INNER JOIN "
@@ -85,6 +85,7 @@ public class FreePostDAO {
 			+ "		FREEPOST.FREEPOST_id = ? " 
 			+ " GROUP BY " 
 			+ "		FREEPOST.FREEPOST_id, "
+			+ " 	FREEPOST.MEMBER_nickname, "
 			+ " 	PROFILEIMG.PROFILEIMG_name";
 
 	// 자유게시판 글 작성 게시판 이미지와 글 내용 인서트를 따로 받음
@@ -105,7 +106,7 @@ public class FreePostDAO {
 				return result;
 			}
 			else if(freePostDTO.getSearchCondition().equals("freePostPremiumList")) {
-				result = (List<FreePostDTO>) jdbcTemplate.query(FREEPOST_SELECTALLPREMIUM, new FreePostPremiumSellectAllRowMapper());
+				result = (List<FreePostDTO>) jdbcTemplate.query(SELECTALL_PREMIUMFREEPOST, new FreePostPremiumSellectAllRowMapper());
 				System.out.println("FreePostDAO(premiumSelectAll) 로그 = [" + result + "]");
 				return result;
 			}
