@@ -120,14 +120,15 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 	
 	// 특정 회원이 좋아요한 게시글 목록 출력 (카테고리별 출력).전미지  
 	private static final String SELECTALL_RECOMMEND2 = "SELECT "
-	        + "    RECOMMEND.POST_id, " // 게시글 아이디를 선택
-	        + "    CASE " // 게시글에 해당하는 카테고리 선택
-	        + "        WHEN HEADHUNTPOST.HEADHUNTPOST_id IS NOT NULL THEN 'HEADHUNTPOST' " 
-	        + "        WHEN JOBHUNTPOST.JOBHUNTPOST_id IS NOT NULL THEN 'JOBHUNTPOST' " 
-	        + "        WHEN FREEPOST.FREEPOST_id IS NOT NULL THEN 'FREEPOST' " 
-	        + "        WHEN MARKETPOST.MARKETPOST_id IS NOT NULL THEN 'MARKETPOST' " 
-	        + "        ELSE 'Unknown' " // 어떤 카테고리에도 해당하지 않는 경우 'Unknown'으로 설정
-	        + "    END AS post_category, " // 게시글의 카테고리를 선택
+			+" SELECT "
+			+ "    RECOMMEND.POST_id, " // 게시글 아이디를 선택
+			+ "    CASE " // 게시글에 해당하는 카테고리 선택
+			+ "        WHEN HEADHUNTPOST.HEADHUNTPOST_id IS NOT NULL THEN 'HEADHUNTPOST' "
+			+ "        WHEN JOBHUNTPOST.JOBHUNTPOST_id IS NOT NULL THEN 'JOBHUNTPOST' "
+			+ "        WHEN FREEPOST.FREEPOST_id IS NOT NULL THEN 'FREEPOST' "
+			+ "        WHEN MARKETPOST.MARKETPOST_id IS NOT NULL THEN 'MARKETPOST' "
+			+ "        ELSE 'Unknown' " // 어떤 카테고리에도 해당하지 않는 경우 'Unknown'으로 설정
+			+ "    END AS post_category, "  // 게시글의 카테고리를 선택
 	        + "    COALESCE (HEADHUNTPOST.HEADHUNTPOST_id, JOBHUNTPOST.JOBHUNTPOST_id,"
 	        + "					FREEPOST.FREEPOST_id, MARKETPOST.MARKETPOST_id, 'Unknown') AS post_id, " // 각 게시글의 아이디를 선택
 	        + "    COALESCE (HEADHUNTPOST.HEADHUNTPOST_title, JOBHUNTPOST.JOBHUNTPOST_title,"
@@ -149,15 +150,63 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 	        + "    MARKETPOST ON RECOMMEND.POST_id = MARKETPOST.MARKETPOST_id " 
 	        + "WHERE " // 회원이 좋아요한 게시글 선택 (조회할 멤버 아이디 입력)
 	        + "    RECOMMEND.MEMBER_id = ? " 
-	        + "GROUP BY "
-	        + "    RECOMMEND.POST_id, " // 게시글 아이디를 기준으로 결과를 그룹화
-	        + "    post_category, " // 게시글의 카테고리를 기준으로 결과를 그룹화
-	        + "    post_id, " // 게시글의 아이디를 기준으로 결과를 그룹화
-	        + "    post_title, " // 게시글의 제목을 기준으로 결과를 그룹화
-	        + "    post_date, " // 게시글의 날짜를 기준으로 결과를 그룹화
-	        + "    post_viewcnt " // 게시글의 조회수를 기준으로 결과를 그룹화
+			+ "GROUP BY "
+			+ "    RECOMMEND.POST_id, " // 게시글 아이디를 기준으로 결과를 그룹화
+			+ "    CASE "
+			+ "        WHEN HEADHUNTPOST.HEADHUNTPOST_id IS NOT NULL THEN 'HEADHUNTPOST' "
+			+ "        WHEN JOBHUNTPOST.JOBHUNTPOST_id IS NOT NULL THEN 'JOBHUNTPOST' "
+			+ "        WHEN FREEPOST.FREEPOST_id IS NOT NULL THEN 'FREEPOST' "
+			+ "        WHEN MARKETPOST.MARKETPOST_id IS NOT NULL THEN 'MARKETPOST' "
+			+ "        ELSE 'Unknown' "
+			+ "    END, "
+			+ "    COALESCE(HEADHUNTPOST.HEADHUNTPOST_id, JOBHUNTPOST.JOBHUNTPOST_id, FREEPOST.FREEPOST_id, MARKETPOST.MARKETPOST_id, 'Unknown'), "
+			+ "    COALESCE(HEADHUNTPOST.HEADHUNTPOST_title, JOBHUNTPOST.JOBHUNTPOST_title, FREEPOST.FREEPOST_title, MARKETPOST.MARKETPOST_title, 'Unknown'), "
+			+ "    COALESCE(HEADHUNTPOST.HEADHUNTPOST_date, JOBHUNTPOST.JOBHUNTPOST_date, FREEPOST.FREEPOST_date, MARKETPOST.MARKETPOST_date, 'Unknown'), "
+			+ "    COALESCE(HEADHUNTPOST.HEADHUNTPOST_viewcnt, JOBHUNTPOST.JOBHUNTPOST_viewcnt, FREEPOST.FREEPOST_viewcnt, MARKETPOST.MARKETPOST_viewcnt, 'Unknown') "
 			+ "ORDER BY "
-			+ "		POST_id DESC ";
+			+ "    RECOMMEND.POST_id DESC ";
+	
+	
+	// 특정 회원이 좋아요한 게시글 목록 출력 (카테고리별 출력).전미지 사용x 참고용코드
+//	private static final String SELECTALL_RECOMMEND3 = "SELECT " 
+//	        + "    RECOMMEND.POST_id, " // 게시글 아이디를 선택
+//	        + "    CASE " // 게시글에 해당하는 카테고리 선택
+//	        + "        WHEN HEADHUNTPOST.HEADHUNTPOST_id IS NOT NULL THEN 'HEADHUNTPOST' " 
+//	        + "        WHEN JOBHUNTPOST.JOBHUNTPOST_id IS NOT NULL THEN 'JOBHUNTPOST' " 
+//	        + "        WHEN FREEPOST.FREEPOST_id IS NOT NULL THEN 'FREEPOST' " 
+//	        + "        WHEN MARKETPOST.MARKETPOST_id IS NOT NULL THEN 'MARKETPOST' " 
+//	        + "        ELSE 'Unknown' " // 어떤 카테고리에도 해당하지 않는 경우 'Unknown'으로 설정
+//	        + "    END AS post_category, " // 게시글의 카테고리를 선택
+//	        + "    COALESCE (HEADHUNTPOST.HEADHUNTPOST_id, JOBHUNTPOST.JOBHUNTPOST_id,"
+//	        + "					FREEPOST.FREEPOST_id, MARKETPOST.MARKETPOST_id, 'Unknown') AS post_id, " // 각 게시글의 아이디를 선택
+//	        + "    COALESCE (HEADHUNTPOST.HEADHUNTPOST_title, JOBHUNTPOST.JOBHUNTPOST_title,"
+//	        + "					FREEPOST.FREEPOST_title, MARKETPOST.MARKETPOST_title, 'Unknown') AS post_title, " // 각 게시글의 제목을 선택
+//	        + "    COALESCE (HEADHUNTPOST.HEADHUNTPOST_date, JOBHUNTPOST.JOBHUNTPOST_date,"
+//	        + "					FREEPOST.FREEPOST_date, MARKETPOST.MARKETPOST_date, 'Unknown') AS post_date, " // 각 게시글의 날짜를 선택
+//	        + "    COALESCE (HEADHUNTPOST.HEADHUNTPOST_viewcnt, JOBHUNTPOST.JOBHUNTPOST_viewcnt,"
+//	        + "					FREEPOST.FREEPOST_viewcnt, MARKETPOST.MARKETPOST_viewcnt, 'Unknown') AS post_viewcnt, " //각 게시글의 조회수를 선택
+//	        + "    COUNT (RECOMMEND.POST_id) AS post_recommendcnt " // 각 게시글의 좋아요 수를 합산
+//	        + "FROM " 
+//	        + "    RECOMMEND " // 좋아요 테이블에서 데이터를 가져옴
+//	        + "LEFT JOIN " // 각 게시글 테이블과 좋아요 테이블을 LEFT JOIN하여 게시글 정보를 가져옴
+//	        + "    HEADHUNTPOST ON RECOMMEND.POST_id = HEADHUNTPOST.HEADHUNTPOST_id "
+//	        + "LEFT JOIN " 
+//	        + "    JOBHUNTPOST ON RECOMMEND.POST_id = JOBHUNTPOST.JOBHUNTPOST_id " 
+//	        + "LEFT JOIN "
+//	        + "    FREEPOST ON RECOMMEND.POST_id = FREEPOST.FREEPOST_id " 
+//	        + "LEFT JOIN "
+//	        + "    MARKETPOST ON RECOMMEND.POST_id = MARKETPOST.MARKETPOST_id " 
+//	        + "WHERE " // 회원이 좋아요한 게시글 선택 (조회할 멤버 아이디 입력)
+//	        + "    RECOMMEND.MEMBER_id = ? " 
+//	        + "GROUP BY "
+//	        + "    RECOMMEND.POST_id, " // 게시글 아이디를 기준으로 결과를 그룹화
+//	        + "    post_category, " // 게시글의 카테고리를 기준으로 결과를 그룹화
+//	        + "    post_id, " // 게시글의 아이디를 기준으로 결과를 그룹화
+//	        + "    post_title, " // 게시글의 제목을 기준으로 결과를 그룹화
+//	        + "    post_date, " // 게시글의 날짜를 기준으로 결과를 그룹화
+//	        + "    post_viewcnt " // 게시글의 조회수를 기준으로 결과를 그룹화
+//			+ "ORDER BY "
+//			+ "		POST_id DESC ";
 	
 	// 좋아요 중복검사 (좋아요를 눌렀는지 안눌렀는지 확인).전미지
 	private static final String SELECTONE_RECOMMEND = "SELECT "
@@ -251,7 +300,7 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 		int result = 0;
 		System.out.println("RecommendDAO(insert) In로그 = [" + recommendDTO + "]");
 		// INSERT_RECOMMEND 쿼리를 실행하여 데이터베이스에서 게시글 좋아요 데이터를 삭제
-		result = jdbcTemplate.update(INSERT_RECOMMEND);
+		result = jdbcTemplate.update(INSERT_RECOMMEND, recommendDTO.getPostId(), recommendDTO.getMemberId());
 		if (result <= 0) {
 			System.out.println("RecommendDAO(insert) Out로그 = [" + result + "]");
 			return false; // 좋아요 추가 실패 시 false 반환
@@ -269,7 +318,7 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 		int result = 0;
 		System.out.println("RecommendDAO(delete) In로그 = [" + recommendDTO + "]");
 		// DELETE_RECOMMEND 쿼리를 실행하여 데이터베이스에서 게시글 좋아요 데이터를 삭제
-		result = jdbcTemplate.update(DELETE_RECOMMEND);
+		result = jdbcTemplate.update(DELETE_RECOMMEND, recommendDTO.getRecommendId(), recommendDTO.getRecommendId());
 		if (result <= 0) {
 			System.out.println("RecommendDAO(delete) Out로그 = [" + result + "]");
 			return false; // 좋아요 삭제 실패 시 false 반환

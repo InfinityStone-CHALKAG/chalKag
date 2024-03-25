@@ -17,106 +17,108 @@ public class HeadHuntPostDAO { // 구인 게시판 DAO
 
   // 구인글 전체 출력.전미지
   private static final String SELECTALL_HEADHUNTPOST = "SELECT "
-//      + "		'HeadHuntPost' AS POST_category, "
-      + "		HEADHUNTPOST.HEADHUNTPOST_id, "
-      + "		HEADHUNTPOST.MEMBER_id, "
-      + "		MEMBER.MEMBER_nickname, "
-      + "		HEADHUNTPOST.HEADHUNTPOST_title, "
-      + "		HEADHUNTPOST.HEADHUNTPOST_content, "
-      + "		HEADHUNTPOST.HEADHUNTPOST_date, "
-      + "		HEADHUNTPOST.HEADHUNTPOST_viewcnt, "
-      + "		COUNT(RECOMMEND.POST_id) AS RECOMMEND_cnt "
+//      + "     'HeadHuntPost' AS POST_category, "
+      + "      HEADHUNTPOST.HEADHUNTPOST_id, "
+      + "      HEADHUNTPOST.MEMBER_id, "
+      + "      MEMBER.MEMBER_nickname, "
+      + "      HEADHUNTPOST.HEADHUNTPOST_title, "
+      + "      HEADHUNTPOST.HEADHUNTPOST_content, "
+      + "      HEADHUNTPOST.HEADHUNTPOST_date, "
+      + "      HEADHUNTPOST.HEADHUNTPOST_viewcnt, "
+      + "      COUNT(RECOMMEND.POST_id) AS RECOMMEND_cnt "
       + "FROM "
-      + "		HEADHUNTPOST "
+      + "      HEADHUNTPOST "
       + "INNER JOIN "
-      + "		MEMBER ON HEADHUNTPOST.MEMBER_id = MEMBER.member_id "
+      + "      MEMBER "
       + "LEFT JOIN "
-      + "		RECOMMEND ON HEADHUNTPOST.HEADHUNTPOST_id = RECOMMEND.POST_id "
+      + "      RECOMMEND ON HEADHUNTPOST.HEADHUNTPOST_id = RECOMMEND.POST_id "
       + "GROUP BY "
-      + "		HEADHUNTPOST.HEADHUNTPOST_id "
+      + "      HEADHUNTPOST.HEADHUNTPOST_id, "
+      + "      MEMBER.MEMBER_nickname "
       + "ORDER BY "
-      + "		HEADHUNTPOST_id DESC ";
+      + "      HEADHUNTPOST_id DESC ";
   // 사용한 테이블 : 구인글 테이블, 회원 테이블, 좋아요 테이블
   // 사용한 컬럼 (출력 내용) :
   // 구인글 아이디, 회원 아이디, 회원 닉네임, 구인글 제목, 구인글 내용, 구인글 작성일, 구인글 조회수, 게시글의 좋아요 수
   // 게시글 이미지는 따로 받아옴
 
   // 프리미엄 회원 게시글 목록 출력 (작성중)
-//	private static final String SELECTALL_HEADHUNTPOSTLIST= "SELECT "
-//			+ "    HEADHUNTPOST.HEADHUNTPOST_title, "
-//			+ "	   MEMBER.MEMBER_grade , "
-//			+ "    POSTIMG.POSTIMG_name "
-//			+ "FROM "
-//			+ "    HEADHUNTPOST "
-//			+ "LEFT JOIN  "
-//			+ "    POSTIMG ON HEADHUNTPOST.HEADHUNTPOST_id = POSTIMG.POST_id  "
-//			+ "INNER JOIN "
-//			+ "    MEMBER ON HEADHUNTPOST.MEMBER_id = MEMBER.MEMBER_id "
-//			+ "WHERE "
-//			+ "    MEMBER.MEMBER_grade = 'premium' ";	
+   private static final String SELECTALL_HEADHUNTPOSTLIST= "SELECT "
+         + "    HEADHUNTPOST.HEADHUNTPOST_title, "
+         + "    MEMBER.MEMBER_grade , "
+         + "    POSTIMG.POSTIMG_name "
+         + "FROM "
+         + "    HEADHUNTPOST "
+         + "LEFT JOIN  "
+         + "    POSTIMG ON HEADHUNTPOST.HEADHUNTPOST_id = POSTIMG.POST_id  "
+         + "INNER JOIN "
+         + "    MEMBER "
+         + "WHERE "
+         + "    MEMBER.MEMBER_grade = ? ";   
 
   // 작성 시간 출력 (작성중)
-//	private static final String SELECTALL_HEADGUNTPOSTTIME = "SELECT " 
-//				+ "	HEADHUNTPOST.HEADHUNTPOST_id, "
-//				+ "	HEADHUNTPOST.HEADHUNTPOST_title," 
-//				+ "	HEADHUNTPOST.HEADHUNTPOST_content,"
-//				+ "	HEADHUNTPOST.HEADHUNTPOST_date,"
-//				+ " CASE "
-//				+ "        WHEN TIMESTAMPDIFF(MINUTE, HEADHUNTPOST.HEADHUNTPOST_date, NOW()) < 60 THEN CONCAT"
-//				+ "				(TIMESTAMPDIFF(MINUTE, HEADHUNTPOST.HEADHUNTPOST_date, NOW()), ' 분 전') "
-//				+ "        WHEN TIMESTAMPDIFF(HOUR, HEADHUNTPOST.HEADHUNTPOST_date, NOW()) < 24 THEN CONCAT"
-//				+ "				(TIMESTAMPDIFF(HOUR, HEADHUNTPOST.HEADHUNTPOST_date, NOW()), ' 시간 전') "
-//				+ "        ELSE CONCAT(TIMESTAMPDIFF(DAY, HEADHUNTPOST.HEADHUNTPOST_date, NOW()), ' 일 전') "
-//				+ "    END AS COMMENT_date," 
-//				+ "	HEADHUNTPOST.MEMBER_id,"
-//				+ " MEMBER.MEMBER_nickname," 	
-//				+ "	HEADHUNTPOST.HEADHUNTPOST_viewcnt,"
-//				+ "	COUNT(RECOMMEND.POST_id) AS RECOMMEND_cnt," 
-//				+ "	FROM" 
-//				+ "		HEADHUNTPOST" 
-//				+ " INNER JOIN "
-//			    + "		MEMBER ON HEADHUNTPOST.MEMBER_id = MEMBER.member_id "
-//				+ "	LEFT JOIN "
-//				+ "		RECOMMEND ON HEADHUNTPOST.HEADHUNTPOST_id = RECOMMEND.POST_id " 
-//				+ "	GROUP BY"
-//				+ "		HEADHUNTPOST.HEADHUNTPOST_id ";
+   private static final String SELECTALL_HEADGUNTPOSTTIME = "SELECT " 
+         + "	HEADHUNTPOST.HEADHUNTPOST_id, "
+         + "	HEADHUNTPOST.HEADHUNTPOST_title," 
+         + "	HEADHUNTPOST.HEADHUNTPOST_content,"
+         + "	HEADHUNTPOST.HEADHUNTPOST_date,"
+         + " 	CASE "
+         + "		WHEN TIMESTAMPDIFF(MINUTE, HEADHUNTPOST.HEADHUNTPOST_date, NOW()) < 60 THEN CONCAT"
+         + "			(TIMESTAMPDIFF(MINUTE, HEADHUNTPOST.HEADHUNTPOST_date, NOW()), ' 분 전') "
+         + "		WHEN TIMESTAMPDIFF(HOUR, HEADHUNTPOST.HEADHUNTPOST_date, NOW()) < 24 THEN CONCAT"
+         + "			(TIMESTAMPDIFF(HOUR, HEADHUNTPOST.HEADHUNTPOST_date, NOW()), ' 시간 전') "
+         + "        ELSE CONCAT(TIMESTAMPDIFF(DAY, HEADHUNTPOST.HEADHUNTPOST_date, NOW()), ' 일 전') "
+         + "	END AS COMMENT_date," 
+         + "	HEADHUNTPOST.MEMBER_id,"
+         + "	MEMBER.MEMBER_nickname,"    
+         + "	HEADHUNTPOST.HEADHUNTPOST_viewcnt,"
+         + "	COUNT(RECOMMEND.POST_id) AS RECOMMEND_cnt," 
+         + "	FROM" 
+         + "		HEADHUNTPOST" 
+         + "INNER JOIN "
+         + "	MEMBER ON HEADHUNTPOST.MEMBER_id = MEMBER.member_id "
+         + "	LEFT JOIN "
+         + "		RECOMMEND ON HEADHUNTPOST.HEADHUNTPOST_id = RECOMMEND.POST_id " 
+         + "	GROUP BY"
+         + "		HEADHUNTPOST.HEADHUNTPOST_id ";
 
 
   // 구인글 상세 출력.전미지
   private static final String SELECTONE_HEADHUNTPOST = "SELECT "
-      + "		HEADHUNTPOST.HEADHUNTPOST_id, "
-      + "		HEADHUNTPOST.MEMBER_id, "
-      + "		MEMBER.MEMBER_nickname, "
-      + "	   	PROFILEIMG.PROFILEIMG_name, "
-      + "		HEADHUNTPOST.HEADHUNTPOST_role, "
-      + "		HEADHUNTPOST.HEADHUNTPOST_region, "
-      + "		HEADHUNTPOST.HEADHUNTPOST_pay, "
-      + "		HEADHUNTPOST.HEADHUNTPOST_workdate, "
-      + "		HEADHUNTPOST.HEADHUNTPOST_concept, "
-      + "		HEADHUNTPOST.HEADHUNTPOST_title, "
-      + "		HEADHUNTPOST.HEADHUNTPOST_content, "
-      + "		HEADHUNTPOST.HEADHUNTPOST_date, "
-      + "		HEADHUNTPOST.HEADHUNTPOST_viewcnt, "
-      + "		COUNT(RECOMMEND.POST_id) AS RECOMMEND_cnt "
+      + "      HEADHUNTPOST.HEADHUNTPOST_id, "
+      + "      HEADHUNTPOST.MEMBER_id, "
+      + "      MEMBER.MEMBER_nickname, "
+      + "      PROFILEIMG.PROFILEIMG_name, "
+      + "      HEADHUNTPOST.HEADHUNTPOST_role, "
+      + "      HEADHUNTPOST.HEADHUNTPOST_region, "
+      + "      HEADHUNTPOST.HEADHUNTPOST_pay, "
+      + "      HEADHUNTPOST.HEADHUNTPOST_workdate, "
+      + "      HEADHUNTPOST.HEADHUNTPOST_concept, "
+      + "      HEADHUNTPOST.HEADHUNTPOST_title, "
+      + "      HEADHUNTPOST.HEADHUNTPOST_content, "
+      + "      HEADHUNTPOST.HEADHUNTPOST_date, "
+      + "      HEADHUNTPOST.HEADHUNTPOST_viewcnt, "
+      + "      COUNT(RECOMMEND.POST_id) AS RECOMMEND_cnt "
       + "FROM "
-      + "		HEADHUNTPOST "
+      + "      HEADHUNTPOST "
       + "INNER JOIN "
-      + "		MEMBER ON HEADHUNTPOST.MEMBER_id = MEMBER.MEMBER_id "
+      + "      MEMBER ON HEADHUNTPOST.MEMBER_id = MEMBER.MEMBER_id "
       + "LEFT JOIN "
-      + "		PROFILEIMG ON HEADHUNTPOST.MEMBER_id = PROFILEIMG.MEMBER_id "
+      + "      PROFILEIMG ON HEADHUNTPOST.MEMBER_id = PROFILEIMG.MEMBER_id "
       + "LEFT JOIN "
-      + "		RECOMMEND ON HEADHUNTPOST.HEADHUNTPOST_id = RECOMMEND.POST_id "
+      + "      RECOMMEND ON HEADHUNTPOST.HEADHUNTPOST_id = RECOMMEND.POST_id "
       + "WHERE "
-      + "		HEADHUNTPOST.HEADHUNTPOST_id = ? "
+      + "      HEADHUNTPOST.HEADHUNTPOST_id = ? "
       + "GROUP BY "
-      + "		HEADHUNTPOST.HEADHUNTPOST_id, "
-      + "		PROFILEIMG.PROFILEIMGNAME ";
+      + "      HEADHUNTPOST.HEADHUNTPOST_id, "
+      + "      MEMBER.MEMBER_nickname, "
+      + "      PROFILEIMG.PROFILEIMGNAME ";
   // 사용한 테이블 : 구인글 테이블, 회원 테이블, 프로필 이미지 테이블, 좋아요 테이블
   // 사용한 컬럼 (출력 내용) :
   // 구인글 아이디, 회원 아이디, 회원 닉네임 (회원 테이블), 프로필 이미지 네임 (프로필 이미지 테이블),
   // 구인글 직업 ( 모델 / 사진작가 ), 구인글 작업 지역, 구인글 작업 페이, 구인글 작업 날짜, 구인글 촬영 컨셉,
   // 구인글 제목, 구인글 내용, 구인글 작성일, 구인글 조회수, 게시글의 좋아요 수
-  // LEFT JOIN을 사용하여 HEADHUNTPOST 테이블과 MEMBER 테이블을 연결하고, 또 다른 LEFT JOIN을 사용하여 MEMBER 테이블과 PROFILEIMG 테이블을 연결
+  // INNER JOIN을 사용하여 HEADHUNTPOST 테이블과 MEMBER 테이블을 연결하고, 또 다른 LEFT JOIN을 사용하여 MEMBER 테이블과 PROFILEIMG 테이블을 연결
 
   // 구인글 작성.전미지
   private static final String INSERT_HEADHUNTPOST = "INSERT INTO HEADHUNTPOST ( "
@@ -139,15 +141,15 @@ public class HeadHuntPostDAO { // 구인 게시판 DAO
   // 구인글 수정.전미지
   private static final String UPDATE_HEADHUNTPOST = "UPDATE HEADHUNTPOST "
       + "SET "
-      + "		HEADHUNTPOST_role = ?, "
-      + "		HEADHUNTPOST_region = ?, "
-      + "		HEADHUNTPOST_pay = ?, "
-      + "		HEADHUNTPOST_workdate = ?, "
-      + "		HEADHUNTPOST_concept = ?, "
-      + "		HEADHUNTPOST_title = ?, "
-      + "		HEADHUNTPOST_content = ? "
+      + "      HEADHUNTPOST_role = ?, "
+      + "      HEADHUNTPOST_region = ?, "
+      + "      HEADHUNTPOST_pay = ?, "
+      + "      HEADHUNTPOST_workdate = ?, "
+      + "      HEADHUNTPOST_concept = ?, "
+      + "      HEADHUNTPOST_title = ?, "
+      + "      HEADHUNTPOST_content = ? "
       + "WHERE "
-      + "		HEADHUNTPOST_id = ? ";
+      + "      HEADHUNTPOST_id = ? ";
   // 사용한 테이블 : 구인글 테이블
   // 사용한 컬럼 (수정 내용) :
   // 구인글 직업, 구인글 작업 지역, 구인글 작업 페이, 구인글 작업 날짜, 구인글 촬영 컨셉, 구인글 제목, 구인글 내용
@@ -155,9 +157,9 @@ public class HeadHuntPostDAO { // 구인 게시판 DAO
   // 구인글 조회수 증가.전미지
   private static final String UPDATE_VIEWCNT = "UPDATE HEADHUNTPOST "
       + "SET "
-      + "		HEADHUNTPOST_viewcnt = (HEADHUNTPOST_viewcnt+1) "
+      + "      HEADHUNTPOST_viewcnt = (HEADHUNTPOST_viewcnt+1) "
       + "WHERE "
-      + "		HEADHUNTPOST_id = ? ";
+      + "      HEADHUNTPOST_id = ? ";
   // 사용한 테이블 : 구인글 테이블
   // 사용한 컬럼 (조회수 업데이트) :
   // 구인글 조회수
@@ -165,9 +167,9 @@ public class HeadHuntPostDAO { // 구인 게시판 DAO
   // 구인글 삭제.전미지
   private static final String DELETE_HEADHUNTPOST = "DELETE "
       + "FROM "
-      + "		HEADHUNTPOST "
+      + "      HEADHUNTPOST "
       + "WHERE "
-      + "		HEADHUNTPOST_id = ? ";
+      + "      HEADHUNTPOST_id = ? ";
 
 
   // 구인글 목록 출력
@@ -182,30 +184,30 @@ public class HeadHuntPostDAO { // 구인 게시판 DAO
         System.out.println("HeadHuntPostDAO(selectAll) Out로그 = [" + result + "]");
         return result;
       }
-//			// 최신 게시글 목록 출력
-//			else if (headHuntPostDTO.getSearchCondition().equals("HeadHuntPostLatestList")) {
-//				result = jdbcTemplate.query(SELECTALL_LATESTHEADHUNTPOST, new HeadHuntPostLatestListRowMapper());
-//				System.out.println("HeadHuntPostDAO(selectAll) Out로그 = [" + result + "]");
-//				return result;
-//			}
-//			// 프리미엄 회원 게시글 목록 출력
-//			else if (headHuntPostDTO.getSearchCondition().equals("HeadHuntPostPremiumList")) {
-//				result = jdbcTemplate.query(SELECTALL_PREMIUMHEADHUNTPOST, new HeadHuntPostPremiumListRowMapper());
-//				System.out.println("HeadHuntPostDAO(selectAll) Out로그 = [" + result + "]");
-//				return result;
-//			}
-//			// 추천 게시글 목록 출력
-//			else if (headHuntPostDTO.getSearchCondition().equals("HeadHuntPostHotList")) {
-//				result = jdbcTemplate.query(SELECTALL_HOTHEADHUNTPOST, new HeadHuntPostHotListRowMapper());
-//				System.out.println("HeadHuntPostDAO(selectAll) Out로그 = [" + result + "]");
-//				return result;
-//			}
-//			// 주간 추천 게시글 목록 출력
-//			else if (headHuntPostDTO.getSearchCondition().equals("HeadHuntPostBestOfTheWeekList")) {
-//				result = jdbcTemplate.query(SELECTALL_BESTOFTHEWEEKHEADHUNTPOST, new HeadHuntPostBestOfTheWeekListkRowMapper());
-//				System.out.println("HeadHuntPostDAO(selectAll) Out로그 = [" + result + "]");
-//				return result;
-//			}
+//         // 최신 게시글 목록 출력
+//         else if (headHuntPostDTO.getSearchCondition().equals("HeadHuntPostLatestList")) {
+//            result = jdbcTemplate.query(SELECTALL_LATESTHEADHUNTPOST, new HeadHuntPostLatestListRowMapper());
+//            System.out.println("HeadHuntPostDAO(selectAll) Out로그 = [" + result + "]");
+//            return result;
+//         }
+//         // 프리미엄 회원 게시글 목록 출력
+//         else if (headHuntPostDTO.getSearchCondition().equals("HeadHuntPostPremiumList")) {
+//            result = jdbcTemplate.query(SELECTALL_PREMIUMHEADHUNTPOST, new HeadHuntPostPremiumListRowMapper());
+//            System.out.println("HeadHuntPostDAO(selectAll) Out로그 = [" + result + "]");
+//            return result;
+//         }
+//         // 추천 게시글 목록 출력
+//         else if (headHuntPostDTO.getSearchCondition().equals("HeadHuntPostHotList")) {
+//            result = jdbcTemplate.query(SELECTALL_HOTHEADHUNTPOST, new HeadHuntPostHotListRowMapper());
+//            System.out.println("HeadHuntPostDAO(selectAll) Out로그 = [" + result + "]");
+//            return result;
+//         }
+//         // 주간 추천 게시글 목록 출력
+//         else if (headHuntPostDTO.getSearchCondition().equals("HeadHuntPostBestOfTheWeekList")) {
+//            result = jdbcTemplate.query(SELECTALL_BESTOFTHEWEEKHEADHUNTPOST, new HeadHuntPostBestOfTheWeekListkRowMapper());
+//            System.out.println("HeadHuntPostDAO(selectAll) Out로그 = [" + result + "]");
+//            return result;
+//         }
     } catch (Exception e) { // 예외 발생 시
       e.printStackTrace(); // 예외 내용 출력
       return null; // 예외 발생 시 null 반환
@@ -302,97 +304,97 @@ class HeadHuntPostListRowMapper implements RowMapper<HeadHuntPostDTO> {
 
     HeadHuntPostDTO headHuntPostDTO = new HeadHuntPostDTO(); // 새로운 HeadHuntPostDTO 객체 생성
     // ResultSet에 저장된 데이터를 HeadHuntPostDTO 객체에 저장
-    headHuntPostDTO.setHeadHuntPostId(rs.getString("HEADHUNTPOST_id"));        // 구인글 아이디
-    headHuntPostDTO.setMemberId(rs.getString("MEMBER_id"));              // 회원 아이디
-    headHuntPostDTO.setMemberNickname(rs.getString("MEMBER_nickname"));        // 회원 닉네임
-//		headHuntPostDTO.setPostCategory(rs.getString("POST_category"));					// 게시글 카테고리
-    headHuntPostDTO.setHeadHuntPostTitle(rs.getString("HEADHUNTPOST_title"));    // 구인글 제목
-    headHuntPostDTO.setHeadHuntPostContent(rs.getString("HEADHUNTPOST_content"));  // 구인글 내용
-    headHuntPostDTO.setHeadHuntPostDate(rs.getString("HEADHUNTPOST_date"));    // 구인글 작성일
-    headHuntPostDTO.setHeadHuntPostViewcnt(rs.getString("HEADHUNTPOST_viewcnt"));  // 구인글 조회수
-    headHuntPostDTO.setRecommendCnt(rs.getString("RECOMMEND_cnt"));          // 게시글의 좋아요 수
+    headHuntPostDTO.setHeadHuntPostId(rs.getString("HEADHUNTPOST_id"));             // 구인글 아이디
+    headHuntPostDTO.setMemberId(rs.getString("MEMBER_id"));                       	// 회원 아이디
+    headHuntPostDTO.setMemberNickname(rs.getString("MEMBER_nickname"));             // 회원 닉네임
+//      headHuntPostDTO.setPostCategory(rs.getString("POST_category"));            	// 게시글 카테고리
+    headHuntPostDTO.setHeadHuntPostTitle(rs.getString("HEADHUNTPOST_title"));       // 구인글 제목
+    headHuntPostDTO.setHeadHuntPostContent(rs.getString("HEADHUNTPOST_content"));	// 구인글 내용
+    headHuntPostDTO.setHeadHuntPostDate(rs.getString("HEADHUNTPOST_date"));         // 구인글 작성일
+    headHuntPostDTO.setHeadHuntPostViewcnt(rs.getString("HEADHUNTPOST_viewcnt"));   // 구인글 조회수
+    headHuntPostDTO.setRecommendCnt(rs.getString("RECOMMEND_cnt"));                	// 게시글의 좋아요 수
     return headHuntPostDTO; // headHuntPostDTO에 저장된 데이터들을 반환
   }
 }
 
 //// 구인글 최신 목록 출력 시 필요한 데이터를 저장할 RowMapper 클래스.전미지
 //class HeadHuntPostLatestListRowMapper implements RowMapper<HeadHuntPostDTO> {
-//	@Override // mapRow 메서드 오버라이드
-//	public HeadHuntPostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
-//		// ResultSet에 저장된 데이터를 HeadHuntPostDTO 객체에 매핑(저장)하는 메서드
+//   @Override // mapRow 메서드 오버라이드
+//   public HeadHuntPostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+//      // ResultSet에 저장된 데이터를 HeadHuntPostDTO 객체에 매핑(저장)하는 메서드
 //
-//		HeadHuntPostDTO headHuntPostDTO = new HeadHuntPostDTO(); // 새로운 HeadHuntPostDTO 객체 생성
-//		// ResultSet에 저장된 데이터를 HeadHuntPostDTO 객체에 저장
-//		headHuntPostDTO.setHeadHuntPostId(rs.getString("HEADHUNTPOST_id"));				// 구인글 아이디
-//		headHuntPostDTO.setMemberId(rs.getString("MEMBER_id"));							// 회원 아이디
-//		headHuntPostDTO.setMemberNickname(rs.getString("MEMBER_nickname"));				// 회원 닉네임
-//		headHuntPostDTO.setHeadHuntPostTitle(rs.getString("HEADHUNTPOST_title"));		// 구인글 제목
-//		headHuntPostDTO.setHeadHuntPostContent(rs.getString("HEADHUNTPOST_content"));	// 구인글 내용
-//		headHuntPostDTO.setHeadHuntPostContent(rs.getString("HEADHUNTPOST_date"));		// 구인글 작성일
-//		headHuntPostDTO.setHeadHuntPostViewcnt(rs.getString("HEADHUNTPOST_viewcnt"));	// 구인글 조회수
-//		headHuntPostDTO.setRecommendCnt(rs.getString("RECOMMEND_cnt"));					// 게시글의 좋아요 수
-//		return headHuntPostDTO; // headHuntPostDTO에 저장된 데이터들을 반환
-//	}
+//      HeadHuntPostDTO headHuntPostDTO = new HeadHuntPostDTO(); // 새로운 HeadHuntPostDTO 객체 생성
+//      // ResultSet에 저장된 데이터를 HeadHuntPostDTO 객체에 저장
+//      headHuntPostDTO.setHeadHuntPostId(rs.getString("HEADHUNTPOST_id"));            	// 구인글 아이디
+//      headHuntPostDTO.setMemberId(rs.getString("MEMBER_id"));                     	// 회원 아이디
+//      headHuntPostDTO.setMemberNickname(rs.getString("MEMBER_nickname"));            	// 회원 닉네임
+//      headHuntPostDTO.setHeadHuntPostTitle(rs.getString("HEADHUNTPOST_title"));      	// 구인글 제목
+//      headHuntPostDTO.setHeadHuntPostContent(rs.getString("HEADHUNTPOST_content"));	// 구인글 내용
+//      headHuntPostDTO.setHeadHuntPostContent(rs.getString("HEADHUNTPOST_date"));      // 구인글 작성일
+//      headHuntPostDTO.setHeadHuntPostViewcnt(rs.getString("HEADHUNTPOST_viewcnt"));   // 구인글 조회수
+//      headHuntPostDTO.setRecommendCnt(rs.getString("RECOMMEND_cnt"));              	// 게시글의 좋아요 수
+//      return headHuntPostDTO; // headHuntPostDTO에 저장된 데이터들을 반환
+//   }
 //}
 //
 //// 구인글 프리미엄 회원글 목록 출력 시 필요한 데이터를 저장할 RowMapper 클래스.전미지
 //class HeadHuntPostPremiumListRowMapper implements RowMapper<HeadHuntPostDTO> {
-//	@Override // mapRow 메서드 오버라이드
-//	public HeadHuntPostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
-//	// ResultSet에 저장된 데이터를 HeadHuntPostDTO 객체에 매핑(저장)하는 메서드
+//   @Override // mapRow 메서드 오버라이드
+//   public HeadHuntPostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+//   // ResultSet에 저장된 데이터를 HeadHuntPostDTO 객체에 매핑(저장)하는 메서드
 //
-//		HeadHuntPostDTO headHuntPostDTO = new HeadHuntPostDTO(); // 새로운 HeadHuntPostDTO 객체 생성
-//		// ResultSet에 저장된 데이터를 HeadHuntPostDTO 객체에 저장
-//		headHuntPostDTO.setHeadHuntPostId(rs.getString("HEADHUNTPOST_id"));				// 구인글 아이디
-//		headHuntPostDTO.setMemberId(rs.getString("MEMBER_id"));							// 회원 아이디
-//		headHuntPostDTO.setMemberNickname(rs.getString("MEMBER_nickname"));				// 회원 닉네임
-//		headHuntPostDTO.setHeadHuntPostTitle(rs.getString("HEADHUNTPOST_title"));		// 구인글 제목
-//		headHuntPostDTO.setHeadHuntPostContent(rs.getString("HEADHUNTPOST_content"));	// 구인글 내용
-//		headHuntPostDTO.setHeadHuntPostContent(rs.getString("HEADHUNTPOST_date"));		// 구인글 작성일
-//		headHuntPostDTO.setHeadHuntPostViewcnt(rs.getString("HEADHUNTPOST_viewcnt"));	// 구인글 조회수
-//		headHuntPostDTO.setRecommendCnt(rs.getString("RECOMMEND_cnt"));					// 게시글의 좋아요 수
-//		return headHuntPostDTO; // headHuntPostDTO에 저장된 데이터들을 반환
-//	}
+//      HeadHuntPostDTO headHuntPostDTO = new HeadHuntPostDTO(); // 새로운 HeadHuntPostDTO 객체 생성
+//      // ResultSet에 저장된 데이터를 HeadHuntPostDTO 객체에 저장
+//      headHuntPostDTO.setHeadHuntPostId(rs.getString("HEADHUNTPOST_id"));            	// 구인글 아이디
+//      headHuntPostDTO.setMemberId(rs.getString("MEMBER_id"));                     	// 회원 아이디
+//      headHuntPostDTO.setMemberNickname(rs.getString("MEMBER_nickname"));            	// 회원 닉네임
+//      headHuntPostDTO.setHeadHuntPostTitle(rs.getString("HEADHUNTPOST_title"));      	// 구인글 제목
+//      headHuntPostDTO.setHeadHuntPostContent(rs.getString("HEADHUNTPOST_content"));	// 구인글 내용
+//      headHuntPostDTO.setHeadHuntPostContent(rs.getString("HEADHUNTPOST_date"));      // 구인글 작성일
+//      headHuntPostDTO.setHeadHuntPostViewcnt(rs.getString("HEADHUNTPOST_viewcnt"));   // 구인글 조회수
+//      headHuntPostDTO.setRecommendCnt(rs.getString("RECOMMEND_cnt"));               	// 게시글의 좋아요 수
+//      return headHuntPostDTO; // headHuntPostDTO에 저장된 데이터들을 반환
+//   }
 //}
 //
 //// 구인글 추천글 목록 출력 시 필요한 데이터를 저장할 RowMapper 클래스.전미지
 //class HeadHuntPostHotListRowMapper implements RowMapper<HeadHuntPostDTO> {
-//	@Override // mapRow 메서드 오버라이드
-//	public HeadHuntPostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
-//		// ResultSet에 저장된 데이터를 HeadHuntPostDTO 객체에 매핑(저장)하는 메서드
+//   @Override // mapRow 메서드 오버라이드
+//   public HeadHuntPostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+//      // ResultSet에 저장된 데이터를 HeadHuntPostDTO 객체에 매핑(저장)하는 메서드
 //
-//		HeadHuntPostDTO headHuntPostDTO = new HeadHuntPostDTO(); // 새로운 HeadHuntPostDTO 객체 생성
-//		// ResultSet에 저장된 데이터를 HeadHuntPostDTO 객체에 저장
-//		headHuntPostDTO.setHeadHuntPostId(rs.getString("HEADHUNTPOST_id"));				// 구인글 아이디
-//		headHuntPostDTO.setMemberId(rs.getString("MEMBER_id"));							// 회원 아이디
-//		headHuntPostDTO.setMemberNickname(rs.getString("MEMBER_nickname"));				// 회원 닉네임
-//		headHuntPostDTO.setHeadHuntPostTitle(rs.getString("HEADHUNTPOST_title"));		// 구인글 제목
-//		headHuntPostDTO.setHeadHuntPostContent(rs.getString("HEADHUNTPOST_content"));	// 구인글 내용
-//		headHuntPostDTO.setHeadHuntPostContent(rs.getString("HEADHUNTPOST_date"));		// 구인글 작성일
-//		headHuntPostDTO.setHeadHuntPostViewcnt(rs.getString("HEADHUNTPOST_viewcnt"));	// 구인글 조회수
-//		headHuntPostDTO.setRecommendCnt(rs.getString("RECOMMEND_cnt"));					// 게시글의 좋아요 수
-//		return headHuntPostDTO; // headHuntPostDTO에 저장된 데이터들을 반환
-//	}
+//      HeadHuntPostDTO headHuntPostDTO = new HeadHuntPostDTO(); // 새로운 HeadHuntPostDTO 객체 생성
+//      // ResultSet에 저장된 데이터를 HeadHuntPostDTO 객체에 저장
+//      headHuntPostDTO.setHeadHuntPostId(rs.getString("HEADHUNTPOST_id"));            	// 구인글 아이디
+//      headHuntPostDTO.setMemberId(rs.getString("MEMBER_id"));                     	// 회원 아이디
+//      headHuntPostDTO.setMemberNickname(rs.getString("MEMBER_nickname"));            	// 회원 닉네임
+//      headHuntPostDTO.setHeadHuntPostTitle(rs.getString("HEADHUNTPOST_title"));      	// 구인글 제목
+//      headHuntPostDTO.setHeadHuntPostContent(rs.getString("HEADHUNTPOST_content"));	// 구인글 내용
+//      headHuntPostDTO.setHeadHuntPostContent(rs.getString("HEADHUNTPOST_date"));      // 구인글 작성일
+//      headHuntPostDTO.setHeadHuntPostViewcnt(rs.getString("HEADHUNTPOST_viewcnt"));   // 구인글 조회수
+//      headHuntPostDTO.setRecommendCnt(rs.getString("RECOMMEND_cnt"));               	// 게시글의 좋아요 수
+//      return headHuntPostDTO; // headHuntPostDTO에 저장된 데이터들을 반환
+//   }
 //}
 //
 //// 구인글 주간 추천글 목록 출력 시 필요한 데이터를 저장할 RowMapper 클래스.전미지
 //class HeadHuntPostBestOfTheWeekListkRowMapper implements RowMapper<HeadHuntPostDTO> {
-//	@Override // mapRow 메서드 오버라이드
-//	public HeadHuntPostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
-//		// ResultSet에 저장된 데이터를 HeadHuntPostDTO 객체에 매핑(저장)하는 메서드
+//   @Override // mapRow 메서드 오버라이드
+//   public HeadHuntPostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+//      // ResultSet에 저장된 데이터를 HeadHuntPostDTO 객체에 매핑(저장)하는 메서드
 //
-//		HeadHuntPostDTO headHuntPostDTO = new HeadHuntPostDTO(); // 새로운 HeadHuntPostDTO 객체 생성
-//		// ResultSet에 저장된 데이터를 HeadHuntPostDTO 객체에 저장
-//		headHuntPostDTO.setHeadHuntPostId(rs.getString("HEADHUNTPOST_id"));				// 구인글 아이디
-//		headHuntPostDTO.setMemberId(rs.getString("MEMBER_id"));							// 회원 아이디
-//		headHuntPostDTO.setMemberNickname(rs.getString("MEMBER_nickname"));				// 회원 닉네임
-//		headHuntPostDTO.setHeadHuntPostTitle(rs.getString("HEADHUNTPOST_title"));		// 구인글 제목
-//		headHuntPostDTO.setHeadHuntPostContent(rs.getString("HEADHUNTPOST_content"));	// 구인글 내용
-//		headHuntPostDTO.setHeadHuntPostContent(rs.getString("HEADHUNTPOST_date"));		// 구인글 작성일
-//		headHuntPostDTO.setHeadHuntPostViewcnt(rs.getString("HEADHUNTPOST_viewcnt"));	// 구인글 조회수
-//		headHuntPostDTO.setRecommendCnt(rs.getString("RECOMMEND_cnt"));					// 게시글의 좋아요 수
-//		return headHuntPostDTO; // headHuntPostDTO에 저장된 데이터들을 반환
-//	}
+//      HeadHuntPostDTO headHuntPostDTO = new HeadHuntPostDTO(); // 새로운 HeadHuntPostDTO 객체 생성
+//      // ResultSet에 저장된 데이터를 HeadHuntPostDTO 객체에 저장
+//      headHuntPostDTO.setHeadHuntPostId(rs.getString("HEADHUNTPOST_id"));            	// 구인글 아이디
+//      headHuntPostDTO.setMemberId(rs.getString("MEMBER_id"));                     	// 회원 아이디
+//      headHuntPostDTO.setMemberNickname(rs.getString("MEMBER_nickname"));            	// 회원 닉네임
+//      headHuntPostDTO.setHeadHuntPostTitle(rs.getString("HEADHUNTPOST_title"));      	// 구인글 제목
+//      headHuntPostDTO.setHeadHuntPostContent(rs.getString("HEADHUNTPOST_content"));	// 구인글 내용
+//      headHuntPostDTO.setHeadHuntPostContent(rs.getString("HEADHUNTPOST_date"));      // 구인글 작성일
+//      headHuntPostDTO.setHeadHuntPostViewcnt(rs.getString("HEADHUNTPOST_viewcnt"));   // 구인글 조회수
+//      headHuntPostDTO.setRecommendCnt(rs.getString("RECOMMEND_cnt"));               	// 게시글의 좋아요 수
+//      return headHuntPostDTO; // headHuntPostDTO에 저장된 데이터들을 반환
+//   }
 //}
 
 // ===== SELECTONE =====
@@ -405,20 +407,20 @@ class SelectOneHeadHuntPostRowMapper implements RowMapper<HeadHuntPostDTO> {
 
     HeadHuntPostDTO headHuntPostDTO = new HeadHuntPostDTO(); // 새로운 HeadHuntPostDTO 객체 생성
     // ResultSet에 저장된 데이터를 HeadHuntPostDTO 객체에 저장
-    headHuntPostDTO.setHeadHuntPostId(rs.getString("HEADHUNTPOST_id"));        // 구인글 아이디
-    headHuntPostDTO.setMemberId(rs.getString("MEMBER_id"));              // 회원 아이디
-    headHuntPostDTO.setMemberNickname(rs.getString("MEMBER_nickname"));        // 회원 닉네임
-    headHuntPostDTO.setMemberNickname(rs.getString("PROFILEIMG_name"));        // 회원 프로필
-    headHuntPostDTO.setHeadHuntPostRole(rs.getString("HEADHUNTPOST_role"));      // 구인글 직업 ( 모델 / 사진작가 )
-    headHuntPostDTO.setHeadHuntPostRegion(rs.getString("HEADHUNTPOST_region"));    // 구인글 작업 지역
-    headHuntPostDTO.setHeadHuntPostPay(rs.getString("HEADHUNTPOST_pay"));      // 구인글 작업 페이
-    headHuntPostDTO.setHeadHuntPostConcept(rs.getString("HEADHUNTPOST_workdate"));  // 구인글 작업 날짜
-    headHuntPostDTO.setHeadHuntPostConcept(rs.getString("HEADHUNTPOST_concept"));  // 구인글 촬영 컨셉
-    headHuntPostDTO.setHeadHuntPostTitle(rs.getString("HEADHUNTPOST_title"));    // 구인글 제목
-    headHuntPostDTO.setHeadHuntPostContent(rs.getString("HEADHUNTPOST_content"));  // 구인글 내용
-    headHuntPostDTO.setHeadHuntPostContent(rs.getString("HEADHUNTPOST_date"));    // 구인글 작성일
-    headHuntPostDTO.setHeadHuntPostViewcnt(rs.getString("HEADHUNTPOST_viewcnt"));  // 구인글 조회수
-    headHuntPostDTO.setRecommendCnt(rs.getString("RECOMMEND_cnt"));          // 게시글의 좋아요 수
+    headHuntPostDTO.setHeadHuntPostId(rs.getString("HEADHUNTPOST_id"));             // 구인글 아이디
+    headHuntPostDTO.setMemberId(rs.getString("MEMBER_id"));                       	// 회원 아이디
+    headHuntPostDTO.setMemberNickname(rs.getString("MEMBER_nickname"));             // 회원 닉네임
+    headHuntPostDTO.setMemberNickname(rs.getString("PROFILEIMG_name"));             // 회원 프로필
+    headHuntPostDTO.setHeadHuntPostRole(rs.getString("HEADHUNTPOST_role"));         // 구인글 직업 ( 모델 / 사진작가 )
+    headHuntPostDTO.setHeadHuntPostRegion(rs.getString("HEADHUNTPOST_region"));     // 구인글 작업 지역
+    headHuntPostDTO.setHeadHuntPostPay(rs.getInt("HEADHUNTPOST_pay"));            	// 구인글 작업 페이
+    headHuntPostDTO.setHeadHuntPostConcept(rs.getString("HEADHUNTPOST_workdate"));	// 구인글 작업 날짜
+    headHuntPostDTO.setHeadHuntPostConcept(rs.getString("HEADHUNTPOST_concept"));   // 구인글 촬영 컨셉
+    headHuntPostDTO.setHeadHuntPostTitle(rs.getString("HEADHUNTPOST_title"));       // 구인글 제목
+    headHuntPostDTO.setHeadHuntPostContent(rs.getString("HEADHUNTPOST_content"));   // 구인글 내용
+    headHuntPostDTO.setHeadHuntPostContent(rs.getString("HEADHUNTPOST_date"));      // 구인글 작성일
+    headHuntPostDTO.setHeadHuntPostViewcnt(rs.getString("HEADHUNTPOST_viewcnt"));   // 구인글 조회수
+    headHuntPostDTO.setRecommendCnt(rs.getString("RECOMMEND_cnt"));                	// 게시글의 좋아요 수
     return headHuntPostDTO; // headHuntPostDTO에 저장된 데이터들을 반환
   }
 }
