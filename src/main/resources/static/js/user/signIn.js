@@ -41,3 +41,13 @@ function signIn() {
         }
     });
 }
+
+$(document).ready(function () {
+    // memberId 또는 memberPw 입력 필드에서 엔터 키가 눌리면 signIn 함수 호출
+    $("#memberId, #memberPw").keydown(function (event) {
+        if (event.keyCode === 13) {
+            signIn();
+            event.preventDefault(); // 폼 제출 방지
+        }
+    });
+});
