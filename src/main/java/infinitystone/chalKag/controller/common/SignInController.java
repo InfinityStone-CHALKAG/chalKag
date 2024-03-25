@@ -2,8 +2,8 @@ package infinitystone.chalKag.controller.common;
 
 import infinitystone.chalKag.biz.member.MemberDTO;
 import infinitystone.chalKag.biz.member.MemberService;
-import infinitystone.chalKag.biz.signinlog.SignInLogDTO;
-import infinitystone.chalKag.biz.signinlog.SignInLogService;
+import infinitystone.chalKag.biz.signInLog.SignInLogDTO;
+import infinitystone.chalKag.biz.signInLog.SignInLogService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

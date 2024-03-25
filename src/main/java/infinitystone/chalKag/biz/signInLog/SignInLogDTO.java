@@ -1,4 +1,4 @@
-package infinitystone.chalKag.biz.signinlog;
+package infinitystone.chalKag.biz.signInLog;
 
 import lombok.Data;
 

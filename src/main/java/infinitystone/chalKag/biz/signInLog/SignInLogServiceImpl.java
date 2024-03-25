@@ -1,4 +1,4 @@
-package infinitystone.chalKag.biz.signinlog;
+package infinitystone.chalKag.biz.signInLog;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
