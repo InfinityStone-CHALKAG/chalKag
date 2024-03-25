@@ -156,7 +156,8 @@ public class MemberDAO {
   // 회원 비밀번호 확인.안승준
   private static final String SELECTONE_CHECKPW = "SELECT MEMBER_pw " +
       "FROM MEMBER " +
-      "WHERE MEMBER_id = ?";
+      "WHERE MEMBER_id = ? " +
+      "AND MEMBER_pw = ?";
 
   private static final String SELECTONE_OAUTH2SIGNIN = "SELECT MEMBER_id, " +
       "MEMBER_grade " +
@@ -263,7 +264,7 @@ public class MemberDAO {
         System.out.println("MemberDAO(selectOne) Out로그 = [" + result + "]");
         return result;
       } else if (memberDTO.getSearchCondition().equals("checkPw")) {
-        Object[] args = {memberDTO.getMemberId()};
+        Object[] args = {memberDTO.getMemberId(), memberDTO.getMemberPw()};
         result = jdbcTemplate.queryForObject(SELECTONE_CHECKPW, args, new CheckPwRowMapper());
         System.out.println("MemberDAO(selectOne) Out로그 = [" + result + "]");
         return result;
