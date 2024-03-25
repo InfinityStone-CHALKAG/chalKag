@@ -45,7 +45,6 @@ public class MarketPostDAO {
 			private static final String SELECTALL_PREMIUMMARKETPOST= "SELECT "
 					+ "			    MARKETPOST.MARKETPOST_title, "
 					+ "				   MEMBER.MEMBER_grade ,  "
-					+ "			    POSTIMG.POSTIMG_name  "
 					+ "			FROM   "
 					+ "			    MARKETPOST  "
 					+ "			LEFT JOIN   "

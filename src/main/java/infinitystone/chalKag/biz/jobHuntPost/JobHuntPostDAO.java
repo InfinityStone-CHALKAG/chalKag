@@ -45,7 +45,6 @@ public class JobHuntPostDAO {
 	private static final String SELECTALL_PREMIUMJOBHUNTPOST= "SELECT "
 			+ "			    JOBHUNTPOST.JOBHUNTPOST_title, "
 			+ "				   MEMBER.MEMBER_grade ,  "
-			+ "			    POSTIMG.POSTIMG_name  "
 			+ "			FROM   "
 			+ "			    JOBHUNTPOST  "
 			+ "			LEFT JOIN   "

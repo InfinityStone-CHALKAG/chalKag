@@ -46,7 +46,6 @@ public class FreePostDAO {
 		private static final String SELECTALL_PREMIUMFREEPOST= "SELECT "
 				+ "			    FREEPOST.FREEPOST_title, "
 				+ "				   MEMBER.MEMBER_grade ,  "
-				+ "			    POSTIMG.POSTIMG_name  "
 				+ "			FROM   "
 				+ "			    FREEPOST  "
 				+ "			LEFT JOIN   "

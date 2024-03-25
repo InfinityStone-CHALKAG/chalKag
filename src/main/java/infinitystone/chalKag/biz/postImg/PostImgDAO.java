@@ -17,7 +17,6 @@ public class PostImgDAO {
 								// 해당 카테고리 전체 출력 (이미지만)
 	private static final String SELECTALL_HEADHUNTPOSTIMG = "SELECT POSTIMG.POSTIMG_name, HEADHUNTPOST.HEADHUNTPOST_id "
 			+ "FROM POSTIMG "
-			// inner or left?
 			+ "INNER JOIN HEADHUNTPOST ON POSTIMG.POST_id = HEADHUNTPOST.HEADHUNTPOST_id "
 			+ "ORDER BY POSTIMG.POSTIMG_id DESC "
 			+ "LIMIT 1";
