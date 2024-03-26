@@ -381,13 +381,16 @@
                                                 <a href="#tab1">Daily SignIn</a>
                                             </li>
                                             <li class="tab__item">
-                                                <a href="#tab2">Weekly SignIn</a>
+                                                <a href="#tab2">Monthly SignIn</a>
                                             </li>
                                             <li class="tab__item">
-                                                <a href="#tab3">NM by Age</a>
+                                                <a href="#tab3">Yearly SignIn</a>
                                             </li>
                                             <li class="tab__item">
-                                                <a href="#tab4">NM by Gender</a>
+                                                <a href="#tab4">NM by Age</a>
+                                            </li>
+                                            <li class="tab__item">
+                                                <a href="#tab5">NM by Gender</a>
                                             </li>
                                         </ul>
                                         <!-- 탭 내용 영역 -->
@@ -534,6 +537,7 @@
                                                 </div> <!-- /.row -->
                                                 두번째 탭 내용
                                             </div>
+
                                             <div id="tab3" class="tab__content">
                                                 <div class="row">
                                                     <div class="col-lg-8">
@@ -544,7 +548,7 @@
                                                     <div class="col-lg-4">
                                                         <div class="card-body">
                                                             <div class="progress-box progress-1">
-                                                                <h4 class="por-title">Visits</h4>
+                                                                <h4 class="por-title">First</h4>
                                                                 <div class="por-txt">96,930 Users (40%)</div>
                                                                 <div class="progress mb-2" style="height: 5px;">
                                                                     <div class="progress-bar bg-flat-color-1"
@@ -554,7 +558,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="progress-box progress-2">
-                                                                <h4 class="por-title">Bounce Rate</h4>
+                                                                <h4 class="por-title">Second</h4>
                                                                 <div class="por-txt">3,220 Users (24%)</div>
                                                                 <div class="progress mb-2" style="height: 5px;">
                                                                     <div class="progress-bar bg-flat-color-2"
@@ -564,7 +568,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="progress-box progress-2">
-                                                                <h4 class="por-title">Unique Visitors</h4>
+                                                                <h4 class="por-title">Third</h4>
                                                                 <div class="por-txt">29,658 Users (60%)</div>
                                                                 <div class="progress mb-2" style="height: 5px;">
                                                                     <div class="progress-bar bg-flat-color-3"
@@ -574,7 +578,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="progress-box progress-2">
-                                                                <h4 class="por-title">Targeted Visitors</h4>
+                                                                <h4 class="por-title">Fourth</h4>
                                                                 <div class="por-txt">99,658 Users (90%)</div>
                                                                 <div class="progress mb-2" style="height: 5px;">
                                                                     <div class="progress-bar bg-flat-color-4"
@@ -588,6 +592,8 @@
                                                 </div> <!-- /.row -->
                                                 세번째 탭 내용
                                             </div>
+
+
                                             <div id="tab4" class="tab__content">
                                                 <div class="row">
                                                     <div class="col-lg-8">
@@ -641,6 +647,60 @@
                                                     </div>
                                                 </div> <!-- /.row -->
                                                 네번째 탭 내용
+                                            </div>
+                                            <div id="tab5" class="tab__content">
+                                                <div class="row">
+                                                    <div class="col-lg-8">
+                                                        <div class="card-body">
+                                                            <canvas id="singleBarChart5"></canvas>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <div class="card-body">
+                                                            <div class="progress-box progress-1">
+                                                                <h4 class="por-title">Visits</h4>
+                                                                <div class="por-txt">96,930 Users (40%)</div>
+                                                                <div class="progress mb-2" style="height: 5px;">
+                                                                    <div class="progress-bar bg-flat-color-1"
+                                                                        role="progressbar" style="width: 40%;"
+                                                                        aria-valuenow="25" aria-valuemin="0"
+                                                                        aria-valuemax="100"></div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="progress-box progress-2">
+                                                                <h4 class="por-title">Bounce Rate</h4>
+                                                                <div class="por-txt">3,220 Users (24%)</div>
+                                                                <div class="progress mb-2" style="height: 5px;">
+                                                                    <div class="progress-bar bg-flat-color-2"
+                                                                        role="progressbar" style="width: 24%;"
+                                                                        aria-valuenow="25" aria-valuemin="0"
+                                                                        aria-valuemax="100"></div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="progress-box progress-2">
+                                                                <h4 class="por-title">Unique Visitors</h4>
+                                                                <div class="por-txt">29,658 Users (60%)</div>
+                                                                <div class="progress mb-2" style="height: 5px;">
+                                                                    <div class="progress-bar bg-flat-color-3"
+                                                                        role="progressbar" style="width: 60%;"
+                                                                        aria-valuenow="60" aria-valuemin="0"
+                                                                        aria-valuemax="100"></div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="progress-box progress-2">
+                                                                <h4 class="por-title">Targeted Visitors</h4>
+                                                                <div class="por-txt">99,658 Users (90%)</div>
+                                                                <div class="progress mb-2" style="height: 5px;">
+                                                                    <div class="progress-bar bg-flat-color-4"
+                                                                        role="progressbar" style="width: 90%;"
+                                                                        aria-valuenow="90" aria-valuemin="0"
+                                                                        aria-valuemax="100"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div> <!-- /.card-body -->
+                                                    </div>
+                                                </div> <!-- /.row -->
+                                                5번째 탭 내용
                                             </div>
                                         </div>
                                     </div>
@@ -863,6 +923,9 @@
                         <!-- .animated -->
                     </div>
                     <!-- /.content -->
+                    <h3>${signUpCountByAgeGroup}</h3>
+                    <h3>${signUpCountByGenderGroup}</h3>
+                    
                     <div class="clearfix"></div>
                     <!-- Footer -->
                     <footer class="site-footer">
@@ -880,7 +943,7 @@
                     <!-- /.site-footer -->
                 </div>
                 <!-- /#right-panel -->
-
+                <div id="dataContainer" data-signUpCountByAgeGroup='${signUpCountByAgeGroup}'data-signUpCountByGenderGroup='${signUpCountByGenderGroup}'></div>
                 <!-- Scripts -->
                 <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
                 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>

@@ -1,3 +1,9 @@
+const dataContainerAgeGender = document.getElementById("dataContainer");
+var signUpCountByAgeGroup = JSON.parse(dataContainerAgeGender.getAttribute("data-signUpCountByAgeGroup"));
+var signUpCountByGenderGroup =  JSON.parse(dataContainerAgeGender.getAttribute("data-signUpCountByGenderGroup"));
+
+console.log(signUpCountByAgeGroup);
+
 (function($) {
 	"use strict";
 	// 차트 인스턴스를 저장할 객체
@@ -122,35 +128,62 @@
 
 
 			drawBarChart(chartId, lables, data, xAxesLabelString, yAxesLabelString, ticksOptions);
-		}
-		else if (chartId == "singleBarChart3") {
+		} 	
+		else if (chartId == "singleBarChart4") {
+			
+			var ageGroup = ["10", "20", "30", "40", "50", "60"];
+var signUpCount = new Array(6).fill(0); // signUpCount 배열을 0으로 초기화
+
+
+			signUpCountByAgeGroup.forEach(function(item) {
+    var index = ageGroup.indexOf(item.ageGroup);
+    if (index !== -1) {
+        signUpCount[index] = parseInt(item.signUpCount); // parseInt를 사용하여 문자열을 숫자로 변환
+    }
+});                       
+
+ // 최대값 찾기
+    var maxSignUpCount = Math.max(...signUpCount);
+
+    // 최대값의 일의 자리를 0으로 만들기
+    var maxWithZero = Math.ceil(maxSignUpCount / 10) * 10;
+
+    // 최대값에 50 추가하여 max 값 설정
+    var max = maxWithZero + 50;
 
 			drawBarChart(
 				chartId,
-				["0~10대", "20대", "30대", "40대", "50대", "60대", "70대"],
-				[130, 80, 50, 90, 40, 20, 1],
+				ageGroup,
+				signUpCount,
 				"Age",
 				"Users",
 				{
 					beginAtZero: true,
 					min: 0,
-					max: 130,
-					stepSize: 20
+					max: max,
+					stepSize: 10
 				}
 			)
-		} else if (chartId == "singleBarChart4") {
+		}
+	 else if (chartId == "singleBarChart5") {
+			var maleCount = parseInt(signUpCountByGenderGroup.maleGroup);
+			var femaleCount = parseInt(signUpCountByGenderGroup.femaleGroup);
+			
+			
+var biggerGenderCount = (maleCount >= femaleCount) ? maleCount+50 : femaleCount + 50;
 
+var maxTemp = biggerGenderCount + (10 - ((biggerGenderCount%10 !=0) ? biggerGenderCount%10 : 10 ));
 			drawBarChart(
 				chartId,
 				["Male", "Female"],
-				[190, 300],
+				[maleCount, femaleCount],
 				"Gender",
 				"Users",
 				{
 					beginAtZero: true,
 					min: 0,
-					max: 500,
-					stepSize: 100
+					max: maxTemp,
+					stepSize: maxTemp/(maxTemp/10)
 				}
 			)
 		}
