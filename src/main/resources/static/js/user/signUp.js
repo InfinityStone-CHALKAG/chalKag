@@ -42,6 +42,8 @@ if (fileInput) {
         }
     });
 }
+
+
 var signUpForm = document.getElementById('yourFormId');
 
 if (signUpForm) {
@@ -54,6 +56,7 @@ if (signUpForm) {
 
 
     function validateForm() {
+		 var memberName = document.getElementById("memberName").value;
         if (checkIdFlag == false) {
             $("#IDErrMsg").text("");
             swal("fail", "이메일을 확인해주세요.", "error", {
@@ -63,6 +66,16 @@ if (signUpForm) {
         }
         if (checkPasswordFlag == false) {
             swal("fail", "비밀번호를 확인해주세요.", "error", {
+                button: "OK",
+            });
+            return false;
+        }
+		if (memberName.trim() === "") {
+			console.log(memberName);
+			console.log(memberName.trim());
+	
+            // SweetAlert으로 실패 메시지 표시
+            swal("fail", "이름을 확인해주세요.", "error", {
                 button: "OK",
             });
             return false;
