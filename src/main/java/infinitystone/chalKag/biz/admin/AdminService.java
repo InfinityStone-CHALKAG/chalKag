@@ -11,11 +11,11 @@ public class AdminService {
   @Autowired
   private AdminDAO adminDAO;
 
-  public List<AdminDTO> selectAll(AdminDTO adminDTO) {
+  public List<AdminDTO> signUpCountByAgeGroup(AdminDTO adminDTO) {
     return adminDAO.selectAll(adminDTO);
   }
 
-  public AdminDTO selectOne(AdminDTO adminDTO) {
+  public AdminDTO signUpCountByGenderGroup(AdminDTO adminDTO) {
     return adminDAO.selectOne(adminDTO);
   }
 

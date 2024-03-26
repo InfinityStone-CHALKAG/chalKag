@@ -17,11 +17,10 @@ public class ChangeNicknameController {
 
   @RequestMapping(value = "/changeNickname", method = RequestMethod.GET)
   public String changeNicknamePage(MemberDTO memberDTO, Model model, HttpSession session) {
-
     memberDTO.setMemberId((String) session.getAttribute("member"));
     memberDTO.setSearchCondition("myPage");
 
-
+    model.addAttribute("memberInfo", memberService.selectOne(memberDTO));
 
     return "changeNickname";
   }
