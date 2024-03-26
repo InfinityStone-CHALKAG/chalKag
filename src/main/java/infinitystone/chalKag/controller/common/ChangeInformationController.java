@@ -28,7 +28,7 @@ public class ChangeInformationController {
   public ProfileImgService profileImgService;
 
   @RequestMapping(value = "changeInformation", method = RequestMethod.GET)
-  public String changeInformationPage(Model model, MemberDTO memberDTO, ProfileImgDTO profileImgDTO, HttpSession session) {
+  public String changeInformationPage(Model model, MemberDTO memberDTO, HttpSession session) {
     memberDTO.setMemberId((String) session.getAttribute("member"));
     memberDTO.setSearchCondition("myPage");
 

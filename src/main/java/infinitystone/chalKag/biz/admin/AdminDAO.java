@@ -23,6 +23,18 @@ public class AdminDAO {
       "GROUP BY AGEGROUP " +
       "ORDER BY AGEGROUP ";
 
+  // (관리자)월 날짜별 로그인 수.안승준
+  private static final String SELECTALL_SIGNINCOUNTBYYEARMONTHDATE = "SELECT DAY(SIGNINLOG_date) AS DAY, " +
+      "COUNT(DISTINCT MEMBER.MEMBER_id) AS SIGNINCOUNT " +
+      "FROM SIGNINLOG " +
+      "JOIN " +
+      "MEMBER ON SIGNINLOG.MEMBER_id = MEMBER.MEMBER_id " +
+      "WHERE MEMBER.MEMBER_grade = 'USER' " +
+      "AND YEAR(SIGNINLOG_date) = ? " +
+      "AND LPAD(MONTH(SIGNINLOG_date), 2, '0') = ? " +
+      "GROUP BY DAY, " +
+      "ORDER BY DAY";
+
   private static final String SELECTALL = "";
 
   // (관리자)성별별 가입자 수.안승준
