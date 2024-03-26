@@ -18,22 +18,17 @@ public class MarketPostListController {
 	@Autowired
 	private MarketPostService marketPostService;
 	
-	@Autowired
-	private PostImgService postImgService;
 	
 	@RequestMapping("/marketPostList")
-	public String marketPostList(Model model, MarketPostDTO marketPostDTO, Gson gson, PostImgDTO postImgDTO) {
+	public String marketPostList(Model model, MarketPostDTO marketPostDTO, Gson gson) {
 		
 		System.out.println("MarketPostListController In로그");
 
 	    marketPostDTO.setSearchCondition("marketPostList");
-	    postImgDTO.setSearchCondition("marketPostListImg");
 
 	    String marketPostListResult = gson.toJson(marketPostService.selectAll(marketPostDTO));
-	    String marketPostListImgResult = gson.toJson(postImgService.selectAll(postImgDTO));
 
 	    model.addAttribute("marketPostList", marketPostListResult);
-	    model.addAttribute("marketPostListImg", marketPostListImgResult);
 
 	    System.out.println("MarketPostListController Out로그");
 

@@ -18,22 +18,17 @@ public class JobHuntPostListController {
   @Autowired
   private JobHuntPostService jobHuntPostService;
   
-  @Autowired
-  private PostImgService postImgService;
 
   @RequestMapping("/jobHuntPostList")
-  public String jobHuntPostList(Model model, JobHuntPostDTO jobHuntPostDTO, Gson gson, PostImgDTO postImgDTO) {
+  public String jobHuntPostList(Model model, JobHuntPostDTO jobHuntPostDTO, Gson gson) {
 
 	  System.out.println("JobHuntPostListController In로그");
 
 	    jobHuntPostDTO.setSearchCondition("jobHuntPostList");
-	    postImgDTO.setSearchCondition("jobHuntPostListImg");
 
 	    String jobHuntPostListResult = gson.toJson(jobHuntPostService.selectAll(jobHuntPostDTO));
-	    String jobHuntPostListImgResult = gson.toJson(postImgService.selectAll(postImgDTO));
 
 	    model.addAttribute("jobHuntPostList", jobHuntPostListResult);
-	    model.addAttribute("jobHuntPostListImg", jobHuntPostListImgResult);
 
 	    System.out.println("JobHuntPostListController Out로그");
 

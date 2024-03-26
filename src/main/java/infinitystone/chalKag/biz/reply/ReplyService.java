@@ -8,7 +8,7 @@ public interface ReplyService {
 
   public ReplyDTO selecOne(ReplyDTO replyDTO);
 
-  public boolean inset(ReplyDTO replyDTO);
+  public boolean insert(ReplyDTO replyDTO);
 
   public boolean update(ReplyDTO replyDTO);
 
