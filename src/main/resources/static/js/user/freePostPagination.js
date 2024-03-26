@@ -12,6 +12,46 @@ const now = new Date();
 
 
 $(document).ready(function() {
+	
+	    // 페이징을 화면에 표시하는 함수
+ function displayPagination(page) {
+    console.log("page : " + page);
+
+    var paginationContainer = $("#paginationContainer"); // 페이지네이션 컨테이너 요소 가져오기
+    paginationContainer.empty(); // 컨테이너 초기화
+
+    var pageSize = 10; // 한 페이지 그룹에 표시할 페이지 수
+    var currentGroup = Math.floor((page - 1) / pageSize); // 현재 페이지 그룹
+    console.log("currentGroup : " + currentGroup);
+    var startPage = currentGroup * pageSize + 1; // 시작 페이지
+    console.log("startPage : " + startPage);
+
+    var endPage = Math.min((currentGroup + 1) * pageSize, totalPages); // 끝 페이지
+    console.log("endPage : " + endPage);
+
+    // 이전 페이지 그룹으로 이동하는 버튼 추가
+    if (startPage > 1) {
+        var prevGroupPage = startPage - 1;
+        var prevGroupLink = "<li class='prev'><a href='#' data-page='" + prevGroupPage + "'><i class='ion-ios-arrow-left'></i></a></li>";
+        paginationContainer.append(prevGroupLink);
+    }
+
+
+// 페이지 버튼 추가
+ for (var i = startPage; i <= endPage; i++) {
+        var pageLinkClass = (i === page) ? "active" : ""; // 현재 페이지면 "active" 클래스 추가
+        var pageLink = "<li class='" + pageLinkClass + "'><a href='#' data-page='" + i + "'>" + i + "</a></li>";
+        paginationContainer.append(pageLink);
+    }
+    
+    
+    // 다음 페이지 그룹으로 이동하는 버튼 추가
+    if (endPage < totalPages) {
+        var nextGroupPage = endPage + 1;
+        var nextGroupLink = "<li class='next'><a href='#' data-page='" + nextGroupPage + "'><i class='ion-ios-arrow-right'></i></a></li>";
+        paginationContainer.append(nextGroupLink);
+    }
+}
     // 페이징 버튼 클릭 이벤트 리스너
     // 페이지네이션 버튼 클릭 이벤트
 	// paginationContainer에는 처음에는 .page 클래스를 가진 요소가 없지만, 
@@ -19,16 +59,10 @@ $(document).ready(function() {
 	// displayPagination 함수는 서버로부터 받아온 페이지네이션 데이터를 기반으로 페이지네이션 버튼을 생성하며,
 	// 이 때 각 버튼에는 .page 클래스와 data-page 속성이 부여 됨
 	// data-page 속성은 해당 버튼이 클릭될 때 이동해야 할 페이지 번호를 저장
-    $("#paginationContainer").on("click", "a", function(event) {
-        event.preventDefault(); // 기본 동작 방지
-        currentPage = $(this).data("page"); // 클릭된 페이지 번호를 가져와 currentPage에 저장
-        loadReviewData(currentPage); // 해당 페이지 데이터 로드
-        // console.log("[로그] currentPage :" + currentPage); 
-             // 현재 active 클래스를 가진 페이지 번호에서 클래스 제거
-        $("#paginationContainer .active").removeClass("active");
-
-        // 클릭된 페이지 번호에 active 클래스 추가
-        $(this).parent().addClass("active");
+$("#paginationContainer").on("click", "a", function(event) {
+    event.preventDefault(); // 기본 동작 방지
+    var page = $(this).data("page"); // 클릭된 페이지 번호를 가져와 currentPage에 저장
+    loadReviewData(page); // 해당 페이지 데이터 로드
 });
   // 데이터를 로드하는 함수 정의
 loadReviewData = function(loadPage) {
@@ -45,7 +79,7 @@ loadReviewData = function(loadPage) {
     
     	console.log(displayDatas);
     
-    var pageDataSize = 20; // 페이지당 데이터 크기
+    var pageDataSize = 10; // 페이지당 데이터 크기
     var totalSize = displayDatas.length; // 전체 데이터 크기
     totalPages = Math.ceil(totalSize / pageDataSize); // 전체 페이지 수 계산
 
@@ -99,11 +133,13 @@ loadReviewData = function(loadPage) {
 			
             // 텍스트 길이 제한 적용
 		    let postContent = headHuntPostList.headHuntPostContent;
-		    if (postContent.length > 10) {
-		        postContent = postContent.substring(0, 10) + "...";
+		    if (postContent.length > 30) {
+		        postContent = postContent.substring(0, 30) + "...";
 		    }
             
-               innerHTML +=  `<div class="inner">
+               innerHTML +=  `
+               <article class="col-md-12 article-list">
+               		<div class="inner">
                         <figure>
                             <a href="/freePostSingle?freePostId=${freePostList.freePostId}">
                                 <img src="/postImg/${freePostList.postImgId}">
@@ -112,8 +148,8 @@ loadReviewData = function(loadPage) {
                         <div class="details">
                             <div class="detail">
                                 <div class="category" style="display:flex;">
-                                    <p>${freePostList.memberId}</p>
-	                                <time style="margin-left:10px;">${freePostList.freePostDate}</time>
+                                    <p>${freePostList.memberNickname}</p>
+	                               <time style="width: 100px; text-align: center; padding-top: 5px;">${timeString}</time>
                                 </div>
                             </div>
                             <h1><a href="/freePostSingle?freePostId=${freePostList.freePostId}">${freePostList.freePostTitle}</a></h1>
@@ -129,49 +165,14 @@ loadReviewData = function(loadPage) {
                                 </a>
                             </footer>
                     </div>
-                </div>`;
+                </div>
+              </article>`;
             });
         }
         
         div.innerHTML = innerHTML;
     }
-    // 페이징을 화면에 표시하는 함수
- function displayPagination(page) {
-    console.log("page : " + page);
 
-    var paginationContainer = $("#paginationContainer"); // 페이지네이션 컨테이너 요소 가져오기
-    paginationContainer.empty(); // 컨테이너 초기화
-
-    var pageSize = 10; // 한 페이지 그룹에 표시할 페이지 수
-    var currentGroup = Math.floor((page - 1) / pageSize); // 현재 페이지 그룹
-    console.log("currentGroup : " + currentGroup);
-    var startPage = currentGroup * pageSize + 1; // 시작 페이지
-    console.log("startPage : " + startPage);
-
-    var endPage = Math.min((currentGroup + 1) * pageSize, totalPages); // 끝 페이지
-    console.log("endPage : " + endPage);
-
-    // 이전 페이지 그룹으로 이동하는 버튼 추가
-    if (startPage > 1) {
-        var prevGroupPage = startPage - 1;
-        var prevGroupLink = "<li class='prev'><a href='#' data-page='" + prevGroupPage + "'><i class='ion-ios-arrow-left'></i></a></li>";
-        paginationContainer.append(prevGroupLink);
-    }
-
-// 페이지 버튼 추가
-for (var i = startPage; i <= endPage; i++) {
-    var pageLinkClass = (i === page) ? "active" : ""; // 현재 페이지면 "active" 클래스 추가
-    var pageLink = "<li class='" + pageLinkClass + "'><a href='#' data-page='" + i + "'>" + i + "</a></li>";
-    paginationContainer.append(pageLink);
-}
-
-    // 다음 페이지 그룹으로 이동하는 버튼 추가
-    if (endPage < totalPages) {
-        var nextGroupPage = endPage + 1;
-        var nextGroupLink = "<li class='next'><a href='#' data-page='" + nextGroupPage + "'><i class='ion-ios-arrow-right'></i></a></li>";
-        paginationContainer.append(nextGroupLink);
-    }
-}
     // 초기 페이지 로드
     loadReviewData(1);
 });

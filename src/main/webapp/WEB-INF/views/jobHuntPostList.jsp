@@ -199,8 +199,6 @@ div .inner p {
 					<div class="nav-tabs-group">
 						<ul class="nav-tabs-list">
 							<li onclick="sortItems('all')">All</li>
-							<li onclick="sortItems('recommendCnt')">Popular</li>
-							<li onclick="sortItems('jobHuntPostViewCnt')">Trending</li>
 						</ul>
 						<div class="nav-tabs-right">
 							<!-- 오름차순, 내림차순 정렬 -->
@@ -212,20 +210,20 @@ div .inner p {
 					</div>
 
 					<!-- 게시글 전체 갯수가 출력되게 처리 -->
-					<div class="row">
-						<!-- 게시글 목록 출력 장소 시작 게시판마다 명이 다르다. -->
-						<article class="col-md-12 article-list">
+					<div class="col-md-9">
+						<div class="row">
+							<!-- 게시글 목록 출력 장소 시작 게시판마다 명이 다르다. -->
 							<div id="postDatasContainer" data-displayreviewdata='${jobHuntPostList}'></div>
-						</article>
-						<!-- 게시글 목록 출력 장소 종료-->
-
-						<!-- 페이지 이동 버튼 -->
-						<!-- 페이징처리 시 1~10 까지 출력 글이 적으면 1~a 만 출력할 수 있게 처리  -->
-						<div class="col-md-12 text-center" >
-							<ul class='pagination' id="paginationContainer">
-							</ul>
+							<!-- 게시글 목록 출력 장소 종료-->
+	
+							<!-- 페이지 이동 버튼 -->
+							<!-- 페이징처리 시 1~10 까지 출력 글이 적으면 1~a 만 출력할 수 있게 처리  -->
+							<div class="col-md-12 text-center" >
+								<ul class='pagination' id="paginationContainer">
+								</ul>
+							</div>
+							<!-- 페이징 끝 -->
 						</div>
-						<!-- 페이징 끝 -->
 					</div>
 				</div>
 			</div>
