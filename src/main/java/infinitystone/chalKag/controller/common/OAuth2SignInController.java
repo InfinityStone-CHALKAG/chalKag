@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import infinitystone.chalKag.biz.customOAuth2.CustomOAuth2User;
 import infinitystone.chalKag.biz.member.MemberDTO;
 import infinitystone.chalKag.biz.member.MemberService;
+import infinitystone.chalKag.biz.signinlog.SignInLogDTO;
+import infinitystone.chalKag.biz.signinlog.SignInLogService;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -16,9 +18,12 @@ public class OAuth2SignInController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private SignInLogService signInLogService;
 
 	@RequestMapping("/oauth2SignIn")
-	public String myEndpoint(HttpSession session, MemberDTO memberDTO) {
+	public String myEndpoint(HttpSession session, MemberDTO memberDTO, SignInLogDTO signInLogDTO) {
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -38,6 +43,9 @@ public class OAuth2SignInController {
 			
 			// 기존에 있는 멤버 서비스를 활용하여 ID와 해당 유저의 등급을 세션에 저장
 			MemberDTO result = memberService.selectOne(memberDTO);
+			
+			signInLogDTO.setMemberId(result.getMemberId());
+			signInLogService.insert(signInLogDTO);
 			
 			session.setAttribute("member", result.getMemberId());
 			session.setAttribute("memberGrade", result.getMemberGrade());

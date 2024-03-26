@@ -20,7 +20,7 @@ public class ReplyServiceImpl implements ReplyService {
   }
 
   @Override
-  public boolean inset(ReplyDTO replyDTO) {
+  public boolean insert(ReplyDTO replyDTO) {
     return replyDAO.insert(replyDTO);
   }
 
