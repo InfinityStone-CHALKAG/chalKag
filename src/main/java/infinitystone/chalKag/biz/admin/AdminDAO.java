@@ -17,7 +17,7 @@ public class AdminDAO {
 
   // (관리자)연령별 가입자 수.안승준
   private static final String SELECTALL_SIGNUPCOUNTBYAGEGROUP = "SELECT FLOOR(TIMESTAMPDIFF(YEAR, STR_TO_DATE(MEMBER_birth, '%Y-%m-%d'), NOW()) / 10) * 10 AS AGEGROUP, " +
-      "COUNT(*) " +
+      "COUNT(*) AS SIGNUPCOUNT" +
       "FROM MEMBER " +
       "WHERE MEMBER_grade = 'USER' " +
       "GROUP BY AGEGROUP " +
