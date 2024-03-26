@@ -14,7 +14,7 @@ function checkPresentPw() {
 		data: { 'memberPw': memberPw },
 		dataType: 'text',
 		success: function(data) {
-			if (data == '0') {
+			if (data == '1') {
 				console.log("[로그] ajax SUCCESS")
 				$("#PresentPwErrMsg").text("본인확인 완료");
 				$("#PresentPwErrMsg").css("color", "green");
@@ -34,7 +34,8 @@ function checkPresentPw() {
 		}
 	});
 }
-	document.getElementById("memberPw").addEventListener("input", function() {
+document.getElementById("memberPw").addEventListener("input", checkPresentPw);
+	/*document.getElementById("memberPw").addEventListener("input", function() {
     // input 내용이 바뀔 때마다 checkPresentPwflag를 false로 설정 다시인증하기
     checkPresentPwFlag  = false;
-});
+});*/

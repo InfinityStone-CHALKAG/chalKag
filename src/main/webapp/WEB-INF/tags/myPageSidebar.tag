@@ -32,7 +32,7 @@
                                                     <div class="item" style="width: -webkit-calc(100% / 2);">
                                                         <a href="#">
                                                             <div class="name">Posts</div>
-                                                            <div class="value">208</div>
+                                                            <div class="value">${memberInfo.postCount}</div>
                                                         </a>
                                                     </div>
                                                     <div class="item" style="width: -webkit-calc(100% / 2);">

@@ -25,7 +25,7 @@
                             <div class="box-body">
                                 <h4>Register</h4>
 
-                                <form id="yourFormId" method="post" action="signUp" enctype="multipart/form-data">
+                                <form id="yourFormId" method="post" action="signUp" enctype="multipart/form-data" onsubmit="return validateForm()">
 
                                     <!-- 프로필 이미지 등록 -->
                                     <div class="featured-author-center">
@@ -106,14 +106,9 @@
                                         </div>
                                         <p id="phErrMsg" class="error"></p>
                                         <br>
-                                        <div style="display: flex;">
-                                            <input type="text" id="memberPhCheck" name="memberPhCheck"
-                                                class="form-control" placeholder="인증번호 입력">
-                                            <a id="smsCheck" style="text-align: center; padding-top: 3%; width: 7rem;"
-                                                class="btn btn-magz btn-sm">check</a>
+                                        <div id="memberPhCheckContainer" style="display: flex; display: none;">
+                                            <!-- 동적으로 인증번호 입력란과 확인 버튼 생성-->
                                         </div>
-                                        <!-- 결과 확인 비동기 -->
-                                        <input type="hidden" id="${result}" class="hiddenCheck">
                                         <p class="successPhCheck"></p>
 
                                         <!-- <span id="phErrMsg" class="error"></span> -->
