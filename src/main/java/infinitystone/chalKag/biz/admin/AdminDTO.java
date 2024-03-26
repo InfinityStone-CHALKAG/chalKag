@@ -5,10 +5,12 @@ import lombok.Data;
 @Data
 public class AdminDTO {
 
-  private String AgeGroup;
-  private String SignUpCount;
+  private String ageGroup;
+  private String signUpCount;
   private String maleGroup;
   private String femaleGroup;
+  private String day;
+  private String signInCount;
 
   private String searchCondition;
 

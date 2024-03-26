@@ -5,6 +5,7 @@ import infinitystone.chalKag.biz.member.MemberService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,7 +17,12 @@ public class ChangePwController {
   public MemberService memberService;
 
   @RequestMapping(value = "/changePw", method = RequestMethod.GET)
-  public String changePwPage() {
+  public String changePwPage(MemberDTO memberDTO, HttpSession session, Model model) {
+    memberDTO.setMemberId((String) session.getAttribute("member"));
+    memberDTO.setSearchCondition("myPage");
+
+    model.addAttribute("memberInfo", memberService.selectOne(memberDTO));
+
     return "changePw";
   }
 

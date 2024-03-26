@@ -1,5 +1,6 @@
 package infinitystone.chalKag.controller.admin;
 
+import com.google.gson.Gson;
 import infinitystone.chalKag.biz.admin.AdminDTO;
 import infinitystone.chalKag.biz.admin.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,16 +15,20 @@ public class AdminMainController {
   private AdminService adminService;
 
   @RequestMapping("/adminMain")
-  public String adminMain(AdminDTO adminDTO, Model model) {
+  public String adminMain(AdminDTO adminDTO, Gson gson, Model model) {
     System.out.println("AdminMainController In로그");
 
     adminDTO.setSearchCondition("signUpCountByAgeGroup");
 
-    model.addAttribute("signUpCountByAgeGroup", adminService.selectAll(adminDTO));
+    String signUpCountByAgeGroupResult = gson.toJson(adminService.signUpCountByAgeGroup(adminDTO));
+
+    model.addAttribute("signUpCountByAgeGroup", signUpCountByAgeGroupResult);
 
     adminDTO.setSearchCondition("signUpCountByGenderGroup");
 
-    model.addAttribute("signUpCountByGenderGroup", adminService.selectOne(adminDTO));
+    String signUpCountByGenderGroupResult = gson.toJson(adminService.signUpCountByGenderGroup(adminDTO));
+
+    model.addAttribute("signUpCountByGenderGroup", signUpCountByGenderGroupResult);
 
     return "admin/adminMain";
   }
