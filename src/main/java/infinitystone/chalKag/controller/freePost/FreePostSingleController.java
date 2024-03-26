@@ -1,16 +1,15 @@
 package infinitystone.chalKag.controller.freePost;
 
-import java.util.List;
-
+import infinitystone.chalKag.biz.comment.CommentDTO;
+import infinitystone.chalKag.biz.comment.CommentService;
+import infinitystone.chalKag.biz.freePost.FreePostDTO;
+import infinitystone.chalKag.biz.freePost.FreePostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import infinitystone.chalKag.biz.comment.CommentDTO;
-import infinitystone.chalKag.biz.comment.CommentService;
-import infinitystone.chalKag.biz.freePost.FreePostDTO;
-import infinitystone.chalKag.biz.freePost.FreePostService;
+import java.util.List;
 
 @Controller
 public class FreePostSingleController {
@@ -30,7 +29,7 @@ public class FreePostSingleController {
 		
 		List<CommentDTO> commentDatas = commentService.selectAll(commentDTO);
 		model.addAttribute("freePostSingle",freePostDTO);
-		model.addAttribute("CommentList", commentDatas);
+		model.addAttribute("commentList", commentDatas);
 		
 		return "freePostSingle";
 	}
