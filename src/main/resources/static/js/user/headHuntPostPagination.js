@@ -139,12 +139,12 @@ loadReviewData = function(loadPage) {
                	<article class="col-md-12 article-list">
                		<div class="inner">
                         <figure>
-                            <a href="/headHuntPostSingle?headHuntPostId=${headHuntPostList.headHuntPostId}">
-                                <img src="/postImg/${headHuntPostList.postImgId}">
+                        	<a href="/headHuntPostSingle?headHuntPostId=${headHuntPostList.headHuntPostId}">
+                               <img src="/postImg/${headHuntPostListImg.postImgName}">
                             </a>
                         </figure>
                         <div class="details">
-                            <div class="detail">
+                            <div>
                                 <div class="category" style="display:flex;">
                                     <p>${headHuntPostList.memberNickname}</p>
                                 	<time style="width: 100px; text-align: center; padding-top: 5px;">${timeString}</time>

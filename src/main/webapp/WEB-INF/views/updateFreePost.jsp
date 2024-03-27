@@ -34,10 +34,10 @@
 						<div class="box-body">
 							<form action="/updateFreePost" method="post" onsubmit="return validateForm()">
 								<div class="form-group" style="display: flex; justify-content: center;">
-									<input type="text" id="freePostTitle" name="freePostTitle" class="form-control rounded" placeholder="Title" />
+									<input type="text" id="freePostTitle" name="freePostTitle" class="form-control rounded" placeholder="Title" value="${updateFreePost.freePostTitle}" />
 								</div>
 										<p>※ 이미지 사이즈는 30MB 이하만 올릴 수 있습니다.</p>
-									<textarea id="freePostContent" name="freePostContent" class="form-control rounded" ></textarea>
+									<textarea id="freePostContent" name="freePostContent" class="form-control rounded" >${updateFreePost.freePostContent}</textarea>
 								<button class="btn btn-primary btn-block">Composite</button>
 							</form>	
 						</div>
