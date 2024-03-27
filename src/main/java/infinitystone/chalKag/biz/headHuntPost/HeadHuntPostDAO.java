@@ -362,7 +362,7 @@ class HeadHuntPostListRowMapper implements RowMapper<HeadHuntPostDTO> {
 		headHuntPostDTO.setHeadHuntPostId(rs.getString("HEADHUNTPOST_id")); // 구인글 아이디
 		headHuntPostDTO.setMemberId(rs.getString("MEMBER_id")); // 회원 아이디
 		headHuntPostDTO.setMemberNickname(rs.getString("MEMBER_nickname")); // 회원 닉네임
-//      headHuntPostDTO.setPostCategory(rs.getString("POST_category"));            	// 게시글 카테고리
+		headHuntPostDTO.setPostCategory(rs.getString("POST_category"));            	// 게시글 카테고리
 		headHuntPostDTO.setHeadHuntPostTitle(rs.getString("HEADHUNTPOST_title")); // 구인글 제목
 		headHuntPostDTO.setHeadHuntPostContent(rs.getString("HEADHUNTPOST_content")); // 구인글 내용
 		headHuntPostDTO.setHeadHuntPostDate(rs.getString("HEADHUNTPOST_date")); // 구인글 작성일
@@ -383,7 +383,7 @@ class HeadHuntPostMemberListRowMapper implements RowMapper<HeadHuntPostDTO> {
 		headHuntPostDTO.setHeadHuntPostId(rs.getString("HEADHUNTPOST_id")); // 구인글 아이디
 		headHuntPostDTO.setMemberId(rs.getString("MEMBER_id")); // 회원 아이디
 		headHuntPostDTO.setMemberNickname(rs.getString("MEMBER_nickname")); // 회원 닉네임
-//   headHuntPostDTO.setPostCategory(rs.getString("POST_category"));            	// 게시글 카테고리
+		headHuntPostDTO.setPostCategory(rs.getString("POST_category"));            	// 게시글 카테고리
 		headHuntPostDTO.setHeadHuntPostTitle(rs.getString("HEADHUNTPOST_title")); // 구인글 제목
 		headHuntPostDTO.setHeadHuntPostContent(rs.getString("HEADHUNTPOST_content")); // 구인글 내용
 		headHuntPostDTO.setHeadHuntPostDate(rs.getString("HEADHUNTPOST_date")); // 구인글 작성일
