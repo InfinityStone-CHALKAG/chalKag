@@ -27,7 +27,7 @@ public class CommentDAO {
 			+ "    COMMENT "
 			+ "LEFT JOIN  "
 			+ "    PROFILEIMG ON COMMENT.MEMBER_id = PROFILEIMG.MEMBER_id "
-			+ "JOIN "
+			+ "INNER JOIN "
 			+ "    MEMBER ON COMMENT.MEMBER_id = MEMBER.MEMBER_id "
 			+ "WHERE "
 			+ "    COMMENT.POST_id = ? ";

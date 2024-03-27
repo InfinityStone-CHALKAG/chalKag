@@ -46,16 +46,16 @@ public class MarketPostFilterDAO {
 
 			// 사용자의 검색 입력에서 띄어쓰기 제거 및 소문자 변환
 			String searchInput = marketPostFilterDTO.getSearchInput().replace(" ", "").toLowerCase();
-			if (marketPostFilterDTO.getSearchField().equals("view에서 표시할 제목 value")) {
+			if (marketPostFilterDTO.getSearchField().equals("title")) {
 				USERSEARCHSQL = "AND REPLACE(LOWER(JOBHUNTPOST_title), ' ', '') LIKE '%'||'" + searchInput + "'||'%'";
 			}
-			if (marketPostFilterDTO.getSearchField().equals("view에서 표시할 내용 value")) {
+			if (marketPostFilterDTO.getSearchField().equals("contents")) {
 				USERSEARCHSQL = "AND REPLACE(LOWER(JOBHUNTPOST_content), ' ', '') LIKE '%'||'" + searchInput + "'||'%'";
 			}
-			if (marketPostFilterDTO.getSearchField().equals("view에서 표시할 작성자 value")) {
+			if (marketPostFilterDTO.getSearchField().equals("write")) {
 				USERSEARCHSQL = "AND REPLACE(LOWER(MEMBER_id), ' ', '') LIKE '%'||'" + searchInput + "'||'%'";
 			}
-			if (marketPostFilterDTO.getSearchField().equals("view에서 표시할 제목과 내용 value")) {
+			if (marketPostFilterDTO.getSearchField().equals("titleAndContents")) {
 				USERSEARCHSQL = "AND (REPLACE(LOWER(JOBHUNTPOST_title), ' ', '') LIKE '%'||'" + searchInput
 						+ "'||'%' OR REPLACE(LOWER(JOBHUNTPOST_content), ' ', '') LIKE '%'||'" + searchInput
 						+ "'||'%')";
