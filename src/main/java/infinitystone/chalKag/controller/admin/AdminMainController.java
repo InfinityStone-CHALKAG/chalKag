@@ -10,37 +10,38 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Controller
 public class AdminMainController {
 
-  @Autowired
-  private AdminService adminService;
+	@Autowired
+	private AdminService adminService;
 
-  @RequestMapping("/adminMain")
-  public String adminMain(AdminDTO adminDTO, Gson gson, Model model) {
-    System.out.println("AdminMainController In로그");
+	@RequestMapping("/adminMain")
+	public String adminMain(AdminDTO adminDTO, Gson gson, Model model) {
+		System.out.println("AdminMainController In로그");
 
-    adminDTO.setSearchCondition("signUpCountByAgeGroup");
+		adminDTO.setSearchCondition("signUpCountByAgeGroup");
 
-    String signUpCountByAgeGroupResult = gson.toJson(adminService.signUpCountByAgeGroup(adminDTO));
+		String signUpCountByAgeGroupResult = gson.toJson(adminService.signUpCountByAgeGroup(adminDTO));
 
-    model.addAttribute("signUpCountByAgeGroup", signUpCountByAgeGroupResult);
+		model.addAttribute("signUpCountByAgeGroup", signUpCountByAgeGroupResult);
 
-    adminDTO.setSearchCondition("signUpCountByGenderGroup");
+		adminDTO.setSearchCondition("signUpCountByGenderGroup");
 
-    String signUpCountByGenderGroupResult = gson.toJson(adminService.signUpCountByGenderGroup(adminDTO));
+		String signUpCountByGenderGroupResult = gson.toJson(adminService.signUpCountByGenderGroup(adminDTO));
 
-    model.addAttribute("signUpCountByGenderGroup", signUpCountByGenderGroupResult);
+		model.addAttribute("signUpCountByGenderGroup", signUpCountByGenderGroupResult);
 
-    adminDTO.setSearchCondition("signInCountByYearMonthDate");
-    adminDTO.setYear(String.valueOf(LocalDate.now().getYear()));
-    adminDTO.setMonth(String.valueOf(LocalDate.now().getMonth()));
+		adminDTO.setSearchCondition("signInCountByYearMonthDate");
+		adminDTO.setYear(String.valueOf(LocalDate.now().getYear()));
+		adminDTO.setMonth(LocalDate.now().format(DateTimeFormatter.ofPattern("MM")));
 
-    String signInCountByYearMonthDateResult = gson.toJson(adminService.signInCountByYearMonthDate(adminDTO));
+		String signInCountByYearMonthDateResult = gson.toJson(adminService.signInCountByYearMonthDate(adminDTO));
 
-    model.addAttribute("signInCountByYearMonthDate", signInCountByYearMonthDateResult);
+		model.addAttribute("signInCountByYearMonthDate", signInCountByYearMonthDateResult);
 
-    return "admin/adminMain";
-  }
+		return "admin/adminMain";
+	}
 }

@@ -135,6 +135,19 @@
                     ul {
                         list-style: none;
                     }
+
+                    /* select 디자인 */
+                    select {
+            background-color: #ffffff;
+            color: rgb(0, 0, 0);
+            padding: 10px;
+            width: 200px;
+            border: none;
+            font-size: 16px;
+            border-radius: 5px;
+            margin: 10px;
+            border: 4px solid #F73F52;
+        }
                 </style>
             </head>
 
@@ -399,7 +412,7 @@
                                                 <div class="row">
                                                     <div class="col-lg-8">
                                                         <div class="card-body">
-                                                            <canvas id="singleBarChart1"></canvas>
+                                                            <canvas id="singleLineChart1"></canvas>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-4">
@@ -487,7 +500,7 @@
                                                 <div class="row">
                                                     <div class="col-lg-8">
                                                         <div class="card-body">
-                                                            <canvas id="singleBarChart2"></canvas>
+                                                            <canvas id="singleLineChart2"></canvas>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-4">
@@ -542,7 +555,18 @@
                                                 <div class="row">
                                                     <div class="col-lg-8">
                                                         <div class="card-body">
-                                                            <canvas id="singleBarChart3"></canvas>
+                                                            <select id="year">
+                                                                <option value="2023">2023</option>
+                                                                <option value="2022">2022</option>
+                                                                <!-- 연도 옵션을 계속 추가하세요 -->
+                                                            </select>
+                                                            
+                                                            <select id="month">
+                                                                <option value="1">1월</option>
+                                                                <option value="2">2월</option>
+                                                                <!-- 월 옵션을 계속 추가하세요 -->
+                                                            </select>
+                                                            <canvas id="singleLineChart3"></canvas>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-4">
@@ -925,6 +949,7 @@
                     <!-- /.content -->
                     <h3>${signUpCountByAgeGroup}</h3>
                     <h3>${signUpCountByGenderGroup}</h3>
+                    <h3>${signInCountByYearMonthDate}</h3>
                     
                     <div class="clearfix"></div>
                     <!-- Footer -->
@@ -943,7 +968,8 @@
                     <!-- /.site-footer -->
                 </div>
                 <!-- /#right-panel -->
-                <div id="dataContainer" data-signUpCountByAgeGroup='${signUpCountByAgeGroup}'data-signUpCountByGenderGroup='${signUpCountByGenderGroup}'></div>
+                <div id="dataContainer" data-signUpCountByAgeGroup='${signUpCountByAgeGroup}' data-signUpCountByGenderGroup='${signUpCountByGenderGroup}' data-signInCountByYearMonthDate='${signInCountByYearMonthDate}'></div>
+                
                 <!-- Scripts -->
                 <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
                 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
