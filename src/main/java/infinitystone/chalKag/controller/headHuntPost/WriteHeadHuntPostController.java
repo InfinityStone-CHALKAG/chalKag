@@ -45,6 +45,19 @@ public class WriteHeadHuntPostController {
     uploadDir = uploadDir.substring(1, uploadDir.indexOf("chalKag")) + "chalKag/src/main/resources/static/postImg";
     System.out.println("WriteHeadHuntPostController Log02 = [" + uploadDir + "]");
 
+    // Add the user-written post
+    if (!headHuntPostService.insert(headHuntPostDTO)) {
+      System.out.println("WriteHeadHuntPostController insertion of post failed");
+    }
+
+    headHuntPostDTO.setSearchCondition("maxPostId");
+    HeadHuntPostDTO maxPostIdDTO = headHuntPostService.selectOne(headHuntPostDTO);
+    headHuntPostDTO.setHeadHuntPostId(maxPostIdDTO.getHeadHuntPostId());
+
+    System.out.println(maxPostIdDTO.getHeadHuntPostId());
+
+    postImgDTO.setPostId(headHuntPostDTO.getHeadHuntPostId());
+
     for (MultipartFile file : files) {
       if (file != null && !file.isEmpty()) {
         String originalFilename = file.getOriginalFilename();
@@ -52,22 +65,16 @@ public class WriteHeadHuntPostController {
         String newFilename = UUID.randomUUID().toString() + "." + extension;
         String filePath = uploadDir + File.separator + newFilename;
         File newFile = new File(filePath);
+        postImgDTO.setPostImgName(newFilename);
+        if (!postImgService.insert(postImgDTO)) {
+          System.out.println("WriteHeadHuntPostController insertion of image failed");
+        }
         try {
           file.transferTo(newFile);
         } catch (IOException e) {
           e.printStackTrace();
         }
-        postImgDTO.setPostImgName(newFilename);
       }
-    }
-
-    // Add the user-written post
-    if (!headHuntPostService.insert(headHuntPostDTO)) {
-      System.out.println("WriteHeadHuntPostController insertion of post failed");
-    }
-
-    if (!postImgService.insert(postImgDTO)) {
-      System.out.println("WriteHeadHuntPostController insertion of image failed");
     }
 
     System.out.println("WriteHeadHuntPostController Out Log");

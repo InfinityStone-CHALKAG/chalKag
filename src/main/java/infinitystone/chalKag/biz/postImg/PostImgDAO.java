@@ -1,13 +1,13 @@
 package infinitystone.chalKag.biz.postImg;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
 
 @Repository("postImgDAO")
 public class PostImgDAO {
@@ -158,7 +158,7 @@ public class PostImgDAO {
 	}
 
 	public boolean insert(PostImgDTO postImgDTO) {
-		int result = jdbcTemplate.update(INSERT,postImgDTO.getPostImgId(),postImgDTO.getPostImages());
+		int result = jdbcTemplate.update(INSERT,postImgDTO.getPostId(), postImgDTO.getPostImgName());
 		System.out.println("PostImgDAO(insert) Out로그 = [" + result + "]");
 		if (result <= 0) {
 			return false;

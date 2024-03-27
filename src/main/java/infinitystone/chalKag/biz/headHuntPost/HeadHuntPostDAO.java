@@ -128,8 +128,10 @@ public class HeadHuntPostDAO { // 구인 게시판 DAO
 //// 사용한 컬럼 (출력 내용) :
 //// 게시글 카테고리, 구인글 아이디, 회원 아이디, 회원 닉네임, 구인글 제목, 구인글 내용, 구인글 작성일, 구인글 조회수, 게시글의 좋아요 수, 몇 분 전 작성된 글인지
 //// 게시글 이미지는 따로 받아옴  
+	
+// 포스트아이디 최대값 가져오는 쿼리문
+private static final String SELECTONE_MAXPOSTID = "SELECT MAX(HEADHUNTPOST_id) FROM HEADHUNTPOST";
 
-  
   // 구인글 상세 출력.전미지
   private static final String SELECTONE_HEADHUNTPOST = "SELECT "
 		  + "	HEADHUNTPOST.HEADHUNTPOST_id, "
@@ -275,15 +277,24 @@ public class HeadHuntPostDAO { // 구인 게시판 DAO
 		HeadHuntPostDTO result = null;
 		System.out.println("HeadHuntPostDAO(selectOne) In로그 = [" + headHuntPostDTO + "]");
 		try {
-			Object[] args = { headHuntPostDTO.getHeadHuntPostId() };
+			Object[] args = {headHuntPostDTO.getHeadHuntPostId()};
 			// SELECTONE_HEADHUNTPOST 쿼리를 실행해 데이터베이스에 구인글 데이터를 불러옴
-			result = jdbcTemplate.queryForObject(SELECTONE_HEADHUNTPOST, args, new SelectOneHeadHuntPostRowMapper());
-			System.out.println("HeadHuntPostDAO(selectOne) Out로그 = [" + result + "]");
-			return result;
-		} catch (Exception e) { // 예외 발생 시
+			if (headHuntPostDTO.getSearchCondition().equals("maxPostId")) {
+				result = jdbcTemplate.queryForObject(SELECTONE_MAXPOSTID, new SelectOneMaxPostIdRowMapper());
+				System.out.println("HeadHuntPostDAO(selectOne) Out로그 = [" + result + "]");
+				return result;
+			} else if(headHuntPostDTO.getSearchCondition().equals("headHuntPostSingle")){
+				// SELECTONE_HEADHUNTPOST 쿼리를 실행해 데이터베이스에 구인글 데이터를 불러옴
+				result = jdbcTemplate.queryForObject(SELECTONE_HEADHUNTPOST, args, new SelectOneHeadHuntPostRowMapper());
+				System.out.println("HeadHuntPostDAO(selectOne) Out로그 = [" + result + "]");
+				return result;
+			}
+
+		}catch (Exception e){
 			e.printStackTrace(); // 예외 내용 출력
 			return null; // 예외 발생 시 null 반환
 		}
+		return null;
 	}
 
 	// 구인글 작성
@@ -498,5 +509,15 @@ class SelectOneHeadHuntPostRowMapper implements RowMapper<HeadHuntPostDTO> {
 		headHuntPostDTO.setHeadHuntPostViewcnt(rs.getString("HEADHUNTPOST_viewcnt")); // 구인글 조회수
 		headHuntPostDTO.setRecommendCnt(rs.getString("RECOMMEND_cnt")); // 게시글의 좋아요 수
 		return headHuntPostDTO; // headHuntPostDTO에 저장된 데이터들을 반환
+	}
+}
+
+class SelectOneMaxPostIdRowMapper implements RowMapper<HeadHuntPostDTO> {
+	@Override
+	public HeadHuntPostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+		HeadHuntPostDTO data = new HeadHuntPostDTO();
+		data.setHeadHuntPostId(rs.getString("MAX(HEADHUNTPOST_id)"));
+		System.out.println("RowMapper OUT");
+		return data;
 	}
 }
