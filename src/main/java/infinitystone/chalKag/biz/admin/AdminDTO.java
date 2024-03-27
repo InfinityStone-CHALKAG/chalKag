@@ -9,7 +9,7 @@ public class AdminDTO {
   private String signUpCount;
   private String maleGroup;
   private String femaleGroup;
-  private String day;
+  private String date;
   private String signInCount;
   private String year;
   private String month;
