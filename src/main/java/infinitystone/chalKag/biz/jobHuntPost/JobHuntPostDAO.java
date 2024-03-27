@@ -134,7 +134,7 @@ public class JobHuntPostDAO {
 
 		try {
 			if (jobHuntPostDTO.getSearchCondition().equals("jobHuntPostList")) {
-				result = (List<JobHuntPostDTO>) jdbcTemplate.query(SELECTALL_JOBHUNTPOST, new JobHuntPostSellecAllRowMapper());
+				result = (List<JobHuntPostDTO>) jdbcTemplate.query(SELECTALL_JOBHUNTPOST, new JobHuntPostSelecAllRowMapper());
 				System.out.println("JobHuntPostDAO(selectAll) 로그 = [" + result + "]");
 				return result;
 			}
@@ -153,7 +153,7 @@ public class JobHuntPostDAO {
 		Object[] args = { jobHuntPostDTO.getJobHuntPostId() };
 		try {
 			if (jobHuntPostDTO.getSearchCondition().equals("jobHuntPostSingle")) {
-				result = jdbcTemplate.queryForObject(SELECTONE_JOBHUNTPOST, args, new JobHuntPostSellectOneRowMapper());
+				result = jdbcTemplate.queryForObject(SELECTONE_JOBHUNTPOST, args, new JobHuntPostOneRowMapper());
 				System.out.println("JobHuntPostDAO(selectOne) 로그 = [" + result + "]");
 				return result;
 			}
@@ -197,7 +197,7 @@ public class JobHuntPostDAO {
 	}
 }
 
-class JobHuntPostSellecAllRowMapper implements RowMapper<JobHuntPostDTO> {
+class JobHuntPostSelecAllRowMapper implements RowMapper<JobHuntPostDTO> {
 
 	@Override
 	public JobHuntPostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -216,7 +216,7 @@ class JobHuntPostSellecAllRowMapper implements RowMapper<JobHuntPostDTO> {
 	}
 }
 
-class JobHuntPostSellectOneRowMapper implements RowMapper<JobHuntPostDTO> {
+class JobHuntPostOneRowMapper implements RowMapper<JobHuntPostDTO> {
 
 	@Override
 	public JobHuntPostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {

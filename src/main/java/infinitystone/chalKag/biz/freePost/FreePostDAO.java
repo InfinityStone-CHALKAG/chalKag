@@ -106,7 +106,7 @@ public class FreePostDAO {
 				return result;
 			}
 			else if(freePostDTO.getSearchCondition().equals("freePostPremiumList")) {
-				result = (List<FreePostDTO>) jdbcTemplate.query(SELECTALL_PREMIUMFREEPOST, new FreePostPremiumSellectAllRowMapper());
+				result = (List<FreePostDTO>) jdbcTemplate.query(SELECTALL_PREMIUMFREEPOST, new FreePostPremiumSelectAllRowMapper());
 				System.out.println("FreePostDAO(premiumSelectAll) 로그 = [" + result + "]");
 				return result;
 			}
@@ -206,7 +206,7 @@ class FreePostSelectOneRowMapper implements RowMapper<FreePostDTO> {
 
 }
 
-class FreePostPremiumSellectAllRowMapper implements RowMapper<FreePostDTO>{
+class FreePostPremiumSelectAllRowMapper implements RowMapper<FreePostDTO>{
 
 	@Override
 	public FreePostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {

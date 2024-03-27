@@ -102,7 +102,7 @@ public class MarketPostDAO {
 		List<MarketPostDTO> result = null;
 		try {
 			if (marketPostDTO.getSearchCondition().equals("marketPostList")) {
-				result = (List<MarketPostDTO>) jdbcTemplate.query(SELECTALL_MARKETPOST, new MarketPostSellectAllRowMapper());
+				result = (List<MarketPostDTO>) jdbcTemplate.query(SELECTALL_MARKETPOST, new MarketPostSelectAllRowMapper());
 				System.out.println("MarketPostDAO(selectAll) 로그 = [" + result + "]");
 				return result;
 			}
@@ -124,7 +124,7 @@ public class MarketPostDAO {
 		Object[] args = { marketPostDTO.getMarketPostId() };
 		try {
 			if(marketPostDTO.getSearchCondition().equals("marketPostSingle")) {
-				result = jdbcTemplate.queryForObject(SELECTONE_MARKETPOST, args, new MarketPostSellectOneRowMapper());
+				result = jdbcTemplate.queryForObject(SELECTONE_MARKETPOST, args, new MarketPostSelectOneRowMapper());
 				return result;
 			}
 		} catch (Exception e) {
@@ -163,7 +163,7 @@ public class MarketPostDAO {
 	}
 }
 
-class MarketPostSellectAllRowMapper implements RowMapper<MarketPostDTO> {
+class MarketPostSelectAllRowMapper implements RowMapper<MarketPostDTO> {
 
 	@Override
 	public MarketPostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -181,7 +181,7 @@ class MarketPostSellectAllRowMapper implements RowMapper<MarketPostDTO> {
 
 }
 
-class MarketPostSellectOneRowMapper implements RowMapper<MarketPostDTO> {
+class MarketPostSelectOneRowMapper implements RowMapper<MarketPostDTO> {
 
 	@Override
 	public MarketPostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {

@@ -75,7 +75,7 @@ public class CommentDAO {
 		Object[] args = { commentDTO.getPostId() };
 		try {
 			if (commentDTO.getSearchCondition().equals("commentList")) {
-				result = (List<CommentDTO>) jdbcTemplate.query(SELECTALL,args,new CommentSellectAllRowMapper());
+				result = (List<CommentDTO>) jdbcTemplate.query(SELECTALL,args,new CommentSelectAllRowMapper());
 				System.out.println("commentDTO(jobHuntPostSelectAll) 로그 =" + "[" + result + "]");
 				return result;
 			} 
@@ -94,7 +94,7 @@ public class CommentDAO {
 		CommentDTO result = null;
 		Object[] args = { commentDTO.getCommentId() };
 		try {
-			result = jdbcTemplate.queryForObject(SELECTONE, args, new CommentSellectOneRowMapper());
+			result = jdbcTemplate.queryForObject(SELECTONE, args, new CommentSelectOneRowMapper());
 			System.out.println("commentDTO(selectOne) 로그 =" + "[" + result + "]");
 			return result;
 		} catch (Exception e) {
@@ -131,7 +131,7 @@ public class CommentDAO {
 	}
 }
 
-class CommentSellectAllRowMapper implements RowMapper<CommentDTO> {
+class CommentSelectAllRowMapper implements RowMapper<CommentDTO> {
 
 	@Override
 	public CommentDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -147,7 +147,7 @@ class CommentSellectAllRowMapper implements RowMapper<CommentDTO> {
 	}
 }
 
-class CommentSellectOneRowMapper implements RowMapper<CommentDTO> {
+class CommentSelectOneRowMapper implements RowMapper<CommentDTO> {
 
 	@Override
 	public CommentDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
