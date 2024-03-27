@@ -31,7 +31,7 @@ function checkId() {
 			else {
 				$("#IDErrMsg").text("중복된 이메일입니다. 다시 입력해주세요");
 				$("#IDErrMsg").css("color", "red");
-				checkIdflag = false;
+				checkIdFlag = false;
 				return checkIdFlag;
 			}
 		},

@@ -97,94 +97,18 @@
                     <div class="container">
                         <div class="col-xs-6 col-md-4 sidebar" id="sidebar">
                             <div class="sidebar-title for-tablet">Sidebar</div>
-                            <aside>
-                                <div class="aside-body">
-                                    <div class="featured-author">
-                                        <div class="featured-author-inner">
-                                            <div class="featured-author-cover"
-                                                style="background-image: url('css/user/images/news/img15.jpg');">
-                                                <div class="badges">
-                                                    <c:if test="${memberInfo.memberGrade eq 'PREMIUM'}">
-                                                        <div class="badge-item"><i class="ion-star"></i> PREMIUM</div>
-                                                    </c:if>
-                                                    <c:if test="${memberInfo.memberGrade eq 'USER'}">
-                                                        <div class="badge-item"><i class="ion-star"></i> PREMIUM...할래?
-                                                        </div>
-                                                    </c:if>
-                                                </div>
-                                                <div class="featured-author-center">
-                                                    <figure class="featured-author-picture">
-                                                        <img src="profileImg/${memberInfo.profileImgName}"
-                                                            alt="Sample Article">
-                                                    </figure>
-                                                    <div class="featured-author-info">
-                                                        <h2 class="name">${memberInfo.memberNickname}</h2>
-                                                        <div class="desc">${memberInfo.memberId}</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="featured-author-body">
-                                                <div class="featured-author-count">
-                                                    <div class="item" style="width: -webkit-calc(100% / 2);">
-                                                        <a href="#">
-                                                            <div class="name">Posts</div>
-                                                            <div class="value">208</div>
-                                                        </a>
-                                                    </div>
-                                                    <div class="item" style="width: -webkit-calc(100% / 2);">
-                                                        <a href="#">
-                                                            <div class="name">Score</div>
-                                                            <div class="value">${memberInfo.currentScore}</div>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="featured-author-quote"
-                                                    style="font-weight: bold; font-family: 'Lato'; font-size:19px ;">
-                                                    LV : ${memberInfo.currentLevel}
-                                                </div>
-                                                <div style="display: flex; justify-content: center;">
-                                                    <input type="range" id="Exp" name="Exp" min="0"
-                                                        max="${memberInfo.currentNextExp}"
-                                                        value="${memberInfo.currentExp}" style="width: 250px;">
-                                                </div>
-                                                <div class="featured-author-quote"
-                                                    style="font-weight: bold; font-family: 'inherit'; margin-top: 10px;">
-                                                    INTRODUCTION</div>
-                                                <div class="featured-author-quote" id="Introdudction">
-                                                    <c:if test="${memberInfo.memberIntroduction != null}">
-                                                        "${memberInfo.memberIntroduction}"
-                                                    </c:if>
-                                                    <c:if test="${memberInfo.memberIntroduction == null}">
-                                                        " Write a self-introduction to showcase yourself "
-                                                    </c:if>
-                                                </div>
-
-
-                                                <div class="featured-author-quote">
-                                                    <ul class="changeList">
-                                                        <li><a href="myPage" class="active">MY INFORMATION</a></li>
-                                                        <li><a href="changeInformation">CHANGE INFORMATION</a></li>
-                                                        <li><a href="changeNickname">CHANGE NICKNAME</a></li>
-                                                        <li><a href="changePw">CHANGE PASSWORD</a></li>
-                                                        <li><a href="changePh">CHANGE PHONENUMBER</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </aside>
+                            <chalKagTags:myPageSidebar />
                         </div>
                         <div class="col-md-5 col-sm-12 col-xs-12">
                             <div class="box box-border">
                                 <div class="box-body">
                                     <h4>Change Nickname</h4>
-                                    <form id="changeNicknameForm" method="post" action="changeNickname">
+                                    <form id="changeNicknameForm" method="post" action="changeNickname" onsubmit="return validateForm()">
                                         <div class="form-group">
                                             <label>Nickname</label>
                                             <div style="display: flex;">
                                                 <input type="text" id="memberNickname" name="memberNickname"
-                                                    value="${memberInfo.nickname}" class="form-control" >
+                                                    value="${memberInfo.memberNickname}" class="form-control" >
                                                 <a id="nicknameCheckBtn"
                                                     style="text-align: center; padding-top: 3%; width: 7rem;"
                                                     class="btn btn-magz btn-sm" onclick="checkNickname()">check</a>
@@ -236,19 +160,12 @@
                 });
 
 
-                //닉네임 유효성~
-                var changeNicknameForm = document.getElementById('changeNicknameForm');
-                if (changeNicknameForm) {
-                    changeNicknameForm.onsubmit = function () {
-                        return validateForm();
-                    }
-                }
+
 
                 function validateForm() {
 
-                    if (checkNicknameFlag == false) {
+                    if (!checkNicknameFlag) {
                         console.log("checkNicknameFlag 진입");
-                        $("#nicknameErrMsg").text("");
                         swal("fail", "닉네임을 확인해주세요.", "error", {
                             button: "OK",
                         });

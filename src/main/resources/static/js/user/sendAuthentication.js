@@ -1,9 +1,18 @@
+var checkPhFlag = false;
+var containerId = "memberPhCheckContainer";
 var serverGeneratedCode = "";
+var phRegex = /^010\d{8}$/i;
 
 
 function sendAuthenticationSMS() {
 	// 사용자가 입력한 전화번호 가져오기
 	var memberPh = $("#memberPh").val();
+	
+	    if (!phRegex.test(memberPh)) {
+        $("#phErrMsg").text('올바른 번호 형식이 아닙니다.');
+        $("#phErrMsg").css('color', 'red');
+        return checkPhFlag;
+    }
 
 	// AJAX를 사용하여 서버에 전화번호 전송
 	$.ajax({
@@ -14,6 +23,7 @@ function sendAuthenticationSMS() {
 		success: function(data) {
 			// 서버 응답에 따른 처리
 			if (data !== "fail") {
+				createMemberPhCheckInput(containerId);
 				console.log("data " + data);
 				$("#phErrMsg").text('');
 				swal("success", "인증번호 발송이 완료되었습니다.", "success", {

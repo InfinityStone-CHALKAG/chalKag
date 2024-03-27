@@ -18,18 +18,6 @@
 
 					<chalKagTags:webSider />
 
-					<div class="details">
-						<h3 class="name">
-							<c:if test="${member == null || member != headHuntPostSingle.memberId}">
-								<a href="/memberPage/memberId=${headHuntPostSingle.memberId}">${headHuntPostSingle.memberId}</a>
-							</c:if>
-							<c:if test="${member == headHuntPostSingle.memberId}">
-								<a href="/myPage/memberId=${member}">${headHuntPostSingle.memberId}</a>
-							</c:if>
-					</h3>
-
-					</div>
-
 					<div class="col-md-8">
 						<article class="article main-article">
 							<header>
@@ -38,31 +26,26 @@
 									<li>${headHuntPostSingle.headHuntPostDate}</li>
 									<li><a>Film</a></li>
 									<li>By 
-										<c:if test="${member == null || member != headHuntPostSingle.memberId}">
-											<a href="/memberPage/memberId=${headHuntPostSingle.memberId}">${headHuntPostSingle.memberId}</a>
-										</c:if>
-										<c:if test="${member == headHuntPostSingle.memberId}">
-											<a href="/myPage/memberId=${member}">${headHuntPostSingle.memberId}</a>
-										</c:if>
+									<c:if test="${member == null || member != headHuntPostSingle.memberId}">
+										<a href="/memberPage/memberId=${headHuntPostSingle.memberId}">${headHuntPostSingle.memberNickname}</a>
+									</c:if> <c:if test="${member == headHuntPostSingle.memberId}">
+										<a style="font-size: 12px;" href="/myPage/memberId=${member}">${headHuntPostSingle.memberNickname}</a>
+									</c:if>
 								</li>
 								</ul>
 							</header>
-							<div class="main">
-								<div style="display: flex;">
-									<p>직업 : ${headHuntPostSingle.headHuntPostRole}</p>
-									<p>지역 : ${headHuntPostSingle.headHuntPostRegion}</p>
-									<p>작업 페이 : ${headHuntPostSingle.headHuntPostPay}</p>
-									<p>작업 날짜 : ${headHuntPostSingle.headHuntPostWorkdate}</p>
-									<p>쵤영 컨셉 : ${headHuntPostSingle.headHuntPostConcept}</p>
-								</div>
+						<div class="main">
 								<!-- 게시글 이미지 출력 추후 추가 -->
 								<div class="featured">
 									<figure>
 										<img src="images/news/img01.jpg">
-										<figcaption>Image by pexels.com</figcaption>
 									</figure>
 								</div>
-
+								<p>Role : ${headHuntPostSingle.headHuntPostRole}</p>
+								<p>Region : ${headHuntPostSingle.headHuntPostRegion}</p>
+								<p>Pay : ${headHuntPostSingle.headHuntPostPay}</p>
+								<p>Work date : ${headHuntPostSingle.headHuntPostWorkDate}</p>
+								<p>Concept : ${headHuntPostSingle.headHuntPostConcept}</p>
 								<!-- 게시글 내용 출력 -->
 								<p>${headHuntPostSingle.headHuntPostContent}</p>
 							</div>
@@ -72,130 +55,12 @@
 								</div>
 							</footer>
 						</article>
-						<div class="sharing">
-						<div class="line">
-							<div>Author</div>
-						</div>
-						<div class="author">
-							<figure>
-								<img src="images/img01.jpg">
-							</figure>
-						</div>
-						
 						<div class="line thin"></div>
-						<!-- 댓글 출력 추후 추가 -->
-						<div class="comments">
-							<h2 class="title">3 Responses <a href="#">Write a Response</a></h2>
-							<div class="comment-list">
-								<div class="item">
-									<div class="user">                                
-										<figure>
-											<img src="images/img01.jpg">
-										</figure>
-										<div class="details">
-											<h5 class="name">Mark Otto</h5>
-											<div class="time">24 Hours</div>
-											<div class="description">
-												Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-												tempor incididunt ut labore et dolore <a href="#">magna</a> aliqua. Ut enim ad minim veniam,
-												quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.
-											</div>
-											<footer>
-												<a href="#">Reply</a>
-											</footer>
-										</div>
-									</div>
-								</div>
-								<div class="item">
-									<div class="user">                                
-										<figure>
-											<img src="images/img01.jpg">
-										</figure>
-										<div class="details">
-											<h5 class="name">Mark Otto</h5>
-											<div class="time">24 Hours</div>
-											<div class="description">
-												Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-												tempor incididunt ut labore et dolore <a href="#">magna</a> aliqua. Ut enim ad minim veniam,
-												quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.
-											</div>
-											<footer>
-												<a href="#">Reply</a>
-											</footer>
-										</div>
-									</div>
-									<div class="reply-list">
-										<div class="item">
-											<div class="user">                                
-												<figure>
-													<img src="images/img01.jpg">
-												</figure>
-												<div class="details">
-													<h5 class="name">Mark Otto</h5>
-													<div class="time">24 Hours</div>
-													<div class="description">
-														Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-														consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-														cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-														proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-													</div>
-													<footer>
-														<a href="#">Reply</a>
-													</footer>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="item">
-									<div class="user">                                
-										<figure>
-											<img src="images/img01.jpg">
-										</figure>
-										<div class="details">
-											<h5 class="name">Mark Otto</h5>
-											<div class="time">24 Hours</div>
-											<div class="description">
-												Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-												tempor incididunt ut labore et dolore <a href="#">magna</a> aliqua. Ut enim ad minim veniam,
-												quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.
-											</div>
-											<footer>
-												<a href="#">Reply</a>
-											</footer>
-										</div>
-									</div>
-								</div>
-							</div>
-							<form class="row">
-								<div class="col-md-12">
-									<h3 class="title">Leave Your Response</h3>
-								</div>
-								<div class="form-group col-md-4">
-									<label for="name">Name <span class="required"></span></label>
-									<input type="text" id="name" name="" class="form-control">
-								</div>
-								<div class="form-group col-md-4">
-									<label for="email">Email <span class="required"></span></label>
-									<input type="email" id="email" name="" class="form-control">
-								</div>
-								<div class="form-group col-md-4">
-									<label for="website">Website</label>
-									<input type="url" id="website" name="" class="form-control">
-								</div>
-								<div class="form-group col-md-12">
-									<label for="message">Response <span class="required"></span></label>
-									<textarea class="form-control" name="message" placeholder="Write your response ..."></textarea>
-								</div>
-								<div class="form-group col-md-12">
-									<button class="btn btn-primary">Send Response</button>
-								</div>
-							</form>
-						</div>
+						<!-- 댓글 출력 -->
+						<chalKagTags:webComments />
 					</div>
 				</div>
 			</div>
-		</div>
 		</section>
 
 		<!-- Start footer tag로 출력 -->

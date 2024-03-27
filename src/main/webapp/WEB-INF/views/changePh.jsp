@@ -97,83 +97,7 @@
                     <div class="container">
                         <div class="col-xs-6 col-md-4 sidebar" id="sidebar">
                             <div class="sidebar-title for-tablet">Sidebar</div>
-                            <aside>
-                                <div class="aside-body">
-                                    <div class="featured-author">
-                                        <div class="featured-author-inner">
-                                            <div class="featured-author-cover"
-                                                style="background-image: url('css/user/images/news/img15.jpg');">
-                                                <div class="badges">
-                                                    <c:if test="${memberInfo.memberGrade eq 'PREMIUM'}">
-                                                        <div class="badge-item"><i class="ion-star"></i> PREMIUM</div>
-                                                    </c:if>
-                                                    <c:if test="${memberInfo.memberGrade eq 'USER'}">
-                                                        <div class="badge-item"><i class="ion-star"></i> PREMIUM...할래?
-                                                        </div>
-                                                    </c:if>
-                                                </div>
-                                                <div class="featured-author-center">
-                                                    <figure class="featured-author-picture">
-                                                        <img src="profileImg/${memberInfo.profileImgName}"
-                                                            alt="Sample Article">
-                                                    </figure>
-                                                    <div class="featured-author-info">
-                                                        <h2 class="name">${memberInfo.memberNickname}</h2>
-                                                        <div class="desc">${memberInfo.memberId}</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="featured-author-body">
-                                                <div class="featured-author-count">
-                                                    <div class="item" style="width: -webkit-calc(100% / 2);">
-                                                        <a href="#">
-                                                            <div class="name">Posts</div>
-                                                            <div class="value">208</div>
-                                                        </a>
-                                                    </div>
-                                                    <div class="item" style="width: -webkit-calc(100% / 2);">
-                                                        <a href="#">
-                                                            <div class="name">Score</div>
-                                                            <div class="value">${memberInfo.currentScore}</div>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="featured-author-quote"
-                                                    style="font-weight: bold; font-family: 'Lato'; font-size:19px ;">
-                                                    LV : ${memberInfo.currentLevel}
-                                                </div>
-                                                <div style="display: flex; justify-content: center;">
-                                                    <input type="range" id="Exp" name="Exp" min="0"
-                                                        max="${memberInfo.currentNextExp}"
-                                                        value="${memberInfo.currentExp}" style="width: 250px;">
-                                                </div>
-                                                <div class="featured-author-quote"
-                                                    style="font-weight: bold; font-family: 'inherit'; margin-top: 10px;">
-                                                    INTRODUCTION</div>
-                                                <div class="featured-author-quote" id="Introdudction">
-                                                    <c:if test="${memberInfo.memberIntroduction != null}">
-                                                        "${memberInfo.memberIntroduction}"
-                                                    </c:if>
-                                                    <c:if test="${memberInfo.memberIntroduction == null}">
-                                                        " Write a self-introduction to showcase yourself "
-                                                    </c:if>
-                                                </div>
-
-
-                                                <div class="featured-author-quote">
-                                                    <ul class="changeList">
-                                                        <li><a href="myPage" class="active">MY INFORMATION</a></li>
-                                                        <li><a href="changeInformation">CHANGE INFORMATION</a></li>
-                                                        <li><a href="changeNickname">CHANGE NICKNAME</a></li>
-                                                        <li><a href="changePw">CHANGE PASSWORD</a></li>
-                                                        <li><a href="changePh">CHANGE PHONENUMBER</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </aside>
+                            <chalKagTags:myPageSidebar />
                         </div>
                         <div class="col-md-5 col-sm-12 col-xs-12">
 
@@ -181,7 +105,7 @@
                             <div class="box box-border">
                                 <div class="box-body">
                                     <h4>Change PhoneNumber</h4>
-                                    <form id="changePhForm" method="post" action="changePh">
+                                    <form id="changePhForm" method="post" action="changePh" onsubmit="return validateForm()">
                                         <!-- 회원 폰번호 입력 -->
                                         <div class="form-group">
                                             <label>Present</label>
@@ -243,123 +167,9 @@
                     });
                 });
 
-
-                var checkPhFlag = false;
-                var successPhCheck = "successPhCheck";
-                var containerId = "memberPhCheckContainer";
-                var phRegex = /^010\d{8}$/i;
-                function checkPh() {
-                    var memberPh = $('#memberPh').val();
-
-                    if (!phRegex.test(memberPh)) {
-                        $("#phErrMsg").text('올바른 번호 형식이 아닙니다.');
-                        $("#phErrMsg").css('color', 'red');
-                        return checkPhFlag;
-                    }
-
-                    $.ajax({
-                        type: "POST",
-                        url: "/checkPh",
-                        data: { 'memberPh': memberPh },
-                        dataType: 'text',
-                        success: function (data) {
-                            if (data == '1') {
-
-                                sendAuthenticationSMS();
-                                createMemberPhCheckInput(containerId);
-                                document.getElementById("memberPhCheckContainer").style.display = "flex"; //
-
-                            }
-                            else {
-                                swal("fail", "이미 가입되어있는 회원입니다.", "error", {
-                                    button: "OK",
-                                });
-
-
-                            }
-                        },
-                        error: function (error) {
-                            console.log('에러' + error);
-                        }
-                    });
-                }
-                document.getElementById("memberPh").addEventListener("input", function () {
-                    // input 내용이 바뀔 때마다 checkPhflag를 false로 설정 다시인증하기
-                    checkPhFlag = false;
-                });
-
-
-                function createMemberPhCheckInput(containerId) {
-                    var container = document.getElementById(containerId); // 동적으로 컨테이너 선택
-
-                    // 기존에 생성된 입력란과 버튼이 있다면 제거
-                    container.innerHTML = '';
-
-                    // 인증번호 입력란 생성
-                    var input = document.createElement("input");
-                    input.type = "text";
-                    input.id = containerId + "Input"; // 고유 ID 부여
-                    input.name = "memberPhCheck";
-                    input.className = "form-control";
-                    input.placeholder = "인증번호 입력";
-
-                    // 확인 버튼 생성
-                    var button = document.createElement("a");
-                    button.id = containerId + "Button"; // 고유 ID 부여
-                    button.className = "btn btn-magz btn-sm";
-                    button.style.textAlign = "center";
-                    button.style.paddingTop = "3%";
-                    button.style.width = "7rem";
-                    button.textContent = "check";
-
-                    // 생성된 요소를 부모 컨테이너에 추가
-                    container.appendChild(input);
-                    container.appendChild(button);
-
-                    // 컨테이너 표시
-                    container.style.display = "flex";
-                    console.log("[로그] input.id : " + input.id);
-
-
-
-
-                    //SMS check.js
-
-                    $(document).ready(function () {
-                        $("#" + button.id).on('click', function () {
-                            console.log("smsCheck 동작함");
-                            console.log(serverGeneratedCode);
-                            if ($("#" + input.id).val() == serverGeneratedCode) {
-                                $("#" + input.id).prop('disabled', true);
-                                $("." + successPhCheck).text("인증번호가 일치합니다.");
-                                $("." + successPhCheck).css("color", "green");
-                                checkPhFlag = true;
-                                return checkPhFlag;
-                            } else {
-                                $("." + successPhCheck).text("인증번호가 일치하지 않습니다. 확인해주시기 바랍니다.");
-                                $("." + successPhCheck).css("color", "red");
-                                $(this).attr("autofocus", true);
-                                checkPhFlag = false;
-                                return checkPhFlag;
-
-                            }
-                        });
-                    });
-                }
-
-                var changePhForm = document.getElementById('changePhForm');
-                console.log("로그]" + changePhForm);
-
-                if (changePhForm) {
-                    console.log("onsubmit 진입")
-                    changePhForm.onsubmit = function () {
-                        return validateForm();
-                    }
-                }
-
-
+           
                 function validateForm() {
-                    if (checkPhFlag == false) {
+                    if (!checkPhFlag) {
                         swal("fail", "전화번호를 인증해주세요.", "error", {
                             button: "OK",
                         });
@@ -374,7 +184,8 @@
 
 
             </script>
-
+            <script src="js/user/checkPh.js"></script>
+            <script src="js/user/smsCheck.js"></script>
             <script src="js/user/sendAuthentication.js"></script>
 
             </html>

@@ -16,122 +16,22 @@ public class CommentDAO {
 
 
 	// 댓글 전체 출력 댓글, 게시판,회원 조인 쿼리문
-	private static final String SELECTALL_JOBHUNTPOSTCOMMENT = "SELECT " 
+	private static final String SELECTALL = "SELECT  "
 			+ "    COMMENT.COMMENT_id, "
-			+ "    COMMENT.POST_id," 
-			+ "    COMMENT.MEMBER_id, "
-			+" 	COMMENT.COMMENT_date, "
-			+ " CASE "
-			+ "     WHEN TIMESTAMPDIFF(MINUTE, COMMENT.COMMENT_date, NOW()) < 60 THEN CONCAT(TIMESTAMPDIFF(MINUTE, COMMENT.COMMENT_date, NOW()), ' 분 전') "
-			+ "     WHEN TIMESTAMPDIFF(HOUR, COMMENT.COMMENT_date, NOW()) < 24 THEN CONCAT(TIMESTAMPDIFF(HOUR, COMMENT.COMMENT_date, NOW()), ' 시간 전') "
-			+ "     ELSE CONCAT(TIMESTAMPDIFF(DAY, COMMENT.COMMENT_date, NOW()), ' 일 전') \n"
-			+ " END AS COMMENT_date,"
-			+ "    COMMENT.COMMENT_content, " 
-			+ "    PROFILEIMG.PROFILEIMG_name " 
-			+ " FROM " 
-			+ "    COMMENT " 
-			+ " JOIN "
-			+ "    JOBHUNTPOST ON COMMENT.POST_id = JOBHUNTPOST.JOBHUNTPOST_id " 
-			+ " LEFT JOIN "
-			+ "    PROFILEIMG ON COMMENT.MEMBER_id = PROFILEIMG.MEMBER_id "
-			+ " JOIN "
-			+ "    MEMBER ON COMMENT.MEMBER_id = MEMBER.MEMBER_id " 
-			+ " WHERE " 
-			+ "    COMMENT.POST_id=? "
-			+ " GROUP BY " 
-			+ "		COMMENT.COMMENT_id, " 
-			+ " 	PROFILEIMG.PROFILEIMG_name" 
-			+ " ORDER BY "
-			+ "    COMMENT.COMMENT_date DESC ";
-
-	private static final String SELECTALL_HEADHUNTPOSTCOMMENT = "SELECT  " 
-			+ "    COMMENT.COMMENT_id, "
-			+ "    COMMENT.POST_id, " 
+			+ "    COMMENT.POST_id, "
 			+ "    COMMENT.MEMBER_id, "
 			+ "    COMMENT.COMMENT_date, "
-			+ " CASE "
-			+ "     WHEN TIMESTAMPDIFF(MINUTE, COMMENT.COMMENT_date, NOW()) < 60 THEN CONCAT(TIMESTAMPDIFF(MINUTE, COMMENT.COMMENT_date, NOW()), ' 분 전') "
-			+ "     WHEN TIMESTAMPDIFF(HOUR, COMMENT.COMMENT_date, NOW()) < 24 THEN CONCAT(TIMESTAMPDIFF(HOUR, COMMENT.COMMENT_date, NOW()), ' 시간 전') "
-			+ "     ELSE CONCAT(TIMESTAMPDIFF(DAY, COMMENT.COMMENT_date, NOW()), ' 일 전') \n"
-			+ " END AS COMMENT_date,"
-			+ "    COMMENT.COMMENT_content, " 
-			+ "    PROFILEIMG.PROFILEIMG_name " 
-			+ " FROM " 
-			+ "    COMMENT " 
-			+ " JOIN "
-			+ "    HEADHUNTPOST ON COMMENT.POST_id = HEADHUNTPOST.FREEPOST_id " 
-			+ " LEFT JOIN "
-			+ "    PROFILEIMG ON COMMENT.MEMBER_id = PROFILEIMG.MEMBER_id " 
-			+ " JOIN "
-			+ "    MEMBER ON COMMENT.MEMBER_id = MEMBER.MEMBER_id " 
-			+ " WHERE " 
-			+ "    COMMENT.POST_id = ? "
-			+ " GROUP BY " 
-			+ "    COMMENT.COMMENT_id, " 
-			+ "    PROFILEIMG.PROFILEIMG_name " 
-			+ " ORDER BY "
-			+ "    COMMENT.COMMENT_date DESC ";
-	
-	
-	
-	
-	private static final String SELECTALL_FREEPOSTCOMMENT = "SELECT  " 
-			+ "    COMMENT.COMMENT_id, "
-			+ "    COMMENT.POST_id, " 
-			+ "    COMMENT.MEMBER_id, "
-			+ "    COMMENT.COMMENT_date, "
-			+ " CASE "
-			+ "     WHEN TIMESTAMPDIFF(MINUTE, COMMENT.COMMENT_date, NOW()) < 60 THEN CONCAT(TIMESTAMPDIFF(MINUTE, COMMENT.COMMENT_date, NOW()), ' 분 전') "
-			+ "     WHEN TIMESTAMPDIFF(HOUR, COMMENT.COMMENT_date, NOW()) < 24 THEN CONCAT(TIMESTAMPDIFF(HOUR, COMMENT.COMMENT_date, NOW()), ' 시간 전') "
-			+ "     ELSE CONCAT(TIMESTAMPDIFF(DAY, COMMENT.COMMENT_date, NOW()), ' 일 전') \n"
-			+ " END AS COMMENT_date,"
-			+ "    COMMENT.COMMENT_content, " 
-			+ "    PROFILEIMG.PROFILEIMG_name " 
-			+ " FROM " 
-			+ "    COMMENT " 
-			+ " JOIN "
-			+ "    FREEPOST ON COMMENT.POST_id = FREEPOST.FREEPOST_id " 
-			+ " LEFT JOIN "
-			+ "    PROFILEIMG ON COMMENT.MEMBER_id = PROFILEIMG.MEMBER_id "
-			+ " JOIN "
-			+ "    MEMBER ON COMMENT.MEMBER_id = MEMBER.MEMBER_id " 
-			+ " WHERE " 
-			+ "    COMMENT.POST_id = ? "
-			+ " GROUP BY " 
-			+ "    COMMENT.COMMENT_id, " 
-			+ "    PROFILEIMG.PROFILEIMG_name " 
-			+ " ORDER BY "
-			+ "    COMMENT.COMMENT_date DESC ";
-
-	private static final String SELECTALL_MARKETPOSTCOMMENT = "SELECT  " 
-			+ "    COMMENT.COMMENT_id, "
-			+ "    COMMENT.POST_id, " 
-			+ "    COMMENT.MEMBER_id, "
-			+ "    COMMENT.COMMENT_date, "
-			+ " CASE "
-			+ "     WHEN TIMESTAMPDIFF(MINUTE, COMMENT.COMMENT_date, NOW()) < 60 THEN CONCAT(TIMESTAMPDIFF(MINUTE, COMMENT.COMMENT_date, NOW()), ' 분 전') "
-			+ "     WHEN TIMESTAMPDIFF(HOUR, COMMENT.COMMENT_date, NOW()) < 24 THEN CONCAT(TIMESTAMPDIFF(HOUR, COMMENT.COMMENT_date, NOW()), ' 시간 전') "
-			+ "     ELSE CONCAT(TIMESTAMPDIFF(DAY, COMMENT.COMMENT_date, NOW()), ' 일 전') \n"
-			+ " END AS COMMENT_date,"
-			+ "    COMMENT.COMMENT_content, " 
+			+ "    COMMENT.COMMENT_content, "
 			+ "    PROFILEIMG.PROFILEIMG_name "
-			+ " FROM " 
-			+ "    COMMENT " 
-			+ " JOIN "
-			+ "    FREEPOST ON COMMENT.POST_id = FREEPOST.FREEPOST_id " 
-			+ " LEFT JOIN "
-			+ "    PROFILEIMG ON COMMENT.MEMBER_id = PROFILEIMG.MEMBER_id " 
-			+ " JOIN "
-			+ "    MEMBER ON COMMENT.MEMBER_id = MEMBER.MEMBER_id " 
-			+ " WHERE " 
-			+ "    COMMENT.POST_id = ? "
-			+ " GROUP BY " 
-			+ "    COMMENT.COMMENT_id, " 
-			+ "    PROFILEIMG.PROFILEIMG_name " 
-			+ " ORDER BY "
-			+ "    COMMENT.COMMENT_date DESC ";
-	
-	
+			+ "FROM  "
+			+ "    COMMENT "
+			+ "LEFT JOIN  "
+			+ "    PROFILEIMG ON COMMENT.MEMBER_id = PROFILEIMG.MEMBER_id "
+			+ "INNER JOIN "
+			+ "    MEMBER ON COMMENT.MEMBER_id = MEMBER.MEMBER_id "
+			+ "WHERE "
+			+ "    COMMENT.POST_id = ? ";
+
 	
 	// 대댓글할 때 사용할 댓글 셀렉트원
 	private static final String SELECTONE = "SELECT "
@@ -139,11 +39,6 @@ public class CommentDAO {
 			+ "    COMMENT.POST_id, "
 			+ "    COMMENT.MEMBER_id, "
 			+ "    COMMENT.COMMENT_date, "
-			+ " CASE "
-			+ "     WHEN TIMESTAMPDIFF(MINUTE, COMMENT.COMMENT_date, NOW()) < 60 THEN CONCAT(TIMESTAMPDIFF(MINUTE, COMMENT.COMMENT_date, NOW()), ' 분 전') "
-			+ "     WHEN TIMESTAMPDIFF(HOUR, COMMENT.COMMENT_date, NOW()) < 24 THEN CONCAT(TIMESTAMPDIFF(HOUR, COMMENT.COMMENT_date, NOW()), ' 시간 전') "
-			+ "     ELSE CONCAT(TIMESTAMPDIFF(DAY, COMMENT.COMMENT_date, NOW()), ' 일 전') \n"
-			+ " END AS COMMENT_date,"
 			+ "    COMMENT.COMMENT_content, "
 			+ "    PROFILEIMG.PROFILEIMG_name "
 			+ "FROM "
@@ -177,28 +72,14 @@ public class CommentDAO {
 
 	public List<CommentDTO> selectAll(CommentDTO commentDTO) {
 		List<CommentDTO> result = null;
+		Object[] args = { commentDTO.getPostId() };
 		try {
-			if (commentDTO.getSearchCondition().equals("jobHuntPostSelectAllComment")) {
-				result = (List<CommentDTO>) jdbcTemplate.query(SELECTALL_JOBHUNTPOSTCOMMENT,
-						new CommentSellectAllRowMapper());
+			if (commentDTO.getSearchCondition().equals("commentList")) {
+				result = (List<CommentDTO>) jdbcTemplate.query(SELECTALL,args,new CommentSellectAllRowMapper());
 				System.out.println("commentDTO(jobHuntPostSelectAll) 로그 =" + "[" + result + "]");
 				return result;
-			} else if (commentDTO.getSearchCondition().equals("headHuntPostSelectAllComment")) {
-				result = (List<CommentDTO>) jdbcTemplate.query(SELECTALL_HEADHUNTPOSTCOMMENT,
-						new CommentSellectAllRowMapper());
-				System.out.println("commentDTO(freePostSelectAll) 로그 =" + "[" + result + "]");
-				return result;
-			} else if (commentDTO.getSearchCondition().equals("freePostSelectAllComment")) {
-				result = (List<CommentDTO>) jdbcTemplate.query(SELECTALL_FREEPOSTCOMMENT,
-						new CommentSellectAllRowMapper());
-				System.out.println("commentDTO(freePostSelectAll) 로그 =" + "[" + result + "]");
-				return result;
-			} else if (commentDTO.getSearchCondition().equals("marketPostSelectAllComment")) {
-				result = (List<CommentDTO>) jdbcTemplate.query(SELECTALL_MARKETPOSTCOMMENT,
-						new CommentSellectAllRowMapper());
-				System.out.println("commentDTO(marketPostSelectAll) 로그 =" + "[" + result + "]");
-				return result;
-			}else {
+			} 
+			else {
 				// 표시용
 			}
 		} catch (Exception e) {

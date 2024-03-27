@@ -47,16 +47,16 @@ public class JobHuntPostFilterDAO {
 		if (filterDTO.getSearchField() != null && filterDTO.getSearchInput() != null) {
 
 			String searchInput = filterDTO.getSearchInput().replace(" ", "").toLowerCase();
-			if (filterDTO.getSearchField().equals("view에서 표시할 제목 value")) {
+			if (filterDTO.getSearchField().equals("title")) {
 				USERSEARCHSQL = "AND REPLACE(LOWER(JOBHUNTPOST_title), ' ', '') LIKE '%'||'" + searchInput + "'||'%'";
 			}
-			if (filterDTO.getSearchField().equals("view에서 표시할 내용 value")) {
+			if (filterDTO.getSearchField().equals("contents")) {
 				USERSEARCHSQL = "AND REPLACE(LOWER(JOBHUNTPOST_content), ' ', '') LIKE '%'||'" + searchInput + "'||'%'";
 			}
-			if (filterDTO.getSearchField().equals("view에서 표시할 작성자 value")) {
+			if (filterDTO.getSearchField().equals("write")) {
 				USERSEARCHSQL = "AND REPLACE(LOWER(MEMBER_id), ' ', '') LIKE '%'||'" + searchInput + "'||'%'";
 			}
-			if (filterDTO.getSearchField().equals("view에서 표시할 제목과 내용 value")) {
+			if (filterDTO.getSearchField().equals("titleAndContents")) {
 				USERSEARCHSQL = "AND (REPLACE(LOWER(JOBHUNTPOST_title), ' ', '') LIKE '%'||'" + searchInput
 						+ "'||'%' OR REPLACE(LOWER(JOBHUNTPOST_content), ' ', '') LIKE '%'||'" + searchInput + "'||'%')";
 			}

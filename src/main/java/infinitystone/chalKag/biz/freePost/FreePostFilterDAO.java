@@ -33,16 +33,16 @@ public class FreePostFilterDAO {
 		// 검색어 검색
 		if (freePostFilterDTO.getSearchField() != null && freePostFilterDTO.getSearchInput() != null) {
 			String searchInput = freePostFilterDTO.getSearchInput().replace(" ", "").toLowerCase();
-			if (freePostFilterDTO.getSearchField().equals("view에서 표시할 제목 value")) {
+			if (freePostFilterDTO.getSearchField().equals("title")) {
 				USERSEARCHSQL = "AND REPLACE(LOWER(FREEPOST_title),' ','')LIKE '%'||'" + searchInput + "'||'%'";
 			}
-			if (freePostFilterDTO.getSearchField().equals("view에서 표시할 내용 value")) {
+			if (freePostFilterDTO.getSearchField().equals("contents")) {
 				USERSEARCHSQL = "AND REPLACE(LOWER(FREEPOST_title),' ','')LIKE '%'||'" + searchInput + "'||'%'";
 			}
-			if (freePostFilterDTO.getSearchField().equals("view에서 표시할 작성자 value")) {
+			if (freePostFilterDTO.getSearchField().equals("write")) {
 				USERSEARCHSQL = "AND REPLACE(LOWER(FREEPOST_title),' ','')LIKE '%'||'" + searchInput + "'||'%'";
 			}
-			if (freePostFilterDTO.getSearchField().equals("view에서 표시할 제목과 내용 value")) {
+			if (freePostFilterDTO.getSearchField().equals("titleAndContents")) {
 				USERSEARCHSQL = "AND (REPLACE(LOWER(FREEPOST_title), ' ', '') LIKE '%'||'" + searchInput
 						+ "'||'%' OR REPLACE(LOWER(FREEPOST_content), ' ', '') LIKE '%'||'" + searchInput + "'||'%')";
 			}

@@ -18,18 +18,6 @@
 
 					<chalKagTags:webSider />
 
-					<div class="details">
-						<h3 class="name">
-							<c:if test="${member == null || member != freePostSingle.memberId}">
-								<a href="/memberPage/memberId=${freePostSingle.memberId}">${freePostSingle.memberId}</a>
-							</c:if>
-							<c:if test="${member == freePostSingle.memberId}">
-								<a href="/myPage/memberId=${member}">${freePostSingle.memberId}</a>
-							</c:if>
-					</h3>
-
-					</div>
-
 					<div class="col-md-8">
 						<article class="article main-article">
 							<header>
@@ -39,10 +27,10 @@
 									<li><a>Film</a></li>
 									<li>By 
 										<c:if test="${member == null || member != freePostSingle.memberId}">
-											<a href="/memberPage/memberId=${freePostSingle.memberId}">${freePostSingle.memberId}</a>
+											<a href="/memberPage/memberId=${freePostSingle.memberId}">${freePostSingle.memberNickname}</a>
 										</c:if>
 										<c:if test="${member == freePostSingle.memberId}">
-											<a href="/myPage/memberId=${member}">${freePostSingle.memberId}</a>
+											<a href="/myPage/memberId=${member}">${freePostSingle.memberNickname}</a>
 										</c:if>
 								</li>
 								</ul>
@@ -66,75 +54,11 @@
 								</div>
 							</footer>
 						</article>
-						<div class="sharing">
-						<div class="line">
-							<div>Author</div>
-						</div>
-						<div class="author">
-							<figure>
-								<img src="images/img01.jpg">
-							</figure>
-						</div>
-						
-						<div class="line thin"></div>
-						<!-- 댓글 출력 추후 추가 -->
-						<div class="comments">
-							<h2 class="title">${commentList.memberId}
-							<c:if test="${member == null || member != freePostSingle.memberId}">
-								<a href="/memberPage/memberId=${commentList.memberId}">${commentList.memberId}</a>
-							</c:if>
-							<c:if test="${member == commentList.memberId}">
-								<a href="/myPage/memberId=${member}">${commentList.memberId}</a>
-							</c:if></h2>
-							<div class="comment-list">
-								
-								<div class="item">
-									<div class="user">                                
-										<figure>
-											<img src="images/img01.jpg">
-										</figure>
-										<div class="details">
-											<h5 class="name">Mark Otto</h5>
-												
-											<div class="time">${commentList.commentDate}</div>
-											<div class="description">
-												${commentList.commentContent}
-											</div>
-											<footer>
-												<a href="#">Reply</a>
-											</footer>
-										</div>
-									</div>
-								</div>
-							</div>
-							<form class="row">
-								<div class="col-md-12">
-									<h3 class="title">Leave Your Response</h3>
-								</div>
-								<div class="form-group col-md-4">
-									<label for="name">Name <span class="required"></span></label>
-									<input type="text" id="name" name="" class="form-control">
-								</div>
-								<div class="form-group col-md-4">
-									<label for="email">Email <span class="required"></span></label>
-									<input type="email" id="email" name="" class="form-control">
-								</div>
-								<div class="form-group col-md-4">
-									<label for="website">Website</label>
-									<input type="url" id="website" name="" class="form-control">
-								</div>
-								<div class="form-group col-md-12">
-									<label for="message">Response <span class="required"></span></label>
-									<textarea class="form-control" name="message" placeholder="Write your response ..."></textarea>
-								</div>
-								<div class="form-group col-md-12">
-									<button class="btn btn-primary">Send Response</button>
-								</div>
-							</form>
-						</div>
+						<div class="line"></div>
+						<!-- 댓글 출력 -->
+						<chalKagTags:webComments />
 					</div>
 				</div>
-			</div>
 			</div>
 		</section>
 
