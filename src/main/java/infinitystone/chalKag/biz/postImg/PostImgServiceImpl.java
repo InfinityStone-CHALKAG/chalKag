@@ -1,9 +1,9 @@
 package infinitystone.chalKag.biz.postImg;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service("postImgService")
 public class PostImgServiceImpl implements PostImgService{
