@@ -19,4 +19,9 @@ public class AdminService {
     return adminDAO.selectOne(adminDTO);
   }
 
+  public List<AdminDTO> signInCountByYearMonthDate(AdminDTO adminDTO) {
+    return adminDAO.selectAll(adminDTO);
+  }
+
+
 }

@@ -11,6 +11,8 @@ public class AdminDTO {
   private String femaleGroup;
   private String day;
   private String signInCount;
+  private String year;
+  private String month;
 
   private String searchCondition;
 
