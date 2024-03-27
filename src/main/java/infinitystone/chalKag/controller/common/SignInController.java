@@ -39,6 +39,8 @@ public class SignInController {
       return 0;
     }
     if (result.getMemberGrade().equals("ADMIN")) {
+      session.setAttribute("member", result.getMemberId());
+      session.setAttribute("memberGrade", result.getMemberGrade());
       return 2;
     }
 

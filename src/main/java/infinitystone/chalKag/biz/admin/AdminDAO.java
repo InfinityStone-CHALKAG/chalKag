@@ -56,6 +56,10 @@ public class AdminDAO {
         result = (List<AdminDTO>) jdbcTemplate.query(SELECTALL_SIGNUPCOUNTBYAGEGROUP, new SignUpCountByAgeGroupRowMapper());
         System.out.println("AdminDAO(selectAll) Out로그 = [" + result + "]");
         return result;
+      } else if (adminDTO.getSearchCondition().equals("signInCountByYearMonthDate")) {
+        result = (List<AdminDTO>) jdbcTemplate.query(SELECTALL_SIGNINCOUNTBYYEARMONTHDATE, new SignInCountByYearMonthDateRowMapper());
+        System.out.println("AdminDAO(selectAll) Out로그 = [" + result + "]");
+        return result;
       }
     } catch (Exception e) {
       e.printStackTrace();
@@ -70,7 +74,8 @@ public class AdminDAO {
     System.out.println("AdminDAO(selectOne) In로그 = [" + adminDTO + "]");
     try {
       if (adminDTO.getSearchCondition().equals("signUpCountByGenderGroup")) {
-        result = jdbcTemplate.queryForObject(SELECTONE_SIGNUPCOUNTBYGENDERGROUP, new SignUpCountByGenderGroupRowMapper());
+        Object[] args = {adminDTO.getYear(), adminDTO.getMonth()};
+        result = jdbcTemplate.queryForObject(SELECTONE_SIGNUPCOUNTBYGENDERGROUP,args, new SignUpCountByGenderGroupRowMapper());
         System.out.println("AdminDAO(selectOne) Out로그 = [" + result + "]");
         return result;
       }
@@ -114,6 +119,16 @@ class SignUpCountByGenderGroupRowMapper implements RowMapper<AdminDTO> {
     AdminDTO adminDTO = new AdminDTO();
     adminDTO.setMaleGroup(rs.getString("MALEGROUP"));
     adminDTO.setFemaleGroup(rs.getString("FEMALEGROUP"));
+    return adminDTO;
+  }
+}
+
+class SignInCountByYearMonthDateRowMapper implements RowMapper<AdminDTO> {
+  @Override
+  public AdminDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+    AdminDTO adminDTO = new AdminDTO();
+    adminDTO.setDay(rs.getString("DAY"));
+    adminDTO.setSignInCount(rs.getString("SIGNINCOUNT"));
     return adminDTO;
   }
 }
