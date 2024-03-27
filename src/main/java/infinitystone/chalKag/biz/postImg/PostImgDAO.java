@@ -15,6 +15,25 @@ public class PostImgDAO {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 								// 해당 카테고리 전체 출력 (이미지만)
+	private static final String SELECTALL ="SELECT "
+			+ "		POSTIMG.POSTIMG_id,"
+			+ "		POST_id,"
+			+ "		POSTIMG.POSTIMG_name"
+			+ " FROM "
+			+ "		POSTIMG "
+			+ " INNER JOIN"
+			+ "	("
+			+ "		SELECT "
+			+ "		MIN(POST_id) as POSTIMG_thumbnail"
+			+ "		POST_id "
+			+ "	FROM "
+			+ "		POSTIMG"
+			+ "	WHERE "
+			+ "		POST_id = ? "
+			+ "	GROUP BY "
+			+ "		POST_id"
+			+ ") AS POSTIMG_thumbnail ON POSTIMG.POSTIMG_id = ";
+
 	private static final String SELECTALL_HEADHUNTPOSTIMG = "SELECT POSTIMG.POSTIMG_name, HEADHUNTPOST.HEADHUNTPOST_id "
 			+ "FROM POSTIMG "
 			+ "INNER JOIN HEADHUNTPOST ON POSTIMG.POST_id = HEADHUNTPOST.HEADHUNTPOST_id "
@@ -139,7 +158,7 @@ public class PostImgDAO {
 	}
 
 	public boolean insert(PostImgDTO postImgDTO) {
-		int result = jdbcTemplate.update(INSERT,postImgDTO.getPostImgId(),postImgDTO.getPostImgName());
+		int result = jdbcTemplate.update(INSERT,postImgDTO.getPostImgId(),postImgDTO.getPostImages());
 		System.out.println("PostImgDAO(insert) Out로그 = [" + result + "]");
 		if (result <= 0) {
 			return false;
