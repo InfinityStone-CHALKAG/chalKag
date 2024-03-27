@@ -33,6 +33,7 @@ public class AdminMainController {
 
     model.addAttribute("signUpCountByGenderGroup", signUpCountByGenderGroupResult);
 
+    adminDTO.setSearchCondition("signInCountByYearMonthDate");
     adminDTO.setYear(String.valueOf(LocalDate.now().getYear()));
     adminDTO.setMonth(String.valueOf(LocalDate.now().getMonth()));
 
