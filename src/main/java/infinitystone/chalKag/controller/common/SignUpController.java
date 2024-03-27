@@ -65,6 +65,7 @@ public class SignUpController {
       } catch (IOException e) {
         e.printStackTrace();
       }
+      System.out.println(newFilename);
       profileImgDTO.setProfileImgName(newFilename);
     } else {
       // 만약 프로필 이미지를 등록하지 않았다면 기본 이미지를 추가.김성민
