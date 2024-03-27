@@ -2,11 +2,7 @@
     <%@ taglib tagdir="/WEB-INF/tags" prefix="chalKagTags" %>
         <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
             <!doctype html>
-            <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
-            <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
-            <!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
-            <!--[if gt IE 8]><!-->
-            <html class="no-js" lang=""> <!--<![endif]-->
+            <html class="no-js" lang=""> 
 
             <head>
                 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -37,6 +33,7 @@
                 <link href="https://cdn.jsdelivr.net/npm/weathericons@2.1.0/css/weather-icons.css" rel="stylesheet" />
                 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.css"
                     rel="stylesheet" />
+                      
 
                 <style>
                     #weatherWidget .currentDesc {
@@ -146,8 +143,15 @@
             font-size: 16px;
             border-radius: 5px;
             margin: 10px;
-            border: 4px solid #F73F52;
+            border: 3px solid #F73F52;
         }
+
+        /* 텝 그래프간의 간격 조절 */
+        dl, ol, ul {
+    margin-top: 0;
+    margin-bottom: 0rem;
+}
+
                 </style>
             </head>
 
@@ -391,13 +395,13 @@
                                         <!-- 탭 버튼 영역 -->
                                         <ul class="tab">
                                             <li class="tab__item active">
-                                                <a href="#tab1">Daily SignIn</a>
+                                                <a href="#tab1">Weakly SignIn</a>
                                             </li>
                                             <li class="tab__item">
                                                 <a href="#tab2">Monthly SignIn</a>
                                             </li>
                                             <li class="tab__item">
-                                                <a href="#tab3">Yearly SignIn</a>
+                                                <a href="#tab3">Yearly SignUp</a>
                                             </li>
                                             <li class="tab__item">
                                                 <a href="#tab4">NM by Age</a>
@@ -500,6 +504,26 @@
                                                 <div class="row">
                                                     <div class="col-lg-8">
                                                         <div class="card-body">
+                                                            <select id="year">
+                                                                <option value="2023">2023</option>
+                                                                <option value="2024">2024</option>
+                                                                <!-- 연도 옵션을 계속 추가하세요 -->
+                                                            </select>
+                                                            <select id="month">
+                                                                <option value="1">1월</option>
+                                                                <option value="2">2월</option>
+                                                                <option value="3">3월</option>
+                                                                <option value="4">4월</option>
+                                                                <option value="5">5월</option>
+                                                                <option value="6">6월</option>
+                                                                <option value="7">7월</option>
+                                                                <option value="8">8월</option>
+                                                                <option value="9">9월</option>
+                                                                <option value="10">10월</option>
+                                                                <option value="11">11월</option>
+                                                                <option value="12">12월</option>
+                                                                <!-- 월 옵션을 계속 추가하세요 -->
+                                                            </select>
                                                             <canvas id="singleLineChart2"></canvas>
                                                         </div>
                                                     </div>
@@ -555,17 +579,6 @@
                                                 <div class="row">
                                                     <div class="col-lg-8">
                                                         <div class="card-body">
-                                                            <select id="year">
-                                                                <option value="2023">2023</option>
-                                                                <option value="2022">2022</option>
-                                                                <!-- 연도 옵션을 계속 추가하세요 -->
-                                                            </select>
-                                                            
-                                                            <select id="month">
-                                                                <option value="1">1월</option>
-                                                                <option value="2">2월</option>
-                                                                <!-- 월 옵션을 계속 추가하세요 -->
-                                                            </select>
                                                             <canvas id="singleLineChart3"></canvas>
                                                         </div>
                                                     </div>
@@ -999,6 +1012,16 @@
 
                 <script src="js/admin/leftPanalActive.js"></script>
                 <script src="js/admin/drawBarChart.js"></script>
+             
+
+                <script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('year').value = "2024"; // 연도 초기값 설정
+    document.getElementById('month').value = "3"; // 월 초기값 설정
+});
+
+                </script>
+
 
             </body>
 
