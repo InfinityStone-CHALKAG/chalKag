@@ -383,7 +383,7 @@ class HeadHuntPostMemberListRowMapper implements RowMapper<HeadHuntPostDTO> {
 		headHuntPostDTO.setHeadHuntPostId(rs.getString("HEADHUNTPOST_id")); // 구인글 아이디
 		headHuntPostDTO.setMemberId(rs.getString("MEMBER_id")); // 회원 아이디
 		headHuntPostDTO.setMemberNickname(rs.getString("MEMBER_nickname")); // 회원 닉네임
-//   headHuntPostDTO.setPostCategory(rs.getString("POST_category"));            	// 게시글 카테고리
+		headHuntPostDTO.setPostCategory(rs.getString("POST_category"));            	// 게시글 카테고리
 		headHuntPostDTO.setHeadHuntPostTitle(rs.getString("HEADHUNTPOST_title")); // 구인글 제목
 		headHuntPostDTO.setHeadHuntPostContent(rs.getString("HEADHUNTPOST_content")); // 구인글 내용
 		headHuntPostDTO.setHeadHuntPostDate(rs.getString("HEADHUNTPOST_date")); // 구인글 작성일
@@ -426,7 +426,7 @@ class HeadHuntPostPremiumListRowMapper implements RowMapper<HeadHuntPostDTO> {
 		headHuntPostDTO.setMemberNickname(rs.getString("MEMBER_nickname")); // 회원 닉네임
 		headHuntPostDTO.setHeadHuntPostTitle(rs.getString("HEADHUNTPOST_title")); // 구인글 제목
 		headHuntPostDTO.setHeadHuntPostContent(rs.getString("HEADHUNTPOST_content")); // 구인글 내용
-		headHuntPostDTO.setHeadHuntPostContent(rs.getString("HEADHUNTPOST_date")); // 구인글 작성일
+		headHuntPostDTO.setHeadHuntPostDate(rs.getString("HEADHUNTPOST_date")); // 구인글 작성일
 		headHuntPostDTO.setHeadHuntPostViewcnt(rs.getString("HEADHUNTPOST_viewcnt")); // 구인글 조회수
 		headHuntPostDTO.setRecommendCnt(rs.getString("RECOMMEND_cnt")); // 게시글의 좋아요 수
 		return headHuntPostDTO; // headHuntPostDTO에 저장된 데이터들을 반환
@@ -486,15 +486,15 @@ class SelectOneHeadHuntPostRowMapper implements RowMapper<HeadHuntPostDTO> {
 		headHuntPostDTO.setHeadHuntPostId(rs.getString("HEADHUNTPOST_id")); // 구인글 아이디
 		headHuntPostDTO.setMemberId(rs.getString("MEMBER_id")); // 회원 아이디
 		headHuntPostDTO.setMemberNickname(rs.getString("MEMBER_nickname")); // 회원 닉네임
-		headHuntPostDTO.setMemberNickname(rs.getString("PROFILEIMG_name")); // 회원 프로필
+		headHuntPostDTO.setProfileImgName(rs.getString("PROFILEIMG_name")); // 회원 프로필
 		headHuntPostDTO.setHeadHuntPostRole(rs.getString("HEADHUNTPOST_role")); // 구인글 직업 ( 모델 / 사진작가 )
 		headHuntPostDTO.setHeadHuntPostRegion(rs.getString("HEADHUNTPOST_region")); // 구인글 작업 지역
 		headHuntPostDTO.setHeadHuntPostPay(rs.getInt("HEADHUNTPOST_pay")); // 구인글 작업 페이
-		headHuntPostDTO.setHeadHuntPostConcept(rs.getString("HEADHUNTPOST_workDate")); // 구인글 작업 날짜
+		headHuntPostDTO.setHeadHuntPostWorkDate(rs.getString("HEADHUNTPOST_workDate")); // 구인글 작업 날짜
 		headHuntPostDTO.setHeadHuntPostConcept(rs.getString("HEADHUNTPOST_concept")); // 구인글 촬영 컨셉
 		headHuntPostDTO.setHeadHuntPostTitle(rs.getString("HEADHUNTPOST_title")); // 구인글 제목
 		headHuntPostDTO.setHeadHuntPostContent(rs.getString("HEADHUNTPOST_content")); // 구인글 내용
-		headHuntPostDTO.setHeadHuntPostContent(rs.getString("HEADHUNTPOST_date")); // 구인글 작성일
+		headHuntPostDTO.setHeadHuntPostDate(rs.getString("HEADHUNTPOST_date")); // 구인글 작성일
 		headHuntPostDTO.setHeadHuntPostViewcnt(rs.getString("HEADHUNTPOST_viewcnt")); // 구인글 조회수
 		headHuntPostDTO.setRecommendCnt(rs.getString("RECOMMEND_cnt")); // 게시글의 좋아요 수
 		return headHuntPostDTO; // headHuntPostDTO에 저장된 데이터들을 반환
