@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+
 	
     var uploadButton = document.getElementById('uploadButton');
     var fileInput = document.getElementById('fileInput');
@@ -44,27 +44,17 @@ if (fileInput) {
 }
 
 
-var signUpForm = document.getElementById('yourFormId');
-
-if (signUpForm) {
-    signUpForm.onsubmit = function () {
-        return validateForm();
-    };
-}
-
-
 
 
     function validateForm() {
 		 var memberName = document.getElementById("memberName").value;
-        if (checkIdFlag == false) {
-            $("#IDErrMsg").text("");
+        if (!checkIdFlag) {
             swal("fail", "이메일을 확인해주세요.", "error", {
                 button: "OK",
             });
             return false;
         }
-        if (checkPasswordFlag == false) {
+        if (!checkPasswordFlag) {
             swal("fail", "비밀번호를 확인해주세요.", "error", {
                 button: "OK",
             });
@@ -80,16 +70,14 @@ if (signUpForm) {
             });
             return false;
         }
-        if (checkNicknameFlag == false) {
+        if (!checkNicknameFlag) {
 			console.log("checkNicknameFlag 진입");
-            $("#nicknameErrMsg").text("");
             swal("fail", "닉네임을 확인해주세요.", "error", {
                 button: "OK",
             });
             return false;
         }
-        if (checkPhFlag == false) {
-            $(".successPhCheck").text("");
+        if (!checkPhFlag) {
             swal("fail", "핸드폰인증을 확인해주세요.", "error", {
                 button: "OK",
             });
@@ -111,4 +99,3 @@ if (signUpForm) {
         // 모든 검증이 통과했을 경우
         return true;
     }
-});

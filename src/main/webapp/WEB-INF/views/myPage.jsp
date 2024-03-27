@@ -194,6 +194,7 @@
                         </div>
                     </div>
                 </section>
+            
 
                 <chalKagTags:webFooter />
 
@@ -225,16 +226,15 @@
                     });
                 });
 
-                // 레벨업시 경험치 초기화
-                // memberInfo 객체를 JavaScript에서 사용할 수 있도록 변수에 할당합니다.
-                // 실제 사용 시에는 서버 사이드 코드에서 해당 값을 JavaScript 변수로 전달해야 합니다.
-                var currentExp = parseInt('${memberInfo.currentExp}', 10); // 현재 경험치
-                var currentNextExp = parseInt('${memberInfo.currentNextExp}', 10); // 다음 레벨까지 필요한 경험치
+                document.addEventListener("DOMContentLoaded", function () {
+    var memberPhElement = document.getElementById('memberPh');
+    var memberPh = memberPhElement.innerText.trim();
+    if (memberPh.length === 11) {
+      var formattedPh = memberPh.substring(0, 3) + '-' + memberPh.substring(3, 7) + '-' + memberPh.substring(7);
+      memberPhElement.innerText = formattedPh;
+    }
+  });
 
-                // 경험치가 같아지는 순간을 감지하고, min 값을 변경합니다.
-                if (currentExp >= currentNextExp) {
-                    document.getElementById('Exp').min = currentExp.toString();
-                }
 
 
 

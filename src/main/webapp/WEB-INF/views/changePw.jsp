@@ -103,22 +103,20 @@
                             <div class="box box-border">
                                 <div class="box-body">
                                     <h4>Change Password</h4>
-                                    <form id="changePwForm" method="post" action="changePw">
+                                    <form id="changePwForm" method="post" action="changePw" onsubmit="return validateForm()">
 
-                                        <label>Present</label>
-                                        <div style="display: flex;">
-                                            <input type="text" id="memberPw" name="memberPw" class="form-control">
-                                            <a id="pwCheckBtn" style="text-align: center; padding-top: 3%; width: 7rem;"
-                                                class="btn btn-magz btn-sm" onclick="checkPresentPw()">check</a>
+                                        <label class="fw">Present Password</label>
+                                        <div class="form-group">
+                                            <input type="password" id="memberPw" name="memberPw" class="form-control">
                                         </div>
                                         <p id="PresentPwErrMsg" class="error"></p>
                                         <div class="form-group">
-                                            <label>New Password</label>
-                                            <input type="text" id="newPw" name="newPw" class="form-control"
+                                            <label class="fw">New Password</label>
+                                            <input type="password" id="newPw" name="newPw" class="form-control"
                                                 placeholder="8자 이상 영문, 숫자, 특수문자포함">
                                             <p id="pwError" class="error"></p>
-                                            <label>New Password Check</label>
-                                            <input type="text" id="newPwCheck" name="newPwCheck" class="form-control">
+                                            <label class="fw">New Password Check</label>
+                                            <input type="password" id="newPwCheck" name="newPwCheck" class="form-control">
                                         </div>
                                         <div class="form-group text-right">
                                             <button class="btn btn-primary btn-block">Confirm</button>
@@ -160,7 +158,7 @@
                     });
                 });
 
-
+                
 
                 // 비밀번호 확인 함수
                 var checkPasswordFlag = false;
@@ -177,10 +175,9 @@
                     if (!pwRegex.test(password)) {
                         errorElement.textContent = "비밀번호는 최소 8자 이상이며 영문, 숫자, 특수문자를 포함해야 합니다."; // 에러 메시지 표시
                         errorElement.style.color = "red";
-                        checkPasswordFlag = false;
-                        return checkPasswordFlag;
+    
+                        return false;
                     }
-
 
                     // 비밀번호와 비밀번호 확인이 일치하는지 확인
                     if (password === confirmPassword) {
@@ -192,35 +189,30 @@
                     else {
                         errorElement.textContent = "비밀번호가 일치하지 않습니다."; // 에러 메시지 표시
                         errorElement.style.color = "red";
-                        checkPasswordFlag = false;
-                        return checkPasswordFlag;
+                      
+                        return false;
                     }
 
 
                 }
 
-                // 비밀번호 확인 필드 입력 시 체크 함수 호출
+               // 현재 비밀번호 입력시 비동기로 체크
+                
+
+                 // 비밀번호 확인 필드 입력 시 체크 함수 호출
                 document.getElementById("newPw").addEventListener("input", checkPassword);
                 document.getElementById("newPwCheck").addEventListener("input", checkPassword);
 
-                var changePwForm = document.getElementById('changePwForm');
-
-                if (changePwForm) {
-                    changePwForm.onsubmit = function () {
-                        return validateForm();
-                    };
-                }
-
                 function validateForm() {
 
-                    if (checkPresentPwFlag == false) {
+                    if (!checkPresentPwFlag) {
                         swal("fail", "본인획인을 해주세요.", "error", {
                             button: "OK",
                         });
                         return false;
                     }
 
-                    if (checkPasswordFlag == false) {
+                    if (!checkPasswordFlag) {
                         swal("fail", "변경할 비밀번호를 확인해주세요.", "error", {
                             button: "OK",
                         });
@@ -231,7 +223,7 @@
                 }
 
 
-
+            
             </script>
 
 
