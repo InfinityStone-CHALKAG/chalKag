@@ -63,40 +63,105 @@ console.log(signUpCountByAgeGroup);
 		});
 
 	}
-	// 초기화: 첫 번째 탭의 차트를 그림
-	drawBarChart(
-		'singleBarChart1',
-		["03/17", "03/18", "03/19", "03/20", "03/21", "03/22", "03/23"],
-		[55, 50, 75, 80, 56, 55, 60],
-		"Day",
-		"Users",
-		{
-			beginAtZero: true,
-			min: 0,
-			max: 100,
-			stepSize: 20
+	
+	
+		//라인 차트 그리기
+		function drawLineChart(chartId) {
+		var ctx = document.getElementById(chartId);
+		// 기존 차트가 있으면 파괴
+		if (window.myCharts && window.myCharts[chartId]) {
+			window.myCharts[chartId].destroy();
 		}
-	)
+		// 빈 배열 생성
+		var data = [];
+
+		// 1에서 50까지의 샘플 데이터 생성 및 배열에 추가
+		// 31개의 랜덤 숫자 생성하여 배열에 추가
+		for (var i = 0; i < 31; i++) {
+			var randomNumber = Math.floor(Math.random() * 20) + 1; // 1에서 50 사이의 랜덤 정수 생성
+			data.push(randomNumber.toString());
+		}
+
+		// 새 차트 생성
+		window.myCharts = window.myCharts || {};
+		window.myCharts[chartId] = new Chart(ctx, {
+			type: 'line',
+			data: {
+				labels: [["17", "2월"], "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", ["1", "3월"], "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", ["17", "오늘"]],
+				datasets: [{
+					label: "Foods",
+					data: data,
+					backgroundColor: 'transparent',
+					borderColor: 'rgba(247, 63, 82, 1)',
+					borderWidth: 3,
+					pointStyle: 'circle',
+					pointRadius: 5,
+					pointBorderColor: 'rgba(247, 63, 82, 1)',
+					pointBackgroundColor: 'rgba(255,255,255,1)',
+					tension: 0, // lineTension을 tension으로 변경
+				}]
+			},
+			options: {
+				responsive: true,
+				plugins: {
+					legend: {
+						display: false
+					},
+					tooltip: {
+						mode: 'index',
+						intersect: false,
+						titleFont: {
+							size: 12,
+							family: 'Montserrat'
+						},
+						bodyFont: {
+							size: 12,
+							family: 'Montserrat'
+						},
+						backgroundColor: '#fff',
+						titleColor: '#000',
+						bodyColor: '#000',
+						cornerRadius: 3,
+					}
+				},
+				scales: {
+					x: {
+						display: true,
+						grid: {
+							display: false,
+							drawBorder: false
+						}
+					},
+					y: {
+						display: true,
+						grid: {
+							display: false,
+							drawBorder: false
+						},
+						min: 0, // Y축의 최소값 설정
+						max: 50, // Y축의 최대값 설정
+					}
+				}
+			}
+		});
+	}
+
+	
+	
+	// 초기화: 첫 번째 탭의 차트를 그림
+	drawLineChart("singleLineChart1");
 
 
 
 
-	// 이벤트: 탭 클릭
+	// 이벤트: 탭 클릭시 이벤트
 	$(".tab__item").click(function(e) {
 		e.preventDefault(); // 기본 이벤트 방지
 		var href = $(this).find("a").attr("href"); // 클릭된 탭의 href 값 (#tabN)
+		
 		// 현재 활성화된 탭 내용에서 canvas id 가져오기
 		var chartId = $(href).find("canvas").attr("id");
-		var lables = ["First", "Second", "Third", "Fourth"];
-		var data = [400, 200, 300, 259];
-		var xAxesLabelString = "Week";
-		var yAxesLabelString = "Users";
-		var ticksOptions = {
-			beginAtZero: true,
-			min: 0,
-			max: 400,
-			stepSize: 100
-		};
+	
 		// 모든 탭 항목과 내용에서 active 클래스 제거
 		$(".tab__item").removeClass("active");
 		$(".tab__content").removeClass("active");
@@ -107,28 +172,32 @@ console.log(signUpCountByAgeGroup);
 		// 연결된 탭 내용 활성화
 		$(href).addClass("active");
 
+
+
+
+
+
+
 		// 이후 필요한 로직을 chartId와 함께 구현
-		if (chartId == "singleBarChart1") {
+		if (chartId == "singleLineChart1") {
 
-			drawBarChart(
-				chartId,
-				["03/17", "03/18", "03/19", "03/20", "03/21", "03/22", "03/23"],
-				[55, 50, 75, 80, 56, 55, 60],
-				"Day",
-				"Users",
-				{
-					beginAtZero: true,
-					min: 0,
-					max: 100,
-					stepSize: 20
-				}
-			)
 		}
-		else if (chartId == "singleBarChart2") {
+		else if (chartId == "singleLineChart2") {
 
 
-			drawBarChart(chartId, lables, data, xAxesLabelString, yAxesLabelString, ticksOptions);
+			
+		} else if (chartId == "singleLineChart3") {
+		drawLineChart("singleLineChart3");
+
+			
 		} 	
+		
+		
+		
+		
+		
+		
+		//나이별 회원 수
 		else if (chartId == "singleBarChart4") {
 			
 			var ageGroup = ["10", "20", "30", "40", "50", "60"];
@@ -165,6 +234,9 @@ var signUpCount = new Array(6).fill(0); // signUpCount 배열을 0으로 초기�
 				}
 			)
 		}
+		
+		
+		//성별 회원 수
 	 else if (chartId == "singleBarChart5") {
 			var maleCount = parseInt(signUpCountByGenderGroup.maleGroup);
 			var femaleCount = parseInt(signUpCountByGenderGroup.femaleGroup);
