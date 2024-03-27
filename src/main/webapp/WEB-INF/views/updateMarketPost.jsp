@@ -29,31 +29,33 @@
 			<div class="box-wrapper" id="writerForm">
 				<div class="box box-border">
 					<div class="box-body">
-						<form action="/writeMarketPost" method="post"
+						<form action="/updateMarketPost" method="post"
 							onsubmit="return validateForm(event)"
 							enctype="multipart/form-data">
 							<div class="form-group"
 								style="display: flex; justify-content: center; margin-bottom: 4%;">
 								<input type="text" class="form-control rounded"
-									id="marketPostTitle" name="marketPostTitle" placeholder="Title" />
+									id="marketPostTitle" name="marketPostTitle" placeholder="Title" value="${updateMarketPost.marketPostTitle}"/>
 							</div>
 							<div class="form-group" style="display: flex; margin-bottom:  4%;">
 								<input type="text" id="marketPostPrice" name="marketPostPrice"
 									class="form-control rounded"
 									style="width: 32%; margin-right: 2%;"
 									oninput="trimInput(this); validatePrice(this);"
-									placeholder="productPrice" /> <select class="selectTags"
+									placeholder="productPrice" value="${updateMarketPost.marketPostPrice}"/> 
+									
+								<select class="selectTags"
 									id="marketPostCompany" name="marketPostCompany"
 									style="width: 32%; margin-right: 2%;">
 									<option value="" disabled selected>Company</option>
-									<option value="캐논">캐논</option>
-									<option value="소니">소니</option>
-									<option value="니콘">니콘</option>
+									<option value="캐논" ${'캐논' == updateMarketPost.marketPostCompany ? 'selected' : ''}>캐논</option>
+									<option value="소니" ${'소니' == updateMarketPost.marketPostCompany ? 'selected' : ''}>소니</option>
+									<option value="니콘" ${'니콘' == updateMarketPost.marketPostCompany ? 'selected' : ''}>니콘</option>
 								</select> <select class="selectTags" id="marketPostCategory"
 									name="marketPostCategory" style="width: 32%;">
 									<option value="" disabled selected>Category</option>
-									<option value="DSLR">DSLR</option>
-									<option value="미러리스">미러리스</option>
+									<option value="DSLR" ${'DSLR' == updateMarketPost.marketPostCategory ? 'selected' : ''}>DSLR</option>
+									<option value="미러리스" ${'미러리스' == updateMarketPost.marketPostCategory ? 'selected' : ''}>미러리스</option>
 								</select>
 							</div>
 							<p>※ 이미지 사이즈는 30MB 이하만 올릴 수 있습니다.</p>
@@ -77,7 +79,7 @@
 							<div class="form-group" style="margin-bottom: 4%;"
 								style="display: flex; justify-content: center;">
 								<textarea class="form-control rounded" id="marketPostContent"
-									name="marketPostContent"></textarea>
+									name="marketPostContent">${updateMarketPost.marketPostContent}</textarea>
 							</div>
 							<button class="btn btn-primary btn-rounded btn-block">Composite</button>
 						</form>

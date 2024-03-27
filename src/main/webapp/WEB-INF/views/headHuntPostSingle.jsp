@@ -6,6 +6,19 @@
 <html>
 <head>
     <chalKagTags:webCss/>
+    
+    <style type="text/css">
+	 .postInfo {
+	 	display: flex;
+	 	font-style: 'Malgun Gothic';
+	 	margin-bottom: 5px;
+	 }
+    	.postInfoTitle { 	
+    	margin-right: 20px; 
+    	width: 100px;
+    	}
+    	
+    </style>
 </head>
 	<body>
 		<!-- Start header tag로 출력 -->
@@ -22,30 +35,58 @@
 						<article class="article main-article">
 							<header>
 								<h1>${headHuntPostSingle.headHuntPostTitle}</h1>
-								<ul class="details">
+								<ul class="details" >
 									<li>${headHuntPostSingle.headHuntPostDate}</li>
-									<li><a>Film</a></li>
+									<li>
+										<a>Film</a>
+									</li>
 									<li>By 
-									<c:if test="${member == null || member != headHuntPostSingle.memberId}">
-										<a href="/memberPage/memberId=${headHuntPostSingle.memberId}">${headHuntPostSingle.memberNickname}</a>
-									</c:if> <c:if test="${member == headHuntPostSingle.memberId}">
-										<a style="font-size: 12px;" href="/myPage/memberId=${member}">${headHuntPostSingle.memberNickname}</a>
-									</c:if>
-								</li>
+										<c:if test="${member == null || member != headHuntPostSingle.memberId}">
+											<a href="/memberPage?memberId=${headHuntPostSingle.memberId}">${headHuntPostSingle.memberNickname}</a>
+										</c:if> 
+										
+										<c:if test="${member == headHuntPostSingle.memberId}">
+											<a href="/myPage?memberId=${headHuntPostSingle.memberId}">${headHuntPostSingle.memberNickname}</a>
+										</c:if>
+										
+									</li>	
 								</ul>
 							</header>
 						<div class="main">
 								<!-- 게시글 이미지 출력 추후 추가 -->
-								<div class="featured">
-									<figure>
-										<img src="images/news/img01.jpg">
-									</figure>
+								<div class="featured" style="margin-bottom: 100px; display: flex;">
+									<div class="owl-carousel owl-theme" id="mainImg">
+										<c:forEach var="images" items="${headHuntPostSingleImages}">
+									 		<div class="item">
+												<figure>
+													<img src="images/news/img01.jpg">	
+												</figure>
+											</div>
+										</c:forEach>
+									</div>
+										<div>
+											<div class="postInfo">
+												<div class="postInfoTitle">Role</div>
+												<div class="postInfoContents">${headHuntPostSingle.headHuntPostRole} </div>
+											</div>
+											<div  class="postInfo">
+												<div class="postInfoTitle">Region</div>
+												<div class="postInfoContents">${headHuntPostSingle.headHuntPostRegion}</div>
+											</div>
+											<div  class="postInfo">
+												<div class="postInfoTitle">Pay</div>
+												<div class="postInfoContents">${headHuntPostSingle.headHuntPostPay} </div>
+											</div>
+											<div  class="postInfo">
+												<div class="postInfoTitle">Work Date</div>
+												<div class="postInfoContents">${headHuntPostSingle.headHuntPostWorkDate}</div>
+											</div>
+											<div  class="postInfo">
+												<div class="postInfoTitle">Concept</div>
+												<div class="postInfoContents">${headHuntPostSingle.headHuntPostConcept}</div>
+											</div>
+										</div>
 								</div>
-								<p>Role : ${headHuntPostSingle.headHuntPostRole}</p>
-								<p>Region : ${headHuntPostSingle.headHuntPostRegion}</p>
-								<p>Pay : ${headHuntPostSingle.headHuntPostPay}</p>
-								<p>Work date : ${headHuntPostSingle.headHuntPostWorkDate}</p>
-								<p>Concept : ${headHuntPostSingle.headHuntPostConcept}</p>
 								<!-- 게시글 내용 출력 -->
 								<p>${headHuntPostSingle.headHuntPostContent}</p>
 							</div>
@@ -55,6 +96,22 @@
 								</div>
 							</footer>
 						</article>
+						<div  style="display: flex; justify-content: center;">
+							<c:if test="${member != null || member == headHuntPostSingle.memberId}">
+								<a class="btn btn-primary" style="margin-right: 10px" href="/updateHeadHuntPost?headHuntPostId=${headHuntPostSingle.headHuntPostId}">Post Update</a>
+								<a class="btn btn-primary" href="/deleteHeadHuntPost?headHuntPostId=${headHuntPostSingle.headHuntPostId}">Post Delete</a>
+							</c:if>
+						</div>
+						<div class="line thin"></div>
+						<div class="author">
+							<figure>
+								<img src="images/img01.jpg">
+							</figure>
+							<div class="details">
+								<h3 class="name">${headHuntPostSingle.memberNickname}</h3>
+								<%-- <p>${headHuntPostSingle.memberIntroduction}</p> --%>
+							</div>
+						</div>
 						<div class="line thin"></div>
 						<!-- 댓글 출력 -->
 						<chalKagTags:webComments />

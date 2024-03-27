@@ -14,7 +14,7 @@ function updateSliderButtonsVisibility() {
     const imagesCount = imageContainer.querySelectorAll('img').length;
     const preview = document.getElementById('preview');
 
-    // 이미지가 하나 이상 있으면 슬라이드 버튼을 보이게 하고, 아니면 숨깁니다.
+    // 이미지가 하나 이상 있으면 슬라이드 버튼을 보이게 하고, 아니면 숨긴다.
     if (imagesCount > 0) {
         slideRightButton.style.display = 'block';
         slideLeftButton.style.display = 'block';

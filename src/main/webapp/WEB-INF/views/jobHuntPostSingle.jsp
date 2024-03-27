@@ -28,27 +28,39 @@
 								<li><a>Film</a></li>
 								<li>By <c:if
 										test="${member == null || member != jobHuntPostSingle.memberId}">
-										<a href="/memberPage/memberId=${jobHuntPostSingle.memberId}">${jobHuntPostSingle.memberNickname}</a>
+										<a href="/memberPage?memberId=${jobHuntPostSingle.memberId}">${jobHuntPostSingle.memberNickname}</a>
 									</c:if> <c:if test="${member == jobHuntPostSingle.memberId}">
-										<a href="/myPage/memberId=${member}">${jobHuntPostSingle.memberNickname}</a>
+										<a href="/myPage?memberId=${member}">${jobHuntPostSingle.memberNickname}</a>
 									</c:if>
 								</li>
 							</ul>
 						</header>
 						<div class="main">
-							<div style="display: flex;">
-								<p>직업 : ${jobHuntPostSingle.jobHuntPostRole}</p>
-								<p>지역 : ${jobHuntPostSingle.jobHuntPostRegion}</p>
-								<p>작업 페이 : ${jobHuntPostSingle.jobHuntPostPay}</p>
-								<p>작업 날짜 : ${jobHuntPostSingle.jobHuntPostWorkdate}</p>
-								<p>쵤영 컨셉 : ${jobHuntPostSingle.jobHuntPostConcept}</p>
-							</div>
-							<!-- 게시글 이미지 출력 추후 추가 -->
-							<div class="featured">
-								<figure>
-									<img src="images/news/img01.jpg">
-								</figure>
-							</div>
+							<div class="featured" style="margin-bottom: 100px;">
+									<figure>
+										<img src="images/news/img01.jpg">
+									</figure>
+										<div class="postInfo">
+											<div class="postInfoTitle">Role</div>
+											<div class="postInfoContents">${jobHuntPostSingle.jobHuntPostRole} </div>
+										</div>
+										<div  class="postInfo">
+											<div class="postInfoTitle">Region</div>
+											<div class="postInfoContents">${jobHuntPostSingle.jobHuntPostRegion}</div>
+										</div>
+										<div  class="postInfo">
+											<div class="postInfoTitle">Pay</div>
+											<div class="postInfoContents">${jobHuntPostSingle.jobHuntPostPay} </div>
+										</div>
+										<div  class="postInfo">
+											<div class="postInfoTitle">Work Date</div>
+											<div class="postInfoContents">${jobHuntPostSingle.jobHuntPostWorkDate}</div>
+										</div>
+										<div  class="postInfo">
+											<div class="postInfoTitle">Concept</div>
+											<div class="postInfoContents">${jobHuntPostSingle.jobHuntPostConcept}</div>
+										</div>
+								</div>
 
 							<!-- 게시글 내용 출력 -->
 							<p>${jobHuntPostSingle.jobHuntPostContent}</p>

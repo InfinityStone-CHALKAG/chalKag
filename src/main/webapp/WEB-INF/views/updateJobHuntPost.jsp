@@ -4,18 +4,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-<chalKagTags:webCss />
-<style>
 
-#marketPostWorkDate {
+<chalKagTags:webCss />
+
+<style>
+#jobHuntPostWorkDate {
 	border-radius: 5px;
 	border: solid 1px rgb(179, 179, 179);
 }
 
-
-#marketPostContent {
+#jobHuntPostContent {
 	height: 300px;
 }
+
 </style>
 <link rel="stylesheet" href="/css/user/css/postImg.css">
 </head>
@@ -29,33 +30,60 @@
 			<div class="box-wrapper" id="writerForm">
 				<div class="box box-border">
 					<div class="box-body">
-						<form action="/writeMarketPost" method="post"
+						<form action="/updateJobHuntPost" method="post"
 							onsubmit="return validateForm(event)"
 							enctype="multipart/form-data">
+							
 							<div class="form-group"
 								style="display: flex; justify-content: center; margin-bottom: 4%;">
 								<input type="text" class="form-control rounded"
-									id="marketPostTitle" name="marketPostTitle" placeholder="Title" />
+									id="jobHuntPostTitle" name="jobHuntPostTitle"
+									placeholder="Title" value="${updateJobHuntPost.jobHuntPostTitle}"/>
 							</div>
-							<div class="form-group" style="display: flex; margin-bottom:  4%;">
-								<input type="text" id="marketPostPrice" name="marketPostPrice"
-									class="form-control rounded"
-									style="width: 32%; margin-right: 2%;"
-									oninput="trimInput(this); validatePrice(this);"
-									placeholder="productPrice" /> <select class="selectTags"
-									id="marketPostCompany" name="marketPostCompany"
-									style="width: 32%; margin-right: 2%;">
-									<option value="" disabled selected>Company</option>
-									<option value="캐논">캐논</option>
-									<option value="소니">소니</option>
-									<option value="니콘">니콘</option>
-								</select> <select class="selectTags" id="marketPostCategory"
-									name="marketPostCategory" style="width: 32%;">
-									<option value="" disabled selected>Category</option>
-									<option value="DSLR">DSLR</option>
-									<option value="미러리스">미러리스</option>
+							
+							<div class="form-group" style="display: flex; margin-bottom: 4%;">
+								<select class="selectTags" id="jobHuntPostRole" name="jobHuntPostRole"
+								style="width: 32%; height: 43px; margin-right: 2%;">
+									<option value="" disabled>Role</option>
+									<option value="모델" ${'모델' == updateJobHuntPost.jobHuntPostRole ? 'selected' : ''}>모델</option>
+									<option value="사진작가 "${'사진작가' == updateJobHuntPost.jobHuntPostRole ? 'selected' : ''}>사진작가</option>
+								</select>
+
+								<select class="selectTags" id="jobHuntPostConcept" 
+								style="width: 32%; height: 43px; margin-right: 2%;"
+								name="jobHuntPostConcept" >
+									<option value="" disabled>WorkConcept</option>
+									<option value="snap" ${'snap' == updateJobHuntPost.jobHuntPostConcept ? 'selected' : ''}>스냅사진</option>
+	   								<option value="pictorial" ${'pictorial' == updateJobHuntPost.jobHuntPostConcept ? 'selected' : ''} >화보</option>
+								    <option value="studio" ${'studio' == updateJobHuntPost.jobHuntPostConcept ? 'selected' : ''}>내부</option>
+ 									<option value="updatejobHuntPost"${'outdoor' == updatejobHuntPost.jobHuntPostConcept ? 'selected' : ''}>외부</option>
+  									<option value="etc" ${'etc' == updateJobHuntPost.jobHuntPostConcept ? 'selected' : ''}>기타</option>
+								</select> 
+								
+								<select class="selectTags" id="jobHuntPostRegion" style="width: 32%; 
+								height: 43px;" name="jobHuntPostRegion">
+									<option value="" disabled>선택</option>
+									<option value="SEOUL" ${'SEOUL' == updateJobHuntPost.jobHuntPostRegion ? 'selected' : ''}>SEOUL</option>
+									<option value="GYEONGGI" ${'GYEONGGI' == updateJobHuntPost.jobHuntPostRegion ? 'selected' : ''}>GYEONGGI</option>
+									<option value="GANGWON" ${'GANGWON' == updateJobHuntPost.jobHuntPostRegion ? 'selected' : ''}>GANGWON</option>
+									<option value="CHUNGCHEONG" ${'CHUNGCHEONG' == updateJobHuntPost.jobHuntPostRegion ? 'selected' : ''}>CHUNGCHEONG</option>
+									<option value="JEOLLA" ${'JEOLLA' == updateJobHuntPost.jobHuntPostRegion ? 'selected' : ''}>JEOLLA</option>
+									<option value="GYEONGSANG" ${'GYEONGSANG' == updateJobHuntPost.jobHuntPostRegion ? 'selected' : ''}>GYEONGSANG</option>
+									<option value="JEJU" ${'JEJU' == updateJobHuntPost.jobHuntPostRegion ? 'selected' : ''}>JEJU</option>
 								</select>
 							</div>
+							
+							
+							<div class="form-group" style="display: flex; margin-bottom: 4%;">
+								<input class="selectTags" type="date" 
+								id="jobHuntPostWorkDate" name="jobHuntPostWorkDate" 
+								style="width:49%; height:43px; padding-left: 8px; margin-right: 2%" value="${updateJobHuntPost.jobHuntPostWorkDate}">
+							
+								<input type="text" id="jobHuntPostPay" name="jobHuntPostPay" class="form-control rounded"
+									style="width: 49%; height:43px; padding-left: 8px;"
+									oninput="trimInput(this); validatePay(this);" placeholder="Pay" value="${updateJobHuntPost.jobHuntPostPay}"/>
+							</div>
+							
 							<p>※ 이미지 사이즈는 30MB 이하만 올릴 수 있습니다.</p>
 							<div class="form-group" style="margin-bottom: 4%;">
 								<input type="file" name="file" id="fileInput" accept="image/*"
@@ -69,15 +97,15 @@
 								</div>
 								<button class="imgSlidebtn" id="slideRight">▶</button>
 							</div>
-
+						
 							<div class="big-image-container">
 							    <img id="big-image" src="" alt="큰 이미지 미리보기" />
 							</div>
 
-							<div class="form-group" style="margin-bottom: 4%;"
-								style="display: flex; justify-content: center;">
-								<textarea class="form-control rounded" id="marketPostContent"
-									name="marketPostContent"></textarea>
+							<div class="form-group"
+								style="display: flex; justify-content: center; margin-bottom: 4%;">
+								<textarea class="form-control rounded" id="jobHuntPostContent"
+									name="jobHuntPostContent">${updateJobHuntPost.jobHuntPostContent}</textarea>
 							</div>
 							<button class="btn btn-primary btn-rounded btn-block">Composite</button>
 						</form>
@@ -150,25 +178,26 @@
 		}
 
 		function validateForm(event) {
-			var title = document.getElementById('marketPostTitle').value;
-			var price = document.getElementById('marketPostPrice').value;
-			var company = document.getElementById('marketPostCompany').value;
-			var category = document.getElementById('marketPostCategory').value;
-			var content = document.getElementById('marketPostContent').value;
+			var title = document.getElementById('jobHuntPostTitle').value;
+			var pay = document.getElementById('jobHuntPostPay').value;
+			var role = document.getElementById('jobHuntPostRole').value;
+			var workDate = document.getElementById('jobHuntPostWorkDate').value;
+			var concept = document.getElementById('jobHuntPostConcept').value;
+			var content = document.getElementById('jobHuntPostContent').value;
 			var imageInput = document.getElementById('fileInput');
-			
+
 
 			// 여기서 pay의 값을 쉼표 없는 숫자로 변환
-		    var cleanPay = price.replace(/,/g, '');
-		    document.getElementById('marketPostPrice').value = cleanPay;
-
-			if (!title.trim() || !price.trim() || !company || !category
+		    var cleanPay = pay.replace(/,/g, '');
+		    document.getElementById('jobHuntPostPay').value = cleanPay;
+			
+			if (!title.trim() || !pay.trim() || !role || !workDate || !concept
 					|| !content.trim()) {
 				swal("fail", "모든 필드를 채워주세요.", "error", {
 					button : "OK",
 				});
 				event.preventDefault(); // 폼 제출을 막는다.
-				return false;
+				return false; // 폼 제출을 막는다.
 			} else if (!imageInput.files.length) { // 이미지가 업로드되었는지 확인
 				swal("fail", "이미지를 업로드해주세요.", "error", {
 					button : "OK",
