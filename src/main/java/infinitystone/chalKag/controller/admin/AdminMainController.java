@@ -42,7 +42,7 @@ public class AdminMainController {
 
 		model.addAttribute("signInCountByYearMonthDate", signInCountByYearMonthDateResult);
 
-		adminDTO.setSearchCondition("signInCountByYearMonthDate");
+		adminDTO.setSearchCondition("signInCountByDayOfWeek");
 
 		String signInCountByDayOfWeekResult = gson.toJson(adminService.signInCountByDayOfWeek(adminDTO));
 

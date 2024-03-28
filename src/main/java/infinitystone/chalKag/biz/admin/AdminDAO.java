@@ -28,14 +28,14 @@ public class AdminDAO {
       "FROM DATERANGE " +
       "WHERE DATE < LAST_DAY(DATE) " +
       ")" +
-      "SELECT" +
-      "DAY(DATERANGE.DATE) AS DATEOFMONTH, " +
+      "SELECT " +
+      "DAY(DATERANGE.DATE) AS DATE, " +
       "COALESCE(COUNT(MEMBER.MEMBER_id), 0) AS SIGNINCOUNT " +
       "FROM DATERANGE " +
       "LEFT JOIN SIGNINLOG ON DATE(SIGNINLOG.SIGNINLOG_date) = DATERANGE.DATE " +
       "LEFT JOIN MEMBER ON SIGNINLOG.MEMBER_id = MEMBER.MEMBER_id AND MEMBER.MEMBER_grade = 'USER' " +
-      "GROUP BY DATEOFMONTH " +
-      "ORDER BY DATEOFMONTH";
+      "GROUP BY DATE " +
+      "ORDER BY DATE";
 
   // (관리자)요일별 로그인 수.안승준
   private static final String SELECTALL_SIGNINCOUNTBYDAYOFWEEK = "SELECT " +
