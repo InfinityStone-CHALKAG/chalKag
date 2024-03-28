@@ -56,10 +56,10 @@
 								<!-- 게시글 이미지 출력 추후 추가 -->
 								<div class="featured" style="margin-bottom: 100px; display: flex;">
 									<div class="owl-carousel owl-theme" id="mainImg">
-										<c:forEach var="images" items="${headHuntPostSingleImages}">
+										<c:forEach var="postImgList" items="${postImgList}">
 									 		<div class="item">
 												<figure>
-													<img src="images/news/img01.jpg">	
+													 <img src="/postImg/${postImgList.postImgName}">
 												</figure>
 											</div>
 										</c:forEach>
