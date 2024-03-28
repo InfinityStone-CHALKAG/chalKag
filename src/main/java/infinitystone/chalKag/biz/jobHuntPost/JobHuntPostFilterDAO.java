@@ -155,7 +155,7 @@ class FilterRowMapper implements RowMapper<JobHuntPostDTO> {
 		data.setJobHuntPostDate(rs.getString("JOBHUNTPOST_date"));
 		data.setJobHuntPostRole(rs.getString("JOBHUNTPOST_role"));
 		data.setJobHuntPostRegion(rs.getString("JOBHUNTPOST_region"));
-		data.setJobHuntPostPay(rs.getString("JOBHUNTPOST_pay"));
+		data.setJobHuntPostPay(rs.getInt("JOBHUNTPOST_pay"));
 		data.setJobHuntPostConcept(rs.getString("JOBHUNTPOST_workDate"));
 		data.setJobHuntPostConcept(rs.getString("JOBHUNTPOST_concept"));
 		data.setJobHuntPostTitle(rs.getString("JOBHUNTPOST_title"));
