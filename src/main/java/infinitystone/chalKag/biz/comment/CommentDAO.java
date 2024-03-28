@@ -77,10 +77,6 @@ public class CommentDAO {
 				result = (List<CommentDTO>) jdbcTemplate.query(SELECTALL,args,new CommentSelectAllRowMapper());
 				System.out.println("commentDTO(jobHuntPostSelectAll) 로그 =" + "[" + result + "]");
 				return result;
-<<<<<<< HEAD
-			
-=======
->>>>>>> 74a1f6cd025a5bef8a7a788e948503b505116fe6
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

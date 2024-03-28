@@ -9,6 +9,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import infinitystone.chalKag.biz.headHuntPost.HeadHuntPostDTO;
+
 @Repository("jobHuntPostDAO")
 public class JobHuntPostDAO {
 
@@ -16,25 +18,26 @@ public class JobHuntPostDAO {
 	private JdbcTemplate jdbcTemplate;
 
 	private static final String SELECTALL_JOBHUNTPOST ="SELECT "
-			+ "     JOBHUNTPOST.JOBHUNTPOST_id, "
-			+ "     JOBHUNTPOST.MEMBER_id, "
-			+ "     MEMBER.MEMBER_nickname, "
-			+ "     JOBHUNTPOST.JOBHUNTPOST_title, "
-			+ "     JOBHUNTPOST.JOBHUNTPOST_content, "
-			+ "     JOBHUNTPOST.JOBHUNTPOST_date, "
-			+ "     JOBHUNTPOST.JOBHUNTPOST_viewcnt, "
-			+ "     COUNT(RECOMMEND.POST_id) AS RECOMMEND_cnt "
-			+ " FROM "
-			+ "     JOBHUNTPOST "
-			+ " LEFT JOIN "
-			+ "     MEMBER ON JOBHUNTPOST.MEMBER_id = MEMBER.MEMBER_id "
-			+ " LEFT JOIN "
-			+ " 	RECOMMEND ON JOBHUNTPOST.JOBHUNTPOST_id = RECOMMEND.POST_id "
-			+ " GROUP BY "
-			+ "     JOBHUNTPOST.JOBHUNTPOST_id, "
-			+ "     MEMBER.MEMBER_nickname "
-			+ " ORDER BY "
-			+ "       JOBHUNTPOST_id DESC;";
+			+ "	'JobHuntPost' AS POST_category, " // 게시판 카테고리 설정
+			+ " JOBHUNTPOST.JOBHUNTPOST_id, "
+			+ " JOBHUNTPOST.MEMBER_id, "
+			+ " 	(SELECT POSTIMG.POSTIMG_name "
+			+ " FROM POSTIMG POSTIMG"
+			+ " 	WHERE POSTIMG.POST_id = JOBHUNT.JOBHUNTPOST_id "
+			+ " 	ORDER BY POSTIMG.POSTIMG_id ASC "
+			+ " 	LIMIT 1) AS POSTIMG_name, "
+			+ " MEMBER.MEMBER_nickname, "
+			+ " JOBHUNTPOST.JOBHUNTPOST_title, "
+			+ " JOBHUNTPOST.JOBHUNTPOST_content, "
+			+ " JOBHUNTPOST.JOBHUNTPOST_date, "
+			+ " JOBHUNTPOST.JOBHUNTPOST_viewcnt, "
+			+ " COUNT(RECOMMEND.POST_id) AS RECOMMEND_cnt "
+			+ " FROM JOBHUNTPOST JOBHUNTPOST "
+			+ " INNER JOIN MEMBER MEMBER ON JOBHUNTPOST.MEMBER_id = MEMBER.MEMBER_id "
+			+ " LEFT JOIN RECOMMEND RECOMMEND ON JOBHUNTPOST.JOBHUNTPOST_id = RECOMMEND.POST_id "
+			+ " GROUP BY JOBHUNTPOST.JOBHUNTPOST_id, "
+			+ " 		MEMBER.MEMBER_nickname "
+			+ " ORDER BY JOBHUNTPOST.JOBHUNTPOST_id DESC";
 	
 	// 메인페이지 프리미엄 회원글 출력(이미지 포함)
 	private static final String SELECTALL_PREMIUMJOBHUNTPOST= "SELECT "
@@ -52,7 +55,6 @@ public class JobHuntPostDAO {
 			+ "    			JOBHUNTPOST.JOBHUNTPOST_date DESC "
 			+ "			LIMIT 2 ";
 
-	
 	
 	private static final String SELECTONE_JOBHUNTPOST = "SELECT" 
 			+ " 	JOBHUNTPOST.JOBHUNTPOST_id, "
@@ -148,6 +150,11 @@ public class JobHuntPostDAO {
 				System.out.println("JobHuntPostDAO(selectOne) 로그 = [" + result + "]");
 				return result;
 			}
+			else if(jobHuntPostDTO.getSearchCondition().equals("maxPostId")) {
+				result = jdbcTemplate.queryForObject(SELECTONE_MAXPOSTID, new SelectOneMaxPostIdRowMapper());
+				System.out.println("HeadHuntPostDAO(selectOne) Out로그 = [" + result + "]");
+				return result;
+			}
 		} catch (Exception e) {
 			return null;
 		}
@@ -193,7 +200,8 @@ class JobHuntPostSelecAllRowMapper implements RowMapper<JobHuntPostDTO> {
 	@Override
 	public JobHuntPostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
 		JobHuntPostDTO data = new JobHuntPostDTO();
-
+		
+		data.setPostCategory(rs.getString("POST_category"));
 		data.setJobHuntPostId(rs.getString("JOBHUNTPOST_id"));
 		data.setMemberId(rs.getString("MEMBER_id"));
 		data.setMemberNickname(rs.getString("MEMBER_nickname"));
@@ -202,6 +210,7 @@ class JobHuntPostSelecAllRowMapper implements RowMapper<JobHuntPostDTO> {
 		data.setJobHuntPostDate(rs.getString("JOBHUNTPOST_date"));
 		data.setJobHuntPostViewcnt(rs.getString("JOBHUNTPOST_viewcnt"));
 		data.setRecommendCnt(rs.getString("RECOMMEND_cnt"));
+		data.setPostImgName(rs.getString("POSTIMG_name"));
 
 		return data;
 	}
@@ -242,4 +251,14 @@ class JobHuntPostPremiumSelectAllRowMapper implements RowMapper<JobHuntPostDTO>{
 		return data;
 	}
 	
+}
+
+class SelectOneMaxPostIdRowMapper implements RowMapper<JobHuntPostDTO> {
+	@Override
+	public JobHuntPostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+		JobHuntPostDTO data = new JobHuntPostDTO();
+		data.setJobHuntPostId(rs.getString("MAX(JOBHUNTPOST_id)"));
+		System.out.println("RowMapper OUT");
+		return data;
+	}
 }

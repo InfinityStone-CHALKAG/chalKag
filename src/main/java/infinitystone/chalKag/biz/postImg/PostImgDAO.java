@@ -16,52 +16,6 @@ public class PostImgDAO {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-								// 해당 카테고리 전체 출력 (이미지만)
-
-//	private static final String SELECTALL_HEADHUNTPOSTIMG = " SELECT "
-//			+ " POSTIMG.POSTIMG_name, HEADHUNTPOST.HEADHUNTPOST_id  "
-//			+ " FROM "
-//			+ " POSTIMG "
-//			+ " INNER JOIN "
-//			+ " HEADHUNTPOST  "
-//			+ " ON POSTIMG.POST_id = HEADHUNTPOST.HEADHUNTPOST_id  "
-//			+ " ORDER BY POSTIMG.POSTIMG_id DESC  "
-//			+ " LIMIT 1";
-	
-//	private static final String SELECTALL_HEADHUNTPOSTIMG ="SELECT HEADHUNTPOST_id ,\n"
-//			+ "       (SELECT POSTIMG_name\n"
-//			+ "        FROM POSTIMG\n"
-//			+ "        WHERE POSTIMG.POST_id = headhuntpost.HEADHUNTPOST_id\n"
-//			+ "        ORDER BY POSTIMG_id DESC\n"
-//			+ "        LIMIT 1) AS POSTIMG_name\n"
-//			+ "FROM headhuntpost ";
-//	
-//	private static final String SELECTALL_JOBHUNTPOSTIMG = "SELECT "
-//			+ "	POSTIMG.POSTIMG_name, JOBHUNTPOST.JOBHUNTPOST_id  "
-//			+ "	FROM "
-//			+ " POSTIMG "
-//			+ " INNER JOIN JOBHUNTPOST "
-//			+ "	ON POSTIMG.POST_id = JOBHUNTPOST.JOBHUNTPOST_id "
-//			+ "	ORDER BY POSTIMG.POSTIMG_id DESC "
-//			+ "	LIMIT 1";
-//	
-//	private static final String SELECTALL_FREEPOSTIMG = "SELECT "
-//			+ "	POSTIMG.POSTIMG_name, FREEPOST.FREEPOST_id "
-//			+ "	FROM "
-//			+ "	POSTIMG "
-//			+ "	INNER JOIN FREETPOST "
-//			+ "	ON POSTIMG.POST_id = FREEPOST.FREEPOST_id "
-//			+ "	ORDER BY POSTIMG.POSTIMG_id DESC "
-//			+ "	LIMIT 1";
-//	
-//	private static final String SELECTALL_MARKETPOSTIMG = "SELECT "
-//			+ "	POSTIMG.POSTIMG_name, MARKETPOST.MARKETPOST_id "
-//			+ "	FROM "
-//			+ "	POSTIMG "
-//			+ "	INNER JOIN MARKETPOST "
-//			+ "	ON POSTIMG.POST_id = MARKETPOST.MARKETPOST_id "
-//			+ "	ORDER BY POSTIMG.POSTIMG_id DESC "
-//			+ "	LIMIT 1";
 	
 	// --------------------------------------------------------------------------------------------------------------------
 	// 프리미엄 회원 작성글 이미지 불러오기
@@ -118,11 +72,13 @@ public class PostImgDAO {
 	
 	
 	private static final String INSERT = "INSERT INTO POSTIMG (POST_id, POSTIMG_name) VALUES (?, ?)";
-	private static final String UPDATE = "UPDATE POSTIMG"
-										+ "SET"
-										+ "POSTIMG_name = ?"
-										+ "WHERE"
-										+ "	POST_id =? ";
+	
+	private static final String UPDATE = "UPDATE POSTIMG "
+										+ " SET "
+										+ " POSTIMG_name = ?, "
+										+ " POSTIMG_state "
+										+ " WHERE "
+										+ " POSTIMG_state BETWEEN 1 AND 10";
 	private static final String DELETE = "DELETE FROM POSTIMG WHERE POST_id = ? AND POSTIMG_name = ? ";
 
 	public List<PostImgDTO> selectAll(PostImgDTO postImgDTO) {
