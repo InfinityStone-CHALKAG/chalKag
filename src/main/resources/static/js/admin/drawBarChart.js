@@ -1,25 +1,29 @@
 const dataContainer = document.getElementById("dataContainer");
+var signInCountByDayOfWeek = JSON.parse(dataContainer.getAttribute("data-signInCountByDayOfWeek"));
+var signInCountByYearMonthDate = JSON.parse(dataContainer.getAttribute("data-signInCountByYearMonthDate"));
+var signUpCountByYear = JSON.parse(dataContainer.getAttribute("data-signUpCountByYear"));
 var signUpCountByAgeGroup = JSON.parse(dataContainer.getAttribute("data-signUpCountByAgeGroup"));
 var signUpCountByGenderGroup = JSON.parse(dataContainer.getAttribute("data-signUpCountByGenderGroup"));
-var signInCountByYearMonthDate = JSON.parse(dataContainer.getAttribute("data-signInCountByYearMonthDate"));
-
 
 (function($) {
     "use strict";
     // 차트 인스턴스를 저장할 객체
     window.myCharts = {};
 
-    // 초기화: 첫 번째 탭의 차트를 그림
-    drawLineChart("singleLineChart1");
-
+    // 초기화: 첫 번째 탭의 차트를 그림 
+    // 메인 이동시 출력, 탭클릭시 출력을 위한 모듈화
+    var chartId = "signInCountByDayOfWeekBar";
+    drawsignInCountByDayOfWeek(); -
+    +
     // 이벤트: 탭 클릭시 이벤트
     $(".tab__item").click(function(e) {
         e.preventDefault(); // 기본 이벤트 방지
         var href = $(this).find("a").attr("href"); // 클릭된 탭의 href 값 (#tabN)
+        console.log("[로그]" + href);
 
         // 현재 활성화된 탭 내용에서 canvas id 가져오기
-        var chartId = $(href).find("canvas").attr("id");
-
+        chartId = $(href).find("canvas").attr("id");
+        console.log("[로그]" + chartId);
         // 모든 탭 항목과 내용에서 active 클래스 제거
         $(".tab__item").removeClass("active");
         $(".tab__content").removeClass("active");
@@ -31,13 +35,14 @@ var signInCountByYearMonthDate = JSON.parse(dataContainer.getAttribute("data-sig
         $(href).addClass("active");
 
         // 이후 필요한 로직을 chartId와 함께 구현
-        if (chartId == "singleLineChart1") {
+        if (chartId == "signInCountByDayOfWeekBar") {
 
-        } else if (chartId == "singleLineChart2") {
+            drawsignInCountByDayOfWeek();
 
-            //탭선택시 초기 그래프
+
+        } else if (chartId == "signInCountByYearMonthDateLine") {
+
             handleSelectChange();
-
             // 년, 월 선택시 그래프 변화
             function handleSelectChange() {
                 const selectedYear = document.getElementById('year').value;
@@ -54,8 +59,26 @@ var signInCountByYearMonthDate = JSON.parse(dataContainer.getAttribute("data-sig
                     success: function(data) {
                         if (data) {
                             signInCountByYearMonthDate = JSON.parse(data); // 데이터를 JSON 형태로 파싱하여 변수에 저장
+                            var date = [];
+                            var signInCount = [];
+
+                            for (var i = 0; i < signInCountByYearMonthDate.length; i++) {
+                                date.push(signInCountByYearMonthDate[i].date);
+                                signInCount.push(signInCountByYearMonthDate[i].signInCount);
+                            }
+
                             console.log("AJAX SUCCESS");
                             console.log(signInCountByYearMonthDate); // 콘솔에 결과 출력
+                            // 최대값 찾기
+                            var maxSignInCount = Math.max(...signInCount);
+
+                            // 최대값의 일의 자리를 0으로 만들기
+                            var maxWithZero = Math.ceil(maxSignInCount / 10) * 10;
+
+                            // 최대값에 50 추가하여 max 값 설정
+                            var max = maxWithZero + 50;
+
+                            drawLineChart(chartId, date, signInCount, max, "DAYS", "SIGNINCOUNT");
                         } else {
                             console.log("[로그] 데이터 없음");
                         }
@@ -64,40 +87,47 @@ var signInCountByYearMonthDate = JSON.parse(dataContainer.getAttribute("data-sig
                         console.log('에러: ' + error);
                     }
                 });
-
-                const daysInMonth = getDaysInMonth(selectedYear, selectedMonth);
-                const daysArray = Array.from({
-                    length: daysInMonth
-                }, (_, i) => i + 1);
-                console.log(daysArray);
-                const monthName = getMonthName(selectedMonth);
-                const signInCount = new Array(daysInMonth).fill(0);
-                const labels = [];
-                for (let day = 1; day <= daysInMonth; day++) {
-                    if (day === 1) {
-                        labels.push([`${day}`, `${monthName}`]); // 첫 번째 날짜에 월 정보 추가
-                    } else {
-                        labels.push(`${day}`);
-                    }
-                }
-                signInCountByYearMonthDate.forEach(function(item) {
-                    var index = daysArray.indexOf(parseInt(item.date));
-                    if (index !== -1) {
-                        signInCount[index] = parseInt(item.signInCount);
-                    }
-                });
-                drawLineChart("singleLineChart2", labels, signInCount);
             }
-
             document.getElementById('year').addEventListener('change', handleSelectChange);
             document.getElementById('month').addEventListener('change', handleSelectChange);
 
-        } else if (chartId == "singleLineChart3") {
+        } else if (chartId == "signUpCountByYearLine") {
+            console.log("3번탭 진입");
+
+            var year = []; 
+            var signUpCount = [];
+
+            for (var i = 0; i < signUpCountByYear.length; i++) {
+                year.push(signUpCountByYear[i].year);
+                signUpCount.push(signUpCountByYear[i].signUpCount);
+            }
+
+            // 추가 데이터 생성
+            var lastYear = parseInt(year[year.length - 1]); // 마지막 년도를 숫자로 변환
+            for (var i = 1; i <= 2; i++) { // 2개의 추가 데이터 생성
+                year.push((lastYear + i).toString()); // 년도를 문자열로 변환하여 추가
+                signUpCount.push("0"); // 가입 수는 "0"으로 설정
+            }
+
+
+            // 최대값 찾기
+            var maxSignUpCount = Math.max(...signUpCount);
+
+            // 최대값의 일의 자리를 0으로 만들기
+            var maxWithZero = Math.ceil(maxSignUpCount / 10) * 10;
+
+            // 최대값에 50 추가하여 max 값 설정
+            var max = maxWithZero + 50;
+            console.log(signUpCount);
+            console.log(year);
+
+            drawLineChart(chartId, year, signUpCount, max, "YEAR", "SIGNUPCOUNT");
+
 
         }
 
         //나이별 회원 수
-        else if (chartId == "singleBarChart4") {
+        else if (chartId == "signUpCountByAgeGroupBar") {
 
             var ageGroup = ["10", "20", "30", "40", "50", "60"];
             var signUpCount = new Array(6).fill(0); // signUpCount 배열을 0으로 초기화
@@ -123,8 +153,8 @@ var signInCountByYearMonthDate = JSON.parse(dataContainer.getAttribute("data-sig
                 chartId,
                 ageGroup,
                 signUpCount,
-                "Age",
-                "Users", {
+                "AGE",
+                "USER", {
                     beginAtZero: true,
                     min: 0,
                     max: max,
@@ -134,7 +164,7 @@ var signInCountByYearMonthDate = JSON.parse(dataContainer.getAttribute("data-sig
         }
 
         //성별 회원 수
-        else if (chartId == "singleBarChart5") {
+        else if (chartId == "signUpCountByGenderGroupBar") {
             var maleCount = parseInt(signUpCountByGenderGroup.maleGroup);
             var femaleCount = parseInt(signUpCountByGenderGroup.femaleGroup);
 
@@ -146,8 +176,8 @@ var signInCountByYearMonthDate = JSON.parse(dataContainer.getAttribute("data-sig
                 chartId,
                 ["Male", "Female"],
                 [maleCount, femaleCount],
-                "Gender",
-                "Users", {
+                "GENDER",
+                "USER", {
                     beginAtZero: true,
                     min: 0,
                     max: maxTemp,
@@ -158,7 +188,7 @@ var signInCountByYearMonthDate = JSON.parse(dataContainer.getAttribute("data-sig
     });
 
     // 함수: 바 차트 그리기
-    function drawBarChart(chartId, labels, data, xAxesLabelString, yAxesLabelString, ticksOptions) {
+    function drawBarChart(chartId, labels, data, xTitleLabel, yTitleLabel, ticksOptions) {
         var ctx = document.getElementById(chartId);
         console.log("[로그] ctx: " + ctx);
         console.log("[로그] chartId: " + chartId);
@@ -173,7 +203,7 @@ var signInCountByYearMonthDate = JSON.parse(dataContainer.getAttribute("data-sig
             data: {
                 labels: labels,
                 datasets: [{
-                    label: "My First dataset",
+                    label: "USER",
                     data: data,
                     borderColor: "rgba(247, 63, 82, 1)",
                     borderWidth: "0",
@@ -189,7 +219,7 @@ var signInCountByYearMonthDate = JSON.parse(dataContainer.getAttribute("data-sig
                         stepSize: ticksOptions.stepSize,
                         title: { // Y축 라벨 설정
                             display: true,
-                            text: yAxesLabelString
+                            text: yTitleLabel
                         },
                         ticks: {
                             stepSize: ticksOptions.stepSize
@@ -198,7 +228,7 @@ var signInCountByYearMonthDate = JSON.parse(dataContainer.getAttribute("data-sig
                     x: { // X축 설정 변경
                         title: { // X축 라벨 설정
                             display: true,
-                            text: xAxesLabelString
+                            text: xTitleLabel
                         }
                     }
                 },
@@ -214,27 +244,25 @@ var signInCountByYearMonthDate = JSON.parse(dataContainer.getAttribute("data-sig
 
 
     //라인 차트 그리기
-    function drawLineChart(chartId, labels, data) {
+    function drawLineChart(chartId, labels, data, max, xTitleLabel, yTitleLabel) {
         var ctx = document.getElementById(chartId);
+
+        // window.myCharts 객체가 없으면 생성
+        if (!window.myCharts) {
+            window.myCharts = {};
+        }
+
         // 기존 차트가 있으면 파괴
-        if (window.myCharts && window.myCharts[chartId]) {
+        if (window.myCharts[chartId]) {
             window.myCharts[chartId].destroy();
         }
-        // 빈 배열 생성
 
-
-        // 1에서 50까지의 샘플 데이터 생성 및 배열에 추가
-        // 31개의 랜덤 숫자 생성하여 배열에 추가
-
-
-        // 새 차트 생성
-        window.myCharts = window.myCharts || {};
         window.myCharts[chartId] = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: labels,
                 datasets: [{
-                    label: "Foods",
+                    label: 'USER',
                     data: data,
                     backgroundColor: 'transparent',
                     borderColor: 'rgba(247, 63, 82, 1)',
@@ -272,6 +300,15 @@ var signInCountByYearMonthDate = JSON.parse(dataContainer.getAttribute("data-sig
                 scales: {
                     x: {
                         display: true,
+                         title: {
+                    display: true,
+                    text: xTitleLabel, // x축 라벨 설정
+                    color: '#111',
+                    font: {
+                        size: 14,
+                        family: 'Montserrat'
+                    }
+                },
                         grid: {
                             display: false,
                             drawBorder: false
@@ -279,27 +316,64 @@ var signInCountByYearMonthDate = JSON.parse(dataContainer.getAttribute("data-sig
                     },
                     y: {
                         display: true,
+                         title: {
+                    display: true,
+                    text: yTitleLabel, // x축 라벨 설정
+                    color: '#111',
+                    font: {
+                        size: 14,
+                        family: 'Montserrat'
+                    }
+                },
                         grid: {
                             display: false,
                             drawBorder: false
                         },
-                        min: -1, // Y축의 최소값 설정
-                        max: 10, // Y축의 최대값 설정
+                        min: 0, // Y축의 최소값 설정
+                        max: max, // Y축의 최대값 설정
                     }
                 }
             }
         });
     }
 
-    function getDaysInMonth(year, month) {
-        return new Date(year, month, 0).getDate();
+    function drawsignInCountByDayOfWeek() {
+
+
+
+        var dayOfWeek = [];
+        var signInCount = [];
+
+        for (var i = 0; i < signInCountByDayOfWeek.length; i++) {
+            dayOfWeek.push(signInCountByDayOfWeek[i].dayOfWeek);
+        }
+        for (var i = 0; i < signInCountByDayOfWeek.length; i++) {
+            signInCount.push(signInCountByDayOfWeek[i].signInCount);
+        }
+
+        // 최대값 찾기
+        var maxSignInCount = Math.max(...signInCount);
+
+        // 최대값의 일의 자리를 0으로 만들기
+        var maxWithZero = Math.ceil(maxSignInCount / 10) * 10;
+
+        // 최대값에 50 추가하여 max 값 설정
+        var max = maxWithZero + 50;
+
+        drawBarChart(
+            chartId,
+            dayOfWeek,
+            signInCount,
+            "SIGNINCOUNT", 
+            "DAYOFWEEK", {
+                beginAtZero: true,
+                min: 0,
+                max: max,
+                stepSize: 10
+            }
+        )
     }
 
-    function getMonthName(monthNumber) {
-        const date = new Date(0, monthNumber - 1);
-        return date.toLocaleString('ko-KR', {
-            month: 'long'
-        });
-    }
+
 
 })(jQuery);

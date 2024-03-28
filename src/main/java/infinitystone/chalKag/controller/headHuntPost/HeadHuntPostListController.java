@@ -16,25 +16,21 @@ public class HeadHuntPostListController {
   @Autowired
   private HeadHuntPostService headHuntPostService;
 
-  @Autowired
-  private PostImgService postImgService;
+
 
 
   @RequestMapping("/headHuntPostList")
-  public String headHuntPostList(Model model, HeadHuntPostDTO headHuntPostDTO, Gson gson, PostImgDTO postImgDTO) {
+  public String headHuntPostList(Model model, HeadHuntPostDTO headHuntPostDTO, Gson gson) {
 
     System.out.println("HeadHuntPostListController In로그");
 
     headHuntPostDTO.setSearchCondition("headHuntPostList");
-    postImgDTO.setSearchCondition("headHuntPostListImg");
 
     String headHuntPostListResult = gson.toJson(headHuntPostService.selectAll(headHuntPostDTO));
-    String headHuntPostListImgResult = gson.toJson(postImgService.selectAll(postImgDTO));
 
 
 
     model.addAttribute("headHuntPostList", headHuntPostListResult);
-    model.addAttribute("headHuntPostListImg", headHuntPostListImgResult);
 
     System.out.println("HeadHuntPostListController Out로그");
 
