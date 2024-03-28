@@ -128,7 +128,7 @@ public class PostImgDAO {
 	public List<PostImgDTO> selectAll(PostImgDTO postImgDTO) {
 		List<PostImgDTO> result = null;
 		try {
-			Object[] args = {postImgDTO.getPostImgName()};
+			Object[] args = {postImgDTO.getPostId()};
 					// 프리미엄 회원 구인글 불러오기 이미지
 			if(postImgDTO.getSearchCondition().equals("headHuntPostPremiumListImg")){
 	 			result = (List<PostImgDTO>) jdbcTemplate.query(SELECTALL_PREMIUMHEADHUNTPOSTIMG, new PostImgRowMapper());
@@ -150,18 +150,19 @@ public class PostImgDAO {
 	 			result = (List<PostImgDTO>) jdbcTemplate.query(SELECTALL_PREMIUMMARKETPOSTIMG, new PostImgRowMapper());
 	 			System.out.println("PostImgDAO(marketPostPremiumImgSellectAll) 로그 = [" + result + "]");
 			}
+			
 			// 상세보기 이미지 출력
 			else if(postImgDTO.getSearchCondition().equals("headHuntPostSingleImg")) {
-				result = (List<PostImgDTO>) jdbcTemplate.queryForObject(SELECTONE_HEADHUNTPOSTIMG,args,new PostImgRowMapper());
-			}
-			else if(postImgDTO.getSearchCondition().equals("jobHuntPostSingleImg")) {
-				result = (List<PostImgDTO>) jdbcTemplate.queryForObject(SELECTONE_JOBHUNTPOSTIMG,args,new PostImgRowMapper());
-			}
-			else if(postImgDTO.getSearchCondition().equals("freePostSingleImg")) {
-				result = (List<PostImgDTO>) jdbcTemplate.queryForObject(SELECTONE_FREEPOSTIMG,args,new PostImgRowMapper());
-			}
-			else if(postImgDTO.getSearchCondition().equals("marketPostSingleImg")) {
-				result = (List<PostImgDTO>) jdbcTemplate.queryForObject(SELECTONE_MARKETPOSTIMG,args,new PostImgRowMapper());
+				
+				result = jdbcTemplate.query(SELECTONE_HEADHUNTPOSTIMG, args, new PostImgRowMapper());
+				System.out.println("result값 : " + result);
+				
+			} else if(postImgDTO.getSearchCondition().equals("jobHuntPostSingleImg")) {
+				result = jdbcTemplate.query(SELECTONE_JOBHUNTPOSTIMG, args, new PostImgRowMapper());
+			} else if(postImgDTO.getSearchCondition().equals("freePostSingleImg")) {
+				result = jdbcTemplate.query(SELECTONE_FREEPOSTIMG, args, new PostImgRowMapper());
+			} else if(postImgDTO.getSearchCondition().equals("marketPostSingleImg")) {
+				result = jdbcTemplate.query(SELECTONE_MARKETPOSTIMG, args, new PostImgRowMapper());
 			}
 			
 		}catch(Exception e) {
@@ -210,11 +211,8 @@ class PostImgRowMapper implements RowMapper<PostImgDTO> {
 
 	@Override
 	public PostImgDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
-		// TODO Auto-generated method stub
-
 		PostImgDTO data = new PostImgDTO();
 		data.setPostImgName(rs.getString("POSTIMG_name"));
-
 		return data;
 	}
 
