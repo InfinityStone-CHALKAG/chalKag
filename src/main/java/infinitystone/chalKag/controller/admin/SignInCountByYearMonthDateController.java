@@ -9,8 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.List;
-
 @Controller
 public class SignInCountByYearMonthDateController {
 
@@ -18,7 +16,7 @@ public class SignInCountByYearMonthDateController {
   private AdminService adminService;
 
   @RequestMapping("/signInCountByYearMonthDate")
-  public @ResponseBody String signInCountByYearMonthDate(AdminDTO adminDTO, Gson gson, Model model) {
+  public @ResponseBody String signInCountByYearMonthDate(AdminDTO adminDTO, Gson gson) {
 
     adminDTO.setSearchCondition("signInCountByYearMonthDate");
     System.out.println("SignInCountByYearMonthDateController In로그 = [" + adminDTO + "]");
