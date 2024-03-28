@@ -31,6 +31,8 @@ public class HeadHuntPostListController {
     String headHuntPostListResult = gson.toJson(headHuntPostService.selectAll(headHuntPostDTO));
     String headHuntPostListImgResult = gson.toJson(postImgService.selectAll(postImgDTO));
 
+
+
     model.addAttribute("headHuntPostList", headHuntPostListResult);
     model.addAttribute("headHuntPostListImg", headHuntPostListImgResult);
 
