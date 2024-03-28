@@ -94,7 +94,8 @@ public class JobHuntPostDAO {
 			+ "		MEMBER.MEMBER_nickname, "
 			+ " 	PROFILEIMG.PROFILEIMG_name";
 	
-	
+	// 포스트아이디 최대값 가져오는 쿼리문
+	private static final String SELECTONE_MAXPOSTID = "SELECT MAX(JOBHUNTPOST_id) FROM JOBHUNTPOST";
 	
 
 	private static final String INSERT = "INSERT "
@@ -134,7 +135,7 @@ public class JobHuntPostDAO {
 
 		try {
 			if (jobHuntPostDTO.getSearchCondition().equals("jobHuntPostList")) {
-				result = (List<JobHuntPostDTO>) jdbcTemplate.query(SELECTALL_JOBHUNTPOST, new JobHuntPostSellecAllRowMapper());
+				result = (List<JobHuntPostDTO>) jdbcTemplate.query(SELECTALL_JOBHUNTPOST, new JobHuntPostSelecAllRowMapper());
 				System.out.println("JobHuntPostDAO(selectAll) 로그 = [" + result + "]");
 				return result;
 			}
@@ -153,7 +154,7 @@ public class JobHuntPostDAO {
 		Object[] args = { jobHuntPostDTO.getJobHuntPostId() };
 		try {
 			if (jobHuntPostDTO.getSearchCondition().equals("jobHuntPostSingle")) {
-				result = jdbcTemplate.queryForObject(SELECTONE_JOBHUNTPOST, args, new JobHuntPostSellectOneRowMapper());
+				result = jdbcTemplate.queryForObject(SELECTONE_JOBHUNTPOST, args, new JobHuntPostOneRowMapper());
 				System.out.println("JobHuntPostDAO(selectOne) 로그 = [" + result + "]");
 				return result;
 			}
@@ -197,7 +198,7 @@ public class JobHuntPostDAO {
 	}
 }
 
-class JobHuntPostSellecAllRowMapper implements RowMapper<JobHuntPostDTO> {
+class JobHuntPostSelecAllRowMapper implements RowMapper<JobHuntPostDTO> {
 
 	@Override
 	public JobHuntPostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -216,7 +217,7 @@ class JobHuntPostSellecAllRowMapper implements RowMapper<JobHuntPostDTO> {
 	}
 }
 
-class JobHuntPostSellectOneRowMapper implements RowMapper<JobHuntPostDTO> {
+class JobHuntPostOneRowMapper implements RowMapper<JobHuntPostDTO> {
 
 	@Override
 	public JobHuntPostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
