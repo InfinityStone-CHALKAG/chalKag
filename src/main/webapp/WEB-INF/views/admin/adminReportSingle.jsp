@@ -375,30 +375,30 @@
                                                     <div class="col col-md-3"><label for="text-input"
                                                             class=" form-control-label">Date</label></div>
                                                     <div class="col-12 col-md-9"><input type="text" id="text-input"
-                                                            name="text-input" class="form-control" readonly>
+                                                            name="text-input" class="form-control" value="${reportSingle.reportDate}" readonly>
                                                     </div>
                                                 </div>
                                                 <div class="row form-group">
                                                     <div class="col col-md-3"><label for="email-input"
                                                             class=" form-control-label">Reporter</label></div>
-                                                    <div class="col-12 col-md-9"><input type="email" id="email-input"
-                                                            name="email-input" class="form-control" readonly>
+                                                    <div class="col-12 col-md-9"><input type="email" id="memberId"
+                                                            name="memberId" class="form-control" value="${reportSingle.memberId}" readonly>
                                                     </div>
                                                 </div>
                                                 <div class="row form-group">
                                                     <div class="col col-md-3"><strong for="password-input"
                                                             class=" form-control-label">Reported</Strong></div>
-                                                    <div class="col-12 col-md-9"><input type="password"
-                                                            id="password-input" name="password-input" readonly
-                                                            placeholder="티모" class="form-control"></div>
+                                                    <div class="col-12 col-md-9"><input type="email"
+                                                            id="reportSuspector" name="reportSuspector"
+                                                            class="form-control"  value="${reportSingle.reportSuspector}" readonly></div>
                                                 </div>
 
                                                 <div class="row form-group">
                                                     <div class="col col-md-3"><label for="textarea-input"
                                                             class=" form-control-label">Textarea</label></div>
-                                                    <div class="col-12 col-md-9"><textarea name="textarea-input"
-                                                            id="textarea-input" rows="9" style="resize: none;"
-                                                            class="form-control"></textarea></div>
+                                                    <div class="col-12 col-md-9"><textarea name="reportContent"
+                                                            id="reportContent" rows="9" style="resize: none;"
+                                                            class="form-control" readonly>${reportSingle.reportContent}</textarea></div>
                                                 </div>
 
 
@@ -446,6 +446,7 @@
                                                             padding: 5px 10px;">Reject</button>
                                                     </div>
                                                 </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>

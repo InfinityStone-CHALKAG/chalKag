@@ -181,9 +181,16 @@
                         <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="box box-border">
                                 <div class="box-body">
+                                    <div style="display: flex; align-items: center;">
                                     <div>Basic Information <i class="ion-ios-information-outline"
                                             style="font-size: 16px; margin-bottom:15px"></i></div>
+                                            <c:if test="${sessionScope.member != null}">
+                                            <a href="writeReport?reportSuspector=${memberInfo.memberId}" class="btn btn-primary btn-sm" style="margin-left:61%">Report</a>
+                                            </c:if>
+                                            <c:if test="${sessionScope.member == null}">
+                                            </c:if>
 
+                                    </div>
                                     <div style="display: flex; align-items: center;">
                                         <figure class="featured-author-picture">
                                             <img src="profileImg/${memberInfo.profileImgName}" id="ImgPreview"
