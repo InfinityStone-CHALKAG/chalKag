@@ -51,13 +51,22 @@ public class AdminDAO {
       "SELECT 7, 'SAT') D " +
       "LEFT JOIN SIGNINLOG ON DAYOFWEEK(SIGNINLOG_date) = D.WEEKDAY " +
       "GROUP BY D.WEEKDAY, D.DAYOFWEEK " +
-      "ORDER BY  D.WEEKDAY";
+      "ORDER BY D.WEEKDAY";
+
+  //(관리자)연별 회원 수. 안승준
+  private static final String SELECT_SIGNUPCOUNTBYYEAR = "SELECT YEAR(MEMBER_signupdate) AS YEAR, " +
+      "COUNT(MEMBER_id) AS SIGNUPCOUNT " +
+      "FROM MEMBER " +
+      "WHERE MEMBER_grade = 'USER' " +
+      "GROUP BY YEAR(MEMBER_signupdate) " +
+      "ORDER BY YEAR(MEMBER_signupdate)";
 
   private static final String SELECTALL = "";
 
   // (관리자)성별별 가입자 수.안승준
   private static final String SELECTONE_SIGNUPCOUNTBYGENDERGROUP = "SELECT SUM(CASE WHEN MEMBER_gender = 'male' THEN 1 ELSE 0 END) AS MALEGROUP, "
-      + "SUM(CASE WHEN MEMBER_gender = 'female' THEN 1 ELSE 0 END) AS FEMALEGROUP " + "FROM MEMBER "
+      + "SUM(CASE WHEN MEMBER_gender = 'female' THEN 1 ELSE 0 END) AS FEMALEGROUP "
+      + "FROM MEMBER "
       + "WHERE MEMBER_grade = 'USER'";
 
   private static final String SELECTONE = "";
@@ -82,6 +91,10 @@ public class AdminDAO {
         return result;
       } else if (adminDTO.getSearchCondition().equals("signInCountByDayOfWeek")) {
         result = (List<AdminDTO>) jdbcTemplate.query(SELECTALL_SIGNINCOUNTBYDAYOFWEEK, new SignInCountByDayOfWeekRowMapper());
+        System.out.println("AdminDAO(selectAll) Out로그 = [" + result + "]");
+        return result;
+      } else if (adminDTO.getSearchCondition().equals("signUpCountByYear")) {
+        result = (List<AdminDTO>) jdbcTemplate.query(SELECT_SIGNUPCOUNTBYYEAR, new SignUpCountByYearRowMapper());
         System.out.println("AdminDAO(selectAll) Out로그 = [" + result + "]");
         return result;
       }
@@ -163,6 +176,16 @@ class SignInCountByDayOfWeekRowMapper implements RowMapper<AdminDTO> {
     AdminDTO adminDTO = new AdminDTO();
     adminDTO.setDayOfWeek(rs.getString("DAYOFWEEK"));
     adminDTO.setSignInCount(rs.getString("SIGNINCOUNT"));
+    return adminDTO;
+  }
+}
+
+class SignUpCountByYearRowMapper implements RowMapper<AdminDTO> {
+  @Override
+  public AdminDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+    AdminDTO adminDTO = new AdminDTO();
+    adminDTO.setYear(rs.getString("YEAR"));
+    adminDTO.setSignUpCount(rs.getString("SIGNUPCOUNT"));
     return adminDTO;
   }
 }

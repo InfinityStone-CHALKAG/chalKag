@@ -15,39 +15,49 @@ import java.time.format.DateTimeFormatter;
 @Controller
 public class AdminMainController {
 
-	@Autowired
-	private AdminService adminService;
+  @Autowired
+  private AdminService adminService;
 
-	@RequestMapping("/adminMain")
-	public String adminMain(AdminDTO adminDTO, Gson gson, Model model) {
-		System.out.println("AdminMainController In로그");
+  @RequestMapping("/adminMain")
+  public String adminMain(AdminDTO adminDTO, Gson gson, Model model) {
+    System.out.println("AdminMainController In로그");
 
-		adminDTO.setSearchCondition("signUpCountByAgeGroup");
+		
 
-		String signUpCountByAgeGroupResult = gson.toJson(adminService.signUpCountByAgeGroup(adminDTO));
 
-		model.addAttribute("signUpCountByAgeGroup", signUpCountByAgeGroupResult);
 
-		adminDTO.setSearchCondition("signUpCountByGenderGroup");
+    adminDTO.setSearchCondition("signUpCountByAgeGroup");
 
-		String signUpCountByGenderGroupResult = gson.toJson(adminService.signUpCountByGenderGroup(adminDTO));
+    String signUpCountByAgeGroupResult = gson.toJson(adminService.signUpCountByAgeGroup(adminDTO));
 
-		model.addAttribute("signUpCountByGenderGroup", signUpCountByGenderGroupResult);
+    model.addAttribute("signUpCountByAgeGroup", signUpCountByAgeGroupResult);
 
-		adminDTO.setSearchCondition("signInCountByYearMonthDate");
-		adminDTO.setYear(String.valueOf(LocalDate.now().getYear()));
-		adminDTO.setMonth(LocalDate.now().format(DateTimeFormatter.ofPattern("MM")));
+    adminDTO.setSearchCondition("signUpCountByGenderGroup");
 
-		String signInCountByYearMonthDateResult = gson.toJson(adminService.signInCountByYearMonthDate(adminDTO));
+    String signUpCountByGenderGroupResult = gson.toJson(adminService.signUpCountByGenderGroup(adminDTO));
 
-		model.addAttribute("signInCountByYearMonthDate", signInCountByYearMonthDateResult);
+    model.addAttribute("signUpCountByGenderGroup", signUpCountByGenderGroupResult);
 
-		adminDTO.setSearchCondition("signInCountByDayOfWeek");
+    adminDTO.setSearchCondition("signInCountByYearMonthDate");
+    adminDTO.setYear(String.valueOf(LocalDate.now().getYear()));
+    adminDTO.setMonth(LocalDate.now().format(DateTimeFormatter.ofPattern("MM")));
 
-		String signInCountByDayOfWeekResult = gson.toJson(adminService.signInCountByDayOfWeek(adminDTO));
+    String signInCountByYearMonthDateResult = gson.toJson(adminService.signInCountByYearMonthDate(adminDTO));
 
-		model.addAttribute("signInCountByDayOfWeek", signInCountByDayOfWeekResult);
+    model.addAttribute("signInCountByYearMonthDate", signInCountByYearMonthDateResult);
 
-		return "admin/adminMain";
-	}
+    adminDTO.setSearchCondition("signInCountByDayOfWeek");
+
+    String signInCountByDayOfWeekResult = gson.toJson(adminService.signInCountByDayOfWeek(adminDTO));
+
+    model.addAttribute("signInCountByDayOfWeek", signInCountByDayOfWeekResult);
+
+    adminDTO.setSearchCondition("signUpCountByYear");
+
+    String signUpCountByYearResult = gson.toJson(adminService.signUpCountByYear(adminDTO));
+
+    model.addAttribute("signUpCountByYear", signUpCountByYearResult);
+
+    return "admin/adminMain";
+  }
 }
