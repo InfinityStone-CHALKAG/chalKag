@@ -42,6 +42,12 @@ public class AdminMainController {
 
 		model.addAttribute("signInCountByYearMonthDate", signInCountByYearMonthDateResult);
 
+		adminDTO.setSearchCondition("signInCountByYearMonthDate");
+
+		String signInCountByDayOfWeekResult = gson.toJson(adminService.signInCountByDayOfWeek(adminDTO));
+
+		model.addAttribute("signInCountByDayOfWeek", signInCountByDayOfWeekResult);
+
 		return "admin/adminMain";
 	}
 }
