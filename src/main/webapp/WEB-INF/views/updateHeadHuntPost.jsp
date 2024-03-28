@@ -84,7 +84,7 @@
 							</div>	
 
 							<p>※ 이미지 사이즈는 30MB 이하만 올릴 수 있습니다.</p>
-							
+							<div id="imageData" data-images='${postImgList.postImgName}'></div>
 							<div class="form-group" style="margin-bottom: 4%;">
 								<input type="file" name="file" id="fileInput" accept="image/*"
 									style="display: none;" multiple> <input type="button"
@@ -148,7 +148,41 @@
 		function trimInput(element) {
 			element.value = element.value.trim();
 		}
+		
+		// 이미지 데이터가 포함된 요소를 선택
+		const imageDataElement = document.getElementById('imageData');
+		// data-images 속성에서 이미지 데이터를 읽어옴
+		const imagesData = imageDataElement.getAttribute('data-images');
+		
+		// JSON 형태의 문자열 데이터를 JavaScript 객체(배열)로 변환
+		const imagesArray = JSON.parse(imagesData);
+		
+		// imagesArray 배열을 사용하여 필요한 작업 수행 (이미 배열, 별도 할당 필요 없음)
+		imagesArray.forEach(function(imageName) {
+		    console.log(imageName);
+		});
+		
+		// 이미지를 미리보기 영역에 추가하는 함수
+		function addImagesToPreview(imagePaths) {
+		    var imageContainer = document.querySelector('.image-container');
+		    
+		    // 기존의 이미지들을 제거
+		    imageContainer.innerHTML = '';
 
+		    // 이미지 경로 배열을 순회하며 이미지 요소를 생성하고, 미리보기 영역에 추가
+		    imagePaths.forEach(function(path) {
+		        var img = document.createElement('img');
+		        img.src = path; // 이미지 경로 설정
+		        img.style.width = '100%'; // 미리보기 영역에 맞게 이미지 크기 조정
+		        imageContainer.appendChild(img);
+		    });
+		}
+
+		// 이미지 미리보기 로직 초기화
+		// addImagesToPreview(imagePaths);
+		// 이미지를 미리보기 영역에 추가하는 함수 호출 시, imagesArray를 직접 전달
+		addImagesToPreview(imagesArray);
+		
 		function validatePay(input) {
 			var cleanInput = input.value.replace(/,/g, '');
 			
@@ -172,9 +206,9 @@
 		    var input = document.getElementById('payInput');
 		  
 
-		    // 이 시점에서 폼 데이터는 쉼표가 제거된 숫자로 제출됩니다.
-		    // 필요한 경우 여기에서 event.preventDefault()를 호출하여 폼의 기본 제출을 방지하고,
-		    // AJAX 등을 사용하여 데이터를 처리할 수 있습니다.
+		    // 이 시점에서 폼 데이터는 쉼표가 제거된 숫자로 제출.
+		    // 필요한 경우 여기에서 event.preventDefault()를 호출하여 폼의 기본 제출을 방지,
+		    // AJAX 등을 사용하여 데이터를 처리.
 		});
 		
 		function formatNumber(input) {
