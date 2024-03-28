@@ -130,7 +130,7 @@ class FilterRowMapper implements RowMapper<MarketPostDTO> {
 		data.setMarketPostId(rs.getString("MARKETPOST_id"));
 		data.setMemberId(rs.getString("MEMBER_id"));
 		data.setMarketPostDate(rs.getString("MARKET_date"));
-		data.setMarketPostPrice(rs.getString("MARKETPOST_price"));
+		data.setMarketPostPrice(rs.getInt("MARKETPOST_price"));
 		data.setMarketPostCategory(rs.getString("MARKETPOST_category"));
 		data.setMarketPostCompany(rs.getString("MARKETPOST_company"));
 		data.setMarketPostStatus(rs.getString("MARKETPOST_status"));

@@ -11,13 +11,15 @@ public class JobHuntPostDTO {
 	private String jobHuntPostDate;
 	private String jobHuntPostRole;
 	private String jobHuntPostRegion;
-	private String jobHuntPostPay;
+	private int jobHuntPostPay;
 	private String jobHuntPostWorkDate;
 	private String jobHuntPostConcept;
 	private String jobHuntPostTitle;
 	private String jobHuntPostContent;
 	private String jobHuntPostViewcnt;
 	private String postImgName;			// 프리미엄 회원글 출력 시 이미지 출력
+	
+	private String postCategory;
 	
 	private String recommendCnt;
 	
