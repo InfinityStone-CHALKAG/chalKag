@@ -27,10 +27,10 @@
 									<li><a>Film</a></li>
 									<li>By 
 										<c:if test="${member == null || member != freePostSingle.memberId}">
-											<a href="/memberPage/memberId=${freePostSingle.memberId}">${freePostSingle.memberNickname}</a>
+											<a href="/memberPage?memberId=${freePostSingle.memberId}">${freePostSingle.memberNickname}</a>
 										</c:if>
 										<c:if test="${member == freePostSingle.memberId}">
-											<a href="/myPage/memberId=${member}">${freePostSingle.memberNickname}</a>
+											<a href="/myPage?memberId=${member}">${freePostSingle.memberNickname}</a>
 										</c:if>
 								</li>
 								</ul>

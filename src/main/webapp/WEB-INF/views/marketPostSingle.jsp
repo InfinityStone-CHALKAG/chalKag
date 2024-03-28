@@ -36,18 +36,26 @@
 								</ul>
 							</header>
 							<div class="main">
-								<div style="display: flex;">
-									<p>가격 : ${marketPostSingle.marketPostPrice}</p>
-									<p>상품 종류 : ${marketPostSingle.marketPostCategory}</p>
-									<p>제조사 : ${marketPostSingle.marketPostCompany}</p>
-									<p>판매상태 : ${marketPostSingle.marketPostStatus}</p>
-								</div>
-								<!-- 게시글 이미지 출력 추후 추가 -->
-								<div class="featured">
+									<div class="featured" style="margin-bottom: 100px;">
 									<figure>
 										<img src="images/news/img01.jpg">
-										<figcaption>Image by pexels.com</figcaption>
 									</figure>
+										<div class="postInfo">
+											<div class="postInfoTitle">Price</div>
+											<div class="postInfoContents">${marketPostSingle.marketPostPrice} </div>
+										</div>
+										<div  class="postInfo">
+											<div class="postInfoTitle">Category</div>
+											<div class="postInfoContents">${marketPostSingle.marketPostCategory}</div>
+										</div>
+										<div  class="postInfo">
+											<div class="postInfoTitle">Company</div>
+											<div class="postInfoContents">${marketPostSingle.marketPostCompany}</div>
+										</div>
+										<div  class="postInfo">
+											<div class="postInfoTitle">Status</div>
+											<div class="postInfoContents">${marketPostSingle.marketPostStatus}</div>
+										</div>
 								</div>
 
 								<!-- 게시글 내용 출력 -->
