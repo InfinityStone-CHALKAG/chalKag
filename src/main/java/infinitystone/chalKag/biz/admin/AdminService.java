@@ -23,5 +23,9 @@ public class AdminService {
     return adminDAO.selectAll(adminDTO);
   }
 
+  public List<AdminDTO> signInCountByDayOfWeek(AdminDTO adminDTO) {
+    return adminDAO.selectAll(adminDTO);
+  }
+
 
 }
