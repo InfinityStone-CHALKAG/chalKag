@@ -36,23 +36,23 @@ A person who reports false information to a public office or a public official f
                                         </div>
                                         <div class="col-md-6 col-sm-6">
                                             <form id="writeReport" method="post" action="writeReport"
-                                           onsubmit="return true">
+                                           onsubmit="return validateForm()">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label>Reporter<span class="required"></span></label>
-                                                        <input type="text" class="form-control" name="reportId" value="${memberInfo.memberId}"readonly>
+                                                        <label>Reporter</label>
+                                                        <input type="text" class="form-control" name="memberId" value="${sessionScope.member}"readonly>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label>Reported <span class="required"></span></label>
-                                                        <input type="text" class="form-control" name="reportSuspector" value="${memberInfo.memberNickname}" readonly>
+                                                        <label>Reported</label>
+                                                        <input type="text" class="form-control" name="reportSuspector" value="${reportInfo.reportSuspector}" readonly>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <label>Content <span class="required"></span></label>
-                                                        <textarea class="form-control" name="reportContent" required="" style="width:533px; height:166px; resize:none;"></textarea>
+                                                        <label>Content</label>
+                                                        <textarea id="reportContent" class="form-control" name="reportContent" style="width:533px; height:166px; resize:none;"></textarea>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
@@ -66,6 +66,7 @@ A person who reports false information to a public office or a public official f
                         </div>
                     </div>
                 </section>
+                <h3>${reportInfo.reportSuspector}</h3>
 
                 <chalKagTags:webFooter />
 
@@ -74,7 +75,18 @@ A person who reports false information to a public office or a public official f
 
             </body>
             <script>
+ function validateForm() {
+                    var reportContent = document.getElementById("reportContent").value;
+                    if (reportContent.trim() === "") {
 
+                        // SweetAlert으로 실패 메시지 표시
+                        swal("fail", "신고 내용을 작성해주세요.", "error", {
+                            button: "OK",
+                        });
+                        return false;
+                    }
+                
+ }
 
 
             </script>

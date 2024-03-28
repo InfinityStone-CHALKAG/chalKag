@@ -113,7 +113,7 @@ public class ReportDAO { // 신고 DAO
 	
 	// 사용 안 할 예정
 	public boolean update(ReportDTO reportDTO) {
-		return false;
+		return true;
 	}
 
 	// 신고글 삭제
