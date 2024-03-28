@@ -17,136 +17,191 @@ public class HeadHuntPostDTO { // 구인글 게시판 DTO 생성.전미지
 	private String headHuntPostTitle;		// 구인글 제목
 	private String headHuntPostContent;		// 구인글 내용
 	private String headHuntPostViewcnt;		// 구인글 조회수
+	private String postId;					// 게시글 아이디
+	private String postImgName;				// 게시글 이미지 이름
 	
-	private String PostCategory;			// 게시글 카테고리
+	private String postCategory;			// 게시글 카테고리
 	
 	private String recommendCnt;			// 게시글의 좋아요 수 
+	
 
 	private String searchCondition;			// 게시글 검색 조건
+
 
 	public String getHeadHuntPostId() {
 		return headHuntPostId;
 	}
 
+
 	public void setHeadHuntPostId(String headHuntPostId) {
 		this.headHuntPostId = headHuntPostId;
 	}
+
 
 	public String getMemberId() {
 		return memberId;
 	}
 
+
 	public void setMemberId(String memberId) {
 		this.memberId = memberId;
 	}
+
 
 	public String getMemberNickname() {
 		return memberNickname;
 	}
 
+
 	public void setMemberNickname(String memberNickname) {
 		this.memberNickname = memberNickname;
 	}
+
 
 	public String getProfileImgName() {
 		return profileImgName;
 	}
 
+
 	public void setProfileImgName(String profileImgName) {
 		this.profileImgName = profileImgName;
 	}
+
 
 	public String getHeadHuntPostDate() {
 		return headHuntPostDate;
 	}
 
+
 	public void setHeadHuntPostDate(String headHuntPostDate) {
 		this.headHuntPostDate = headHuntPostDate;
 	}
+
 
 	public String getHeadHuntPostRole() {
 		return headHuntPostRole;
 	}
 
+
 	public void setHeadHuntPostRole(String headHuntPostRole) {
 		this.headHuntPostRole = headHuntPostRole;
 	}
+
 
 	public String getHeadHuntPostRegion() {
 		return headHuntPostRegion;
 	}
 
+
 	public void setHeadHuntPostRegion(String headHuntPostRegion) {
 		this.headHuntPostRegion = headHuntPostRegion;
 	}
+
 
 	public int getHeadHuntPostPay() {
 		return headHuntPostPay;
 	}
 
+
 	public void setHeadHuntPostPay(int headHuntPostPay) {
 		this.headHuntPostPay = headHuntPostPay;
 	}
+
 
 	public String getHeadHuntPostWorkDate() {
 		return headHuntPostWorkDate;
 	}
 
+
 	public void setHeadHuntPostWorkDate(String headHuntPostWorkDate) {
 		this.headHuntPostWorkDate = headHuntPostWorkDate;
 	}
+
 
 	public String getHeadHuntPostConcept() {
 		return headHuntPostConcept;
 	}
 
+
 	public void setHeadHuntPostConcept(String headHuntPostConcept) {
 		this.headHuntPostConcept = headHuntPostConcept;
 	}
+
 
 	public String getHeadHuntPostTitle() {
 		return headHuntPostTitle;
 	}
 
+
 	public void setHeadHuntPostTitle(String headHuntPostTitle) {
 		this.headHuntPostTitle = headHuntPostTitle;
 	}
+
 
 	public String getHeadHuntPostContent() {
 		return headHuntPostContent;
 	}
 
+
 	public void setHeadHuntPostContent(String headHuntPostContent) {
 		this.headHuntPostContent = headHuntPostContent;
 	}
+
 
 	public String getHeadHuntPostViewcnt() {
 		return headHuntPostViewcnt;
 	}
 
+
 	public void setHeadHuntPostViewcnt(String headHuntPostViewcnt) {
 		this.headHuntPostViewcnt = headHuntPostViewcnt;
 	}
 
-	public String getPostCategory() {
-		return PostCategory;
+
+	public String getPostId() {
+		return postId;
 	}
 
-	public void setPostCategory(String postCategory) {
-		PostCategory = postCategory;
+
+	public void setPostId(String postId) {
+		this.postId = postId;
 	}
+
+
+	public String getPostImgName() {
+		return postImgName;
+	}
+
+
+	public void setPostImgName(String postImgName) {
+		this.postImgName = postImgName;
+	}
+
+
+	public String getPostCategory() {
+		return postCategory;
+	}
+
+
+	public void setPostCategory(String postCategory) {
+		this.postCategory = postCategory;
+	}
+
 
 	public String getRecommendCnt() {
 		return recommendCnt;
 	}
 
+
 	public void setRecommendCnt(String recommendCnt) {
 		this.recommendCnt = recommendCnt;
 	}
 
+
 	public String getSearchCondition() {
 		return searchCondition;
 	}
+
 
 	public void setSearchCondition(String searchCondition) {
 		this.searchCondition = searchCondition;
@@ -160,8 +215,8 @@ public class HeadHuntPostDTO { // 구인글 게시판 DTO 생성.전미지
 				+ ", headHuntPostPay=" + headHuntPostPay + ", headHuntPostWorkDate=" + headHuntPostWorkDate
 				+ ", headHuntPostConcept=" + headHuntPostConcept + ", headHuntPostTitle=" + headHuntPostTitle
 				+ ", headHuntPostContent=" + headHuntPostContent + ", headHuntPostViewcnt=" + headHuntPostViewcnt
-				+ ", PostCategory=" + PostCategory + ", recommendCnt=" + recommendCnt + ", searchCondition="
-				+ searchCondition + "]";
+				+ ", postId=" + postId + ", postImgName=" + postImgName + ", postCategory=" + postCategory
+				+ ", recommendCnt=" + recommendCnt + ", searchCondition=" + searchCondition + "]";
 	}
 	
 }	
