@@ -12,8 +12,8 @@ import infinitystone.chalKag.biz.jobHuntPost.JobHuntPostService;
 public class DeleteJobHuntPostController {
 	@Autowired
 	private JobHuntPostService jobHuntPostService;
-	
-	@RequestMapping(value = "/deleteJobHuntPost", method = RequestMethod.POST)
+
+	@RequestMapping(value = "/deleteJobHuntPost", method = RequestMethod.GET)
 	public String writeJobHuntPost(JobHuntPostDTO jobHuntPostDTO) {
 		// 사용자의 글을 삭제
 		if(!jobHuntPostService.delete(jobHuntPostDTO)) {

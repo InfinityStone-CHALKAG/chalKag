@@ -16,9 +16,6 @@ public class HeadHuntPostListController {
   @Autowired
   private HeadHuntPostService headHuntPostService;
 
-
-
-
   @RequestMapping("/headHuntPostList")
   public String headHuntPostList(Model model, HeadHuntPostDTO headHuntPostDTO, Gson gson) {
 

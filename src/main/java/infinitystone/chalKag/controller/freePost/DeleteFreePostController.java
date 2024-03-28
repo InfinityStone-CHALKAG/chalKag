@@ -12,8 +12,8 @@ import infinitystone.chalKag.biz.freePost.FreePostService;
 public class DeleteFreePostController {
 	@Autowired
 	private FreePostService freePostService;
-	
-	@RequestMapping(value = "/deleteFreePost", method = RequestMethod.POST)
+
+	@RequestMapping(value = "/deleteFreePost", method = RequestMethod.GET)
 	public String writeFreePost(FreePostDTO freePostDTO) {
 		// 사용자의 글을 삭제
 		if(!freePostService.delete(freePostDTO)) {

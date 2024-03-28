@@ -19,12 +19,18 @@ import java.util.UUID;
 
 @Controller
 public class WriteFreePostController {
+
 	@Autowired
 	private FreePostService freePostService;
-	
+
 	@Autowired
 	private PostImgService postImgService;
-	
+
+	@RequestMapping(value = "/writeFreePost", method = RequestMethod.GET)
+	public String writeFreePostPage() {
+		return "writeFreePost";
+	}
+
 	@RequestMapping(value = "/writeFreePost", method = RequestMethod.POST)
 	public String writeFreePost(FreePostDTO freePostDTO, PostImgDTO postImgDTO, HttpSession session, @RequestParam("file") MultipartFile[] files) {
 
