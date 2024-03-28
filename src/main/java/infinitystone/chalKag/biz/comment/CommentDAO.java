@@ -74,19 +74,14 @@ public class CommentDAO {
 		List<CommentDTO> result = null;
 		Object[] args = { commentDTO.getPostId() };
 		try {
-			if (commentDTO.getSearchCondition().equals("commentList")) {
 				result = (List<CommentDTO>) jdbcTemplate.query(SELECTALL,args,new CommentSelectAllRowMapper());
 				System.out.println("commentDTO(jobHuntPostSelectAll) 로그 =" + "[" + result + "]");
 				return result;
-			} 
-			else {
-				// 표시용
-			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
-		return null;
 	}
 
 	public CommentDTO selectOne(CommentDTO commentDTO) {

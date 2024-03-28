@@ -22,11 +22,6 @@ public class JobHuntPostDAO {
 			+ "     JOBHUNTPOST.JOBHUNTPOST_title, "
 			+ "     JOBHUNTPOST.JOBHUNTPOST_content, "
 			+ "     JOBHUNTPOST.JOBHUNTPOST_date, "
-			+ " CASE "
-			+ "     WHEN TIMESTAMPDIFF(MINUTE, JOBHUNTPOST.JOBHUNTPOST_date, NOW()) < 60 THEN CONCAT(TIMESTAMPDIFF(MINUTE, JOBHUNTPOST.JOBHUNTPOST_date, NOW()), ' 분 전') "
-			+ "     WHEN TIMESTAMPDIFF(HOUR, JOBHUNTPOST.JOBHUNTPOST_date, NOW()) < 24 THEN CONCAT(TIMESTAMPDIFF(HOUR, JOBHUNTPOST.JOBHUNTPOST_date, NOW()), ' 시간 전') "
-			+ "     ELSE CONCAT(TIMESTAMPDIFF(DAY, JOBHUNTPOST.JOBHUNTPOST_date, NOW()), ' 일 전') \n"
-			+ " END AS JOBHUNTPOST_date,"
 			+ "     JOBHUNTPOST.JOBHUNTPOST_viewcnt, "
 			+ "     COUNT(RECOMMEND.POST_id) AS RECOMMEND_cnt "
 			+ " FROM "
@@ -72,11 +67,6 @@ public class JobHuntPostDAO {
 		    + "		JOBHUNTPOST.JOBHUNTPOST_title, " 
 		    + "		JOBHUNTPOST.JOBHUNTPOST_content, "
 		    + "		JOBHUNTPOST.JOBHUNTPOST_date, "
-		    + " CASE "
-		    + "        WHEN TIMESTAMPDIFF(MINUTE, JOBHUNTPOST.JOBHUNTPOST_date, NOW()) < 60 THEN CONCAT(TIMESTAMPDIFF(MINUTE, JOBHUNTPOST.JOBHUNTPOST_date, NOW()), ' 분 전') "
-		    + "        WHEN TIMESTAMPDIFF(HOUR, JOBHUNTPOST.JOBHUNTPOST_date, NOW()) < 24 THEN CONCAT(TIMESTAMPDIFF(HOUR, JOBHUNTPOST.JOBHUNTPOST_date, NOW()), ' 시간 전') "
-		    + "        ELSE CONCAT(TIMESTAMPDIFF(DAY, JOBHUNTPOST.JOBHUNTPOST_date, NOW()), ' 일 전') "
-		    + " END AS JOBHUNTPOST_date," 
 			+ "		JOBHUNTPOST.JOBHUNTPOST_viewcnt, "
 			+ "		COUNT(RECOMMEND.POST_id) AS RECOMMEND_cnt "
 			+ "	FROM "
@@ -229,7 +219,7 @@ class JobHuntPostOneRowMapper implements RowMapper<JobHuntPostDTO> {
 		data.setJobHuntPostDate(rs.getString("JOBHUNTPOST_date"));
 		data.setJobHuntPostRole(rs.getString("JOBHUNTPOST_role"));
 		data.setJobHuntPostRegion(rs.getString("JOBHUNTPOST_region"));
-		data.setJobHuntPostPay(rs.getString("JOBHUNTPOST_pay"));
+		data.setJobHuntPostPay(rs.getInt("JOBHUNTPOST_pay"));
 		data.setJobHuntPostConcept(rs.getString("JOBHUNTPOST_workDate"));
 		data.setJobHuntPostConcept(rs.getString("JOBHUNTPOST_concept"));
 		data.setJobHuntPostTitle(rs.getString("JOBHUNTPOST_title"));

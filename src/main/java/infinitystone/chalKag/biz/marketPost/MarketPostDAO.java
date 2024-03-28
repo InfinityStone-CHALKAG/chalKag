@@ -20,11 +20,6 @@ public class MarketPostDAO {
 			+ "	MARKETPOST.MEMBER_id, " 
 			+ " MEMBER.MEMBER_nickname, "
 			+ " MARKETPOST.MARKETPOST_date,"
-			+ " CASE "
-			+ "        WHEN TIMESTAMPDIFF(MINUTE, MARKETPOST.MARKETPOST_date, NOW()) < 60 THEN CONCAT(TIMESTAMPDIFF(MINUTE, MARKETPOST.MARKETPOST_date, NOW()), ' 분 전') "
-			+ "        WHEN TIMESTAMPDIFF(HOUR, MARKETPOST.MARKETPOST_date, NOW()) < 24 THEN CONCAT(TIMESTAMPDIFF(HOUR, MARKETPOST.MARKETPOST_date, NOW()), ' 시간 전') "
-			+ "        ELSE CONCAT(TIMESTAMPDIFF(DAY, MARKETPOST.MARKETPOST_date, NOW()), ' 일 전') "
-			+ "    END AS MARKETPOST_date," 
 			+ " MARKETPOST.MARKETPOST_title, " 
 			+ "	MARKETPOST.MARKETPOST_content, "
 			+ "	MARKETPOST.MARKETPOST_viewcnt, " 
@@ -62,11 +57,6 @@ public class MarketPostDAO {
 			+ "	MARKETPOST.MEMBER_id, "
 			+ " MEMBER.MEMBER_nickname, " 
 			+ "	MARKETPOST.MARKETPOST_date, "
-			+ " CASE "
-			+ "        WHEN TIMESTAMPDIFF(MINUTE, MARKETPOST.MARKETPOST_date, NOW()) < 60 THEN CONCAT(TIMESTAMPDIFF(MINUTE, MARKETPOST.MARKETPOST_date, NOW()), ' 분 전') "
-			+ "        WHEN TIMESTAMPDIFF(HOUR, MARKETPOST.MARKETPOST_date, NOW()) < 24 THEN CONCAT(TIMESTAMPDIFF(HOUR, MARKETPOST.MARKETPOST_date, NOW()), ' 시간 전') "
-			+ "        ELSE CONCAT(TIMESTAMPDIFF(DAY, MARKETPOST.MARKETPOST_date, NOW()), ' 일 전') "
-			+ "    END AS MARKETPOST_date,"
 			+ "	MARKETPOST.MARKETPOST_price, " 
 			+ "	MARKETPOST.MARKETPOST_category, "
 			+ "	MARKETPOST.MARKETPOST_company, " 
@@ -194,7 +184,7 @@ class MarketPostSelectOneRowMapper implements RowMapper<MarketPostDTO> {
 		data.setMemberNickname(rs.getString("MEMBER_nickname"));
 		data.setProfileImgName(rs.getString("PROFILEIMG_name"));
 		data.setMarketPostDate(rs.getString("MARKETPOST_date"));
-		data.setMarketPostPrice(rs.getString("MARKETPOST_price"));
+		data.setMarketPostPrice(rs.getInt("MARKETPOST_price"));
 		data.setMarketPostCategory(rs.getString("MARKETPOST_category"));
 		data.setMarketPostCompany(rs.getString("MARKETPOST_company"));
 		data.setMarketPostStatus(rs.getString("MARKETPOST_status"));
