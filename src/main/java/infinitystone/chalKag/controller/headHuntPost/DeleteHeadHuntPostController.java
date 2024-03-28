@@ -13,7 +13,7 @@ public class DeleteHeadHuntPostController {
 	@Autowired
 	private HeadHuntPostService headHuntPostService;
 	
-	@RequestMapping(value = "/deleteHeadHuntPost", method = RequestMethod.POST)
+	@RequestMapping(value = "/deleteHeadHuntPost", method = RequestMethod.GET)
 	public String writeHeadHuntPost(HeadHuntPostDTO headHuntPostDTO) {
 		// 사용자의 글을 삭제
 		if(!headHuntPostService.delete(headHuntPostDTO)) {

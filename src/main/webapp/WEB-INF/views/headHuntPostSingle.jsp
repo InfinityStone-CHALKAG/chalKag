@@ -53,17 +53,13 @@
 								</ul>
 							</header>
 						<div class="main">
-								<!-- 게시글 이미지 출력 추후 추가 -->
+							
+								<c:forEach var="postImgList" items="${postImgList}">
+										<figure>
+											<img src="/postImg/${postImgList.postImgName}">
+										</figure>
+								</c:forEach>
 								<div class="featured" style="margin-bottom: 100px; display: flex;">
-									<div class="owl-carousel owl-theme" id="mainImg">
-										<c:forEach var="postImgList" items="${postImgList}">
-									 		<div class="item">
-												<figure>
-													 <img src="/postImg/${postImgList.postImgName}">
-												</figure>
-											</div>
-										</c:forEach>
-									</div>
 										<div>
 											<div class="postInfo">
 												<div class="postInfoTitle">Role</div>
