@@ -194,6 +194,10 @@ public class MemberDAO {
       "SET MEMBER_introduction = ? " +
       "WHERE MEMBER_id = ?";
 
+  private static final String UPDATE_CHANGEGRADE = "UPDATE MEMBER " +
+      "SET MEMBER_grade = 'PREMIUM' " +
+      "WHERE MEMBER_id = ?";
+
   // 회원 탈퇴.안승준
   private static final String UPDATE_DELETEACCOUNT = "UPDATE MEMBER " +
       "SET MEMBER_grade = 'delete' " +
@@ -316,8 +320,13 @@ public class MemberDAO {
         return false;
       }
       return true;
+    } else if (memberDTO.getSearchCondition().equals("changeGrade")) {
+      if (jdbcTemplate.update(UPDATE_CHANGEGRADE, memberDTO.getMemberId()) <= 0) {
+        return false;
+      }
+      return true;
     } else if (memberDTO.getSearchCondition().equals("deleteAccount")) {
-      if (jdbcTemplate.update(UPDATE_DELETEACCOUNT, memberDTO.getMemberGrade(), memberDTO.getMemberId()) <= 0) {
+      if (jdbcTemplate.update(UPDATE_DELETEACCOUNT, memberDTO.getMemberId()) <= 0) {
         return false;
       }
       return true;

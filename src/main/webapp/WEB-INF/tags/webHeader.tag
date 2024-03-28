@@ -157,7 +157,7 @@
 									<li><a href="#"><i class="icon ion-log-out"></i> Logout</a></li>
 								</ul>
 							</li>
-							<li><a href="#">Chat</a></li>
+							<li><a href="payment">Chat</a></li>
 							</li>
 						</ul>
 					</div>

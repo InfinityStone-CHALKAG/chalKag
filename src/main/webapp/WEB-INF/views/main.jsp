@@ -574,9 +574,11 @@
                                 <c:if test="${sessionScope.member != null}">
                                     <div class="featured-author-cover"
                                          style="background-image: url('css/user/images/news/img15.jpg');">
+                                        <c:if test="${memberInfo.memberGrade.equals('PREMIUM')}">
                                         <div class="badges">
                                             <div class="badge-item"><i class="ion-star"></i> PREMIUM</div>
                                         </div>
+                                        </c:if>
                                         <div class="featured-author-center">
                                             <figure class="featured-author-picture">
                                                 <img src="profileImg/${memberInfo.profileImgName}" alt="Sample Article"
