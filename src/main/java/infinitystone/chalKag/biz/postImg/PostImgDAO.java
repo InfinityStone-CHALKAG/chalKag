@@ -28,40 +28,40 @@ public class PostImgDAO {
 //			+ " ORDER BY POSTIMG.POSTIMG_id DESC  "
 //			+ " LIMIT 1";
 	
-	private static final String SELECTALL_HEADHUNTPOSTIMG ="SELECT HEADHUNTPOST_id ,\n"
-			+ "       (SELECT POSTIMG_name\n"
-			+ "        FROM POSTIMG\n"
-			+ "        WHERE POSTIMG.POST_id = headhuntpost.HEADHUNTPOST_id\n"
-			+ "        ORDER BY POSTIMG_id DESC\n"
-			+ "        LIMIT 1) AS POSTIMG_name\n"
-			+ "FROM headhuntpost ";
-	
-	private static final String SELECTALL_JOBHUNTPOSTIMG = "SELECT "
-			+ "	POSTIMG.POSTIMG_name, JOBHUNTPOST.JOBHUNTPOST_id  "
-			+ "	FROM "
-			+ " POSTIMG "
-			+ " INNER JOIN JOBHUNTPOST "
-			+ "	ON POSTIMG.POST_id = JOBHUNTPOST.JOBHUNTPOST_id "
-			+ "	ORDER BY POSTIMG.POSTIMG_id DESC "
-			+ "	LIMIT 1";
-	
-	private static final String SELECTALL_FREEPOSTIMG = "SELECT "
-			+ "	POSTIMG.POSTIMG_name, FREEPOST.FREEPOST_id "
-			+ "	FROM "
-			+ "	POSTIMG "
-			+ "	INNER JOIN FREETPOST "
-			+ "	ON POSTIMG.POST_id = FREEPOST.FREEPOST_id "
-			+ "	ORDER BY POSTIMG.POSTIMG_id DESC "
-			+ "	LIMIT 1";
-	
-	private static final String SELECTALL_MARKETPOSTIMG = "SELECT "
-			+ "	POSTIMG.POSTIMG_name, MARKETPOST.MARKETPOST_id "
-			+ "	FROM "
-			+ "	POSTIMG "
-			+ "	INNER JOIN MARKETPOST "
-			+ "	ON POSTIMG.POST_id = MARKETPOST.MARKETPOST_id "
-			+ "	ORDER BY POSTIMG.POSTIMG_id DESC "
-			+ "	LIMIT 1";
+//	private static final String SELECTALL_HEADHUNTPOSTIMG ="SELECT HEADHUNTPOST_id ,\n"
+//			+ "       (SELECT POSTIMG_name\n"
+//			+ "        FROM POSTIMG\n"
+//			+ "        WHERE POSTIMG.POST_id = headhuntpost.HEADHUNTPOST_id\n"
+//			+ "        ORDER BY POSTIMG_id DESC\n"
+//			+ "        LIMIT 1) AS POSTIMG_name\n"
+//			+ "FROM headhuntpost ";
+//	
+//	private static final String SELECTALL_JOBHUNTPOSTIMG = "SELECT "
+//			+ "	POSTIMG.POSTIMG_name, JOBHUNTPOST.JOBHUNTPOST_id  "
+//			+ "	FROM "
+//			+ " POSTIMG "
+//			+ " INNER JOIN JOBHUNTPOST "
+//			+ "	ON POSTIMG.POST_id = JOBHUNTPOST.JOBHUNTPOST_id "
+//			+ "	ORDER BY POSTIMG.POSTIMG_id DESC "
+//			+ "	LIMIT 1";
+//	
+//	private static final String SELECTALL_FREEPOSTIMG = "SELECT "
+//			+ "	POSTIMG.POSTIMG_name, FREEPOST.FREEPOST_id "
+//			+ "	FROM "
+//			+ "	POSTIMG "
+//			+ "	INNER JOIN FREETPOST "
+//			+ "	ON POSTIMG.POST_id = FREEPOST.FREEPOST_id "
+//			+ "	ORDER BY POSTIMG.POSTIMG_id DESC "
+//			+ "	LIMIT 1";
+//	
+//	private static final String SELECTALL_MARKETPOSTIMG = "SELECT "
+//			+ "	POSTIMG.POSTIMG_name, MARKETPOST.MARKETPOST_id "
+//			+ "	FROM "
+//			+ "	POSTIMG "
+//			+ "	INNER JOIN MARKETPOST "
+//			+ "	ON POSTIMG.POST_id = MARKETPOST.MARKETPOST_id "
+//			+ "	ORDER BY POSTIMG.POSTIMG_id DESC "
+//			+ "	LIMIT 1";
 	
 	// --------------------------------------------------------------------------------------------------------------------
 	// 프리미엄 회원 작성글 이미지 불러오기
@@ -95,14 +95,28 @@ public class PostImgDAO {
 			+ "	LIMIT 1";
 	
 	
-	private static final String SELECTONE = "";
-//			"SELECT "
-//			+ "	POSTIMG.POST_id, POSTIMG.POSTIMG_name "
-//			+ "	FROM "
-//			+ "	POSTIMG "
-//			+ "	ON POSTIMG.POST_id = ? "
-//			+ "	ORDER BY POSTIMG.POSTIMG_id DESC "
-//			+ "	LIMIT 1";
+	// 상세 보기 시 이미지 
+	private static final String SELECTONE_HEADHUNTPOSTIMG = "SELECT POSTIMG.POSTIMG_name, HEADHUNTPOST.HEADHUNTPOST_id "
+			+ "FROM POSTIMG "
+			+ "INNER JOIN HEADHUNTPOST ON POSTIMG.POST_id = HEADHUNTPOST.HEADHUNTPOST_id "
+			+ "WHERE POSTIMG.POST_id = ?";
+	
+	private static final String SELECTONE_JOBHUNTPOSTIMG = "SELECT POSTIMG.POSTIMG_name, JOBHUNTPOST.JOBHUNTPOST_id "
+			+ "	FROM POSTIMG "
+			+ "	INNER JOIN JOBHUNTPOST ON POSTIMG.POST_id = JOBHUNTPOST.JOBHUNTPOST_id "
+			+ "	WHERE POSTIMG.POST_id = ? ";
+	
+	private static final String SELECTONE_FREEPOSTIMG = "SELECT POSTIMG.POSTIMG_name, FREEPOST.FREEPOST_id "
+			+ "	FROM POSTIMG "
+			+ "	INNER JOIN FREEPOST ON POSTIMG.POST_id = FREEPOST.FREEPOST_id "
+			+ "	WHERE POSTIMG.POST_id = ? ";
+	
+	private static final String SELECTONE_MARKETPOSTIMG = "SELECT POSTIMG.POSTIMG_name, MARKETPOST.MARKETPOST_id "
+			+ "	FROM POSTIMG "
+			+ "	INNER JOIN MARKETPOST ON POSTIMG.POST_id = MARKETPOST.MARKETPOST_id "
+			+ " WHERE POSTIMG.POST_id = ? ";
+	
+	
 	private static final String INSERT = "INSERT INTO POSTIMG (POST_id, POSTIMG_name) VALUES (?, ?)";
 	private static final String UPDATE = "UPDATE POSTIMG"
 										+ "SET"
@@ -114,29 +128,9 @@ public class PostImgDAO {
 	public List<PostImgDTO> selectAll(PostImgDTO postImgDTO) {
 		List<PostImgDTO> result = null;
 		try {
-					// 구직글 전체 불러오기 이미지
-			if(postImgDTO.getSearchCondition().equals("headHuntPostListImg")) {
-				result = (List<PostImgDTO>) jdbcTemplate.query(SELECTALL_HEADHUNTPOSTIMG, new PostImgRowMapper());
-				System.out.println("PostImgDAO(headHuntPostImgSellectAll) 로그 = [" + result + "]");
-				
-			}
-					// 구인글 전체 불러오기 이미지
-			else if(postImgDTO.getSearchCondition().equals("jobHuntPostListImg")) {
-				result = (List<PostImgDTO>) jdbcTemplate.query(SELECTALL_JOBHUNTPOSTIMG, new PostImgRowMapper());
-				System.out.println("PostImgDAO(jobHuntPostImgSellectAll) 로그 = [" + result + "]");
-			}
-					// 자유글 전체 불러오기 이미지
-			else if(postImgDTO.getSearchCondition().equals("freePostListImg")) {
-				result = (List<PostImgDTO>) jdbcTemplate.query(SELECTALL_FREEPOSTIMG, new PostImgRowMapper());
-				System.out.println("PostImgDAO(freePostImgSellectAll) 로그 = [" + result + "]");
-			}
-					// 장터글 전체 불러오기 이미지
-			else if(postImgDTO.getSearchCondition().equals("marketPostListImg")) {
-				result = (List<PostImgDTO>) jdbcTemplate.query(SELECTALL_MARKETPOSTIMG, new PostImgRowMapper());
-				System.out.println("PostImgDAO(marektPostImgSellectAll) 로그 = [" + result + "]");
-	 		}
+			Object[] args = {postImgDTO.getPostImgName()};
 					// 프리미엄 회원 구인글 불러오기 이미지
-			else if(postImgDTO.getSearchCondition().equals("headHuntPostPremiumListImg")){
+			if(postImgDTO.getSearchCondition().equals("headHuntPostPremiumListImg")){
 	 			result = (List<PostImgDTO>) jdbcTemplate.query(SELECTALL_PREMIUMHEADHUNTPOSTIMG, new PostImgRowMapper());
 	 			System.out.println("PostImgDAO(headHuntPostPremiumImgSellectAll) 로그 = [" + result + "]");
 			}
@@ -156,6 +150,19 @@ public class PostImgDAO {
 	 			result = (List<PostImgDTO>) jdbcTemplate.query(SELECTALL_PREMIUMMARKETPOSTIMG, new PostImgRowMapper());
 	 			System.out.println("PostImgDAO(marketPostPremiumImgSellectAll) 로그 = [" + result + "]");
 			}
+			// 상세보기 이미지 출력
+			else if(postImgDTO.getSearchCondition().equals("headHuntPostSingleImg")) {
+				result = (List<PostImgDTO>) jdbcTemplate.queryForObject(SELECTONE_HEADHUNTPOSTIMG,args,new PostImgRowMapper());
+			}
+			else if(postImgDTO.getSearchCondition().equals("jobHuntPostSingleImg")) {
+				result = (List<PostImgDTO>) jdbcTemplate.queryForObject(SELECTONE_JOBHUNTPOSTIMG,args,new PostImgRowMapper());
+			}
+			else if(postImgDTO.getSearchCondition().equals("freePostSingleImg")) {
+				result = (List<PostImgDTO>) jdbcTemplate.queryForObject(SELECTONE_FREEPOSTIMG,args,new PostImgRowMapper());
+			}
+			else if(postImgDTO.getSearchCondition().equals("marketPostSingleImg")) {
+				result = (List<PostImgDTO>) jdbcTemplate.queryForObject(SELECTONE_MARKETPOSTIMG,args,new PostImgRowMapper());
+			}
 			
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -165,6 +172,7 @@ public class PostImgDAO {
 	}
 
 	public PostImgDTO selectOne(PostImgDTO postImgDTO) {
+		
 		return null;
 	}
 
