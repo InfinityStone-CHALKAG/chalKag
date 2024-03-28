@@ -94,7 +94,8 @@ public class JobHuntPostDAO {
 			+ "		MEMBER.MEMBER_nickname, "
 			+ " 	PROFILEIMG.PROFILEIMG_name";
 	
-	
+	// 포스트아이디 최대값 가져오는 쿼리문
+	private static final String SELECTONE_MAXPOSTID = "SELECT MAX(JOBHUNTPOST_id) FROM JOBHUNTPOST";
 	
 
 	private static final String INSERT = "INSERT "

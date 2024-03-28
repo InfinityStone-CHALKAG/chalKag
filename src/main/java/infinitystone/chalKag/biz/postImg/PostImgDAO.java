@@ -5,6 +5,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import infinitystone.chalKag.biz.headHuntPost.HeadHuntPostDTO;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -16,14 +18,23 @@ public class PostImgDAO {
 	private JdbcTemplate jdbcTemplate;
 								// 해당 카테고리 전체 출력 (이미지만)
 
-	private static final String SELECTALL_HEADHUNTPOSTIMG = " SELECT "
-			+ " POSTIMG.POSTIMG_name, HEADHUNTPOST.HEADHUNTPOST_id  "
-			+ " FROM "
-			+ " POSTIMG "
-			+ " INNER JOIN HEADHUNTPOST  "
-			+ " ON POSTIMG.POST_id = HEADHUNTPOST.HEADHUNTPOST_id  "
-			+ " ORDER BY POSTIMG.POSTIMG_id DESC  "
-			+ " LIMIT 1";
+//	private static final String SELECTALL_HEADHUNTPOSTIMG = " SELECT "
+//			+ " POSTIMG.POSTIMG_name, HEADHUNTPOST.HEADHUNTPOST_id  "
+//			+ " FROM "
+//			+ " POSTIMG "
+//			+ " INNER JOIN "
+//			+ " HEADHUNTPOST  "
+//			+ " ON POSTIMG.POST_id = HEADHUNTPOST.HEADHUNTPOST_id  "
+//			+ " ORDER BY POSTIMG.POSTIMG_id DESC  "
+//			+ " LIMIT 1";
+	
+	private static final String SELECTALL_HEADHUNTPOSTIMG ="SELECT HEADHUNTPOST_id ,\n"
+			+ "       (SELECT POSTIMG_name\n"
+			+ "        FROM POSTIMG\n"
+			+ "        WHERE POSTIMG.POST_id = headhuntpost.HEADHUNTPOST_id\n"
+			+ "        ORDER BY POSTIMG_id DESC\n"
+			+ "        LIMIT 1) AS POSTIMG_name\n"
+			+ "FROM headhuntpost ";
 	
 	private static final String SELECTALL_JOBHUNTPOSTIMG = "SELECT "
 			+ "	POSTIMG.POSTIMG_name, JOBHUNTPOST.JOBHUNTPOST_id  "
@@ -85,6 +96,13 @@ public class PostImgDAO {
 	
 	
 	private static final String SELECTONE = "";
+//			"SELECT "
+//			+ "	POSTIMG.POST_id, POSTIMG.POSTIMG_name "
+//			+ "	FROM "
+//			+ "	POSTIMG "
+//			+ "	ON POSTIMG.POST_id = ? "
+//			+ "	ORDER BY POSTIMG.POSTIMG_id DESC "
+//			+ "	LIMIT 1";
 	private static final String INSERT = "INSERT INTO POSTIMG (POST_id, POSTIMG_name) VALUES (?, ?)";
 	private static final String UPDATE = "UPDATE POSTIMG"
 										+ "SET"
@@ -147,7 +165,6 @@ public class PostImgDAO {
 	}
 
 	public PostImgDTO selectOne(PostImgDTO postImgDTO) {
-
 		return null;
 	}
 
@@ -188,11 +205,10 @@ class PostImgRowMapper implements RowMapper<PostImgDTO> {
 		// TODO Auto-generated method stub
 
 		PostImgDTO data = new PostImgDTO();
-
-		data.setPostImgId(rs.getString("POSTIMG_id"));
 		data.setPostImgName(rs.getString("POSTIMG_name"));
 
 		return data;
 	}
 
 }
+
