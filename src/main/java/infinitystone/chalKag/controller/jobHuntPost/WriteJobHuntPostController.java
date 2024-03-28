@@ -20,18 +20,18 @@ import java.util.UUID;
 @Controller
 public class WriteJobHuntPostController {
 
-  @Autowired
-  private JobHuntPostService jobHuntPostService;
+	@Autowired
+	private JobHuntPostService jobHuntPostService;
 
-  @Autowired
-  private PostImgService postImgService;
+	@Autowired
+	private PostImgService postImgService;
 
-  @RequestMapping(value = "/writeJobHuntPost", method = RequestMethod.GET)
-  public String writeJobHuntPostPage() {
-    return "writeJobHuntPost";
-  }
+	@RequestMapping(value = "/writeJobHuntPost", method = RequestMethod.GET)
+	public String writeJobHuntPostPage() {
+		return "writeJobHuntPost";
+	}
 
-  @RequestMapping(value = "/writeJobHuntPost", method = RequestMethod.POST)
+	@RequestMapping(value = "/writeJobHuntPost", method = RequestMethod.POST)
 	public String writeJobHuntPost(JobHuntPostDTO jobHuntPostDTO, PostImgDTO postImgDTO, HttpSession session, @RequestParam("file") MultipartFile[] files) {
 
 		jobHuntPostDTO.setMemberId((String) session.getAttribute("member"));

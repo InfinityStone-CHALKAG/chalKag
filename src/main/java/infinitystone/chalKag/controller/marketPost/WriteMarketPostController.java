@@ -20,18 +20,18 @@ import java.util.UUID;
 @Controller
 public class WriteMarketPostController {
 
-  @Autowired
-  private MarketPostService marketPostService;
+	@Autowired
+	private MarketPostService marketPostService;
 
-  @Autowired
-  private PostImgService postImgService;
+	@Autowired
+	private PostImgService postImgService;
 
-  @RequestMapping(value = "/writeMarketPost", method = RequestMethod.GET)
-  public String writeMarketPostPage() {
-    return "writeMarketPost";
-  }
+	@RequestMapping(value = "/writeMarketPost", method = RequestMethod.GET)
+	public String writeMarketPostPage() {
+		return "writeMarketPost";
+	}
 
-  @RequestMapping(value = "/writeMarketPost", method = RequestMethod.POST)
+	@RequestMapping(value = "/writeMarketPost", method = RequestMethod.POST)
 	public String writeMarketPost(MarketPostDTO marketPostDTO, PostImgDTO postImgDTO, HttpSession session, @RequestParam("file") MultipartFile[] files) {
 
 		marketPostDTO.setMemberId((String) session.getAttribute("member"));

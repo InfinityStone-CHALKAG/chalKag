@@ -16,16 +16,16 @@ public class WriteReplyController {
 	private ReplyService replyService;
 	
 	@RequestMapping (value="/writeReply", method=RequestMethod.POST)
-	public @ResponseBody ReplyDTO writeReply(ReplyDTO replyDTO){
+	public @ResponseBody boolean writeReply(ReplyDTO replyDTO){
 		System.out.println("[WriteReplyController] Input 로그");
 		boolean replyInsertResult= replyService.insert(replyDTO);
 
 		if(replyInsertResult) {
 			System.out.println("[WriteReplyController] 댓글 작성 성공");
-			return replyDTO;
+			return true;
 		}
 		System.out.println("[WriteReplyController] 댓글 작성 실패");
-		return null;
+		return false;
 	}
 	
 }

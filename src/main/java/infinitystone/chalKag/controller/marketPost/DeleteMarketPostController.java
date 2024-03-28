@@ -12,8 +12,8 @@ import infinitystone.chalKag.biz.marketPost.MarketPostService;
 public class DeleteMarketPostController {
 	@Autowired
 	private MarketPostService marketPostService;
-	
-	@RequestMapping(value = "/deleteMarketPost", method = RequestMethod.POST)
+
+	@RequestMapping(value = "/deleteMarketPost", method = RequestMethod.GET)
 	public String writeMarketPost(MarketPostDTO marketPostDTO) {
 		// 사용자의 글을 삭제
 		if(!marketPostService.delete(marketPostDTO)) {

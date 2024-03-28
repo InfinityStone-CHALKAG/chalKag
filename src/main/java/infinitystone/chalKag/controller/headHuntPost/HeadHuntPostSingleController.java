@@ -33,12 +33,9 @@ public class HeadHuntPostSingleController {
 
 		headHuntPostDTO.setSearchCondition("headHuntPostSingle");
 		headHuntPostDTO = headHuntPostService.selectOne(headHuntPostDTO);
-		System.out.println("확인용 구인글 DTO :" + headHuntPostDTO);
 		commentDTO.setPostId(headHuntPostDTO.getHeadHuntPostId());
 		postImgDTO.setSearchCondition("headHuntPostSingleImg");
 		postImgDTO.setPostId(headHuntPostDTO.getHeadHuntPostId());
-		
-		System.out.println("확인용 확인용확인용 : "  + postImgDTO.getPostId());
 		
 		List<PostImgDTO> postImgList = postImgService.selectAll(postImgDTO);
 		List<CommentDTO> commentList = commentService.selectAll(commentDTO);
