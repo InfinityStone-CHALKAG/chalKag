@@ -75,7 +75,7 @@ public class AdminDAO {
         System.out.println("AdminDAO(selectAll) Out로그 = [" + result + "]");
         return result;
       } else if (adminDTO.getSearchCondition().equals("signInCountByYearMonthDate")) {
-        Object[] args = {adminDTO.getYear(), adminDTO.getMonth(), adminDTO.getYear(), adminDTO.getMonth()};
+        Object[] args = {adminDTO.getYear(), adminDTO.getMonth()};
         result = (List<AdminDTO>) jdbcTemplate.query(SELECTALL_SIGNINCOUNTBYYEARMONTHDATE, args,
             new SignInCountByYearMonthDateRowMapper());
         System.out.println("AdminDAO(selectAll) Out로그 = [" + result + "]");
