@@ -416,7 +416,7 @@
                                                 <div class="row">
                                                     <div class="col-lg-8">
                                                         <div class="card-body">
-                                                            <canvas id="singleLineChart1"></canvas>
+                                                            <canvas id="signInCountByDayOfWeekBar"></canvas>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-4">
@@ -496,7 +496,6 @@
                                                     </div>
 
                                                 </div>
-                                                첫번째 탭 내용
                                             </div>
 
 
@@ -524,7 +523,7 @@
                                                                 <option value="12">12월</option>
                                                                 <!-- 월 옵션을 계속 추가하세요 -->
                                                             </select>
-                                                            <canvas id="singleLineChart2"></canvas>
+                                                            <canvas id="signInCountByYearMonthDateLine"></canvas>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-4">
@@ -572,14 +571,13 @@
                                                         </div> <!-- /.card-body -->
                                                     </div>
                                                 </div> <!-- /.row -->
-                                                두번째 탭 내용
                                             </div>
 
                                             <div id="tab3" class="tab__content">
                                                 <div class="row">
                                                     <div class="col-lg-8">
                                                         <div class="card-body">
-                                                            <canvas id="singleLineChart3"></canvas>
+                                                            <canvas id="signUpCountByYearLine"></canvas>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-4">
@@ -627,7 +625,6 @@
                                                         </div> <!-- /.card-body -->
                                                     </div>
                                                 </div> <!-- /.row -->
-                                                세번째 탭 내용
                                             </div>
 
 
@@ -635,7 +632,7 @@
                                                 <div class="row">
                                                     <div class="col-lg-8">
                                                         <div class="card-body">
-                                                            <canvas id="singleBarChart4"></canvas>
+                                                            <canvas id="signUpCountByAgeGroupBar"></canvas>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-4">
@@ -683,13 +680,12 @@
                                                         </div> <!-- /.card-body -->
                                                     </div>
                                                 </div> <!-- /.row -->
-                                                네번째 탭 내용
                                             </div>
                                             <div id="tab5" class="tab__content">
                                                 <div class="row">
                                                     <div class="col-lg-8">
                                                         <div class="card-body">
-                                                            <canvas id="singleBarChart5"></canvas>
+                                                            <canvas id="signUpCountByGenderGroupBar"></canvas>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-4">
@@ -737,7 +733,6 @@
                                                         </div> <!-- /.card-body -->
                                                     </div>
                                                 </div> <!-- /.row -->
-                                                5번째 탭 내용
                                             </div>
                                         </div>
                                     </div>
@@ -960,9 +955,6 @@
                         <!-- .animated -->
                     </div>
                     <!-- /.content -->
-                    <h3>${signUpCountByAgeGroup}</h3>
-                    <h3>${signUpCountByGenderGroup}</h3>
-                    <h3>${signInCountByYearMonthDate}</h3>
                     
                     <div class="clearfix"></div>
                     <!-- Footer -->
@@ -981,7 +973,7 @@
                     <!-- /.site-footer -->
                 </div>
                 <!-- /#right-panel -->
-                <div id="dataContainer" data-signUpCountByAgeGroup='${signUpCountByAgeGroup}' data-signUpCountByGenderGroup='${signUpCountByGenderGroup}' data-signInCountByYearMonthDate='${signInCountByYearMonthDate}'></div>
+                <div id="dataContainer" data-signUpCountByAgeGroup='${signUpCountByAgeGroup}' data-signUpCountByGenderGroup='${signUpCountByGenderGroup}' data-signInCountByYearMonthDate='${signInCountByYearMonthDate}' data-signInCountByDayOfWeek='${signInCountByDayOfWeek}' data-signUpCountByYear='${signUpCountByYear}'></div>
                 
                 <!-- Scripts -->
                 <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
