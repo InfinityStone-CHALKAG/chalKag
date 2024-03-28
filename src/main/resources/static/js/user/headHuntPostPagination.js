@@ -140,7 +140,7 @@ loadReviewData = function(loadPage) {
                		<div class="inner">
                         <figure>
                         	<a href="/headHuntPostSingle?headHuntPostId=${headHuntPostList.headHuntPostId}">
-                               <img src="/postImg/${headHuntPostListImg.postImgName}">
+                               <img src="/postImg/${headHuntPostList.postImgName}">
                             </a>
                         </figure>
                         <div class="details">
@@ -153,7 +153,9 @@ loadReviewData = function(loadPage) {
                             <h1><a href="/headHuntPostSingle?headHuntPostId=${headHuntPostList.headHuntPostId}">${headHuntPostList.headHuntPostTitle}</a></h1>
                              <p class="postContentText">${postContent}</p>
                             <footer>
-                                <a href="#" class="love"><i class="ion-android-favorite-outline"></i> <div>${headHuntPostList.recommendCnt}</div></a>
+                            
+                                <a class="love"><i class="ion-android-favorite-outline"></i> <div>${headHuntPostList.recommendCnt}</div></a>
+                                
                                 <a class="btn btn-primary more" href="/headHuntPostSingle?headHuntPostId=${headHuntPostList.headHuntPostId}">
                                     <div>More</div>
                                     <div><i class="ion-ios-arrow-thin-right"></i></div>
