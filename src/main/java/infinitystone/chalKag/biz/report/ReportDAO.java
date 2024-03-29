@@ -35,15 +35,16 @@ public class ReportDAO { // 신고 DAO
 			+ "		REPORT_id, "
 			+ "		MEMBER_id, "		
 			+ "		REPORT_suspector, "
+			+ "		REPORT_content, "
 			+ "		REPORT_date, "
-			+ "		REPORT_content "
+			+ " 	REPORT_state "
 			+ "FROM "
 			+ "		REPORT "
 			+ "WHERE "
 			+ "		REPORT_id = ? ";
 	// 사용한 테이블 : 신고 테이블
 	// 사용한 컬럼 (출력 내용) :
-	// 신고글 아이디, 회원 아이디(회원 테이블), 피신고자 아이디, 신고글 작성 시간, 신고 내용
+	// 신고글 아이디, 회원 아이디(회원 테이블), 피신고자 아이디, 신고 내용, 신고글 작성 시간, 신고 상태
 
 	// 신고글 작성. 전미지
 	private static final String INSERT_REPORT = "INSERT INTO REPORT ( "
@@ -56,22 +57,59 @@ public class ReportDAO { // 신고 DAO
 	// 회원 아이디(회원 테이블), 피신고자 아이디, 신고글 작성 시간, 신고 내용
 	// 신고 아이디는 테이블 생성 시 AUTO_INCREMENT를 사용해 번호 부여
 
-	// 사용 안 할 예정.전미지
-	private static final String UPDATE = " ";
-	
-	// 신고글 삭제.전미지
-	private static final String DELETE_REPORT = "DELETE "
-			+ "FROM "
-			+ "		REPORT "
+	// 신고글 상태를 READ로 변경.전미지
+	// 신고글 상태 : 관리자가 읽은 글은 'UNREAD', 관리자가 읽은 글은 'READ', 회원을 정지한 글은 'HOLD', 신고글을 반려한 글은 'REJECT'
+	private static final String UPDATE_REPORTSTATEREAD = "UPDATE REPORT "
+			+ "SET "
+			+ "		REPORT_state = 'READ' "
 			+ "WHERE "
 			+ "		REPORT_id = ? ";
+	// 사용한 테이블 : 신고 테이블
+	// 사용한 컬럼 (작성 내용) :
+	// 신고 상태
+	
+	// 신고글 상태를 HOLD로 변경.전미지
+	// 신고글 상태 : 관리자가 읽은 글은 'UNREAD', 관리자가 읽은 글은 'READ', 회원을 정지한 글은 'HOLD', 신고글을 반려한 글은 'REJECT'
+	private static final String UPDATE_REPORTSTATEHOLD = "UPDATE REPORT "
+			+ "SET "
+			+ "		REPORT_state = 'HOLD' "
+			+ "WHERE "
+			+ "		REPORT_id = ? ";
+	// 사용한 테이블 : 신고 테이블
+	// 사용한 컬럼 (작성 내용) :
+	// 신고 상태
+	
+	// 신고글 상태를 REJECT로 변경.전미지
+	// 신고글 상태 : 관리자가 읽은 글은 'UNREAD', 관리자가 읽은 글은 'READ', 회원을 정지한 글은 'HOLD', 신고글을 반려한 글은 'REJECT'
+	private static final String UPDATE_REPORTSTATEREJECT = "UPDATE REPORT "
+			+ "SET "
+			+ "		REPORT_state = 'REJECT' "
+			+ "WHERE "
+			+ "		REPORT_id = ? ";
+	// 사용한 테이블 : 신고 테이블
+	// 사용한 컬럼 (작성 내용) :
+	// 신고 상태
+	
+//	// 신고글 상태 변경(관리자가 상태 변경).전미지
+//	// 신고글 상태 : 관리자가 읽은 글은 0 'UNREAD', 관리자가 읽은 글은 1 'READ', 회원을 정지한 글은 2 'HOLD', 신고글을 반려한 글은 3 'REJECT'
+//	private static final String UPDATE_REPORTSTATE = "UPDATE REPORT "
+//			+ "SET "
+//			+ "		REPORT_state = ? "
+//			+ "WHERE "
+//			+ "		REPORT_id = ? ";
+//	// 사용한 테이블 : 신고 테이블
+//	// 사용한 컬럼 (작성 내용) :
+//	// 신고 상태
+	
+	// 사용 안 할 예정.전미지
+	private static final String DELETE = " ";
 	
 	
 	// 신고글 전체 출력
 	public List<ReportDTO> selectAll(ReportDTO reportDTO) {
 		List<ReportDTO> result = null;
-		System.out.println("ReportDAO(selectAll) In로그 = [" + reportDTO + "]");
 		// 검색 조건에 해당될 경우 jdbcTemplate을 사용하여 SELECTALL 쿼리 실행 후 결과를 RowMapper로 매핑하여 반환
+		System.out.println("ReportDAO(selectAll) In로그 = [" + reportDTO + "]");
 		try {
 			result = jdbcTemplate.query(SELECTALL_REPORT, new SelectAllReportRoMapper());
 			System.out.println("ReportDAO(selectAll) Out로그 = [" + result + "]");
@@ -111,22 +149,45 @@ public class ReportDAO { // 신고 DAO
 		return true; // 신고글 작성 성공 시 true 반환
 	}
 	
-	// 사용 안 할 예정
+	// 신고글 상태를 READ로 변경
+	// 신고글 상태 : 관리자가 읽은 글은 'UNREAD', 관리자가 읽은 글은 'READ', 회원을 정지한 글은 'HOLD', 신고글을 반려한 글은 'REJECT'
 	public boolean update(ReportDTO reportDTO) {
-		return true;
+		int result = 0;
+		System.out.println("ReportDAO(insert) In로그 = [" + reportDTO + "]");
+		if (reportDTO.getSearchCondition().equals("reportStateRead")) {
+			// UPDATE_REPORT 쿼리를 실행해 데이터베이스에 신고글 데이터를 저장
+			result = jdbcTemplate.update(UPDATE_REPORTSTATEREAD, reportDTO.getReportId(), reportDTO.getReportState());
+			 if (result <= 0) {
+				System.out.println("ReportDAO(insert) Out로그 = [" + result + "]");
+				return false; // 신고글 상태를 READ로 변경 실패 시 false 반환
+			}
+			return true; // 신고글 상태를 READ로 변경 성공 시 true 반환
+		}
+		else if (reportDTO.getSearchCondition().equals("reportStateHold")) {
+			// UPDATE_REPORT 쿼리를 실행해 데이터베이스에 신고글 데이터를 저장
+			result = jdbcTemplate.update(UPDATE_REPORTSTATEHOLD, reportDTO.getReportId(), reportDTO.getReportState());
+			 if (result <= 0) {
+				System.out.println("ReportDAO(insert) Out로그 = [" + result + "]");
+				return false; // 신고글 상태를 HOLD로 변경 실패 시 false 반환
+			}
+			return true; // 신고글 상태를 HOLD로 변경 성공 시 true 반환
+		}
+		else if (reportDTO.getSearchCondition().equals("reportStateReject")) {
+			// UPDATE_REPORT 쿼리를 실행해 데이터베이스에 신고글 데이터를 저장
+			result = jdbcTemplate.update(UPDATE_REPORTSTATEREJECT, reportDTO.getReportId(), reportDTO.getReportState());
+			 if (result <= 0) {
+				System.out.println("ReportDAO(insert) Out로그 = [" + result + "]");
+				return false; // 신고글 상태를 REJECT로 변경 실패 시 false 반환
+			}
+			return true; // 신고글 상태를 REJECT로 변경 성공 시 true 반환
+		}
+		System.out.println("ReportDAO(update) Error 로그 = [" + reportDTO.getSearchCondition() + "]");
+		return false; // 업데이트 조건에 해당되지 않는다면 false 반환
 	}
 
 	// 신고글 삭제
 	public boolean delete(ReportDTO reportDTO) {
-		int result = 0;
-		System.out.println("ReportDAO(delete) In로그 = [" + reportDTO + "]");
-		// DELETE_REPORT 쿼리를 실행해 데이터베이스에 신글 데이터를 삭제
-		result = jdbcTemplate.update(DELETE_REPORT, reportDTO.getReportId());
-		if (result <= 0) {
-			System.out.println("ReportDAO(delete) Out로그 = [" + result + "]");
-			return false; // 신고글 작성 실패 시 false 반환
-		}
-		return true; // 신고글 작성 실패 시 true 반환
+		return false;
 	}
 
 }
@@ -140,11 +201,13 @@ class SelectAllReportRoMapper implements RowMapper<ReportDTO> {
 		// ResultSet에 저장된 데이터를 ReportDTO 객체에 저장
 
 		ReportDTO reportDTO = new ReportDTO(); // 새로운 ReportDTO 객체 생성
+		// ResultSet에 저장된 데이터를 HeadHuntPostDTO 객체에 저장
 		reportDTO.setReportId(rs.getString("REPORT_id")); 					// 신고 아이디
 		reportDTO.setMemberId(rs.getString("MEMBER_id")); 					// 회원 아이디
 		reportDTO.setReportSuspector(rs.getString("REPORT_suspector")); 	// 피신고자 아이디
 		reportDTO.setReportDate(rs.getString("REPORT_date")); 				// 신고글 작성 시간
 		reportDTO.setReportContent(rs.getString("REPORT_content")); 		// 신고 내용
+		reportDTO.setReportState(rs.getString("REPORT_state"));				// 신고글 상태 (관리자 확인용) 
 		return reportDTO; // reportDTO에 저장된 데이터들을 반환
 	}
 }
@@ -158,11 +221,13 @@ class SelectOneReportRowMapper implements RowMapper<ReportDTO> {
 		// ResultSet에 저장된 데이터를 ReportDTO 객체에 저장
 
 		ReportDTO reportDTO = new ReportDTO(); // 새로운 ReportDTO 객체 생성
+		// ResultSet에 저장된 데이터를 HeadHuntPostDTO 객체에 저장
 		reportDTO.setReportId(rs.getString("REPORT_id")); 					// 신고 아이디
 		reportDTO.setMemberId(rs.getString("MEMBER_id")); 					// 회원 아이디
 		reportDTO.setReportSuspector(rs.getString("REPORT_suspector"));		// 피신고자 아이디
 		reportDTO.setReportDate(rs.getString("REPORT_date")); 				// 신고글 작성 시간
 		reportDTO.setReportContent(rs.getString("REPORT_content")); 		// 신고 내용
+		reportDTO.setReportState(rs.getString("REPORT_state"));				// 신고글 상태 (관리자 확인용
 		return reportDTO; // reportDTO에 저장된 데이터들을 반환
 	}
 }

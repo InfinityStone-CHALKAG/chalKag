@@ -153,46 +153,52 @@ public class HeadHuntPostDAO { // 구인 게시판 DAO
 //// 게시글 카테고리, 구인글 아이디, 회원 아이디, 회원 닉네임, 구인글 제목, 구인글 내용, 구인글 작성일, 구인글 조회수, 게시글의 좋아요 수, 몇 분 전 작성된 글인지
 //// 게시글 이미지는 따로 받아옴  
 	
-// 포스트아이디 최대값 가져오는 쿼리문
-private static final String SELECTONE_MAXPOSTID = "SELECT MAX(HEADHUNTPOST_id) FROM HEADHUNTPOST";
+  // 포스트아이디 최대값 가져오는 쿼리문
+  private static final String SELECTONE_MAXPOSTID = "SELECT MAX(HEADHUNTPOST_id) FROM HEADHUNTPOST";
 
-  // 구인글 상세 출력.전미지
+  //구인글 상세 출력.전미지
   private static final String SELECTONE_HEADHUNTPOST = "SELECT "
-		  + "	HEADHUNTPOST.HEADHUNTPOST_id, "
-		  + "	HEADHUNTPOST.MEMBER_id, "
-		  + "	MEMBER.MEMBER_nickname, "
-		  + "	PROFILEIMG.PROFILEIMG_name, "
-		  + "	HEADHUNTPOST.HEADHUNTPOST_role, "
-		  + "	HEADHUNTPOST.HEADHUNTPOST_region, "
-		  + "	HEADHUNTPOST.HEADHUNTPOST_pay, "
-		  + "	HEADHUNTPOST.HEADHUNTPOST_workDate, "
-		  + "	HEADHUNTPOST.HEADHUNTPOST_concept, "
-		  + "	HEADHUNTPOST.HEADHUNTPOST_title, "
-		  + "	HEADHUNTPOST.HEADHUNTPOST_content, "
-		  + "	HEADHUNTPOST.HEADHUNTPOST_date, "
-		  + "	HEADHUNTPOST.HEADHUNTPOST_viewcnt, "
-		  + "	COUNT(RECOMMEND.POST_id) AS RECOMMEND_cnt " // 게시글의 좋아요 수 합산
-		  + "FROM "
-		  + "	HEADHUNTPOST "
-		  + "INNER JOIN "
-		  + "	MEMBER ON HEADHUNTPOST.MEMBER_id = MEMBER.MEMBER_id "
-		  + "LEFT JOIN "
-		  + "	PROFILEIMG ON HEADHUNTPOST.MEMBER_id = PROFILEIMG.MEMBER_id "
-		  + "LEFT JOIN "
-		  + "	RECOMMEND ON HEADHUNTPOST.HEADHUNTPOST_id = RECOMMEND.POST_id "
-		  + "WHERE "
-		  + "	HEADHUNTPOST.HEADHUNTPOST_id = ? "
-		  + "GROUP BY "
-		  + "	HEADHUNTPOST.HEADHUNTPOST_id, "
-		  + "	MEMBER.MEMBER_nickname, "
-		  + "	PROFILEIMG.PROFILEIMG_name ";
-  // 사용한 테이블 : 구인글 테이블, 회원 테이블, 프로필 이미지 테이블, 좋아요 테이블
-  // 사용한 컬럼 (출력 내용) :
-  // 구인글 아이디, 회원 아이디, 회원 닉네임 (회원 테이블), 프로필 이미지 네임 (프로필 이미지 테이블),
-  // 구인글 직업 ( 모델 / 사진작가 ), 구인글 작업 지역, 구인글 작업 페이, 구인글 작업 날짜, 구인글 촬영 컨셉,
-  // 구인글 제목, 구인글 내용, 구인글 작성일, 구인글 조회수, 게시글의 좋아요 수
-  // INNER JOIN을 사용하여 HEADHUNTPOST 테이블과 MEMBER 테이블을 연결하고, 또 다른 LEFT JOIN을 사용하여 MEMBER 테이블과 PROFILEIMG 테이블을 연결
-
+		+ "	'HeadHuntPost' AS POST_category, " //  게시판의 카테고리 설정 "
+		+ "    HEADHUNTPOST.HEADHUNTPOST_id, "
+		+ "    HEADHUNTPOST.MEMBER_id, "
+		+ "    MEMBER.MEMBER_nickname, "
+		+ "    HEADHUNTPOST.HEADHUNTPOST_title, "
+		+ "    HEADHUNTPOST.HEADHUNTPOST_content, "
+		+ "    HEADHUNTPOST.HEADHUNTPOST_role, "
+		+ "    HEADHUNTPOST.HEADHUNTPOST_region, "
+		+ "    HEADHUNTPOST.HEADHUNTPOST_pay, "
+		+ "    HEADHUNTPOST.HEADHUNTPOST_workDate, "
+		+ "    HEADHUNTPOST.HEADHUNTPOST_concept, "
+		+ "    HEADHUNTPOST.HEADHUNTPOST_date, "
+		+ "    HEADHUNTPOST.HEADHUNTPOST_viewcnt, "
+		+ "    ( "
+		+ "        SELECT  "
+		+ "            PROFILEIMG.PROFILEIMG_name  "
+		+ "        FROM  "
+		+ "            PROFILEIMG  "
+		+ "        WHERE  "
+		+ "            PROFILEIMG.MEMBER_id = HEADHUNTPOST.MEMBER_id "
+		+ "        ORDER BY  "
+		+ "            PROFILEIMG.PROFILEIMG_id DESC "
+		+ "        LIMIT 1 "
+		+ "    ) AS PROFILEIMG_name, "
+		+ "    ( "
+		+ "        SELECT  "
+		+ "            COUNT(*)  "
+		+ "        FROM  "
+		+ "            RECOMMEND  "
+		+ "        WHERE  "
+		+ "            RECOMMEND.POST_id = HEADHUNTPOST.HEADHUNTPOST_id "
+		+ "    ) AS RECOMMEND_cnt "
+		+ "FROM  "
+		+ "    HEADHUNTPOST  "
+		+ "INNER JOIN  "
+		+ "    MEMBER ON HEADHUNTPOST.MEMBER_id = MEMBER.MEMBER_id "
+		+ "LEFT JOIN  "
+		+ "    RECOMMEND ON HEADHUNTPOST.HEADHUNTPOST_id = RECOMMEND.POST_id "
+		+ "WHERE  "
+		+ "    HEADHUNTPOST.HEADHUNTPOST_id = ? " ;
+  
   // 구인글 작성.전미지
   private static final String INSERT_HEADHUNTPOST = "INSERT INTO HEADHUNTPOST ( "
 		  + "MEMBER_id, "
