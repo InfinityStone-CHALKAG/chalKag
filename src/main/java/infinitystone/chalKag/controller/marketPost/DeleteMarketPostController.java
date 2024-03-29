@@ -20,6 +20,6 @@ public class DeleteMarketPostController {
 			System.out.println("[DeleteMarketPostController] 삭제 실패");
 		}
 		System.out.println("[DeleteMarketPostController] 삭제 성공");
-		return "marketPostList";
+		return "marketPost/marketPostList";
 	}
 }

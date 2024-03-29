@@ -20,6 +20,6 @@ public class UpdateFreePostController {
 			System.out.println("[UpdateFreePostController] 수정 실패");
 		}
 		System.out.println("[UpdateFreePostController] 수정 성공");
-		return "freePostSingle";
+		return "freePost/freePostSingle";
 	}
 }

@@ -31,7 +31,7 @@ public class SignUpController {
 
   @RequestMapping(value = "/signUp", method = RequestMethod.GET)
   public String signUpPage() {
-    return "signUp";
+    return "common/signUp";
   }
 
   @RequestMapping(value = "/signUp", method = RequestMethod.POST)

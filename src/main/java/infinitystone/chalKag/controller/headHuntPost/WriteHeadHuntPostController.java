@@ -28,7 +28,7 @@ public class WriteHeadHuntPostController {
 
   @RequestMapping(value = "/writeHeadHuntPost", method = RequestMethod.GET)
   public String writeHeadHuntPostPage() {
-    return "writeHeadHuntPost";
+    return "headHuntPost/writeHeadHuntPost";
   }
 
   @RequestMapping(value = "/writeHeadHuntPost", method = RequestMethod.POST)

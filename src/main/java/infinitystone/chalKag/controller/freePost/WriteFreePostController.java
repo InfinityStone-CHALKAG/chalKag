@@ -28,7 +28,7 @@ public class WriteFreePostController {
 
 	@RequestMapping(value = "/writeFreePost", method = RequestMethod.GET)
 	public String writeFreePostPage() {
-		return "writeFreePost";
+		return "freePost/writeFreePost";
 	}
 
 	@RequestMapping(value = "/writeFreePost", method = RequestMethod.POST)

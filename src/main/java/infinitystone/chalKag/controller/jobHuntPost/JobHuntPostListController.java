@@ -3,8 +3,6 @@ package infinitystone.chalKag.controller.jobHuntPost;
 import com.google.gson.Gson;
 import infinitystone.chalKag.biz.jobHuntPost.JobHuntPostDTO;
 import infinitystone.chalKag.biz.jobHuntPost.JobHuntPostService;
-import infinitystone.chalKag.biz.postImg.PostImgDTO;
-import infinitystone.chalKag.biz.postImg.PostImgService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,7 +29,7 @@ public class JobHuntPostListController {
 
 		System.out.println("JobHuntPostListController Out로그");
 
-		return "jobHuntPostList";
+		return "jobHuntPost/jobHuntPostList";
 	}
 
 }

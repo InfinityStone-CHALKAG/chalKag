@@ -44,7 +44,7 @@ public class FreePostSingleController {
 		model.addAttribute("commentList", commentList);
 		model.addAttribute("postImgList", postImgList);
 
-		return "freePostSingle";
+		return "freePost/freePostSingle";
 	}
 
 }

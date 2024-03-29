@@ -24,7 +24,7 @@ public class WriteReportController {
 	  
 	  System.out.println("writeReportController Out로그 = [" + reportDTO + "]");
 	  
-    return "writeReport";
+    return "report/writeReport";
   }
 
   @RequestMapping(value = "/writeReport", method = RequestMethod.POST)

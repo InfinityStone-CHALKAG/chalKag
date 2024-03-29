@@ -167,7 +167,7 @@
                                             <li class="dropdown magz-dropdown" ">
                             </i><a href=" category.html">My Posts<i class="ion-android-create"></i></a>
                                                 <ul class="dropdown-menu">
-                                                    <li><a href="marketPost">MarketPost</a></li>
+                                                    <li><a href="../marketPost">MarketPost</a></li>
                                                     <li><a href="HeadHuntPost">HeadHuntPost</a></li>
                                                     <li><a href="JobHuntPost">JobHuntPost</a></li>
                                                     <li><a href="FreePost">FreePost</a></li>
@@ -177,7 +177,7 @@
                                                 <a href="category.html">My Recommend
                                                     Posts<i class="ion-ios-heart"></i></a>
                                                 <ul class="dropdown-menu">
-                                                    <li><a href="marketPost">MarketPost</a></li>
+                                                    <li><a href="../marketPost">MarketPost</a></li>
                                                     <li><a href="HeadHuntPost">HeadHuntPost</a></li>
                                                     <li><a href="JobHuntPost">JobHuntPost</a></li>
                                                     <li><a href="FreePost">FreePost</a></li>

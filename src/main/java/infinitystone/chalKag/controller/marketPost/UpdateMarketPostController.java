@@ -20,6 +20,6 @@ public class UpdateMarketPostController {
 			System.out.println("[UpdateMarketPostController] 수정 실패");
 		}
 		System.out.println("[UpdateMarketPostController] 수정 성공");
-		return "marketPostSingle";
+		return "marketPost/marketPostSingle";
 	}
 }

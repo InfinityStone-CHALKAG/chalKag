@@ -54,6 +54,6 @@ public class MainController {
 
     System.out.println("MainController Out로그");
 
-    return "main";
+    return "common/main";
   }
 }

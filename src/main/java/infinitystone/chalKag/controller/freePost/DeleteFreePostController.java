@@ -20,6 +20,6 @@ public class DeleteFreePostController {
 			System.out.println("[DeleteFreePostController] 삭제 실패");
 		}
 		System.out.println("[DeleteFreePostController] 삭제 성공");
-		return "freePostList";
+		return "freePost/freePostList";
 	}
 }

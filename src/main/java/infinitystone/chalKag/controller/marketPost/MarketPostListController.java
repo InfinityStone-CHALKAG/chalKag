@@ -29,7 +29,7 @@ public class MarketPostListController {
 
 		System.out.println("MarketPostListController Out로그");
 
-		return "marketPostList";
+		return "marketPost/marketPostList";
 	}
 
 }

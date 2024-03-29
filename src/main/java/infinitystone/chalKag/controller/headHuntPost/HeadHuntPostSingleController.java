@@ -44,7 +44,7 @@ public class HeadHuntPostSingleController {
 		model.addAttribute("commentList", commentList);
 		model.addAttribute("postImgList", postImgList);
 
-		return "headHuntPostSingle";
+		return "headHuntPost/headHuntPostSingle";
 	}
 	
 }

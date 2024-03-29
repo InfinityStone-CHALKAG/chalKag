@@ -44,7 +44,7 @@ public class MarketPostSingleController {
 		model.addAttribute("commentList", commentList);
 		model.addAttribute("postImgList", postImgList);
 
-		return "marketPostSingle";
+		return "marketPost/marketPostSingle";
 	}
 
 }

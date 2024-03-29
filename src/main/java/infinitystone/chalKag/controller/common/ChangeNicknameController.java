@@ -22,7 +22,7 @@ public class ChangeNicknameController {
 
     model.addAttribute("memberInfo", memberService.selectOne(memberDTO));
 
-    return "changeNickname";
+    return "myPage/changeNickname";
   }
 
   @RequestMapping(value = "/changeNickname", method = RequestMethod.POST)

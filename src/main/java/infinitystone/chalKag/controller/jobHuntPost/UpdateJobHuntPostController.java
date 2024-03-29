@@ -20,6 +20,6 @@ public class UpdateJobHuntPostController {
 			System.out.println("[UpdateJobHuntPostController] 수정 실패");
 		}
 		System.out.println("[UpdateJobHuntPostController] 수정 성공");
-		return "jobHuntPostSingle";
+		return "jobHuntPost/jobHuntPostSingle";
 	}
 }

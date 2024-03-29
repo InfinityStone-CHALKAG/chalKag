@@ -20,6 +20,6 @@ public class DeleteJobHuntPostController {
 			System.out.println("[DeleteJobHuntPostController] 삭제 실패");
 		}
 		System.out.println("[DeleteJobHuntPostController] 삭제 성공");
-		return "jobHuntPostList";
+		return "jobHuntPost/jobHuntPostList";
 	}
 }

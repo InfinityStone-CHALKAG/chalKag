@@ -604,7 +604,7 @@
                                                 </a>
                                             </div>
                                             <div class="item">
-                                                <a href="myPage">
+                                                <a href="../myPage">
                                                     <div class="name">Score</div>
                                                     <c:if test="${memberInfo.currentScore != null}">
                                                         <div class="value">${memberInfo.currentScore}</div>
@@ -615,7 +615,7 @@
                                                 </a>
                                             </div>
                                             <div class="item">
-                                                <a href="myPage">
+                                                <a href="../myPage">
                                                     <div class="icon">
                                                         <div>More</div>
                                                         <i class="ion-chevron-right"></i>
