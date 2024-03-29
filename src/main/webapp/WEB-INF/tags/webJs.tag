@@ -6,11 +6,8 @@
 <script>var $target_end = $(".best-of-the-week");</script>
 <script src="css/user/scripts/jquery-number/jquery.number.min.js"></script>
 <script src="css/user/scripts/owlcarousel/dist/owl.carousel.min.js"></script>
-<script src="css/user/scripts/magnific-popup/dist/jquery.magnific-popup.min.js"></script>
 <script src="css/user/scripts/sweetalert/dist/sweetalert.min.js"></script>
 <script src="css/user/scripts/icheck/icheck.min.js"></script>
-<script src="css/user/scripts/toast/jquery.toast.min.js"></script>
-<script src="css/user/js/demo.js"></script>
 <script src="css/user/js/e-magz.js"></script>
 <script>$("input").iCheck({
     checkboxClass: 'icheckbox_square-red',

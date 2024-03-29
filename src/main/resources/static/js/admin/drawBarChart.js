@@ -13,8 +13,8 @@ var signUpCountByGenderGroup = JSON.parse(dataContainer.getAttribute("data-signU
     // 초기화: 첫 번째 탭의 차트를 그림 
     // 메인 이동시 출력, 탭클릭시 출력을 위한 모듈화
     var chartId = "signInCountByDayOfWeekBar";
-    drawsignInCountByDayOfWeek(); -
-    +
+    drawsignInCountByDayOfWeek(); 
+    
     // 이벤트: 탭 클릭시 이벤트
     $(".tab__item").click(function(e) {
         e.preventDefault(); // 기본 이벤트 방지
@@ -329,8 +329,14 @@ var signUpCountByGenderGroup = JSON.parse(dataContainer.getAttribute("data-signU
                             display: false,
                             drawBorder: false
                         },
-                        min: 0, // Y축의 최소값 설정
+                        min: -2, // Y축의 최소값 설정
                         max: max, // Y축의 최대값 설정
+                        ticks: {
+                        callback: function(value, index, values) {
+                            // -1인 경우에만 라벨을 감추기
+                            return value === -2 ? null : value;
+                        }
+                    }
                     }
                 }
             }
