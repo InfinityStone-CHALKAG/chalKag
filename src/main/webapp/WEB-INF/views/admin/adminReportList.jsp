@@ -403,6 +403,7 @@
                                                             <td>${reportData.reportSuspector}</td>
                                                             <!-- Date -->
                                                             <td>${fn:substring(reportData.reportDate, 0, 10)}</td>
+                                                            <td></td>
                                                         </tr>
                                                     </c:forEach>
                                                 </table>
