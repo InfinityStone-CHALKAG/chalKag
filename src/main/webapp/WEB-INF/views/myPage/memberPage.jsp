@@ -20,7 +20,7 @@
 
                 .featured-author .featured-author-body .featured-author-quote {
                     padding: 4px !important;
-                }
+                }z
 
                 #scroll-container {
                     max-height: 200px;

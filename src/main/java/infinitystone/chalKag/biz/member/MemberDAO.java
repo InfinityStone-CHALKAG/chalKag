@@ -32,7 +32,8 @@ public class MemberDAO {
       "WHERE MEMBER_nickname = ?";
 
   // 메인페이지 레벨순위 맴버 출력.안승준
-  private static final String SELECTALL_LEVELRANK = "SELECT MEMBER_nickname, " +
+  private static final String SELECTALL_LEVELRANK = "SELECT MEMBER_id, " +
+      "MEMBER_nickname, " +
       "(SELECT MAX(LEVEL_id) " +
       "FROM LEVEL " +
       "WHERE LEVEL_requiredexp <= MEMBER_exp) AS CURRENT_LEVEL " +
@@ -348,6 +349,7 @@ class LevelRankRowMapper implements RowMapper<MemberDTO> {
   @Override
   public MemberDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
     MemberDTO memberDTO = new MemberDTO();
+    memberDTO.setMemberId(rs.getString("MEMBER_id"));
     memberDTO.setMemberNickname(rs.getString("MEMBER_nickname"));
     memberDTO.setCurrentLevel(rs.getString("CURRENT_level"));
     return memberDTO;
