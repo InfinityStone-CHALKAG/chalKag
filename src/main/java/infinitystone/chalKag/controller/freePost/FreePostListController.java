@@ -29,7 +29,7 @@ public class FreePostListController {
 
 		System.out.println("FreePostListController Out로그");
 
-		return "freePostList";
+		return "freePost/freePostList";
 	}
 
 }

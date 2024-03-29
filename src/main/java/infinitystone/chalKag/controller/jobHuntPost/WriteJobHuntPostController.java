@@ -28,7 +28,7 @@ public class WriteJobHuntPostController {
 
 	@RequestMapping(value = "/writeJobHuntPost", method = RequestMethod.GET)
 	public String writeJobHuntPostPage() {
-		return "writeJobHuntPost";
+		return "jobHuntPost/writeJobHuntPost";
 	}
 
 	@RequestMapping(value = "/writeJobHuntPost", method = RequestMethod.POST)

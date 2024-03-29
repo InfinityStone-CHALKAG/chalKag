@@ -44,7 +44,7 @@ public class JobHuntPostSingleController {
 		model.addAttribute("commentList", commentList);
 		model.addAttribute("postImgList", postImgList);
 
-		return "jobHuntPostSingle";
+		return "jobHuntPost/jobHuntPostSingle";
 	}
 
 }

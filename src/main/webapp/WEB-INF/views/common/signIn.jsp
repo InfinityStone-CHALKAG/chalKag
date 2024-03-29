@@ -20,14 +20,14 @@
                     <!-- 로그인 비동기 -->
                     <div class="form-group">
                         <label class="fw">Email
-                            <a href="findId" class="pull-right">Forgot Email?</a>
+                            <a href="../findId" class="pull-right">Forgot Email?</a>
                         </label>
                         <input type="email" name="memberId" class="form-control" id="memberId" required>
                     </div>
                     <p id="IDErrMsg"></p>
                     <div class="form-group">
                         <label class="fw">Password
-                            <a href="findPw" class="pull-right">Forgot Password?</a>
+                            <a href="../findPw" class="pull-right">Forgot Password?</a>
                         </label>
                         <input type="password" name="memberPw" class="form-control" id="memberPw" required>
                     </div>

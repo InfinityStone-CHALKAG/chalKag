@@ -28,7 +28,7 @@ public class MyPageController {
 
     System.out.println("MyPageController Out로그 = [" + result + "]");
 
-    return "myPage";
+    return "myPage/myPage";
 
   }
 

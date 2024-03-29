@@ -34,7 +34,7 @@ public class ChangeInformationController {
 
     model.addAttribute("memberInfo", memberService.selectOne(memberDTO));
 
-    return "changeInformation";
+    return "myPage/changeInformation";
   }
 
   @RequestMapping(value = "/changeInformation", method = RequestMethod.POST)

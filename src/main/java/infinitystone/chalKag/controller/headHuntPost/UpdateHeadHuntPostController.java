@@ -1,6 +1,5 @@
 package infinitystone.chalKag.controller.headHuntPost;
 
-import infinitystone.chalKag.biz.comment.CommentDTO;
 import infinitystone.chalKag.biz.headHuntPost.HeadHuntPostDTO;
 import infinitystone.chalKag.biz.headHuntPost.HeadHuntPostService;
 import infinitystone.chalKag.biz.postImg.PostImgDTO;
@@ -44,7 +43,7 @@ public class UpdateHeadHuntPostController {
 		model.addAttribute("postImgList", postImgList);
 		
 		
-		return "updateHeadHuntPost";
+		return "headHuntPost/updateHeadHuntPost";
 	}
 	
 	@RequestMapping(value = "/updateHeadHuntPost", method = RequestMethod.POST)

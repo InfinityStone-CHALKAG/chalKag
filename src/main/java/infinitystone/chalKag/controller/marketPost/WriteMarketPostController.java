@@ -28,7 +28,7 @@ public class WriteMarketPostController {
 
 	@RequestMapping(value = "/writeMarketPost", method = RequestMethod.GET)
 	public String writeMarketPostPage() {
-		return "writeMarketPost";
+		return "marketPost/writeMarketPost";
 	}
 
 	@RequestMapping(value = "/writeMarketPost", method = RequestMethod.POST)

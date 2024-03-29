@@ -23,7 +23,7 @@ public class ChangePwController {
 
     model.addAttribute("memberInfo", memberService.selectOne(memberDTO));
 
-    return "changePw";
+    return "myPage/changePw";
   }
 
   @RequestMapping(value = "/changePw", method = RequestMethod.POST)

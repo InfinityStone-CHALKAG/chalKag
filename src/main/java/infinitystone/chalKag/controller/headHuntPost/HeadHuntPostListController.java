@@ -3,8 +3,6 @@ package infinitystone.chalKag.controller.headHuntPost;
 import com.google.gson.Gson;
 import infinitystone.chalKag.biz.headHuntPost.HeadHuntPostDTO;
 import infinitystone.chalKag.biz.headHuntPost.HeadHuntPostService;
-import infinitystone.chalKag.biz.postImg.PostImgDTO;
-import infinitystone.chalKag.biz.postImg.PostImgService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,7 +29,7 @@ public class HeadHuntPostListController {
 
     System.out.println("HeadHuntPostListController Out로그");
 
-    return "headHuntPostList";
+    return "headHuntPost/headHuntPostList";
   }
 
 }

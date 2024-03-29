@@ -20,6 +20,6 @@ public class DeleteHeadHuntPostController {
 			System.out.println("[DeleteHeadHuntPostController] 삭제 실패");
 		}
 		System.out.println("[DeleteHeadHuntPostController] 삭제 성공");
-		return "headHuntPostList";
+		return "headHuntPost/headHuntPostList";
 	}
 }

@@ -23,7 +23,7 @@ public class SignInController {
 
   @RequestMapping(value = "/signIn", method = RequestMethod.GET)
   public String signInPage() {
-    return "signIn";
+    return "common/signIn";
   }
 
   @RequestMapping(value = "/signIn", method = RequestMethod.POST)

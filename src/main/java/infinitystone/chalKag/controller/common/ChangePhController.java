@@ -4,13 +4,10 @@ import infinitystone.chalKag.biz.member.MemberDTO;
 import infinitystone.chalKag.biz.member.MemberService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import java.lang.reflect.Member;
 
 @Controller
 public class ChangePhController {
@@ -25,7 +22,7 @@ public class ChangePhController {
 
     model.addAttribute("memberInfo", memberService.selectOne(memberDTO));
 
-    return "changePh";
+    return "myPage/changePh";
   }
 
   @RequestMapping(value = "/changePh", method = RequestMethod.POST)
