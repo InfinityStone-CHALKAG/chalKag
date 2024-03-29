@@ -272,7 +272,7 @@
                         <div class="body-col">
                             <ol class="tags-list">
                                 <c:forEach var="member" items="${levelRank}" varStatus="status">
-                                    <li><a href="memberPage">${member.memberNickname} (LV.${member.currentLevel})</a>
+                                    <li><a href="memberPage?memberId=${member.memberId}">${member.memberNickname} (LV.${member.currentLevel})</a>
                                     </li>
                                 </c:forEach>
                             </ol>
@@ -575,9 +575,9 @@
                                     <div class="featured-author-cover"
                                          style="background-image: url('css/user/images/news/img15.jpg');">
                                         <c:if test="${memberInfo.memberGrade.equals('PREMIUM')}">
-                                        <div class="badges">
-                                            <div class="badge-item"><i class="ion-star"></i> PREMIUM</div>
-                                        </div>
+                                            <div class="badges">
+                                                <div class="badge-item"><i class="ion-star"></i> PREMIUM</div>
+                                            </div>
                                         </c:if>
                                         <div class="featured-author-center">
                                             <figure class="featured-author-picture">

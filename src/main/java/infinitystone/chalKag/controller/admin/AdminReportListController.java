@@ -12,21 +12,20 @@ import infinitystone.chalKag.biz.report.ReportService;
 
 @Controller
 public class AdminReportListController {
-	@Autowired
-	private ReportService reportService;
-	
-	@RequestMapping("/adminReportList")
-	public String adminReportList(ReportDTO reportDTO , Model model) {
-		
-		System.out.println("AdminReportListController In로그");
-		
-		List<ReportDTO> reportListResult = reportService.selectAll(reportDTO);
-		
-		model.addAttribute("reportList", reportListResult);
-		
-		System.out.println("AdminReportListController Out로그");
-		
-		
-		return "admin/adminReportList";
-	}
+  @Autowired
+  private ReportService reportService;
+
+  @RequestMapping("/adminReportList")
+  public String adminReportList(ReportDTO reportDTO, Model model) {
+
+    System.out.println("AdminReportListController In로그");
+
+    List<ReportDTO> reportListResult = reportService.selectAll(reportDTO);
+
+    model.addAttribute("reportList", reportListResult);
+
+    System.out.println("AdminReportListController Out로그");
+
+    return "admin/adminReportList";
+  }
 }
