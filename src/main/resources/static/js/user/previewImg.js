@@ -65,6 +65,7 @@ document.getElementById("fileInput").addEventListener('change', function(e) {
             imgWrapper.classList.add('img-wrapper');
 			
             const img = document.createElement('img');
+            img.id = 'previewImg';
             img.src = e.target.result;
 
             imageContainer.appendChild(img);
