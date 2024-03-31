@@ -140,6 +140,13 @@
                         ul {
                             list-style: none;
                         }
+
+                        /* ReportState 가운데 정렬 */
+
+                        #bootstrap-data-table td:nth-child(5) {
+                            text-align: center;
+                            /* State 컬럼의 모든 td 요소를 가운데 정렬 */
+                        }
                     </style>
                 </head>
 
@@ -377,17 +384,18 @@
                                     <div class="col-md-12">
                                         <div class="card">
                                             <div class="card-header">
-                                                <strong class="card-title"><a href="adminReportSingle">Report
-                                                        List</a></strong>
+                                                <strong class="card-title">Report
+                                                    List</strong>
                                             </div>
                                             <div class="card-body">
                                                 <table id="bootstrap-data-table"
                                                     class="table table-striped table-bordered">
                                                     <thead>
                                                         <tr>
+                                                            <th id="checkbox"><input type="checkbox" id="selectAll"></th>
                                                             <th>Reporter</th>
+                                                            <th>Suspector Email</th>
                                                             <th>Report Content</th>
-                                                            <th>Reported</th>
                                                             <th>Date</th>
                                                             <th>State</th>
                                                         </tr>
@@ -395,15 +403,51 @@
                                                     <!-- 반복문을 통해 데이터를 삽입 -->
                                                     <c:forEach items="${reportList}" var="reportData">
                                                         <tr>
-                                                            <!-- Reporter -->
-                                                            <td>${reportData.memberId}</td>
-                                                            <!-- Report Content -->
-                                                            <td><a href="adminReportSingle?reportId=${reportData.reportId}">${reportData.reportContent}</a></td>
-                                                            <!-- Reported -->
-                                                            <td>${reportData.reportSuspector}</td>
-                                                            <!-- Date -->
-                                                            <td>${fn:substring(reportData.reportDate, 0, 10)}</td>
-                                                            <td></td>
+                                                            <c:if test="${reportData.reportState eq 'UNREAD'}">
+                                                                <td><input type="checkbox" name="reportIds"
+                                                                        value="${reportData.reportId}"></td>
+                                                                <td><strong>${reportData.memberId}</strong></td>
+                                                                <td><strong>${reportData.reportSuspector}</strong></td>
+                                                                <td><strong><a
+                                                                            href="adminReportSingle?reportId=${reportData.reportId}">${reportData.reportContent}</a></strong>
+                                                                </td>
+                                                                <td><strong>${fn:substring(reportData.reportDate, 0,
+                                                                        10)}</strong></td>
+                                                                <td><strong class="badge badge-primary"
+                                                                        style="font-size:16px;">${reportData.reportState}</strong>
+                                                                </td>
+                                                            </c:if>
+                                                            <c:if test="${reportData.reportState ne 'UNREAD'}">
+                                                                <td><input type="checkbox" name="reportIds"
+                                                                        value="${reportData.reportId}"></td>
+                                                                <td>${reportData.memberId}</td>
+                                                                <td>${reportData.reportSuspector}</td>
+                                                                <td><a
+                                                                        href="adminReportSingle?reportId=${reportData.reportId}">${reportData.reportContent}</a>
+                                                                </td>
+                                                                <td>${fn:substring(reportData.reportDate, 0, 10)}</td>
+                                                                <c:if test="${reportData.reportState eq 'READ'}">
+                                                                    <td>
+                                                                        <div class="badge badge-success"
+                                                                            style="font-size:16px;">
+                                                                            ${reportData.reportState}</div>
+                                                                    </td>
+                                                                </c:if>
+                                                                <c:if test="${reportData.reportState eq 'HOLD'}">
+                                                                    <td>
+                                                                        <div class="badge badge-danger"
+                                                                            style="font-size:16px;">
+                                                                            ${reportData.reportState}</div>
+                                                                    </td>
+                                                                </c:if>
+                                                                <c:if test="${reportData.reportState eq 'REJECT'}">
+                                                                    <td>
+                                                                        <div class="badge badge-secondary"
+                                                                            style="font-size:16px;">
+                                                                            ${reportData.reportState}</div>
+                                                                    </td>
+                                                                </c:if>
+                                                            </c:if>
                                                         </tr>
                                                     </c:forEach>
                                                 </table>
@@ -453,201 +497,28 @@
 
                     <script src="js/admin/leftPanalActive.js"></script>
 
+                    <script>
+ // <th> 요소를 가져옵니다.
+var checkboxTh = document.getElementById('checkbox');
 
 
-                    <!--Local Stuff-->
-                    <!-- <script>
-                    jQuery(document).ready(function ($) {
-                        "use strict";
+    checkboxTh.classList.remove('sorting_asc', 'sorting', 'sorting_desc', 'sorting_asc_disabled', 'sorting_desc_disabled');
 
-                        // Pie chart flotPie1
-                        var piedata = [
-                            { label: "Desktop visits", data: [[1, 32]], color: '#5c6bc0' },
-                            { label: "Tab visits", data: [[1, 33]], color: '#ef5350' },
-                            { label: "Mobile visits", data: [[1, 35]], color: '#66bb6a' }
-                        ];
 
-                        $.plot('#flotPie1', piedata, {
-                            series: {
-                                pie: {
-                                    show: true,
-                                    radius: 1,
-                                    innerRadius: 0.65,
-                                    label: {
-                                        show: true,
-                                        radius: 2 / 3,
-                                        threshold: 1
-                                    },
-                                    stroke: {
-                                        width: 0
-                                    }
-                                }
-                            },
-                            grid: {
-                                hoverable: true,
-                                clickable: true
-                            }
-                        });
-                        // Pie chart flotPie1  End
-                        // cellPaiChart
-                        var cellPaiChart = [
-                            { label: "Direct Sell", data: [[1, 65]], color: '#5b83de' },
-                            { label: "Channel Sell", data: [[1, 35]], color: '#00bfa5' }
-                        ];
-                        $.plot('#cellPaiChart', cellPaiChart, {
-                            series: {
-                                pie: {
-                                    show: true,
-                                    stroke: {
-                                        width: 0
-                                    }
-                                }
-                            },
-                            legend: {
-                                show: false
-                            }, grid: {
-                                hoverable: true,
-                                clickable: true
-                            }
+    // checkboxTh 요소에 대한 jQuery 객체를 만듭니다.
+var $checkboxTh = $(checkboxTh);
 
-                        });
-                        // cellPaiChart End
-                        // Line Chart  #flotLine5
-                        var newCust = [[0, 3], [1, 5], [2, 4], [3, 7], [4, 9], [5, 3], [6, 6], [7, 4], [8, 10]];
+// click 이벤트 리스너를 제거합니다.
+$checkboxTh.off('click.DT');
 
-                        var plot = $.plot($('#flotLine5'), [{
-                            data: newCust,
-                            label: 'New Data Flow',
-                            color: '#fff'
-                        }],
-                            {
-                                series: {
-                                    lines: {
-                                        show: true,
-                                        lineColor: '#fff',
-                                        lineWidth: 2
-                                    },
-                                    points: {
-                                        show: true,
-                                        fill: true,
-                                        fillColor: "#ffffff",
-                                        symbol: "circle",
-                                        radius: 3
-                                    },
-                                    shadowSize: 0
-                                },
-                                points: {
-                                    show: true,
-                                },
-                                legend: {
-                                    show: false
-                                },
-                                grid: {
-                                    show: false
-                                }
-                            });
-                        // Line Chart  #flotLine5 End
-                        // Traffic Chart using chartist
-                        if ($('#traffic-chart').length) {
-                            var chart = new Chartist.Line('#traffic-chart', {
-                                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-                                series: [
-                                    [0, 18000, 35000, 25000, 22000, 0],
-                                    [0, 33000, 15000, 20000, 15000, 300],
-                                    [0, 15000, 28000, 15000, 30000, 5000]
-                                ]
-                            }, {
-                                low: 0,
-                                showArea: true,
-                                showLine: false,
-                                showPoint: false,
-                                fullWidth: true,
-                                axisX: {
-                                    showGrid: true
-                                }
-                            });
+// keypress 이벤트 리스너를 제거합니다.
+$checkboxTh.off('keypress.DT');
 
-                            chart.on('draw', function (data) {
-                                if (data.type === 'line' || data.type === 'area') {
-                                    data.element.animate({
-                                        d: {
-                                            begin: 2000 * data.index,
-                                            dur: 2000,
-                                            from: data.path.clone().scale(1, 0).translate(0, data.chartRect.height()).stringify(),
-                                            to: data.path.clone().stringify(),
-                                            easing: Chartist.Svg.Easing.easeOutQuint
-                                        }
-                                    });
-                                }
-                            });
-                        }
-                        // Traffic Chart using chartist End
-                        //Traffic chart chart-js
-                        if ($('#TrafficChart').length) {
-                            var ctx = document.getElementById("TrafficChart");
-                            ctx.height = 150;
-                            var myChart = new Chart(ctx, {
-                                type: 'line',
-                                data: {
-                                    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
-                                    datasets: [
-                                        {
-                                            label: "Visit",
-                                            borderColor: "rgba(4, 73, 203,.09)",
-                                            borderWidth: "1",
-                                            backgroundColor: "rgba(4, 73, 203,.5)",
-                                            data: [0, 2900, 5000, 3300, 6000, 3250, 0]
-                                        },
-                                        {
-                                            label: "Bounce",
-                                            borderColor: "rgba(245, 23, 66, 0.9)",
-                                            borderWidth: "1",
-                                            backgroundColor: "rgba(245, 23, 66,.5)",
-                                            pointHighlightStroke: "rgba(245, 23, 66,.5)",
-                                            data: [0, 4200, 4500, 1600, 4200, 1500, 4000]
-                                        },
-                                        {
-                                            label: "Targeted",
-                                            borderColor: "rgba(40, 169, 46, 0.9)",
-                                            borderWidth: "1",
-                                            backgroundColor: "rgba(40, 169, 46, .5)",
-                                            pointHighlightStroke: "rgba(40, 169, 46,.5)",
-                                            data: [1000, 5200, 3600, 2600, 4200, 5300, 0]
-                                        }
-                                    ]
-                                },
-                                options: {
-                                    responsive: true,
-                                    tooltips: {
-                                        mode: 'index',
-                                        intersect: false
-                                    },
-                                    hover: {
-                                        mode: 'nearest',
-                                        intersect: true
-                                    }
+// selectstart 이벤트 리스너를 제거합니다.
+$checkboxTh.off('selectstart.DT');
 
-                                }
-                            });
-                        }
-                        //Traffic chart chart-js  End
-                        // Bar Chart #flotBarChart
-                        $.plot("#flotBarChart", [{
-                            data: [[0, 18], [2, 8], [4, 5], [6, 13], [8, 5], [10, 7], [12, 4], [14, 6], [16, 15], [18, 9], [20, 17], [22, 7], [24, 4], [26, 9], [28, 11]],
-                            bars: {
-                                show: true,
-                                lineWidth: 0,
-                                fillColor: '#ffffff8a'
-                            }
-                        }], {
-                            grid: {
-                                show: false
-                            }
-                        });
-                        // Bar Chart #flotBarChart End
-                    }); 
+                    </script>
 
-                </script> -->
                 </body>
 
                 </html>

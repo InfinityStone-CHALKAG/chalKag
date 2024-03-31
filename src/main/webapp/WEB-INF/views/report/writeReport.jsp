@@ -45,7 +45,7 @@ A person who reports false information to a public office or a public official f
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label>Reported</label>
+                                                        <label>Suspector</label>
                                                         <input type="text" class="form-control" name="reportSuspector" value="${reportInfo.reportSuspector}" readonly>
                                                     </div>
                                                 </div>
