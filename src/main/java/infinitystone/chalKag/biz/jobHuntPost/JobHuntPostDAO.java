@@ -23,7 +23,7 @@ public class JobHuntPostDAO {
 			+ " JOBHUNTPOST.MEMBER_id, "
 			+ " 	(SELECT POSTIMG.POSTIMG_name "
 			+ " FROM POSTIMG POSTIMG"
-			+ " 	WHERE POSTIMG.POST_id = JOBHUNT.JOBHUNTPOST_id "
+			+ " 	WHERE POSTIMG.POST_id = JOBHUNTPOST.JOBHUNTPOST_id "
 			+ " 	ORDER BY POSTIMG.POSTIMG_id ASC "
 			+ " 	LIMIT 1) AS POSTIMG_name, "
 			+ " MEMBER.MEMBER_nickname, "
