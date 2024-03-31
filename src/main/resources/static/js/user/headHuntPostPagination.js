@@ -146,10 +146,10 @@ loadReviewData = function(loadPage) {
                                 <div class="category">
                                     <a href="memberPage?memberId=${headHuntPostList.memberId}" style="font-size:14px; font-weight:600;">${headHuntPostList.memberNickname}</a>
                                 </div>
-                                	 &nbsp;<time>${timeString}</time>
+                                	 &nbsp;&nbsp;<time>${timeString}</time>
                             </div>
-                            <h1 style="width: 522.5px; height: 56px; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;><a href="/headHuntPostSingle?headHuntPostId=${headHuntPostList.headHuntPostId}">${headHuntPostList.headHuntPostTitle}</a></h1>
-                             <p style="width: 522.5px; height: 52px; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;">${headHuntPostList.headHuntPostContent}</p>
+                            <h1 style="width: 522.5px; max-height: 56px; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;"><a href="/headHuntPostSingle?headHuntPostId=${headHuntPostList.headHuntPostId}">${headHuntPostList.headHuntPostTitle}</a></h1>
+                             <p style="width: 522.5px; max-height: 52px; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;">${headHuntPostList.headHuntPostContent}</p>
                             <footer>
                                 <a href="#" class="love"><i class="ion-android-favorite-outline"></i> <div>${headHuntPostList.recommendCnt}</div></a>
                                 <a class="btn btn-primary more" href="/headHuntPostSingle?headHuntPostId=${headHuntPostList.headHuntPostId}">

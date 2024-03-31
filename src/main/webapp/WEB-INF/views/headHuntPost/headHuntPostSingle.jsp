@@ -12,11 +12,26 @@
 	 	display: flex;
 	 	font-style: 'Malgun Gothic';
 	 	margin-bottom: 5px;
+		font-size:20px;
+		margin-left: 26%;
 	 }
     	.postInfoTitle { 	
-    	margin-right: 20px; 
+    	margin-right: 100px; 
     	width: 100px;
+		margin-left: 4%;
     	}
+
+		.owl-carousel {
+            display: block;
+            width: 100%;
+            margin: 0 auto;
+        }
+        .owl-item img {
+            display: block;
+            width: 750px; /* 이미지의 너비를 750px로 강제 설정 */
+            height: 575px; /* 이미지의 높이를 575px로 강제 설정 */
+            object-fit: cover; /* 이미지의 비율을 유지하면서 요소에 맞게 잘리지 않도록 설정 */
+        }
     	
     </style>
 </head>
@@ -53,32 +68,40 @@
 								</ul>
 							</header>
 						<div class="main">
-							
+							<div class="featured">
+							<div class="owl-carousel">
 								<c:forEach var="postImgList" items="${postImgList}">
 										<figure>
 											<img src="/postImg/${postImgList.postImgName}">
 										</figure>
 								</c:forEach>
-								<div class="featured" style="margin-bottom: 100px; display: flex;">
+								</div>
+							</div>
+								<div class="featured" style="margin-bottom: 3%; margin-top: 2%; display: block; justify-content: center;">
 										<div>
 											<div class="postInfo">
-												<div class="postInfoTitle">Role</div>
+												<i class="ion-ios-body"
+													style="font-size:20px;"></i><div class="postInfoTitle">Role</div>
 												<div class="postInfoContents">${headHuntPostSingle.headHuntPostRole} </div>
 											</div>
 											<div  class="postInfo">
-												<div class="postInfoTitle">Region</div>
+												<i class="ion-android-home"
+													style="font-size:20px;"></i><div class="postInfoTitle">Region</div>
 												<div class="postInfoContents">${headHuntPostSingle.headHuntPostRegion}</div>
 											</div>
 											<div  class="postInfo">
-												<div class="postInfoTitle">Pay</div>
-												<div class="postInfoContents">${headHuntPostSingle.headHuntPostPay} </div>
+												<i class="ion-cash"
+													style="font-size:20px;"></i><div class="postInfoTitle" style="margin-left:3.1%;">Pay</div>
+												<div class="postInfoContents" id="headHuntPostPay">${headHuntPostSingle.headHuntPostPay} ₩</div>
 											</div>
 											<div  class="postInfo">
-												<div class="postInfoTitle">Work Date</div>
+												<i class="ion-android-calendar"
+													style="font-size:20px;"></i><div class="postInfoTitle">Work Date</div>
 												<div class="postInfoContents">${headHuntPostSingle.headHuntPostWorkDate}</div>
 											</div>
 											<div  class="postInfo">
-												<div class="postInfoTitle">Concept</div>
+												<i class="ion-ios-camera"
+													style="font-size:20px;"></i><div class="postInfoTitle">Concept</div>
 												<div class="postInfoContents">${headHuntPostSingle.headHuntPostConcept}</div>
 											</div>
 										</div>
@@ -87,8 +110,8 @@
 								<p>${headHuntPostSingle.headHuntPostContent}</p>
 							</div>
 							<footer>
-								<div class="col">
-									<a href="#" class="love"><i class="ion-android-favorite-outline"></i> <div>${headHuntPostList.recommendCnt}</div></a>
+								<div class="col" style="width:54.4%;">
+									<a href="#" class="love" style="margin-top:0%"><i class="ion-android-favorite-outline"></i><div>${headHuntPostList.recommendCnt}</div></a>
 								</div>
 							</footer>
 						</article>
@@ -98,13 +121,19 @@
 								<a class="btn btn-primary" href="/deleteHeadHuntPost?headHuntPostId=${headHuntPostSingle.headHuntPostId}">Post Delete</a>
 							</c:if>
 						</div>
-						<div class="line thin"></div>
+						<div class="line">
+							<div>Author</div>
+						</div>
 						<div class="author">
 							<figure>
-								<img src="images/img01.jpg">
+								<img src="profileImg/${headHuntPostSingle.profileImgName}"style="width: 100%; height: 100%; object-fit: cover;">
 							</figure>
 							<div class="details">
 								<h3 class="name">${headHuntPostSingle.memberNickname}</h3>
+								<p>I enjoy capturing small moments in everyday life with my camera as a
+									hobby. I strive to capture the beauty of daily life through photos so
+									that everyone can share in those precious moments together. Let's share
+									these precious moments together!</p>
 								<%-- <p>${headHuntPostSingle.memberIntroduction}</p> --%>
 							</div>
 						</div>
@@ -130,15 +159,38 @@
 	<script src="css/user/scripts/jquery-number/jquery.number.min.js"></script>
 	<script src="css/user/scripts/owlcarousel/dist/owl.carousel.min.js"></script>
 	<script src="css/user/scripts/magnific-popup/dist/jquery.magnific-popup.min.js"></script>
-	<script src="css/user/scripts/easescroll/jquery.easeScroll.js"></script>
 	<script src="css/user/scripts/sweetalert/dist/sweetalert.min.js"></script>
 	<script src="css/user/scripts/toast/jquery.toast.min.js"></script>
 	<script src="css/user/js/demo.js"></script>
-		<script>$("input").iCheck({
-      checkboxClass: 'icheckbox_square-red',
-      radioClass: 'iradio_square-red',
-      cursor: true
-		});</script>
 	<script src="css/user/js/e-magz.js"></script>
+	<script>
+		  $(document).ready(function(){
+            // Owl Carousel 초기화
+            $(".owl-carousel").owlCarousel({
+				items: 1,
+                loop: true,
+                autoplay: true,
+                autoplayTimeout: 3000,
+                autoplayHoverPause: true,
+                margin: 10
+            });
+		});
+
+		document.addEventListener('DOMContentLoaded', function() {
+    // div 요소를 가져옵니다.
+    const postPayElement = document.getElementById('headHuntPostPay');
+
+    // 요소의 텍스트 내용을 가져옵니다.
+    const postPayText = postPayElement.textContent;
+
+    // 쉼표로 숫자를 구분하여 출력하기 위한 함수를 정의합니다.
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    // 텍스트 내용을 숫자로 파싱하고 쉼표로 구분하여 다시 설정합니다.
+    postPayElement.textContent = numberWithCommas(parseFloat(postPayText));
+});
+	</script>
 	</body>
 </html>

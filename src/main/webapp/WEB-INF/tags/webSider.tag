@@ -6,7 +6,7 @@
 	<aside>
 		<div class="aside-body">
 			<figure class="ads">
-
+					<img src="css/user/images/ad.png">
 				<figcaption>Advertisement</figcaption>
 			</figure>
 		</div>
@@ -18,7 +18,7 @@
 				<div class="inner">
 					<!-- 이미지 추후 여러장 출력하는 기능 추가 -->
 					<figure>
-						<a href="single.html"> <img src="images/news/img16.jpg">
+						<a href="single.html"> <img src="css/user/images/news/img16.jpg">
 						</a>
 					</figure>
 					<div class="details">
@@ -42,7 +42,7 @@
 			<article class="article-mini">
 				<div class="inner">
 					<figure>
-						<a href="single.html"> <img src="images/news/img05.jpg">
+						<a href="single.html"> <img src="css/user/images/news/img05.jpg">
 						</a>
 					</figure>
 					<div class="padding">
@@ -62,7 +62,7 @@
 			<article class="article-mini">
 				<div class="inner">
 					<figure>
-						<a href="single.html"> <img src="images/news/img02.jpg">
+						<a href="single.html"> <img src="css/user/images/news/img02.jpg">
 						</a>
 					</figure>
 					<div class="padding">
@@ -82,7 +82,7 @@
 			<article class="article-mini">
 				<div class="inner">
 					<figure>
-						<a href="single.html"> <img src="images/news/img13.jpg">
+						<a href="single.html"> <img src="css/user/images/news/img13.jpg">
 						</a>
 					</figure>
 					<div class="padding">

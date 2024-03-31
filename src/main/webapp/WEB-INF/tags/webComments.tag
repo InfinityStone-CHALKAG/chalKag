@@ -5,7 +5,7 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="webComments"%>
 
 <div class="comments">
-	<h5>${fn:length(commentList)}Responses</h5>
+	<h5>${fn:length(commentList)} Responses</h5>
 	<div style="text-align: center;">
 		<!-- 로그인 했을때 -->
 		<c:if test="${member != null}">
