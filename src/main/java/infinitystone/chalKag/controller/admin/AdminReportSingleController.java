@@ -13,25 +13,27 @@ import infinitystone.chalKag.biz.report.ReportService;
 @Controller
 public class AdminReportSingleController {
 
-  @Autowired
-  private ReportService reportService;
+	@Autowired
+	private ReportService reportService;
 
-  @RequestMapping("/adminReportSingle")
-  public String adminReportSingle(ReportDTO reportDTO, Model model) {
+	@RequestMapping("/adminReportSingle")
+	public String adminReportSingle(ReportDTO reportDTO, Model model) {
 
-    System.out.println("AdminReportSingleController In로그");
+		System.out.println("AdminReportSingleController In로그");
 
-    reportDTO = reportService.selectOne(reportDTO);
+		reportDTO = reportService.selectOne(reportDTO);
+		if (reportDTO.getReportState().equals("UNREAD")) {
+			reportDTO.setSearchCondition("reportStateRead");
+			if (!reportService.update(reportDTO)) {
+				System.out.println("AdminTimeOutController reportUpdate failed");
+			}
+		}
 
-    if (!reportService.update(reportDTO)) {
-      System.out.println("AdminTimeOutController reportUpdate failed");
-    }
+		model.addAttribute("reportSingle", reportDTO);
 
-    model.addAttribute("reportSingle", reportDTO);
+		System.out.println("AdminReportSingleController Out로그");
 
-    System.out.println("AdminReportSingleController Out로그");
-
-    return "admin/adminReportSingle";
-  }
+		return "admin/adminReportSingle";
+	}
 
 }

@@ -107,10 +107,6 @@
                                                 <c:if test="${memberInfo.memberGrade eq 'PREMIUM'}">
                                                     <div class="badge-item"><i class="ion-star"></i> PREMIUM</div>
                                                 </c:if>
-                                                <c:if test="${memberInfo.memberGrade eq 'USER'}">
-                                                    <div class="badge-item"><i class="ion-star"></i> PREMIUM...할래?
-                                                    </div>
-                                                </c:if>
                                             </div>
                                             <div class="featured-author-center">
                                                 <figure class="featured-author-picture">

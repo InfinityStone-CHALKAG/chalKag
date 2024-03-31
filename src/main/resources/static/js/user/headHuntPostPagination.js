@@ -96,13 +96,15 @@ loadReviewData = function(loadPage) {
 	
  // 데이터를 화면에 표시하는 함수
     function displayReviewData(pageDatas) {
-		console.log(pageDatas);
+		console.log("pageDatas" + pageDatas);
         const div = document.getElementById('postDatasContainer');
     	div.classList.add('headHuntPostList', 'div');
     let innerHTML = ''; // 새로운 내용을 담을 변수
+		console.log("pageDatas.legnth"+ pageDatas.length);
     
-    if (pageDatas === null && pageDatas.length <= 0) {
-        innerHTML = '<div class="inner"><p>there are no registered posts...</p></div>'; // 데이터가 없을 때 메시지 출력
+    if (pageDatas.length <= 0) {
+
+        innerHTML = '<div class="inner"><h3 style="margin-left:1.5%;">there are no registered posts...</h3></div>'; // 데이터가 없을 때 메시지 출력
     } else {
         pageDatas.forEach(function(headHuntPostList) {
 			
@@ -129,33 +131,27 @@ loadReviewData = function(loadPage) {
 		    }
 			
             
-            // 텍스트 길이 제한 적용
-		    let postContent = headHuntPostList.headHuntPostContent;
-		    if (postContent.length > 30) {
-		        postContent = postContent.substring(0, 30) + "...";
-		    }
+      
 		    
                innerHTML +=  `
                	<article class="col-md-12 article-list">
                		<div class="inner">
                         <figure>
                         	<a href="/headHuntPostSingle?headHuntPostId=${headHuntPostList.headHuntPostId}">
-                               <img src="/postImg/${headHuntPostList.postImgName}">
+                               <img src="/postImg/${headHuntPostList.postImgName}"  style="width: 100%; height: 100%; object-fit: cover;">
                             </a>
                         </figure>
                         <div class="details">
-                            <div>
-                                <div class="category" style="display:flex;">
-                                    <p>${headHuntPostList.memberNickname}</p>
-                                	<time style="width: 100px; text-align: center; padding-top: 5px;">${timeString}</time>
+                            <div class="detail">
+                                <div class="category">
+                                    <a href="memberPage?memberId=${headHuntPostList.memberId}" style="font-size:14px; font-weight:600;">${headHuntPostList.memberNickname}</a>
                                 </div>
+                                	 &nbsp;<time>${timeString}</time>
                             </div>
-                            <h1><a href="/headHuntPostSingle?headHuntPostId=${headHuntPostList.headHuntPostId}">${headHuntPostList.headHuntPostTitle}</a></h1>
-                             <p class="postContentText">${postContent}</p>
+                            <h1 style="width: 522.5px; height: 56px; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;><a href="/headHuntPostSingle?headHuntPostId=${headHuntPostList.headHuntPostId}">${headHuntPostList.headHuntPostTitle}</a></h1>
+                             <p style="width: 522.5px; height: 52px; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;">${headHuntPostList.headHuntPostContent}</p>
                             <footer>
-                            
-                                <a class="love"><i class="ion-android-favorite-outline"></i> <div>${headHuntPostList.recommendCnt}</div></a>
-                                
+                                <a href="#" class="love"><i class="ion-android-favorite-outline"></i> <div>${headHuntPostList.recommendCnt}</div></a>
                                 <a class="btn btn-primary more" href="/headHuntPostSingle?headHuntPostId=${headHuntPostList.headHuntPostId}">
                                     <div>More</div>
                                     <div><i class="ion-ios-arrow-thin-right"></i></div>

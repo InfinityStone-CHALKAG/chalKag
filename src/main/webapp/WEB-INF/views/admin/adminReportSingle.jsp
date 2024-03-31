@@ -29,7 +29,8 @@
                 <link rel="stylesheet" href="css/admin/assets/css/style.css">
                 <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet'
                     type='text/css'>
-        
+                <link rel="stylesheet" href="css/user/scripts/sweetalert/dist/sweetalert.css">
+
 
 
 
@@ -368,29 +369,34 @@
                                             <strong>Report Details</strong>
                                         </div>
                                         <div class="card-body card-block">
-                                            <form action="#" method="post" enctype="multipart/form-data"
+                                            <form id="reportStateHoldForm" action="reportStateHold" method="post"
                                                 class="form-horizontal">
+                                                <!-- reportState를 HOLD로 바꾸기 위한 hidden value 제출-->
+                                                <input type="hidden" id="reportId" name="reportId"
+                                                    value="${reportSingle.reportId}">
 
                                                 <div class="row form-group">
                                                     <div class="col col-md-3"><label for="text-input"
                                                             class=" form-control-label">Date</label></div>
                                                     <div class="col-12 col-md-9"><input type="text" id="text-input"
-                                                            name="text-input" class="form-control" value="${reportSingle.reportDate}" readonly>
+                                                            name="text-input" class="form-control"
+                                                            value="${reportSingle.reportDate}" readonly>
                                                     </div>
                                                 </div>
                                                 <div class="row form-group">
                                                     <div class="col col-md-3"><label for="email-input"
                                                             class=" form-control-label">Reporter</label></div>
-                                                    <div class="col-12 col-md-9"><input type="email" id="memberId"
-                                                            name="memberId" class="form-control" value="${reportSingle.memberId}" readonly>
+                                                    <div class="col-12 col-md-9"><input type="email" id="reporter"
+                                                            name="reporter" class="form-control"
+                                                            value="${reportSingle.memberId}" readonly>
                                                     </div>
                                                 </div>
                                                 <div class="row form-group">
                                                     <div class="col col-md-3"><strong for="password-input"
-                                                            class=" form-control-label">Reported</Strong></div>
-                                                    <div class="col-12 col-md-9"><input type="email"
-                                                            id="reportSuspector" name="reportSuspector"
-                                                            class="form-control"  value="${reportSingle.reportSuspector}" readonly></div>
+                                                            class=" form-control-label">Suspector Email</Strong></div>
+                                                    <div class="col-12 col-md-9"><input type="email" id="memberId"
+                                                            name="memberId" class="form-control"
+                                                            value="${reportSingle.reportSuspector}" readonly></div>
                                                 </div>
 
                                                 <div class="row form-group">
@@ -398,54 +404,56 @@
                                                             class=" form-control-label">Textarea</label></div>
                                                     <div class="col-12 col-md-9"><textarea name="reportContent"
                                                             id="reportContent" rows="9" style="resize: none;"
-                                                            class="form-control" readonly>${reportSingle.reportContent}</textarea></div>
+                                                            class="form-control"
+                                                            readonly>${reportSingle.reportContent}</textarea></div>
                                                 </div>
 
-
-                                                <div class="row form-group">
-                                                    <div class="col col-md-3"><label class=" form-control-label">Hold
-                                                            Period</label></div>
-                                                    <div class="col col-md-9">
-                                                        <div class="form-check-inline form-check">
-                                                            <label for="inline-radio1" class="form-check-label ">
-                                                                 <input type="radio" id="inline-radio1"
-                                                                    name="inline-radios" value="option1"
-                                                                    class="form-check-input">1 day &nbsp;&nbsp;
-                                                            </label>
-                                                            <label for="inline-radio2" class="form-check-label ">
-                                                                 <input type="radio" id="inline-radio2"
-                                                                    name="inline-radios" value="option2"
-                                                                    class="form-check-input"> 7 days &nbsp;&nbsp;
-                                                            </label>
-                                                            <label for="inline-radio3" class="form-check-label ">
-                                                                 <input type="radio" id="inline-radio3"
-                                                                    name="inline-radios" value="option3"
-                                                                    class="form-check-input"> 30 days &nbsp;&nbsp;
-                                                            </label>
-                                                            <label for="inline-radio4" class="form-check-label ">
-                                                                 <input type="radio" id="inline-radio4"
-                                                                    name="inline-radios" value="option4"
-                                                                    class="form-check-input"> 90 days
-                                                            </label>
+                                                <c:if
+                                                    test="${reportSingle.reportState eq 'READ' || reportSingle.reportState eq 'UNREAD'}">
+                                                    <div class="row form-group">
+                                                        <div class="col col-md-3"><label
+                                                                class=" form-control-label">Hold
+                                                                Period</label></div>
+                                                        <div class="col col-md-9">
+                                                            <div class="form-check-inline form-check">
+                                                                <label for="inline-radio1" class="form-check-label ">
+                                                                    <input type="radio" id="timeOutDuration1"
+                                                                        name="timeOutDuration" value="1"
+                                                                        class="form-check-input">1 day &nbsp;&nbsp;
+                                                                </label>
+                                                                <label for="inline-radio2" class="form-check-label ">
+                                                                    <input type="radio" id="timeOutDuration2"
+                                                                        name="timeOutDuration" value="7"
+                                                                        class="form-check-input"> 7 days &nbsp;&nbsp;
+                                                                </label>
+                                                                <label for="inline-radio3" class="form-check-label ">
+                                                                    <input type="radio" id="timeOutDuration3"
+                                                                        name="timeOutDuration" value="30"
+                                                                        class="form-check-input"> 30 days &nbsp;&nbsp;
+                                                                </label>
+                                                                <label for="inline-radio4" class="form-check-label ">
+                                                                    <input type="radio" id="timeOutDuration4"
+                                                                        name="timeOutDuration" value="90"
+                                                                        class="form-check-input"> 90 days
+                                                                </label>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="row form-group">
-                                                    <div class="col col-md-3"></div>
-                                                    <div class="col col-md-9">
-                                                        <button type="button"
-                                                            class="btn btn-outline-success" style="width: 100px; 
+                                                    <div class="row form-group">
+                                                        <div class="col col-md-3"></div>
+                                                        <div class="col col-md-9">
+                                                            <button id="reportStateHold" class="btn btn-outline-danger"
+                                                                style="width: 100px; 
                                                             height: 40px; 
                                                             font-size: 16px; 
                                                             padding: 5px 10px;">User Hold</button>&nbsp;
-                                                        <button type="button"
-                                                            class="btn btn-outline-danger" style="width: 100px; 
-                                                            height: 40px; 
-                                                            font-size: 16px; 
-                                                            padding: 5px 10px;">Reject</button>
+                                                            <button id="reportStateReject"
+                                                                class="btn btn-outline-secondary"
+                                                                style="width: 100px; height: 40px; font-size: 16px; padding: 5px 10px;">Reject</button>
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                </c:if>
                                             </form>
                                         </div>
                                     </div>
@@ -477,10 +485,94 @@
                 <script
                     src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
                 <script src="css/admin/assets/js/main.js"></script>
+                <script src="css/user/scripts/sweetalert/dist/sweetalert.min.js"></script>
 
 
 
                 <script src="js/admin/leftPanalActive.js"></script>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        document.getElementById('reportStateReject').addEventListener('click', function (event) {
+                            event.preventDefault();
+                            swal({
+                                title: 'WARNING',
+                                text: '정말 Reject 하시겠습니까?',
+                                type: 'warning',
+                                showCancelButton: true, // 확인, 취소 버튼 표시
+                                confirmButtonText: 'OK',
+                                cancelButtonText: 'Cancel'
+                            }, function (isConfirmed) {
+                                // 확인 버튼을 클릭했을 때의 동작
+                                if (isConfirmed) {
+                                    // location.href를 사용하여 로그인 페이지로 이동
+                                    window.location.href = "reportStateReject?reportId=${reportSingle.reportId}";
+                                }
+                            });
+                        });
+                    });
+
+
+                    // User Hold 버튼을 클릭했을 때의 이벤트 처리
+                    document.getElementById("reportStateHold").addEventListener("click", function (event) {
+                        event.preventDefault(); // 이벤트 전파 중지
+                        reportStateCheck(); // reportStateCheck() 함수 호출
+                    });
+
+
+                    function reportStateCheck() {
+                        console.log("진입");
+
+                        var radioButtons = document.querySelectorAll('input[type="radio"][name="timeOutDuration"]');
+                        var checked = false;
+
+                        radioButtons.forEach(function (radio) {
+                            if (radio.checked) {
+                                checked = true;
+                                console.log(checked);
+                            }
+                        });
+
+                        if (!checked) {
+                            swal("WARNING", "정지 기간을 선택해 주세요.", "error", {
+                                button: "OK",
+                            });
+                            return false;
+                        }
+
+                        // 1. 신고를 당해 정지된 사용자가 있는지 확인 
+                        $.ajax({
+                            type: 'POST',
+                            url: '/reportStateCheck',
+                            data: $('#reportStateHoldForm').serialize(), // 폼 데이터 전송
+                            success: function (result) {
+                                if (result === 1) {
+                                    // 정지된 사용자가 없으면 정지상태로 변경
+                                    reportStateHold();
+                                } else {
+                                    swal("WARNING", "이미 정지된 사용자 입니다.", "error", {
+                                        button: "OK",
+                                    });
+                                }
+                            },
+                            error: function () {
+                                alert('서버 오류가 발생했습니다.');
+                            }
+                        });
+                    }
+
+                    function reportStateHold() {
+                        // 폼 가져오기
+                        var form = document.getElementById('reportStateHoldForm');
+
+                        // 폼 제출 
+                        form.submit();
+                    }
+
+
+
+
+                </script>
 
 
             </body>
