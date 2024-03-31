@@ -16,35 +16,101 @@ public class MarketPostDAO {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-	
-	private static final String SELECTALL_MARKETPOST = " SELECT "
-			+ "    'MarketPost' AS POST_category, "
-			+ "    MARKETPOST.MARKETPOST_id, "
-			+ "    MARKETPOST.MEMBER_id, "
+	// 삽니다 글 전체 출력
+	private static final String SELECTALL_SELLMARKETPOST = "SELECT  "
+			+ "    'MarketPost' AS POST_category,  "
+			+ "    MARKETPOST.MARKETPOST_id,  "
+			+ "    MARKETPOST.MEMBER_id,  "
 			+ "    ( "
-			+ "        SELECT POSTIMG.POSTIMG_name "
-			+ "        FROM POSTIMG "
-			+ "        WHERE POSTIMG.POST_id = MARKETPOST.MARKETPOST_id "
-			+ "        ORDER BY POSTIMG.POSTIMG_id ASC "
+			+ "        SELECT POSTIMG.POSTIMG_name  "
+			+ "        FROM POSTIMG  "
+			+ "        WHERE POSTIMG.POST_id = MARKETPOST.MARKETPOST_id  "
+			+ "        ORDER BY POSTIMG.POSTIMG_id ASC  "
 			+ "        LIMIT 1 "
-			+ "    ) AS POSTIMG_name, "
-			+ "    MEMBER.MEMBER_nickname, "
-			+ "    MARKETPOST.MARKETPOST_title, "
-			+ "    MARKETPOST.MARKETPOST_content, "
-			+ "    MARKETPOST.MARKETPOST_date, "
-			+ "    MARKETPOST.MARKETPOST_viewcnt, "
-			+ "    COUNT(RECOMMEND.POST_id) AS RECOMMEND_cnt "
-			+ "FROM "
-			+ "    MARKETPOST MARKETPOST "
-			+ "INNER JOIN "
-			+ "    MEMBER MEMBER ON MARKETPOST.MEMBER_id = MEMBER.MEMBER_id "
-			+ "LEFT JOIN "
-			+ "    RECOMMEND RECOMMEND ON MARKETPOST.MARKETPOST_id = RECOMMEND.POST_id "
-			+ "GROUP BY "
-			+ "    MARKETPOST.MARKETPOST_id, "
-			+ "    MEMBER.MEMBER_nickname "
-			+ "ORDER BY "
-			+ "    MARKETPOST.MARKETPOST_id DESC ";
+			+ "    ) AS POSTIMG_name,  "
+			+ "    MEMBER.MEMBER_nickname,  "
+			+ "    MARKETPOST.MARKETPOST_title,  "
+			+ "    MARKETPOST.MARKETPOST_content,  "
+			+ "    MARKETPOST.MARKETPOST_date,  "
+			+ "    MARKETPOST.MARKETPOST_viewcnt,  "
+			+ "    COUNT(RECOMMEND.POST_id) AS RECOMMEND_cnt  "
+			+ "FROM  "
+			+ "    MARKETPOST "
+			+ "INNER JOIN  "
+			+ "    MEMBER ON MARKETPOST.MEMBER_id = MEMBER.MEMBER_id  "
+			+ "LEFT JOIN  "
+			+ "    RECOMMEND ON MARKETPOST.MARKETPOST_id = RECOMMEND.POST_id  "
+			+ "WHERE  "
+			+ "	MARKETPOST.MARKETPOST_status = 'sell' "
+			+ "GROUP BY  "
+			+ "    MARKETPOST.MARKETPOST_id,  "
+			+ "    MEMBER.MEMBER_nickname  "
+			+ "ORDER BY  "
+			+ "    MARKETPOST.MARKETPOST_id DESC";
+	
+	// 팝니다 글 전체 출력
+	private static final String SELECTALL_BUYMARKETPOST="SELECT  "
+			+ "    'MarketPost' AS POST_category,  "
+			+ "    MARKETPOST.MARKETPOST_id,  "
+			+ "    MARKETPOST.MEMBER_id,  "
+			+ "    ( "
+			+ "        SELECT POSTIMG.POSTIMG_name  "
+			+ "        FROM POSTIMG  "
+			+ "        WHERE POSTIMG.POST_id = MARKETPOST.MARKETPOST_id  "
+			+ "        ORDER BY POSTIMG.POSTIMG_id ASC  "
+			+ "        LIMIT 1 "
+			+ "    ) AS POSTIMG_name,  "
+			+ "    MEMBER.MEMBER_nickname,  "
+			+ "    MARKETPOST.MARKETPOST_title,  "
+			+ "    MARKETPOST.MARKETPOST_content,  "
+			+ "    MARKETPOST.MARKETPOST_date,  "
+			+ "    MARKETPOST.MARKETPOST_viewcnt,  "
+			+ "    COUNT(RECOMMEND.POST_id) AS RECOMMEND_cnt  "
+			+ "FROM  "
+			+ "    MARKETPOST "
+			+ "INNER JOIN  "
+			+ "    MEMBER ON MARKETPOST.MEMBER_id = MEMBER.MEMBER_id  "
+			+ "LEFT JOIN  "
+			+ "    RECOMMEND ON MARKETPOST.MARKETPOST_id = RECOMMEND.POST_id  "
+			+ "WHERE  "
+			+ "	MARKETPOST.MARKETPOST_status = 'buy'"
+			+ "GROUP BY  "
+			+ "    MARKETPOST.MARKETPOST_id,  "
+			+ "    MEMBER.MEMBER_nickname  "
+			+ "ORDER BY  "
+			+ "    MARKETPOST.MARKETPOST_id DESC";
+	
+	// 무료나눔 글 전체 출력
+	private static final String SELECTALL_FREECYCLEFREEPOST="SELECT  "
+			+ "    'MarketPost' AS POST_category,  "
+			+ "    MARKETPOST.MARKETPOST_id,  "
+			+ "    MARKETPOST.MEMBER_id,  "
+			+ "    ( "
+			+ "        SELECT POSTIMG.POSTIMG_name  "
+			+ "        FROM POSTIMG  "
+			+ "        WHERE POSTIMG.POST_id = MARKETPOST.MARKETPOST_id  "
+			+ "        ORDER BY POSTIMG.POSTIMG_id ASC  "
+			+ "        LIMIT 1 "
+			+ "    ) AS POSTIMG_name,  "
+			+ "    MEMBER.MEMBER_nickname,  "
+			+ "    MARKETPOST.MARKETPOST_title,  "
+			+ "    MARKETPOST.MARKETPOST_content,  "
+			+ "    MARKETPOST.MARKETPOST_date,  "
+			+ "    MARKETPOST.MARKETPOST_viewcnt,  "
+			+ "    COUNT(RECOMMEND.POST_id) AS RECOMMEND_cnt  "
+			+ "FROM  "
+			+ "    MARKETPOST "
+			+ "INNER JOIN  "
+			+ "    MEMBER MEMBER ON MARKETPOST.MEMBER_id = MEMBER.MEMBER_id  "
+			+ "LEFT JOIN  "
+			+ "    RECOMMEND ON MARKETPOST.MARKETPOST_id = RECOMMEND.POST_id  "
+			+ "WHERE  "
+			+ "	MARKETPOST.MARKETPOST_status = 'freecycle "
+			+ "GROUP BY  "
+			+ "    MARKETPOST.MARKETPOST_id,  "
+			+ "    MEMBER.MEMBER_nickname  "
+			+ "ORDER BY  "
+			+ "    MARKETPOST.MARKETPOST_id DESC";
 	
 	// 메인페이지 프리미엄 회원글 출력
 	private static final String SELECTALL_PREMIUMMARKETPOST= "SELECT "
@@ -92,7 +158,7 @@ public class MarketPostDAO {
 			+ "		MEMBER.MEMBER_nickname, "
 			+ " 	PROFILEIMG.PROFILEIMG_name";
 	
-	private static final String INSERT = "INSERT INTO MARKETPOST(MEMBER_id,MARKET_price,MARKET_category,MARKET_company,MARKET_status,MARKET_title,MARKET_content,MARKET_viewcnt)"
+	private static final String INSERT = "INSERT INTO MARKETPOST(MEMBER_id,MARKETPOST_price,MARKETPOST_category,MARKETPOST_company,MARKETPOST_status,MARKETPOST_title,MARKETPOST_content,MARKETPOST_viewcnt)"
 			+ "							VALUES(?,?,?,?,?,?,?,0)";
 	private static final String UPDATE = "UPDATE MARKETPOST SET MARKETPOST_PRICE = ? ,MARKETPOST_category = ? ,MARKETPOST_company = ? ,MARKETPOST_status = ? ,MARKETPOST_title = ? ,MARKETPOST_content = ? "
 									+ "	 WHERE "
@@ -105,9 +171,22 @@ public class MarketPostDAO {
 	public List<MarketPostDTO> selectAll(MarketPostDTO marketPostDTO) {
 		List<MarketPostDTO> result = null;
 		try {
-			if (marketPostDTO.getSearchCondition().equals("marketPostList")) {
-				result = (List<MarketPostDTO>) jdbcTemplate.query(SELECTALL_MARKETPOST, new MarketPostSelectAllRowMapper());
-				System.out.println("MarketPostDAO(selectAll) 로그 = [" + result + "]");
+			// 팝니다 글 상태 글 출력
+			if (marketPostDTO.getSearchCondition().equals("marketPostSellList")) {
+				result = (List<MarketPostDTO>) jdbcTemplate.query(SELECTALL_SELLMARKETPOST, new MarketPostSelectAllRowMapper());
+				System.out.println("MarketPostDAO(SellselectAll) 로그 = [" + result + "]");
+				return result;
+			}
+			// 삽니다 글 상태 글 출력
+			else if (marketPostDTO.getSearchCondition().equals("marketPostBuyList")) {
+				result = (List<MarketPostDTO>) jdbcTemplate.query(SELECTALL_BUYMARKETPOST, new MarketPostSelectAllRowMapper());
+				System.out.println("MarketPostDAO(BuyselectAll) 로그 = [" + result + "]");
+				return result;
+			}
+			// 무료나눔 글 상태 글 출력
+			else if (marketPostDTO.getSearchCondition().equals("marketPostFreecycleList")) {
+				result = (List<MarketPostDTO>) jdbcTemplate.query(SELECTALL_FREECYCLEFREEPOST, new MarketPostSelectAllRowMapper());
+				System.out.println("MarketPostDAO(FreecycleSelectAll) 로그 = [" + result + "]");
 				return result;
 			}
 			//  프리미엄 회원 글 출력
