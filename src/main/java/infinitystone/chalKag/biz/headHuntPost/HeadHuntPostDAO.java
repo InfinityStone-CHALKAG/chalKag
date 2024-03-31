@@ -17,27 +17,54 @@ public class HeadHuntPostDAO { // 구인 게시판 DAO
   
   //구인글 전체 출력.전미지
   private static final String SELECTALL_HEADHUNTPOST = "SELECT "
-		+ "   'HeadHuntPost' AS POST_category, " // 게시판 카테고리 설정
-        + "    H.HEADHUNTPOST_id, "
-        + "    H.MEMBER_id,"
-        + "    (SELECT P.POSTIMG_name "
-        + "     FROM POSTIMG P "
-        + "     WHERE P.POST_id = H.HEADHUNTPOST_id "
-        + "     ORDER BY P.POSTIMG_id ASC "
-        + "     LIMIT 1) AS POSTIMG_name, "
-        + "    M.MEMBER_nickname, "
-        + "    H.HEADHUNTPOST_title, "
-        + "    H.HEADHUNTPOST_content, "
-        + "    H.HEADHUNTPOST_date, "
-        + "    H.HEADHUNTPOST_viewcnt, "
-        + "    COUNT(R.POST_id) AS RECOMMEND_cnt "
-        + "FROM HEADHUNTPOST H "
-        + "INNER JOIN MEMBER M ON H.MEMBER_id = M.MEMBER_id "
-        + "LEFT JOIN RECOMMEND R ON H.HEADHUNTPOST_id = R.POST_id "
-        + "GROUP BY H.HEADHUNTPOST_id, "
-        + "			M.MEMBER_nickname "
-        + "ORDER BY H.HEADHUNTPOST_id DESC";
-
+		  + "	'HeadHuntPost' AS POST_category, " // 게시판 카테고리 설정
+		  + "	HEADHUNTPOST.HEADHUNTPOST_id, "
+		  + "	HEADHUNTPOST.MEMBER_id, "
+		  + "	( " // 게시글의 대표 이미지를 설정하는 서브 쿼리문
+		  + "		SELECT "
+		  + "			POSTIMG.POSTIMG_name " // 구인글의 게시글 이미지를 선택
+		  + "		FROM "
+		  + "			POSTIMG " // 게시글 이미지 테이블에서 가져옴
+		  + "		WHERE "
+		  + "			POSTIMG.POST_id = HEADHUNTPOST.HEADHUNTPOST_id " // 해당 구인글과 연관된 이미지
+		  + "		ORDER BY "
+		  + "			POSTIMG.POSTIMG_id ASC " // 게시글의 이미지 아이디 기준으로 오름차순 정렬
+		  + "		LIMIT 1 " // 최대 1개의 이미지만 가져오도록 설정
+		  + "	 ) AS POSTIMG_name, " // 가져온 대표 이미지의 이름을 "POSTIMG_name"로 칭함
+		  + "    MEMBER.MEMBER_nickname, "
+		  + "    HEADHUNTPOST.HEADHUNTPOST_title, "
+		  + "    HEADHUNTPOST.HEADHUNTPOST_content, "
+		  + "    HEADHUNTPOST.HEADHUNTPOST_date, "
+		  + "    HEADHUNTPOST.HEADHUNTPOST_viewcnt, "
+		  + "	 ( "
+		  + "		SELECT "
+		  + "            COUNT(*) " // 해당 구인글에 대한 좋아요 수를 COUNT 함수를 사용해 합산
+		  + "        FROM "
+		  + "            RECOMMEND " // 좋아요 테이블에서 가져옴
+		  + "        WHERE "
+		  + "            RECOMMEND.POST_id = HEADHUNTPOST.HEADHUNTPOST_id " // 해당 구인글과 연관된 좋아요 수
+		  + "    ) AS RECOMMEND_cnt " // 좋아요 수를 "RECOMMEND_cnt"로 칭함
+		  + "FROM "
+		  + "	HEADHUNTPOST " // 구인글 테이블에서 가져옴
+		  + "INNER JOIN "
+		  + "	MEMBER ON HEADHUNTPOST.MEMBER_id = MEMBER.MEMBER_id " // 회원 정보와 INNER JOIN
+		  + "LEFT JOIN"
+		  + "	RECOMMEND ON HEADHUNTPOST.HEADHUNTPOST_id = RECOMMEND.POST_id " // 좋아요 정보와 LEFT JOIN
+		  + "GROUP BY"
+		  + "	HEADHUNTPOST.HEADHUNTPOST_id, " // 구인글 아이디로 그룹화
+		  + "	MEMBER.MEMBER_nickname " // 회원 닉네임으로 그룹화
+		  + "ORDER BY"
+		  + "	HEADHUNTPOST.HEADHUNTPOST_id DESC"; // 구인글 아이디 기준으로 내림차순 정렬
+  // 사용한 테이블 : 구인글 테이블, 회원 테이블, 좋아요 테이블, 게시글 이미지 테이블
+  // 사용한 컬럼 (출력 내용) :
+  // 게시글 카테고리, 구인글 아이디, 회원 아이디, 회원 닉네임(회원 테이블), 구인글 제목, 구인글 내용,
+  // 구인글 작성일, 구인글 조회수, 게시글 이미지 테이블(게시글 이미지 테이블), 게시글의 좋아요 수(좋아요 테이블), 
+  // 쿼리문 설명 :
+  // INNER JOIN을 사용해 구인글 테이블과 회원 테이블을 연결하고, 또 다른 LEFT JOIN을 사용해 구인글 테이블과 좋아요 테이블을 연결
+  // 게시글 이미지는 게시글 이미지 테이블을 따로 나누었으며 서브 쿼리를 사용해 게시글 이미지 중 대표 이미지로 보여줄 이미지를 설정하고,
+  // 그 결과를 "PROFILEIMG_name"라는 별칭으로 반환
+  // 게시글의 좋아요 수는 좋아요 테이블을 따로 나누었으며
+  // COUNT() 함수를 사용해 게시글에 대한 좋아요 수를 합산하고, 그 결과를 "RECOMMEND_cnt"라는 별칭으로 반환
 
   //구인글 전체 출력.전미지 (수정하기 전 쿼리)
 //  private static final String SELECTALL_HEADHUNTPOST = "SELECT " 
@@ -198,6 +225,17 @@ public class HeadHuntPostDAO { // 구인 게시판 DAO
 		+ "    RECOMMEND ON HEADHUNTPOST.HEADHUNTPOST_id = RECOMMEND.POST_id "
 		+ "WHERE  "
 		+ "    HEADHUNTPOST.HEADHUNTPOST_id = ? " ;
+  // 사용한 테이블 : 구인글 테이블, 회원 테이블, 좋아요 테이블, 프로필 이미지 테이블
+  // 사용한 컬럼 (출력 내용) :
+  // 게시글 카테고리, 구인글 아이디, 회원 아이디, 회원 닉네임(회원 테이블), 구인글 제목, 구인글 내용,
+  // 구인글 직업 (모델/사진작가), 구인글 작업 지역, 구인글 작업 페이, 구인글 작업 날짜, 구인글 작업 컨셉,
+  // 구인글 작성일, 구인글 조회수, 게시글의 좋아요 수(좋아요 테이블), 프로필 이미지(프로필 이미지 테이블)
+  // 쿼리문 설명 :
+  // INNER JOIN을 사용해 구인글 테이블과 회원 테이블을 연결하고, 또 다른 LEFT JOIN을 사용해 구인글 테이블과 좋아요 테이블을 연결
+  // 프로필 이미지는 프로필 이미지 테이블을 따로 나누었으며 서브 쿼리를 사용해 회원의 프로필 이미지 중 회원정보로 보여줄 이미지를 설정하고,
+  // 그 결과를 "PROFILEIMG_name"라는 별칭으로 반환
+  // 게시글의 좋아요 수는 좋아요 테이블을 따로 나누었으며
+ // COUNT() 함수를 사용해 게시글에 대한 좋아요 수를 합산하고, 그 결과를 "RECOMMEND_cnt"라는 별칭으로 반환
   
   // 구인글 작성.전미지
   private static final String INSERT_HEADHUNTPOST = "INSERT INTO HEADHUNTPOST ( "
@@ -519,6 +557,20 @@ class HeadHuntPostPremiumListRowMapper implements RowMapper<HeadHuntPostDTO> {
 
 // ===== SELECTONE =====
 
+// 게시글 작성 시 게시글 아이디를 저장할 RowMapper 클래스.전미지
+class SelectOneMaxPostIdRowMapper implements RowMapper<HeadHuntPostDTO> {
+	@Override
+	public HeadHuntPostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+		// ResultSet에 저장된 데이터를 HeadHuntPostDTO 객체에 매핑(저장)하는 메서드
+		
+		HeadHuntPostDTO headHuntPostDTO = new HeadHuntPostDTO(); // 새로운 HeadHuntPostDTO 객체 생성
+		// ResultSet에 저장된 데이터를 HeadHuntPostDTO 객체에 저장		
+		headHuntPostDTO.setHeadHuntPostId(rs.getString("MAX(HEADHUNTPOST_id)"));	// 제일 마지막에 추가된 게시글 아이디
+		System.out.println("RowMapper OUT");
+		return headHuntPostDTO;
+	}
+}
+
 // 구인글 상세 출력 시 필요한 데이터를 저장할 RowMapper 클래스.전미지
 class SelectOneHeadHuntPostRowMapper implements RowMapper<HeadHuntPostDTO> {
 	@Override // mapRow 메서드 오버라이드
@@ -542,16 +594,5 @@ class SelectOneHeadHuntPostRowMapper implements RowMapper<HeadHuntPostDTO> {
 		headHuntPostDTO.setHeadHuntPostViewcnt(rs.getString("HEADHUNTPOST_viewcnt")); 	// 구인글 조회수
 		headHuntPostDTO.setRecommendCnt(rs.getString("RECOMMEND_cnt")); 				// 게시글의 좋아요 수
 		return headHuntPostDTO; // headHuntPostDTO에 저장된 데이터들을 반환
-	}
-}
-
-// 게시글 작성 시 게시글 아이디를 저장할 RowMapper 클래스.전미지
-class SelectOneMaxPostIdRowMapper implements RowMapper<HeadHuntPostDTO> {
-	@Override
-	public HeadHuntPostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
-		HeadHuntPostDTO data = new HeadHuntPostDTO();
-		data.setHeadHuntPostId(rs.getString("MAX(HEADHUNTPOST_id)"));
-		System.out.println("RowMapper OUT");
-		return data;
 	}
 }
