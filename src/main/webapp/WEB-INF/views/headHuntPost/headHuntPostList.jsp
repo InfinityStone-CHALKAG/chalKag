@@ -36,10 +36,12 @@
 									
 									<!-- 글 작성 -->
 									<c:if test="${member != null }">
-										<a class="btn btn-primary btn-block" style="margin-top:5%" href="/writeHeadHuntPost">Write</a>
+										<a class="btn btn-primary btn-block" style="margin-top:5%" href="/writeHeadHuntPost"><i class="ion-android-create"
+											style="font-size:15px;"></i> Write</a>
 									</c:if>
 									<c:if test="${member == null }">
-										<a class="btn btn-primary btn-block" style="margin-top:5%"onclick="message()">Write</a>
+										<a class="btn btn-primary btn-block" style="margin-top:5%"onclick="message()"><i class="ion-android-create"
+											style="font-size:15px;"></i> Write</a>
 									</c:if>
 									<br>
 									<h2 class="aside-title">Search</h2>
@@ -163,7 +165,7 @@
 										<br>
 										<button class="btn btn-primary btn-sm" id="filterReset"
 											style="font-size:15px;"><i class="ion-ios-refresh-empty"
-												style="font-size:15px;"></i>FILTER RESET</button>
+												style="font-size:15px;"></i> FILTER RESET</button>
 
 									</div>
 								</aside>

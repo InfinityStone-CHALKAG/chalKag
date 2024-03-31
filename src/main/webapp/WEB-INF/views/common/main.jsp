@@ -20,6 +20,10 @@
     input[type="range"] {
         accent-color: #F73F52;
     }
+       /* 숨길 Dot 스타일링 */
+       .owl-dots {
+            display: none !important;
+        }
 </style>
 
 <body class="skin-orange">
@@ -899,6 +903,33 @@
 
 <!-- JS -->
 <chalKagTags:webJs/>
+<!-- owl 사용시 필요-->
+	<script src="css/user/js/demo.js"></script>
+
+<script>
+      $(document).ready(function(){
+        $(".owl-carousel").trigger('destroy.owl.carousel').removeClass('owl-loaded');
+            // Headline Carousel
+            $("#headline").owlCarousel({
+                items: 1,
+                loop: true,
+                autoplay: true,
+                autoplayTimeout: 3000,
+                autoplayHoverPause: true,
+                margin: 10
+            });
+
+            // Featured Carousel
+            $("#featured").owlCarousel({
+                items: 1,
+                loop: true,
+                autoplay: true,
+                autoplayTimeout: 3000,
+                autoplayHoverPause: true,
+                margin: 10
+            });
+        });
+</script>
 </body>
 
 </html>
