@@ -196,11 +196,12 @@ class FreePostSelectAllRowMapper implements RowMapper<FreePostDTO> {
 		data.setFreePostId(rs.getString("FREEPOST_id"));
 		data.setMemberId(rs.getString("MEMBER_id"));
 		data.setMemberNickname(rs.getString("MEMBER_nickname"));
-		data.setFreePostDate(rs.getString("FREEPOST_date"));
 		data.setFreePostTitle(rs.getString("FREEPOST_title"));
 		data.setFreePostContent(rs.getString("FREEPOST_content"));
+		data.setFreePostDate(rs.getString("FREEPOST_date"));
 		data.setFreePostViewcnt(rs.getString("FREEPOST_viewcnt"));
 		data.setRecommendCnt(rs.getString("RECOMMEND_cnt"));
+		data.setPostImgName(rs.getString("POSTIMG_name"));
 		return data;
 	}
 
@@ -223,6 +224,7 @@ class FreePostSelectOneRowMapper implements RowMapper<FreePostDTO> {
 		data.setFreePostContent(rs.getString("FREEPOST_content"));
 		data.setFreePostViewcnt(rs.getString("FREEPOST_viewcnt"));
 		data.setRecommendCnt(rs.getString("RECOMMEND_cnt"));
+		
 		return data;
 	}
 
