@@ -1,4 +1,6 @@
 var checkNicknameFlag = false;
+var memberGrade = document.getElementById("memberGrade").getAttribute("value");
+console.log(memberGrade);
 function checkNickname() {
 	console.log("[로그] checkNickname 진입")
 	var memberNickname = $('#memberNickname').val();
@@ -6,6 +8,23 @@ function checkNickname() {
 		$("#nicknameErrMsg").text('입력된 닉네임이 없습니다.');
 		$("#nicknameErrMsg").css('color', 'red');
 		return checkNicknameFlag;
+	}
+	if (memberGrade == 'USER') {
+		swal({
+      title: 'fail',
+      text: '프리미엄 회원이 아닙니다. \n프리미엄 결제 페이지로 이동하시겠습니까?',
+      type: 'error',
+      showCancelButton: true, // 확인, 취소 버튼 표시
+      confirmButtonText: 'OK',
+      cancelButtonText: 'Cancel'
+    }, function(isConfirmed) {
+      // 확인 버튼을 클릭했을 때의 동작
+      if (isConfirmed) {
+        // location.href를 사용하여 로그인 페이지로 이동
+        window.location.href = 'payment';
+      }
+    });
+    return false;
 	}
 	
 	$.ajax({
