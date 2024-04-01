@@ -34,6 +34,7 @@
 										<!-- 답글 입력 -->
 										<div class="updateContents" id="writeReplyForm" style="display: none; text-align: center;">
 											<form action="/writeReply" method="post" class="row">
+				   							 <input type="hidden" name="commentId" value="${commentIdList.commentId}">
 												<div class="form-group col-md-12">
 													<label for="message">Reply <span class="required"></span></label>
 													<textarea class="form-control" id="replyContent" name="replyContent"
