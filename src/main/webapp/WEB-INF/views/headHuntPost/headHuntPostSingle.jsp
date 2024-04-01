@@ -144,6 +144,7 @@
 				</div>
 			</div>
 		</section>
+		<div postImgList="${postImgList}" ></div>
 
 		<!-- Start footer tag로 출력 -->
 		<chalKagTags:webFooter/>
@@ -164,18 +165,8 @@
 	<script src="css/user/js/demo.js"></script>
 	<script src="css/user/js/e-magz.js"></script>
 	<script>
-		  $(document).ready(function(){
-            // Owl Carousel 초기화
-            $(".owl-carousel").owlCarousel({
-				items: 1,
-                loop: true,
-                autoplay: true,
-                autoplayTimeout: 3000,
-                autoplayHoverPause: true,
-                margin: 10
-            });
-		});
-
+		
+		  
 		document.addEventListener('DOMContentLoaded', function() {
     // div 요소를 가져옵니다.
     const postPayElement = document.getElementById('headHuntPostPay');
@@ -191,6 +182,26 @@
     // 텍스트 내용을 숫자로 파싱하고 쉼표로 구분하여 다시 설정합니다.
     postPayElement.textContent = numberWithCommas(parseFloat(postPayText));
 });
+
+
+
+$(document).ready(function(){
+    // Owl Carousel의 이미지 개수 확인
+    var numPhotos = $(".owl-carousel").find("img").length;
+    var loopValue = (numPhotos > 1) ? true : false;
+    console.log(numPhotos); // 이미지 개수를 로그에 출력하여 확인
+
+    // Owl Carousel 초기화
+    $(".owl-carousel").owlCarousel({
+        items: 1,
+        loop: loopValue,
+        autoplay: true,
+        autoplayTimeout: 3000,
+        autoplayHoverPause: true,
+        margin: 10
+    });
+});
+
 	</script>
 	</body>
 </html>
