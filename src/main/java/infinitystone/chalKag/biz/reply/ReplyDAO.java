@@ -15,28 +15,30 @@ public class ReplyDAO {
   @Autowired
   private JdbcTemplate jdbcTemplate;
 
-  private static final String SELECTALL = "SELET REPLY.REPLY_id," +
-      "REPLY.MEMBER_id," +
-      "MEMBER_nickname," +
-      "REPLY.REPLY_content," +
-      "REPLY.REPLY_date" +
-      "FROM REPLY" +
-      "INNER JOIN MEMBER ON REPLY.MEMBER_id = MEMBER.MEMBER_id" +
+  private static final String SELECTALL = "SELET REPLY.REPLY_id, " +
+      "REPLY.MEMBER_id, " +
+      "MEMBER_nickname, " +
+      "PROFILEIMG_name, " +
+      "REPLY.REPLY_content, " +
+      "REPLY.REPLY_date " +
+      "FROM REPLY " +
+      "INNER JOIN MEMBER ON REPLY.MEMBER_id = MEMBER.MEMBER_id " +
+      "INNER JOIN PROFILEIMG ON REPLY.MEMBER_id = PROFILEIMG.MEMBER_id " +
       "WHERE REPLY.COMMENT_id = ?";
 
   private static final String SELECTONE = "";
 
-  private static final String INSERT = "INSERT INTO REPLY (COMMENT_id," +
-      "MEMBER_id," +
-      "REPLY_content)" +
+  private static final String INSERT = "INSERT INTO REPLY (COMMENT_id, " +
+      "MEMBER_id, " +
+      "REPLY_content) " +
       "VALUES (?,?,?)";
 
-  private static final String UPDATE = "UPDATE REPLY" +
-      "SET REPLY_content = ?" +
+  private static final String UPDATE = "UPDATE REPLY " +
+      "SET REPLY_content = ? " +
       "WHERE REPLY_id = ?";
 
-  private static final String DELETE = "DELETE" +
-      "FROM REPLY" +
+  private static final String DELETE = "DELETE " +
+      "FROM REPLY " +
       "WHERE REPLY_id = ?";
 
   public List<ReplyDTO> selectAll(ReplyDTO replyDTO) {
@@ -83,6 +85,7 @@ class ReplyRowMapper implements RowMapper<ReplyDTO> {
     replyDTO.setCommentId(rs.getString("COMMENT_id"));
     replyDTO.setMemberId(rs.getString("MEMBER_id"));
     replyDTO.setMemberNickname(rs.getString("MEMBER_nickname"));
+    replyDTO.setProfileImgName(rs.getString("PROFILEIMG_name"));
     replyDTO.setReplyContent(rs.getString("REPLY_content"));
     replyDTO.setReplyDate(rs.getString("REPLY_date"));
     return replyDTO;
