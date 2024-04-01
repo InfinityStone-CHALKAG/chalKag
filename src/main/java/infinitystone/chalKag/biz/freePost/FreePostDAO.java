@@ -18,7 +18,7 @@ public class FreePostDAO {
 	
 	
 	// 게시글 전체 보기 자유게시판, 게시판 이미지, 좋아요 테이블 조인문
-	private static final String SELECTALL_FREEPOST = "SELECT  "
+	private static final String SELECTALL_FREEPOSTLIST = "SELECT  "
 			+ "	'FREEPost' AS POST_category,  "
 			+ "	FREEPOST.freePOST_id,  "
 			+ "	FREEPOST.MEMBER_id,  "
@@ -48,7 +48,7 @@ public class FreePostDAO {
 			+ "	   FREEPOST.FREEPOST_id DESC ";
 	
 	// 메인페이지 프리미엄 회원글 출력
-		private static final String SELECTALL_PREMIUMFREEPOST= "SELECT "
+		private static final String SELECTALL_PREMIUMFREEPOSTLIST= "SELECT "
 				+ "			    FREEPOST.FREEPOST_title, "
 				+ "				   MEMBER.MEMBER_grade ,  "
 				+ "			FROM   "
@@ -68,7 +68,7 @@ public class FreePostDAO {
 	
 	
 	// 게시글 상세보기 게시글 전체 보기 자유게시판, 게시판 이미지, 좋아요 테이블 조인문
-	private static final String SELECTONE_FREEPOST = "SELECT  "
+	private static final String SELECTONE_FREEPOSTSINGLE = "SELECT  "
 			+ "	'FreePost' AS POST_category, "
 			+ "	FREEPOST.FREEPOST_id, "
 			+ "	FREEPOST.MEMBER_id, "
@@ -119,11 +119,11 @@ public class FreePostDAO {
 
 		try { // 게시판 전체 출력해주는 행동이라면 selectAll 쿼리문 실행
 			if (freePostDTO.getSearchCondition().equals("freePostList")) {
-				result = (List<FreePostDTO>) jdbcTemplate.query(SELECTALL_FREEPOST, new FreePostSelectAllRowMapper());
+				result = (List<FreePostDTO>) jdbcTemplate.query(SELECTALL_FREEPOSTLIST, new FreePostSelectAllRowMapper());
 				return result;
 			}
 			else if(freePostDTO.getSearchCondition().equals("freePostPremiumList")) {
-				result = (List<FreePostDTO>) jdbcTemplate.query(SELECTALL_PREMIUMFREEPOST, new FreePostPremiumSelectAllRowMapper());
+				result = (List<FreePostDTO>) jdbcTemplate.query(SELECTALL_PREMIUMFREEPOSTLIST, new FreePostPremiumSelectAllRowMapper());
 				System.out.println("FreePostDAO(premiumSelectAll) 로그 = [" + result + "]");
 				return result;
 			}
@@ -140,7 +140,7 @@ public class FreePostDAO {
 		try {											
 			if (freePostDTO.getSearchCondition().equals("freePostSingle")) {
 				Object[] args = { freePostDTO.getFreePostId() };
-				result = jdbcTemplate.queryForObject(SELECTONE_FREEPOST, args, new FreePostSelectOneRowMapper());
+				result = jdbcTemplate.queryForObject(SELECTONE_FREEPOSTSINGLE, args, new FreePostSelectOneRowMapper());
 				return result;
 			}else if(freePostDTO.getSearchCondition().equals("maxPostId")) {
 				result = jdbcTemplate.queryForObject(SELECTONE_MAXPOSTID, new SelectOneMaxPostIdRowMapper());
@@ -230,6 +230,7 @@ class FreePostSelectOneRowMapper implements RowMapper<FreePostDTO> {
 
 }
 
+// 프리미엄 회원 출력
 class FreePostPremiumSelectAllRowMapper implements RowMapper<FreePostDTO>{
 
 	@Override
@@ -245,6 +246,7 @@ class FreePostPremiumSelectAllRowMapper implements RowMapper<FreePostDTO>{
 }
 
 
+// 저장 시 최대값
 class SelectOneMaxPostIdRowMapper implements RowMapper<FreePostDTO> {
 	@Override
 	public FreePostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {

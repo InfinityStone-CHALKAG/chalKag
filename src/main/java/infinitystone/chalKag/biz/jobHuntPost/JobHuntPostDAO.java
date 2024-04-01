@@ -223,7 +223,7 @@ public class JobHuntPostDAO {
 		return true;
 	}
 }
-
+// 전체보기 출력
 class JobHuntPostSelecAllRowMapper implements RowMapper<JobHuntPostDTO> {
 
 	@Override
@@ -245,6 +245,7 @@ class JobHuntPostSelecAllRowMapper implements RowMapper<JobHuntPostDTO> {
 	}
 }
 
+// 상세보기 출력
 class JobHuntPostOneRowMapper implements RowMapper<JobHuntPostDTO> {
 
 	@Override
@@ -270,6 +271,7 @@ class JobHuntPostOneRowMapper implements RowMapper<JobHuntPostDTO> {
 	}
 }
 
+// 메인페이지 프리미엄 회원 전체 출력
 class JobHuntPostPremiumSelectAllRowMapper implements RowMapper<JobHuntPostDTO>{
 
 	@Override
@@ -284,6 +286,7 @@ class JobHuntPostPremiumSelectAllRowMapper implements RowMapper<JobHuntPostDTO>{
 	
 }
 
+// 저장 시 최대값
 class SelectOneMaxPostIdRowMapper implements RowMapper<JobHuntPostDTO> {
 	@Override
 	public JobHuntPostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {

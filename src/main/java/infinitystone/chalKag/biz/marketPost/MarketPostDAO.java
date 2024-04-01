@@ -330,7 +330,7 @@ class MarketPostPremiumSelectAllRowMapper implements RowMapper<MarketPostDTO>{
 	
 }
 
-//
+// 저장 시 최대값
 class SelectOneMaxPostIdRowMapper implements RowMapper<MarketPostDTO> {
 	@Override
 	public MarketPostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
