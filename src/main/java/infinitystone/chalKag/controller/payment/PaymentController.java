@@ -54,6 +54,8 @@ public class PaymentController {
 
     memberService.update(memberDTO);
 
+    session.setAttribute("memberGrade", "PREMIUM");
+
     return 1;
   }
 }
