@@ -62,6 +62,20 @@ div .inner p {
 				<div class="col-md-3">
 					<aside>
 						<!-- 검색 창 필터검색과 연동되어 있기에 필터검색을 처리하는 Js파일로 검색 처리 -->
+						
+						<!-- 글 작성 -->
+						<c:if test="${member != null }">
+							<a class="btn btn-primary btn-block" style="margin-top: 5%"
+								href="/writeHeadHuntPost"><i class="ion-android-create"
+								style="font-size: 15px;"></i> Write</a>
+						</c:if>
+						<c:if test="${member == null }">
+							<a class="btn btn-primary btn-block" style="margin-top: 5%"
+								onclick="message()"><i class="ion-android-create"
+								style="font-size: 15px;"></i> Write</a>
+						</c:if>
+						<br>
+						
 						<h2 class="aside-title">Search</h2>
 						<div class="aside-body">
 							<!-- 검색창 옵션(제목, 내용, 작성자, 제목 + 작성자) -->
@@ -91,85 +105,83 @@ div .inner p {
 						<h2 class="aside-title">Filter</h2>
 						<div class="aside-body">
 							<div class="group-title"
-								style="font-weight: bold; margin-bottom: 2%;">Date</div>
+								style="font-weight: bold; margin-bottom: 2%;">DATE</div>
 							<div class="form-group">
 								<!-- 모든 시간 selectAll -->
-								<label><input type="radio" name="date" checked>&nbsp;
-									Anytime</label>
+								<label><input type="radio" name="date" id="Anytime"
+									checked>&nbsp; Anytime</label>
 							</div>
 							<div class="form-group">
 								<!-- 오늘 하루 동안 작성한 글들 selectAll_today -->
-								<label><input type="radio" name="date">&nbsp;
+								<label><input type="radio" name="date" id="Today">&nbsp;
 									Today</label>
 							</div>
 							<div class="form-group">
 								<!-- 지난주 동안 작성한 글들 selectAll_today -->
-								<label><input type="radio" name="date">&nbsp;
+								<label><input type="radio" name="date" id="LastWeek">&nbsp;
 									Last Week</label>
 							</div>
 							<div class="form-group">
 								<!-- 전 달동안 작성한 글들 selectAll_today -->
-								<label><input type="radio" name="date">&nbsp;
+								<label><input type="radio" name="date" id="LastMonth">&nbsp;
 									Last Month</label>
 							</div>
-
-							<!-- 상품글 정보 필터 검색 -->
+							<br>
+							<!-- 제조사 필터 -->
 							<div class="group-title"
-								style="font-weight: bold; margin-bottom: 2%;">Product</div>
-							<!-- 모든 글 -->
+								style="font-weight: bold; margin-bottom: 2%;">COMPANY</div>
 							<div class="form-group">
-								<label><input type="checkbox" id="headHunt"
-									name="headHunt" checked> &nbsp; All Market Post</label>
-							</div>
-
-							<!-- 직업 필터 -->
-							<div class="form-group">
-								<label for="company">제조사 :</label> <select
+								<select
 									style="width: 100%; height: 40px;" id="role" name="company">
-									<option value="" disabled selected>선택</option>
-									<option value="캐논">캐논</option>
-									<option value="소니">소니</option>
-									<option value="니콘">니콘</option>
+									<option value="" disabled selected>Select</option>
+									<option value="Canon">Canon</option>
+									<option value="Sony">Sony</option>
+									<option value="Nikon">Nikon</option>
 								</select>
 							</div>
 
 							<!-- 종류 필터 -->
+							<div class="group-title"
+								style="font-weight: bold; margin-bottom: 2%;">PRODUCT CATEGORY</div>
 							<div class="form-group">
-								<label for="region">상품 종류 :</label> <select
-									style="width: 100%; height: 40px;" id="region"
+								<select style="width: 100%; height: 40px;" id="productCategory"
 									name="productCategory">
-									<option value="" disabled selected>선택</option>
+									<option value="" disabled selected>Select</option>
 									<option value="DSLR">DSLR</option>
-									<option value="미러리스">미러리스</option>
+									<option value="MirrorLess">Mirror Less</option>
+									<option value="FilmCamera">Film Camera</option>
 								</select>
 							</div>
 
 							<!-- Price 필터 -->
+							<div class="group-title"
+								style="font-weight: bold; margin-bottom: 2%;">PRICE</div>
 							<div class="form-group">
-								<label for="minPrice">최소 Price:</label> <input type="range"
+								<input type="range"
 									id="minPrice" name="minPay" min="0" max="1000000" value="1">
 								<label for="maxPrice">최대 Price:</label> <input type="range"
 									id="maxPrice" name="maxPay" min="0" max="1000000" value="1">
 							</div>
+							<br>
+							
+							<button class="btn btn-primary btn-sm" id="filterReset"
+								style="font-size: 100%;">
+								<i class="ion-ios-refresh-empty" style="font-size: 15px;"></i>
+								FILTER RESET
+							</button>
+
 						</div>
 					</aside>
-				</div>
-
-				<div class="col-md-9"
-					style="text-align: right; margin-bottom: 10px;">
-					<!-- 글 작성 -->
-					<c:if test="${member != null }">
-						<a class="btn btn-primary btn-sm" href="/writeMarketPost">Writing</a>
-					</c:if>
-					<c:if test="${member == null }">
-						<a class="btn btn-primary btn-sm" onclick="message()">Writing</a>
-					</c:if>
 				</div>
 
 				<div class="col-md-9">
 					<div class="nav-tabs-group">
 						<ul class="nav-tabs-list">
-							<li onclick="sortItems('all')">All</li>
+							<li class="active" onclick="sortItems('all')"><a href="#">All</a></li>
+							<li><a href="#">Latest</a></li>
+							<li><a href="#">Popular</a></li>
+							<li><a href="#">Trending</a></li>
+							<li><a href="#">Videos</a></li>
 						</ul>
 						<div class="nav-tabs-right">
 							<!-- 오름차순, 내림차순 정렬 -->
@@ -180,21 +192,24 @@ div .inner p {
 						</div>
 					</div>
 
+					<div class="search-result">Define style with your exceptional
+						models.</div>
+
+
 					<!-- 게시글 전체 갯수가 출력되게 처리 -->
-					<div class="col-md-9">
-						<div class="row">
-							<!-- 게시글 목록 출력 장소 시작 게시판마다 명이 다르다. -->
-							<div id="postDatasContainer" data-displayreviewdata='${marketPostList}'></div>
-							<!-- 게시글 목록 출력 장소 종료-->
-	
-							<!-- 페이지 이동 버튼 -->
-							<!-- 페이징처리 시 1~10 까지 출력 글이 적으면 1~a 만 출력할 수 있게 처리  -->
-							<div class="col-md-12 text-center" >
-								<ul class='pagination' id="paginationContainer">
-								</ul>
-							</div>
-							<!-- 페이징 끝 -->
+					<div class="row">
+						<!-- 게시글 목록 출력 장소 시작 게시판마다 명이 다르다. -->
+						<div id="postDatasContainer"
+							data-displayreviewdata='${marketPostList}'></div>
+						<!-- 게시글 목록 출력 장소 종료-->
+
+						<!-- 페이지 이동 버튼 -->
+						<!-- 페이징처리 시 1~10 까지 출력 글이 적으면 1~a 만 출력할 수 있게 처리  -->
+						<div class="col-md-12 text-center">
+							<ul class='pagination' id="paginationContainer">
+							</ul>
 						</div>
+						<!-- 페이징 끝 -->
 					</div>
 				</div>
 			</div>

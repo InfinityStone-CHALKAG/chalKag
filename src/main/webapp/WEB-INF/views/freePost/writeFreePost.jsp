@@ -32,7 +32,7 @@
 				<div class="box-wrapper" id="writerForm">
 					<div class="box box-border">
 						<div class="box-body">
-							<form action="/updateFreePost" method="post" onsubmit="return validateForm()">
+							<form action="/writeFreePost" method="post" onsubmit="return validateForm()">
 								<div class="form-group" style="display: flex; justify-content: center;">
 									<input type="text" id="freePostTitle" name="freePostTitle" class="form-control rounded" placeholder="Title" />
 								</div>
@@ -81,7 +81,7 @@
           // CKEditor 설정
           ckfinder: {
                 // 이미지 업로드를 위한 설정
-                uploadUrl: '/your-upload-url'	
+                uploadUrl: '/freePostImgUpload'	
             }
         }).then(editor => {
         	editorInstance = editor;
