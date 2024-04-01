@@ -24,9 +24,22 @@
 	<!-- 댓글 입력 -->
 	<div id="writeResponseForm" style="display: none; text-align: center;">
 		<form action="/writeComment" method="post" class="row">
+				<c:if test="${not empty headHuntPostList}">
+				    <input type="hidden" name="postId" value="${headHuntPostList.headHuntPostId}">
+				</c:if>
+				<c:if test="${not empty jobHuntPostList}">
+				    <input type="hidden" name="postId" value="${jobHuntPostList.jobHuntPostId}">
+				</c:if>
+				<c:if test="${not empty freePostList}">
+				    <input type="hidden" name="postId" value="${freePostList.freePostId}">
+				</c:if>
+				<c:if test="${not empty marketPostList}">
+				    <input type="hidden" name="postId" value="${marketPostList.marketPostId}">
+				</c:if>
+					
 			<div class="form-group col-md-12">
 				<label for="message">Response <span class="required"></span></label>
-				<textarea class="form-control" name="message"
+				<textarea class="form-control" name="commentContent"
 					placeholder="Write your response ..."></textarea>
 			</div>
 			<div class="form-group col-md-12">
