@@ -107,7 +107,7 @@ loadReviewData = function(loadPage) {
         pageDatas.forEach(function(jobHuntPostList) {
 			
 				 // 글 작성 시간을 Date 객체로 변환합니다.
-		    const postDate = new Date(headHuntPostList.headHuntPostDate);
+		    const postDate = new Date(jobHuntPostList.jobHuntPostDate);
 		    // 현재 시간과 글 작성 시간의 차이를 밀리초 단위로 계산합니다.
 		    const diff = now - postDate;
 		
@@ -129,7 +129,7 @@ loadReviewData = function(loadPage) {
 		    }
 			
             // 텍스트 길이 제한 적용
-		    let postContent = headHuntPostList.headHuntPostContent;
+		    let postContent = jobHuntPostList.jobHuntPostContent;
 		    if (postContent.length > 30) {
 		        postContent = postContent.substring(0, 30) + "...";
 		    }
