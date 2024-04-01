@@ -16,16 +16,17 @@ public class CommentDAO {
 
 
 	// 댓글 전체 출력 댓글, 게시판,회원 조인 쿼리문
-	private static final String SELECTALL = "SELECT  "
+	private static final String SELECTALL = "SELECT "
 			+ "    COMMENT.COMMENT_id, "
 			+ "    COMMENT.POST_id, "
 			+ "    COMMENT.MEMBER_id, "
+			+ "    MEMBER.MEMBER_nickname , "
 			+ "    COMMENT.COMMENT_date, "
 			+ "    COMMENT.COMMENT_content, "
 			+ "    PROFILEIMG.PROFILEIMG_name "
-			+ "FROM  "
+			+ "FROM "
 			+ "    COMMENT "
-			+ "LEFT JOIN  "
+			+ "LEFT JOIN "
 			+ "    PROFILEIMG ON COMMENT.MEMBER_id = PROFILEIMG.MEMBER_id "
 			+ "INNER JOIN "
 			+ "    MEMBER ON COMMENT.MEMBER_id = MEMBER.MEMBER_id "

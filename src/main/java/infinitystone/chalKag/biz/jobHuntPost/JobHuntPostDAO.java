@@ -9,8 +9,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import infinitystone.chalKag.biz.headHuntPost.HeadHuntPostDTO;
-
 @Repository("jobHuntPostDAO")
 public class JobHuntPostDAO {
 
@@ -56,35 +54,47 @@ public class JobHuntPostDAO {
 			+ "			LIMIT 2 ";
 
 	
-	private static final String SELECTONE_JOBHUNTPOST = "SELECT" 
-			+ " 	JOBHUNTPOST.JOBHUNTPOST_id, "
-			+ "		JOBHUNTPOST.MEMBER_id, "
-			+ " 	MEMBER.MEMBER_nickname, "
-			+ " 	PROFILEIMG.PROFILEIMG_name, "
-			+ "		JOBHUNTPOST.JOBHUNTPOST_role, "
-		    + "		JOBHUNTPOST.JOBHUNTPOST_region, "
-		    + "		JOBHUNTPOST.JOBHUNTPOST_pay, "
-		    + "		JOBHUNTPOST.JOBHUNTPOST_workDate, "
-		    + "		JOBHUNTPOST.JOBHUNTPOST_concept, "
-		    + "		JOBHUNTPOST.JOBHUNTPOST_title, " 
-		    + "		JOBHUNTPOST.JOBHUNTPOST_content, "
-		    + "		JOBHUNTPOST.JOBHUNTPOST_date, "
-			+ "		JOBHUNTPOST.JOBHUNTPOST_viewcnt, "
-			+ "		COUNT(RECOMMEND.POST_id) AS RECOMMEND_cnt "
-			+ "	FROM "
-			+ "		JOBHUNTPOST " 
-			+ " INNER JOIN "
-		    + "		MEMBER "
-			+ "	LEFT JOIN "
-			+ "		RECOMMEND ON JOBHUNTPOST.JOBHUNTPOST_id = RECOMMEND.POST_id"
-			+ " LEFT JOIN "
-			+ "    PROFILEIMG ON JOBHUNTPOST.MEMBER_id = PROFILEIMG.MEMBER_id "
-			+ " WHERE "
-			+ "		JOBHUNTPOST.JOBHUNTPOST_id = ? " 
-			+ "	GROUP BY "
-			+ "		JOBHUNTPOST.JOBHUNTPOST_id,"
-			+ "		MEMBER.MEMBER_nickname, "
-			+ " 	PROFILEIMG.PROFILEIMG_name";
+	private static final String SELECTONE_JOBHUNTPOST = "SELECT "
+			+ "			'JobHuntPost' AS POST_category,"    
+			+ "		    JOBHUNTPOST.jobHUNTPOST_id, "
+			+ "		    JOBHUNTPOST.MEMBER_id, "
+			+ "		    MEMBER.MEMBER_nickname, "
+			+ "		    JOBHUNTPOST.jobHUNTPOST_title, "
+			+ "		    JOBHUNTPOST.jobHUNTPOST_content, "
+			+ "		    JOBHUNTPOST.jobHUNTPOST_role, "
+			+ "		    JOBHUNTPOST.jobHUNTPOST_region, "
+			+ "		    JOBHUNTPOST.jobHUNTPOST_pay,"
+			+ "		    JOBHUNTPOST.jobHUNTPOST_workDate, "
+			+ "		    JOBHUNTPOST.jobHUNTPOST_concept, "
+			+ "		    JOBHUNTPOST.jobHUNTPOST_date, "
+			+ "		    JOBHUNTPOST.jobHUNTPOST_viewcnt, "
+			+ "		    (  "
+			+ "		        SELECT "
+			+ "		            PROFILEIMG.PROFILEIMG_name "
+			+ "		        FROM "
+			+ "		            PROFILEIMG "
+			+ "		        WHERE "
+			+ "		            PROFILEIMG.MEMBER_id = jobHUNTPOST.MEMBER_id "
+			+ "		        ORDER BY "
+			+ "		            PROFILEIMG.PROFILEIMG_id DESC "
+			+ "		        LIMIT 1 "
+			+ "		    ) AS PROFILEIMG_name, "
+			+ "		    (  "
+			+ "		        SELECT "
+			+ "		            COUNT(*) "
+			+ "		        FROM "
+			+ "		            RECOMMEND "
+			+ "		        WHERE "
+			+ "		            RECOMMEND.POST_id = JOBHUNTPOST.JOBHUNTPOST_id  "
+			+ "		    ) AS RECOMMEND_cnt  "
+			+ "		FROM "
+			+ "		    jobHUNTPOST "
+			+ "		INNER JOIN "
+			+ "		    MEMBER ON JOBHUNTPOST.MEMBER_id = MEMBER.MEMBER_id "
+			+ "		LEFT JOIN "
+			+ "		    RECOMMEND ON JOBHUNTPOST.JOBHUNTPOST_id = RECOMMEND.POST_id  "
+			+ "		WHERE "
+			+ "		    JOBHUNTPOST.JOBHUNTPOST_id = ? ";
 	
 	// 포스트아이디 최대값 가져오는 쿼리문
 	private static final String SELECTONE_MAXPOSTID = "SELECT MAX(JOBHUNTPOST_id) FROM JOBHUNTPOST";
@@ -152,7 +162,7 @@ public class JobHuntPostDAO {
 			}
 			else if(jobHuntPostDTO.getSearchCondition().equals("maxPostId")) {
 				result = jdbcTemplate.queryForObject(SELECTONE_MAXPOSTID, new SelectOneMaxPostIdRowMapper());
-				System.out.println("HeadHuntPostDAO(selectOne) Out로그 = [" + result + "]");
+				System.out.println("JobHuntPostDAO(selectOne) Out로그 = [" + result + "]");
 				return result;
 			}
 		} catch (Exception e) {
