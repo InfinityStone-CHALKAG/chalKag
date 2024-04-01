@@ -19,33 +19,33 @@ public class FreePostDAO {
 	
 	// 게시글 전체 보기 자유게시판, 게시판 이미지, 좋아요 테이블 조인문
 	private static final String SELECTALL_FREEPOST = "SELECT  "
-			+ "	'freePost' AS POST_category,  "
-			+ "	freePOST.freePOST_id,  "
-			+ "	freePOST.MEMBER_id,  "
+			+ "	'FREEPost' AS POST_category,  "
+			+ "	FREEPOST.freePOST_id,  "
+			+ "	FREEPOST.MEMBER_id,  "
 			+ "	(  "
 			+ "	    SELECT POSTIMG.POSTIMG_name  "
 			+ "		FROM POSTIMG  "
-			+ "		WHERE POSTIMG.POST_id = freePOST.freePOST_id  "
+			+ "		WHERE POSTIMG.POST_id = FREEOST.FREEPOST_id  "
 			+ "		ORDER BY POSTIMG.POSTIMG_id ASC  "
 			+ "		LIMIT 1  "
 			+ "	) AS POSTIMG_name,  "
 			+ "	MEMBER.MEMBER_nickname,  "
-			+ "	freePOST.freePOST_title,  "
-			+ "	freePOST.freePOST_content,  "
-			+ "	freePOST.freePOST_date,  "
-			+ "	freePOST.freePOST_viewcnt,  "
+			+ "	FREEPOST.FREEPOST_title,  "
+			+ "	FREEPOST.FREEPOST_content,  "
+			+ "	FREEPOST.FREEPOST_date,  "
+			+ "	FREEPOST.FREEPOST_viewcnt,  "
 			+ "	COUNT(RECOMMEND.POST_id) AS RECOMMEND_cnt  "
 			+ "	FROM  "
-			+ "		freePOST freePOST  "
+			+ "		FREEPOST "
 			+ "	INNER JOIN  "
-			+ "	    MEMBER MEMBER ON freePOST.MEMBER_id = MEMBER.MEMBER_id  "
+			+ "	    MEMBER MEMBER ON FREEPOST.MEMBER_id = MEMBER.MEMBER_id  "
 			+ "	LEFT JOIN  "
-			+ "		RECOMMEND RECOMMEND ON freePOST.freePOST_id = RECOMMEND.POST_id  "
+			+ "		RECOMMEND RECOMMEND ON FREEPOST.FREEPOST_id = RECOMMEND.POST_id  "
 			+ "	GROUP BY  "
-			+ "	   freePOST.freePOST_id,  "
+			+ "	   FREEPOST.FREEPOST_id,  "
 			+ "	   MEMBER.MEMBER_nickname  "
 			+ "	ORDER BY  "
-			+ "	   freePOST.freePOST_id DESC ";
+			+ "	   FREEPOST.FREEPOST_id DESC ";
 	
 	// 메인페이지 프리미엄 회원글 출력
 		private static final String SELECTALL_PREMIUMFREEPOST= "SELECT "
@@ -236,8 +236,8 @@ class FreePostPremiumSelectAllRowMapper implements RowMapper<FreePostDTO>{
 	public FreePostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
 		FreePostDTO data = new FreePostDTO();
 
-		data.setFreePostId(rs.getString("freePost_id"));
-		data.setFreePostTitle(rs.getString("freePost_title"));
+		data.setFreePostId(rs.getString("FREEPOST_id"));
+		data.setFreePostTitle(rs.getString("FREEPOST_title"));
 
 		return data;
 	}
