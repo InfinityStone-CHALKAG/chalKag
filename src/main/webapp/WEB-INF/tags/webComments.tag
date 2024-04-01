@@ -23,18 +23,18 @@
 	<br>
 	<!-- 댓글 입력 -->
 	<div id="writeResponseForm" style="display: none; text-align: center;">
-		<form action="/writeComment" method="post" class="row">
-				<c:if test="${not empty headHuntPostList}">
-				    <input type="hidden" name="postId" value="${headHuntPostList.headHuntPostId}">
+		<form id="commentForm" action="/writeComment" method="post" class="row">
+				<c:if test="${not empty headHuntPostSingle}">
+				    <input type="hidden" name="postId" value="${headHuntPostSingle.headHuntPostId}">
 				</c:if>
-				<c:if test="${not empty jobHuntPostList}">
-				    <input type="hidden" name="postId" value="${jobHuntPostList.jobHuntPostId}">
+				<c:if test="${not empty jobHuntPostSingle}">
+				    <input type="hidden" name="postId" value="${jobHuntPostSingle.jobHuntPostId}">
 				</c:if>
-				<c:if test="${not empty freePostList}">
-				    <input type="hidden" name="postId" value="${freePostList.freePostId}">
+				<c:if test="${not empty freePostSingle}">
+				    <input type="hidden" name="postId" value="${freePostSingle.freePostId}">
 				</c:if>
-				<c:if test="${not empty marketPostList}">
-				    <input type="hidden" name="postId" value="${marketPostList.marketPostId}">
+				<c:if test="${not empty marketPostSingle}">
+				    <input type="hidden" name="postId" value="${marketPostSingle.marketPostId}">
 				</c:if>
 					
 			<div class="form-group col-md-12">
@@ -144,6 +144,31 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+
+// 댓글 작성
+$(document).ready(function() {
+    $('#commentForm').submit(function(event) {
+        event.preventDefault(); // 폼의 기본 제출 동작 방지
+
+        var formData = $(this).serialize(); // 폼 데이터 직렬화
+
+        $.ajax({
+            type: "POST",
+            url: "/writeComment",
+            data: formData,
+            success: function(response) {
+                // 댓글 작성 성공 시 동작
+                alert("댓글이 성공적으로 작성되었습니다.");
+                // 성공 시 추가적인 동작, 예를 들어 댓글 목록 업데이트 등
+            },
+            error: function() {
+                // 댓글 작성 실패 시 동작
+                alert("댓글 작성에 실패했습니다.");
+            }
+        });
+    });
+});
+
 	//토글 기능을 수행하는 JavaScript 함수
 	function toggleReply() {
 		var replyElement = document.getElementById("webReply");
