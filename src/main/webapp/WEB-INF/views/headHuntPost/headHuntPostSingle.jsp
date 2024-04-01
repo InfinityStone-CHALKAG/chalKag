@@ -33,6 +33,25 @@
             object-fit: cover; /* 이미지의 비율을 유지하면서 요소에 맞게 잘리지 않도록 설정 */
         }
     	
+		#fullScreenImageContainer {
+		    position: fixed;
+		    top: 0;
+		    left: 0;
+		    width: 100%;
+		    height: 100%;
+		    background-color: rgba(0, 0, 0, 0.9);
+		    display: flex;
+		    justify-content: center;
+		    align-items: center;
+		    z-index: 1000; /* 확실히 다른 요소 위에 표시되도록 z-index 지정 */
+		}
+		
+		/* 이미지 스타일 */
+		#fullScreenImageContainer img {
+		    max-width: 90%; /* 화면 너비의 90%를 넘지 않도록 */
+		    max-height: 90%; /* 화면 높이의 90%를 넘지 않도록 */
+		}    	
+    	
     </style>
 </head>
 	<body>
@@ -77,6 +96,12 @@
 								</c:forEach>
 								</div>
 							</div>
+							
+							<!-- 클릭한 이미지를 보여줄 컨테이너 -->
+							<div id="fullScreenImageContainer" style="display:none;">
+							    <img id="fullScreenImage">
+							</div>
+							
 								<div class="featured" style="margin-bottom: 3%; margin-top: 2%; display: block; justify-content: center;">
 										<div>
 											<div class="postInfo">
@@ -116,7 +141,7 @@
 							</footer>
 						</article>
 						<div  style="display: flex; justify-content: center;">
-							<c:if test="${member != null || member == headHuntPostSingle.memberId}">
+							<c:if test="${member != null && member == headHuntPostSingle.memberId}">
 								<a class="btn btn-primary" style="margin-right: 10px" href="/updateHeadHuntPost?headHuntPostId=${headHuntPostSingle.headHuntPostId}">Post Update</a>
 								<a class="btn btn-primary" href="/deleteHeadHuntPost?headHuntPostId=${headHuntPostSingle.headHuntPostId}">Post Delete</a>
 							</c:if>
@@ -167,7 +192,7 @@
 	<script>
 		
 		  
-		document.addEventListener('DOMContentLoaded', function() {
+	document.addEventListener('DOMContentLoaded', function() {
     // div 요소를 가져옵니다.
     const postPayElement = document.getElementById('headHuntPostPay');
 
@@ -184,23 +209,34 @@
 });
 
 
+	$(document).ready(function(){
+	    // Owl Carousel의 이미지 개수 확인
+	    var numPhotos = $(".owl-carousel").find("img").length;
+	    var loopValue = (numPhotos > 1) ? true : false;
+	    console.log(numPhotos); // 이미지 개수를 로그에 출력하여 확인
 
-$(document).ready(function(){
-    // Owl Carousel의 이미지 개수 확인
-    var numPhotos = $(".owl-carousel").find("img").length;
-    var loopValue = (numPhotos > 1) ? true : false;
-    console.log(numPhotos); // 이미지 개수를 로그에 출력하여 확인
+	    // Owl Carousel 초기화
+	    $(".owl-carousel").owlCarousel({
+	        items: 1,
+	        loop: loopValue,
+	        autoplay: true,
+	        autoplayTimeout: 3000,
+	        autoplayHoverPause: true,
+	        margin: 10
+	    });
 
-    // Owl Carousel 초기화
-    $(".owl-carousel").owlCarousel({
-        items: 1,
-        loop: loopValue,
-        autoplay: true,
-        autoplayTimeout: 3000,
-        autoplayHoverPause: true,
-        margin: 10
-    });
-});
+	    // 이미지 클릭 이벤트를 위한 이벤트 위임
+	    $(".owl-carousel").on("click", ".owl-item", function(){
+	        var src = $(this).find("img").attr("src"); // 클릭한 div 내부의 이미지 src를 가져옵니다.
+	        $("#fullScreenImage").attr("src", src); // 전체 화면에 표시할 이미지 src 설정
+	        $("#fullScreenImageContainer").fadeIn(); // 이미지 컨테이너를 페이드인으로 보여줍니다.
+	    });
+
+	    // 전체 화면 이미지 컨테이너 클릭 시 닫기 기능
+	    $("#fullScreenImageContainer").click(function(){
+	        $(this).fadeOut(); // 컨테이너를 페이드아웃으로 숨깁니다.
+	    });
+	});
 
 	</script>
 	</body>

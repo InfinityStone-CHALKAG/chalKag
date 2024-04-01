@@ -46,16 +46,25 @@
 									
 								<select class="selectTags"
 									id="marketPostCompany" name="marketPostCompany"
-									style="width: 32%; margin-right: 2%;">
+									style="width: 23.5%; margin-right: 2%;">
 									<option value="" disabled selected>Company</option>
 									<option value="캐논" ${'캐논' == updateMarketPost.marketPostCompany ? 'selected' : ''}>캐논</option>
 									<option value="소니" ${'소니' == updateMarketPost.marketPostCompany ? 'selected' : ''}>소니</option>
 									<option value="니콘" ${'니콘' == updateMarketPost.marketPostCompany ? 'selected' : ''}>니콘</option>
-								</select> <select class="selectTags" id="marketPostCategory"
-									name="marketPostCategory" style="width: 32%;">
+								</select> 
+								<select class="selectTags" 
+									id="marketPostCategory" name="marketPostCategory" 
+									style="width: 23.5%;  margin-right: 2%;">
 									<option value="" disabled selected>Category</option>
 									<option value="DSLR" ${'DSLR' == updateMarketPost.marketPostCategory ? 'selected' : ''}>DSLR</option>
 									<option value="미러리스" ${'미러리스' == updateMarketPost.marketPostCategory ? 'selected' : ''}>미러리스</option>
+								</select>
+								<select class="selectTags" id="marketPostStatus"
+									name="marketPostStatus" style="width: 23.5%;">
+									<option value="" disabled selected>Status</option>
+									<option value="Sell" ${'Sell' == updateMarketPost.marketPostStatus ? 'selected' : ''}>Sell</option>
+									<option value="Buy" ${'Buy' == updateMarketPost.marketPostStatus ? 'selected' : ''}>Buy</option>
+									<option value="Freecycle" ${'Freecycle' == updateMarketPost.marketPostStatus ? 'selected' : ''}>Freecycle</option>
 								</select>
 							</div>
 							<p>※ 이미지 사이즈는 30MB 이하만 올릴 수 있습니다.</p>

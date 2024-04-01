@@ -11,7 +11,7 @@
 		<c:if test="${member != null}">
 			<input style="display: inline-block;"
 				class="btn btn-primary btn-rounded" id="toggleWriteBtn1"
-				type="button" value="Write Responses" onclick="toggleWrite()">
+				type="button" value="Write Responses" onclick="toggleWrite(this)">
 		</c:if>
 		<!-- 비 로그인 유저일때 -->
 		<c:if test="${member == null}">
@@ -64,11 +64,11 @@
 
 						<!-- 회원 프로필 이미지 -->
 						<figure>
-							<img src="images/img01.jpg">
+							<img  src="profileImg/${commentList.profileImgName}" >
 						</figure>
 
 						<div class="details">
-							<h5 class="title">${commentList.memberId}
+							<h5 class="title">${commentList.memberNickname}
 								<c:if test="${member == null || member != commentList.memberId}">
 									<a href="/memberPage?memberId=${commentList.memberId}">${commentList.memberId}</a>
 								</c:if>
@@ -80,54 +80,48 @@
 							<div class="description">${commentList.commentContent}</div>
 
 							<!-- 답글 달기 -->
-							<footer style="display: flex;">
-
+							<footer  style="display: flex; flex-wrap: wrap;">
 								<c:if test="${fn:length(replyList) > 0}">
 									<a href="javascript:void(0);" onclick="toggleReply()"
-										style="justify-content: left;"> Reply ▼</a>
+										style="justify-content: left;">Reply</a>
 									<div id="webReply" style="display: none;">
 										<webComments:webReply />
 									</div>
-								</c:if>
-
-								<!-- 답글 작성 버튼 클릭 이벤트 -->
-								<c:if test="${member != null}">
-									<input class="btn btn-primary btn-rounded" type="button"
-										value="Reply" onclick="toggleReplyWrite()" />
-
-									<!-- 답글 입력 -->
-									<div class="updateContents" id="writeReplyForm"
-										style="display: none; text-align: center;">
-										<form action="/writeReply" method="post" class="row">
-											<div class="form-group col-md-12">
-												<label for="message">Reply <span class="required"></span></label>
-												<textarea class="form-control" id="commentContent"
-													name="commentContent" placeholder="Write your Reply ..."></textarea>
-											</div>
-											<div class="form-group col-md-12">
-												<button class="btn btn-primary">Send Reply</button>
-											</div>
-										</form>
-									</div>
-
-								</c:if>
+								</c:if> 
 
 								<!-- 미 로그인 시 경고 버튼 -->
 								<c:if test="${member == null}">
-									<input class="btn btn-primary btn-rounded" type="button"
+									<input class="btn btn-primary btn-rounded" type="button" style="width : 25%;"
 										value="Reply" onclick="message()" />
 								</c:if>
-
+								
 								<!-- 작성자가 자기 댓글을 수정할 경우 -->
 								<c:if test="${commentList.memberId == member}">
-									<input class="btn btn-primary btn-rounded" type="button"
-										value="Reply" id="replyMoreBtn" onclick="toggleReply()">
-
-									<input class="btn btn-primary btn-rounded" type="button"
+									<input class="btn btn-primary btn-rounded" type="button" style="width : 25%; margin-right: 10px;"
 										value="Update" id="replyUpdateBtn" onclick="toggleUpdate()">
 
-									<input class="btn btn-primary btn-rounded" type="button"
+									<input class="btn btn-primary btn-rounded" type="button" style="width : 25%; margin-right: 10px;"
 										value="Delete" id="replyDeleteBtn" onclick="toggleDelete()">
+								</c:if>
+								
+								<!-- 답글 작성 버튼 클릭 이벤트 -->
+								<c:if test="${member != null}">
+									<input class="btn btn-primary btn-rounded" type="button"  style="width : 25%;"
+										value="Reply" onclick="toggleReplyWrite(this)" data-comment-id="${commentList.commentId}"/>
+										<!-- 답글 입력 -->
+										<div class="updateContents" id="writeReplyForm-${commentList.commentId}"
+											style="display: none; flex-basis: 100%;">
+											<form action="/writeReply" method="post" class="row">
+												<div class="form-group col-md-12" style="text-align: left;">
+													<label for="message">Reply <span class="required"></span></label>
+													<textarea class="form-control" id="commentContent"
+														name="commentContent" placeholder="Write your Reply ..."></textarea>
+												</div>
+												<div class="form-group col-md-12" style="text-align: right;">
+													<button class="btn btn-primary">Send Reply</button>
+												</div>
+											</form>
+										</div>
 								</c:if>
 
 							</footer>
@@ -158,12 +152,17 @@ $(document).ready(function() {
             data: formData,
             success: function(response) {
                 // 댓글 작성 성공 시 동작
-                alert("댓글이 성공적으로 작성되었습니다.");
+                swal("success", "댓글이 성공적으로 작성되었습니다.", "success", {
+					button : "OK",
+				});
+                history.go(0);
                 // 성공 시 추가적인 동작, 예를 들어 댓글 목록 업데이트 등
             },
             error: function() {
                 // 댓글 작성 실패 시 동작
-                alert("댓글 작성에 실패했습니다.");
+                swal("fail", "댓글 작성에 실패했습니다.", "error", {
+					button : "OK",
+				});
             }
         });
     });
@@ -182,8 +181,13 @@ $(document).ready(function() {
 	function toggleWrite() {
 		$("#writeResponseForm").toggle(); // jQuery를 사용하여 토글
 	}
-	function toggleReplyWrite() {
-		$("#writeReplyForm").toggle(); // jQuery를 사용하여 토글
+	function toggleReplyWrite(element) {
+		 // 클릭된 답글 버튼에서 data-comment-id 속성 값을 받아온다.
+	    var commentId = $(element).data('comment-id');
+
+	    // 해당 댓글 ID에 기반한 위치에 답글 입력창을 표시
+	    //입력창을 해당 댓글의 바로 아래에 표시하고 싶다면, 해당 댓글의 마크업 구조에 따라 적절한 선택자를 사용하여 위치를 지정
+	   	$("#writeReplyForm-" + commentId).toggle();
 	}
 
 	function message() {

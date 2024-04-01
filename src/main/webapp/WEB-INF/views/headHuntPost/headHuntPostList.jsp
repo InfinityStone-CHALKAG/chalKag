@@ -102,8 +102,8 @@
 										<div class="form-group">
 											<select style="width: 100%; height: 40px;" id="role" name="role">
 												<option value="" disabled selected>Select</option>
-												<option value="모델">Model</option>
-												<option value="사진작가">Photographer</option>
+												<option value="Model">Model</option>
+												<option value="Photographer">Photographer</option>
 											</select>
 										</div>
 										<br>
@@ -164,7 +164,7 @@
 										</div>
 										<br>
 										<button class="btn btn-primary btn-sm" id="filterReset"
-											style="font-size:15px;"><i class="ion-ios-refresh-empty"
+											style="font-size:100%;"><i class="ion-ios-refresh-empty"
 												style="font-size:15px;"></i> FILTER RESET</button>
 
 									</div>
@@ -214,7 +214,6 @@
 								</div>
 							</div>
 						</div>
-					</div>
 				</section>
 
 				<!-- Start footer tag로 출력 -->
