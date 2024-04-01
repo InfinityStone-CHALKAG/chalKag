@@ -275,9 +275,13 @@ class MarketPostSelectAllRowMapper implements RowMapper<MarketPostDTO> {
 		data.setPostCategory(rs.getString("POST_category"));
 		data.setMarketPostId(rs.getString("MARKETPOST_id"));
 		data.setMemberId(rs.getString("MEMBER_id"));
+		data.setMemberNickname(rs.getString("MEMBER_nickname"));
+		data.setMarketPostDate(rs.getString("FREEPOST_date"));
 		data.setMarketPostTitle(rs.getString("MARKETPOST_title"));
 		data.setMarketPostContent(rs.getString("MARKETPOST_content"));
 		data.setMarketPostViewcnt(rs.getString("MARKETPOST_viewcnt"));
+		data.setRecommendCnt(rs.getString("RECOMMEND_cnt"));
+		data.setPostImgName(rs.getString("POSTIMG_name"));
 
 		return data;
 	}
@@ -305,7 +309,7 @@ class MarketPostSelectOneRowMapper implements RowMapper<MarketPostDTO> {
 		data.setMarketPostTitle(rs.getString("MARKETPOST_title"));
 		data.setMarketPostContent(rs.getString("MARKETPOST_content"));
 		data.setMarketPostViewcnt(rs.getString("MARKETPOST_viewcnt"));
-
+		
 		return data;
 	}
 

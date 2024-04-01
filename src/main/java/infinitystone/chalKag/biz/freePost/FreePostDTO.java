@@ -12,7 +12,8 @@ public class FreePostDTO {
 	private String freePostTitle;
 	private String freePostContent;
 	private String freePostViewcnt;
-	private String postImgName;			// 프리미엄 회원글 출력 시 이미지 출력
+	private String postId;					// 게시글 아이디
+	private String postImgName;				// 프리미엄 회원글 출력 시 이미지 출력
 	
 	private String postCategory;
 	
