@@ -11,6 +11,8 @@ public class ReportDTO { // 신고 정보 관리 DTO 생성. 전미지
 	private String reportContent;		// 신고 내용
 	private String reportState;			// 신고 상태 (관리자 확인용)
 	
+	private String suspectorNickname;	// 피신고자 닉네임
+	
 	private String searchCondition;		// 신고글 검색 조건
 
 	public String getReportId() {
@@ -61,6 +63,14 @@ public class ReportDTO { // 신고 정보 관리 DTO 생성. 전미지
 		this.reportState = reportState;
 	}
 
+	public String getSuspectorNickname() {
+		return suspectorNickname;
+	}
+
+	public void setSuspectorNickname(String suspectorNickname) {
+		this.suspectorNickname = suspectorNickname;
+	}
+
 	public String getSearchCondition() {
 		return searchCondition;
 	}
@@ -73,6 +83,7 @@ public class ReportDTO { // 신고 정보 관리 DTO 생성. 전미지
 	public String toString() {
 		return "ReportDTO [reportId=" + reportId + ", memberId=" + memberId + ", reportSuspector=" + reportSuspector
 				+ ", reportDate=" + reportDate + ", reportContent=" + reportContent + ", reportState=" + reportState
-				+ ", searchCondition=" + searchCondition + "]";
+				+ ", suspectorNickname=" + suspectorNickname + ", searchCondition=" + searchCondition + "]";
 	}
+	
 }
