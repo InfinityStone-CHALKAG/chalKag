@@ -15,16 +15,30 @@ public class ReplyDAO {
   @Autowired
   private JdbcTemplate jdbcTemplate;
 
-  private static final String SELECTALL = "SELET REPLY.REPLY_id, " +
-      "REPLY.MEMBER_id, " +
-      "MEMBER_nickname, " +
-      "PROFILEIMG_name, " +
-      "REPLY.REPLY_content, " +
-      "REPLY.REPLY_date " +
-      "FROM REPLY " +
-      "INNER JOIN MEMBER ON REPLY.MEMBER_id = MEMBER.MEMBER_id " +
-      "INNER JOIN PROFILEIMG ON REPLY.MEMBER_id = PROFILEIMG.MEMBER_id " +
-      "WHERE REPLY.COMMENT_id = ?";
+  private static final String SELECTALL = "SELECT  "
+  		+ "    REPLY.REPLY_id, "
+  		+ "    REPLY.MEMBER_id,  "
+  		+ "    MEMBER.MEMBER_nickname,  "
+  		+ "    REPLY.REPLY_content,  "
+  		+ "    REPLY.REPLY_date,  "
+  		+ "    REPLY.COMMENT_id, "
+  		+ "    ( "
+  		+ "        SELECT   "
+  		+ "        PROFILEIMG.PROFILEIMG_name  "
+  		+ "        FROM   "
+  		+ "        PROFILEIMG  "
+  		+ "        WHERE   "
+  		+ "        PROFILEIMG.MEMBER_id = REPLY.MEMBER_id  "
+  		+ "        ORDER BY   "
+  		+ "        PROFILEIMG.PROFILEIMG_id DESC  "
+  		+ "        LIMIT 1  "
+  		+ "    ) AS PROFILEIMG_name  "
+  		+ "FROM  "
+  		+ "    REPLY "
+  		+ "INNER JOIN  "
+  		+ "    MEMBER ON REPLY.MEMBER_id = MEMBER.MEMBER_id "
+  		+ "WHERE  "
+  		+ "    REPLY.COMMENT_id = ?";
 
   private static final String SELECTONE = "";
 
@@ -42,8 +56,11 @@ public class ReplyDAO {
       "WHERE REPLY_id = ?";
 
   public List<ReplyDTO> selectAll(ReplyDTO replyDTO) {
+	  List<ReplyDTO> result = null;
+	  Object[] args = {replyDTO.getCommentId()};
     try {
-      return (List<ReplyDTO>) jdbcTemplate.queryForObject(SELECTALL, new ReplyRowMapper());
+    	result=  (List<ReplyDTO>) jdbcTemplate.query(SELECTALL, args,new ReplyRowMapper());
+      return result; 
     } catch (Exception e) {
       e.printStackTrace();
       return null;
@@ -55,21 +72,22 @@ public class ReplyDAO {
   }
 
   public boolean insert(ReplyDTO replyDTO) {
-    if (jdbcTemplate.update(INSERT) <= 0) {
+	  int result = jdbcTemplate.update(INSERT,replyDTO.getCommentId(),replyDTO.getMemberId(),replyDTO.getReplyContent());
+    if (result <= 0) {
       return false;
     }
     return true;
   }
 
   public boolean update(ReplyDTO replyDTO) {
-    if (jdbcTemplate.update(UPDATE) <= 0) {
+    if (jdbcTemplate.update(UPDATE,replyDTO.getReplyContent(),replyDTO.getReplyId()) <= 0) {
       return false;
     }
     return true;
   }
 
   public boolean delete(ReplyDTO replyDTO) {
-    if (jdbcTemplate.update(DELETE) <= 0) {
+    if (jdbcTemplate.update(DELETE,replyDTO.getReplyId()) <= 0) {
       return false;
     }
     return true;

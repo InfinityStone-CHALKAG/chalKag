@@ -7,6 +7,7 @@ public class FreePostDTO {
 	private String freePostId;
 	private String memberId;
 	private String memberNickname;			// 회원 닉네임
+	private String memberIntroduction;		// 한줄평 소개
 	private String profileImgName;
 	private String freePostDate;
 	private String freePostTitle;

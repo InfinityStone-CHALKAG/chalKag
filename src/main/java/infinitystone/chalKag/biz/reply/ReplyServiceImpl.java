@@ -1,5 +1,6 @@
 package infinitystone.chalKag.biz.reply;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.List;
 @Service("replyService")
 public class ReplyServiceImpl implements ReplyService {
 
+  @Autowired
   private ReplyDAO replyDAO;
 
   @Override
