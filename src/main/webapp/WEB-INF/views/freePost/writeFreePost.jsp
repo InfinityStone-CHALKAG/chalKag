@@ -36,7 +36,7 @@
 								<div class="form-group" style="display: flex; justify-content: center;">
 									<input type="text" id="freePostTitle" name="freePostTitle" class="form-control rounded" placeholder="Title" />
 								</div>
-										<p>※ 이미지 사이즈는 30MB 이하만 올릴 수 있습니다.</p>
+										<p>※ The size. There is a maximum file size of '30MB' for all images.</p>
 									<textarea id="freePostContent" name="freePostContent" class="form-control rounded" ></textarea>
 								<button class="btn btn-primary btn-block">Composite</button>
 							</form>	
