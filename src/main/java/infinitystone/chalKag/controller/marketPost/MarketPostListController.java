@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Controller
 public class MarketPostListController {
 
@@ -19,13 +21,22 @@ public class MarketPostListController {
 
 		System.out.println("MarketPostListController In로그");
 
-		marketPostDTO.setSearchCondition("marketPostList");
+		// 거래 게시글의 거래 상태를 담는 변수 status
+		String status = marketPostDTO.getMarketPostStatus();
 
-		String marketPostListResult = gson.toJson(marketPostService.selectAll(marketPostDTO));
+		if(status.equals("sell")){
+			marketPostDTO.setSearchCondition("marketPostSellList");
+		} else if (status.equals("buy")) {
+			marketPostDTO.setSearchCondition("marketPostBuyList");
+		} else if (status.equals("freecycle")) {
+			marketPostDTO.setSearchCondition("marketPostFreecycleList");
+		} else {
+			System.out.println("MarketPostListController Out로그 : marketPostDTO.SearchCondition is null");
+			return null;
+		}
 
-
-
-		model.addAttribute("marketPostList", marketPostListResult);
+		String marketPostList = gson.toJson(marketPostService.selectAll(marketPostDTO));
+		model.addAttribute("marketPostList", marketPostList);
 
 		System.out.println("MarketPostListController Out로그");
 
