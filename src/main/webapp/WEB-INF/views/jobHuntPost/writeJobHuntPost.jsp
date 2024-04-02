@@ -45,8 +45,8 @@
 								<select class="selectTags" id="jobHuntPostRole" name="jobHuntPostRole"
 								style="width: 32%; height: 43px; margin-right: 2%;">
 									<option value="" disabled selected>Role</option>
-									<option value="모델">모델</option>
-									<option value="사진작가">사진작가</option>
+									<option value="Model">Model</option>
+									<option value="Photographer">Photographer</option>
 								</select>
 
 								<select class="selectTags" id="jobHuntPostConcept" 
