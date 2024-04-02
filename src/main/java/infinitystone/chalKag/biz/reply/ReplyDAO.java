@@ -15,16 +15,29 @@ public class ReplyDAO {
   @Autowired
   private JdbcTemplate jdbcTemplate;
 
-  private static final String SELECTALL = "SELET REPLY.REPLY_id, " +
-      "REPLY.MEMBER_id, " +
-      "MEMBER_nickname, " +
-      "PROFILEIMG_name, " +
-      "REPLY.REPLY_content, " +
-      "REPLY.REPLY_date " +
-      "FROM REPLY " +
-      "INNER JOIN MEMBER ON REPLY.MEMBER_id = MEMBER.MEMBER_id " +
-      "INNER JOIN PROFILEIMG ON REPLY.MEMBER_id = PROFILEIMG.MEMBER_id " +
-      "WHERE REPLY.COMMENT_id = ?";
+  private static final String SELECTALL = "SELECT  "
+  		+ "    REPLY.REPLY_id, "
+  		+ "    REPLY.MEMBER_id,  "
+  		+ "    MEMBER.MEMBER_nickname,  "
+  		+ "    REPLY.REPLY_content,  "
+  		+ "    REPLY.REPLY_date,  "
+  		+ "    ( "
+  		+ "        SELECT   "
+  		+ "        PROFILEIMG.PROFILEIMG_name  "
+  		+ "        FROM   "
+  		+ "        PROFILEIMG  "
+  		+ "        WHERE   "
+  		+ "        PROFILEIMG.MEMBER_id = REPLY.MEMBER_id  "
+  		+ "        ORDER BY   "
+  		+ "        PROFILEIMG.PROFILEIMG_id DESC  "
+  		+ "        LIMIT 1  "
+  		+ "    ) AS PROFILEIMG_name  "
+  		+ "FROM  "
+  		+ "    REPLY "
+  		+ "INNER JOIN  "
+  		+ "    MEMBER ON REPLY.MEMBER_id = MEMBER.MEMBER_id "
+  		+ "WHERE  "
+  		+ "    REPLY.COMMENT_id = ?";
 
   private static final String SELECTONE = "";
 
