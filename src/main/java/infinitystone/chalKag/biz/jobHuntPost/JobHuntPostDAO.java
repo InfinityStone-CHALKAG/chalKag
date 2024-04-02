@@ -256,15 +256,17 @@ class JobHuntPostOneRowMapper implements RowMapper<JobHuntPostDTO> {
 		data.setJobHuntPostId(rs.getString("JOBHUNTPOST_id"));
 		data.setMemberId(rs.getString("MEMBER_id"));
 		data.setMemberNickname(rs.getString("MEMBER_nickname"));
-		data.setJobHuntPostDate(rs.getString("JOBHUNTPOST_date"));
+		data.setProfileImgName(rs.getString("PROFILEIMG_name"));
 		data.setJobHuntPostRole(rs.getString("JOBHUNTPOST_role"));
 		data.setJobHuntPostRegion(rs.getString("JOBHUNTPOST_region"));
 		data.setJobHuntPostPay(rs.getInt("JOBHUNTPOST_pay"));
-		data.setJobHuntPostConcept(rs.getString("JOBHUNTPOST_workDate"));
+		data.setJobHuntPostWorkDate(rs.getString("JOBHUNTPOST_workDate"));
 		data.setJobHuntPostConcept(rs.getString("JOBHUNTPOST_concept"));
 		data.setJobHuntPostTitle(rs.getString("JOBHUNTPOST_title"));
 		data.setJobHuntPostContent(rs.getString("JOBHUNTPOST_content"));
+		data.setJobHuntPostDate(rs.getString("JOBHUNTPOST_date"));
 		data.setJobHuntPostViewcnt(rs.getString("JOBHUNTPOST_viewcnt"));
+		data.setRecommendCnt(rs.getString("RECOMMEND_cnt"));
 //		data.setPostImgName(rs.getString("POSTIMG_name"));
 		
 		return data;
