@@ -15,3 +15,5 @@
 <link rel="stylesheet" href="css/user/scripts/icheck/skins/all.css">
 <!-- Custom style -->
 <link rel="stylesheet" href="css/user/css/style.css">
+<link rel="stylesheet" href="css/user/css/demo.css">
+<link rel="stylesheet" href="css/user/css/skins/all.css">
