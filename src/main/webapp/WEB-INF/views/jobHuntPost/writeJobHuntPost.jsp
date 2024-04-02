@@ -53,16 +53,16 @@
 								style="width: 32%; height: 43px; margin-right: 2%;"
 								name="jobHuntPostConcept" >
 									<option value="" disabled selected>WorkConcept</option>
-									<option value="snap">스냅사진</option>
-									<option value="pictorial">화보</option>
-									<option value="studio">내부</option>
-									<option value="outdoor">외부</option>
-									<option value="etc">기타</option>
+									<option value="snap">Snap</option>
+									<option value="pictorial">Pictorial</option>
+									<option value="studio">Studio</option>
+									<option value="outdoor">Outdoor</option>
+									<option value="etc">Etc</option>
 								</select> 
 								
 								<select class="selectTags" id="jobHuntPostRegion" style="width: 32%; 
 								height: 43px;" name="jobHuntPostRegion">
-									<option value="" disabled selected>선택</option>
+									<option value="" disabled selected>Region</option>
 									<option value="SEOUL">SEOUL</option>
 									<option value="GYEONGGI">GYEONGGI</option>
 									<option value="GANGWON">GANGWON</option>
@@ -84,7 +84,7 @@
 									oninput="trimInput(this); validatePay(this);" placeholder="Pay" />
 							</div>
 							
-							<p>※ 이미지 사이즈는 30MB 이하만 올릴 수 있습니다.</p>
+							<p>※ The size. There is a maximum file size of '30MB' for all images.</p>
 							<div class="form-group" style="margin-bottom: 4%;">
 								<input type="file" name="file" id="fileInput" accept="image/*"
 									style="display: none;" multiple> <input type="button"
