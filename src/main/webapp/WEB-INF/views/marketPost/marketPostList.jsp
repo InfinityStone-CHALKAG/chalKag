@@ -66,7 +66,7 @@ div .inner p {
 						<!-- 글 작성 -->
 						<c:if test="${member != null }">
 							<a class="btn btn-primary btn-block" style="margin-top: 5%"
-								href="/writeHeadHuntPost"><i class="ion-android-create"
+								href="/writeMarketHuntPost"><i class="ion-android-create"
 								style="font-size: 15px;"></i> Write</a>
 						</c:if>
 						<c:if test="${member == null }">
