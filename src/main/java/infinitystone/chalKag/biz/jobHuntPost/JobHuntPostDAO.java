@@ -15,78 +15,46 @@ public class JobHuntPostDAO {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-//	private static final String SELECTALL_JOBHUNTPOST ="SELECT "
-//			+ "		'JOBHuntPost' AS POST_category, " // 게시판 카테고리 설정 
-//			+ "		JOBHUNTPOST.JOBHUNTPOST_id, "
-//			+ "		JOBHUNTPOST.MEMBER_id, "
-//			+ "			( " 							// 게시글의 대표 이미지를 설정하는 서브 쿼리문 
-//			+ "				SELECT "
-//			+ "					POSTIMG.POSTIMG_name " 	// 구직글의 게시글 이미지를 선택 
-//			+ "				FROM  "
-//			+ "					POSTIMG " 				// 게시글 이미지 테이블에서 가져옴 
-//			+ "				WHERE  "
-//			+ "					POSTIMG.POST_id = JOBHUNTPOST.JOBHUNTPOST_id " // 해당 구직글과 연관된 이미지 
-//			+ "				ORDER BY  "
-//			+ "					POSTIMG.POSTIMG_id ASC " 	// 게시글의 이미지 아이디 기준으로 오름차순 정렬 
-//			+ "				LIMIT 1 " 						// 최대 1개의 이미지만 가져오도록 설정 
-//			+ "			 ) AS POSTIMG_name, " 				// 가져온 대표 이미지의 이름을 "POSTIMG_name"로 칭함 
-//			+ "		    MEMBER.MEMBER_nickname, "
-//			+ "		    JOBHUNTPOST.JOBHUNTPOST_title, "
-//			+ "		    JOBHUNTPOST.JOBHUNTPOST_content, "
-//			+ "		    JOBHUNTPOST.JOBHUNTPOST_date, "
-//			+ "		    JOBHUNTPOST.JOBHUNTPOST_viewcnt, "
-//			+ "			 ( "
-//			+ "				SELECT "
-//			+ "		            COUNT(*) " 					// 해당 구직글에 대한 좋아요 수를 COUNT 함수를 사용해 합산 
-//			+ "		        FROM  "
-//			+ "		            RECOMMEND " 				// 좋아요 테이블에서 가져옴 
-//			+ "		        WHERE  "
-//			+ "		             RECOMMEND.POST_id = JOBHUNTPOST.JOBHUNTPOST_id " // 해당 구직글과 연관된 좋아요 수 
-//			+ "		    ) AS RECOMMEND_cnt " 				// 좋아요 수를 \"RECOMMEND_cnt\"로 칭함 "
-//			+ "			FROM  "
-//			+ "				JOBHUNTPOST "					 // 구직글 테이블에서 가져옴 "
-//			+ "		  	INNER JOIN  "
-//			+ "				MEMBER ON JOBHUNTPOST.MEMBER_id = MEMBER.MEMBER_id " // 회원 정보와 INNER JOIN 
-//			+ "		  	LEFT JOIN "
-//			+ "		  		RECOMMEND ON JOBHUNTPOST.JOBHUNTPOST_id = RECOMMEND.POST_id " // 좋아요 정보와 LEFT JOIN 
-//			+ "		  	GROUP BY "
-//			+ "		  		JOBHUNTPOST.JOBHUNTPOST_id, " 	// 구직글 아이디로 그룹화 
-//			+ "		  		MEMBER.MEMBER_nickname " 		// 회원 닉네임으로 그룹화 
-//			+ "		  	ORDER BY "
-//			+ "		 		JOBHUNTPOST.JOBHUNTPOST_id DESC";
+	private static final String SELECTALL_JOBHUNTPOST ="SELECT "
+			+ "		'JOBHuntPost' AS POST_category, " // 게시판 카테고리 설정 
+			+ "		JOBHUNTPOST.JOBHUNTPOST_id, "
+			+ "		JOBHUNTPOST.MEMBER_id, "
+			+ "			( " 							// 게시글의 대표 이미지를 설정하는 서브 쿼리문 
+			+ "				SELECT "
+			+ "					POSTIMG.POSTIMG_name " 	// 구직글의 게시글 이미지를 선택 
+			+ "				FROM  "
+			+ "					POSTIMG " 				// 게시글 이미지 테이블에서 가져옴 
+			+ "				WHERE  "
+			+ "					POSTIMG.POST_id = JOBHUNTPOST.JOBHUNTPOST_id " // 해당 구직글과 연관된 이미지 
+			+ "				ORDER BY  "
+			+ "					POSTIMG.POSTIMG_id ASC " 	// 게시글의 이미지 아이디 기준으로 오름차순 정렬 
+			+ "				LIMIT 1 " 						// 최대 1개의 이미지만 가져오도록 설정 
+			+ "			 ) AS POSTIMG_name, " 				// 가져온 대표 이미지의 이름을 "POSTIMG_name"로 칭함 
+			+ "		    MEMBER.MEMBER_nickname, "
+			+ "		    JOBHUNTPOST.JOBHUNTPOST_title, "
+			+ "		    JOBHUNTPOST.JOBHUNTPOST_content, "
+			+ "		    JOBHUNTPOST.JOBHUNTPOST_date, "
+			+ "		    JOBHUNTPOST.JOBHUNTPOST_viewcnt, "
+			+ "			 ( "
+			+ "				SELECT "
+			+ "		            COUNT(*) " 					// 해당 구직글에 대한 좋아요 수를 COUNT 함수를 사용해 합산 
+			+ "		        FROM  "
+			+ "		            RECOMMEND " 				// 좋아요 테이블에서 가져옴 
+			+ "		        WHERE  "
+			+ "		             RECOMMEND.POST_id = JOBHUNTPOST.JOBHUNTPOST_id " // 해당 구직글과 연관된 좋아요 수 
+			+ "		    ) AS RECOMMEND_cnt " 				// 좋아요 수를 \"RECOMMEND_cnt\"로 칭함 "
+			+ "			FROM  "
+			+ "				JOBHUNTPOST "					 // 구직글 테이블에서 가져옴 "
+			+ "		  	INNER JOIN  "
+			+ "				MEMBER ON JOBHUNTPOST.MEMBER_id = MEMBER.MEMBER_id " // 회원 정보와 INNER JOIN 
+			+ "		  	LEFT JOIN "
+			+ "		  		RECOMMEND ON JOBHUNTPOST.JOBHUNTPOST_id = RECOMMEND.POST_id " // 좋아요 정보와 LEFT JOIN 
+			+ "		  	GROUP BY "
+			+ "		  		JOBHUNTPOST.JOBHUNTPOST_id, " 	// 구직글 아이디로 그룹화 
+			+ "		  		MEMBER.MEMBER_nickname " 		// 회원 닉네임으로 그룹화 
+			+ "		  	ORDER BY "
+			+ "		 		JOBHUNTPOST.JOBHUNTPOST_id DESC";
 	
-	private static final String SELECTALL_JOBHUNTPOST="SELECT\n"
-			+ "    'JOBHuntPost' AS POST_category,\n"
-			+ "    JOBHUNTPOST.JOBHUNTPOST_id,\n"
-			+ "    JOBHUNTPOST.MEMBER_id,\n"
-			+ "    (\n"
-			+ "        SELECT POSTIMG.POSTIMG_name\n"
-			+ "        FROM POSTIMG\n"
-			+ "        WHERE POSTIMG.POST_id = JOBHUNTPOST.JOBHUNTPOST_id\n"
-			+ "        ORDER BY POSTIMG.POSTIMG_id ASC\n"
-			+ "        LIMIT 1\n"
-			+ "    ) AS POSTIMG_name,\n"
-			+ "    MEMBER.MEMBER_nickname,\n"
-			+ "    JOBHUNTPOST.JOBHUNTPOST_title,\n"
-			+ "    JOBHUNTPOST.JOBHUNTPOST_content,\n"
-			+ "    JOBHUNTPOST.JOBHUNTPOST_date,\n"
-			+ "    JOBHUNTPOST.JOBHUNTPOST_viewcnt,\n"
-			+ "    (\n"
-			+ "        SELECT COUNT(*)\n"
-			+ "        FROM RECOMMEND\n"
-			+ "        WHERE RECOMMEND.POST_id = JOBHUNTPOST.JOBHUNTPOST_id\n"
-			+ "    ) AS RECOMMEND_cnt\n"
-			+ "FROM\n"
-			+ "    JOBHUNTPOST\n"
-			+ "INNER JOIN\n"
-			+ "    MEMBER ON JOBHUNTPOST.MEMBER_id = MEMBER.MEMBER_id\n"
-			+ "LEFT JOIN\n"
-			+ "    RECOMMEND ON JOBHUNTPOST.JOBHUNTPOST_id = RECOMMEND.POST_id\n"
-			+ "GROUP BY\n"
-			+ "    JOBHUNTPOST.JOBHUNTPOST_id,\n"
-			+ "    MEMBER.MEMBER_nickname\n"
-			+ "ORDER BY\n"
-			+ "    JOBHUNTPOST.JOBHUNTPOST_id DESC";
 
 	// 메인페이지 프리미엄 회원글 출력(이미지 포함)
 	private static final String SELECTALL_PREMIUMJOBHUNTPOST= "SELECT "
@@ -255,7 +223,7 @@ public class JobHuntPostDAO {
 		return true;
 	}
 }
-
+// 전체보기 출력
 class JobHuntPostSelecAllRowMapper implements RowMapper<JobHuntPostDTO> {
 
 	@Override
@@ -277,6 +245,7 @@ class JobHuntPostSelecAllRowMapper implements RowMapper<JobHuntPostDTO> {
 	}
 }
 
+// 상세보기 출력
 class JobHuntPostOneRowMapper implements RowMapper<JobHuntPostDTO> {
 
 	@Override
@@ -302,6 +271,7 @@ class JobHuntPostOneRowMapper implements RowMapper<JobHuntPostDTO> {
 	}
 }
 
+// 메인페이지 프리미엄 회원 전체 출력
 class JobHuntPostPremiumSelectAllRowMapper implements RowMapper<JobHuntPostDTO>{
 
 	@Override
@@ -316,6 +286,7 @@ class JobHuntPostPremiumSelectAllRowMapper implements RowMapper<JobHuntPostDTO>{
 	
 }
 
+// 저장 시 최대값
 class SelectOneMaxPostIdRowMapper implements RowMapper<JobHuntPostDTO> {
 	@Override
 	public JobHuntPostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
