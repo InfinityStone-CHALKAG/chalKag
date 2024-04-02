@@ -53,7 +53,6 @@ div .inner p {
 	<!-- Start header tag로 출력 -->
 	<chalKagTags:webHeader />
 	<!-- End header tag로 출력 -->
-
 	<!-- 필터 검색 용 메뉴 -->
 	<section class="search">
 		<div class="container">
@@ -62,6 +61,19 @@ div .inner p {
 				<div class="col-md-3">
 					<aside>
 						<!-- 검색 창 필터검색과 연동되어 있기에 필터검색을 처리하는 Js파일로 검색 처리 -->
+
+						<!-- 글 작성 -->
+						<c:if test="${member != null }">
+							<a class="btn btn-primary btn-block" style="margin-top: 5%"
+								href="/writeJobHuntPost"><i class="ion-android-create"
+								style="font-size: 15px;"></i> Write</a>
+						</c:if>
+						<c:if test="${member == null }">
+							<a class="btn btn-primary btn-block" style="margin-top: 5%"
+								onclick="message()"><i class="ion-android-create"
+								style="font-size: 15px;"></i> Write</a>
+						</c:if>
+						<br>
 						<h2 class="aside-title">Search</h2>
 						<div class="aside-body">
 							<!-- 검색창 옵션(제목, 내용, 작성자, 제목 + 작성자) -->
@@ -91,114 +103,118 @@ div .inner p {
 						<h2 class="aside-title">Filter</h2>
 						<div class="aside-body">
 							<div class="group-title"
-								style="font-weight: bold; margin-bottom: 2%;">Date</div>
+								style="font-weight: bold; margin-bottom: 2%;">DATE</div>
 							<div class="form-group">
 								<!-- 모든 시간 selectAll -->
-								<label><input type="radio" name="date" checked>&nbsp;
-									Anytime</label>
+								<label><input type="radio" name="date" id="Anytime"
+									checked>&nbsp; Anytime</label>
 							</div>
 							<div class="form-group">
 								<!-- 오늘 하루 동안 작성한 글들 selectAll_today -->
-								<label><input type="radio" name="date">&nbsp;
+								<label><input type="radio" name="date" id="Today">&nbsp;
 									Today</label>
 							</div>
 							<div class="form-group">
 								<!-- 지난주 동안 작성한 글들 selectAll_today -->
-								<label><input type="radio" name="date">&nbsp;
+								<label><input type="radio" name="date" id="LastWeek">&nbsp;
 									Last Week</label>
 							</div>
 							<div class="form-group">
 								<!-- 전 달동안 작성한 글들 selectAll_today -->
-								<label><input type="radio" name="date">&nbsp;
+								<label><input type="radio" name="date" id="LastMonth">&nbsp;
 									Last Month</label>
 							</div>
-
-							<!-- 구직 정보 필터 검색 -->
-							<div class="group-title"
-								style="font-weight: bold; margin-bottom: 2%;">Head Hunt</div>
-							<!-- 모든 글 -->
-							<div class="form-group">
-								<label><input type="checkbox" id="jobHunt"
-									name="jobHunt" checked> &nbsp; All Job Hunt</label>
-							</div>
+							<br>
 
 							<!-- 직업 필터 -->
+							<div class="group-title"
+								style="font-weight: bold; margin-bottom: 2%;">ROLE</div>
 							<div class="form-group">
-								<label for="role">직업 :</label> <select
-									style="width: 100%; height: 40px;" id="role" name="role">
-									<option value="" disabled selected>선택</option>
-									<option value="모델">모델</option>
-									<option value="사진작가">사진작가</option>
+								<select style="width: 100%; height: 40px;" id="role" name="role">
+									<option value="" disabled selected>Select</option>
+									<option value="Model">Model</option>
+									<option value="Photographer">Photographer</option>
 								</select>
 							</div>
+							<br>
 
 							<!-- 지역 필터 -->
+							<div class="group-title"
+								style="font-weight: bold; margin-bottom: 2%;">REGION</div>
 							<div class="form-group">
-								<label for="region">작업 지역:</label> <select
-									style="width: 100%; height: 40px;" id="region" name="region">
-									<option value="" disabled selected>선택</option>
-									<option value="SEOUL">서울</option>
-									<option value="GYEONGGI">경기</option>
-									<option value="GANGWON">강원</option>
-									<option value="CHUNGCHEONG">충천</option>
-									<option value="JEOLLA">전라</option>
-									<option value="GYEONGSANG">경상</option>
-									<option value="JEJU">제주</option>
+								<select style="width: 100%; height: 40px;" id="region"
+									name="region">
+									<option value="" disabled selected>Select</option>
+									<option value="SEOUL">SEOUL</option>
+									<option value="GYEONGGI">GYEONGGI</option>
+									<option value="GANGWON">GANGWON</option>
+									<option value="CHUNGCHEONG">CHUNGCHEONG</option>
+									<option value="JEOLLA">JEOLLA</option>
+									<option value="GYEONGSANG">GYEONGSANG</option>
+									<option value="JEJU">JEJU</option>
 								</select>
 							</div>
+							<br>
 
 							<!-- Pay 필터 -->
+							<div class="group-title"
+								style="font-weight: bold; margin-bottom: 2%;">PAY</div>
 							<div class="form-group">
-								<label for="minPrice" style="margin-bottom: 2%;">최소 Pay:</label>
-								<input type="range" style="margin-bottom: 2%;" id="minPay"
-									name="minPay" min="0" max="1000000" value="1"> <label
-									for="maxPrice" style="margin-bottom: 2%;">최대 Pay:</label> <input
-									type="range" style="margin-bottom: 2%;" id="maxPay"
-									name="maxPay" min="0" max="1000000" value="1">
+								<label for="minPrice">Min</label> <input type="range"
+									id="minPay" name="minPay" min="0" max="1000000" value="1">
+								<label for="maxPrice">Max</label> <input type="range"
+									id="maxPay" name="maxPay" min="0" max="1000000" value="1">
 							</div>
+							<br>
 
 							<!--  작업 날짜 필터 -->
 							<div class="group-title"
-								style="font-weight: bold; margin-bottom: 2%;">Work Date</div>
+								style="font-weight: bold; margin-bottom: 2%;">WORK DATE</div>
 							<div class="form-group">
-								<label for="workdate" style="margin-bottom: 2%;">시작일</label> <input
+								<label for="workdate" style="margin-bottom: 2%;">Start</label> <input
 									style="width: 100%; height: 40px; margin-bottom: 2%;"
 									type="date" id="startDate" name="startDate"> <label
-									for="workdate" style="margin-bottom: 2%;">종료일</label> <input
+									for="workdate" style="margin-bottom: 2%;">End</label> <input
 									style="width: 100%; height: 40px; margin-bottom: 2%;"
 									type="date" id="endDate" name="endDate">
 							</div>
+							<br>
 
 							<!-- 촬영 컨셉 필터 -->
+							<div class="group-title"
+								style="font-weight: bold; margin-bottom: 2%;">WORK CONCEPT
+							</div>
 							<div class="form-group">
-								<label for="concept">촬영 컨셉:</label> <select id="concept"
-									name="concept" style="width: 100%; height: 40px;">
-									<option value="" disabled selected>선택</option>
-									<option value="snap">스냅사진</option>
-									<option value="pictorial">화보</option>
-									<option value="studio">내부</option>
-									<option value="outdoor">외부</option>
-									<option value="etc">기타</option>
+								<select id="concept" name="concept"
+									style="width: 100%; height: 40px;">
+									<option value="" disabled selected>Select</option>
+									<option value="snap">Snap</option>
+									<option value="pictorial">Pictorial</option>
+									<option value="studio">Studio</option>
+									<option value="outdoor">Outdoor</option>
+									<option value="etc">Etc</option>
 								</select>
 							</div>
+							<br>
+							<button class="btn btn-primary btn-sm" id="filterReset"
+								style="font-size: 100%;">
+								<i class="ion-ios-refresh-empty" style="font-size: 15px;"></i>
+								FILTER RESET
+							</button>
+
 						</div>
 					</aside>
 				</div>
 
-				<div class="col-md-9"
-					style="text-align: right; margin-bottom: 10px;">
-					<!-- 글 작성 -->
-					<c:if test="${member != null }">
-						<a class="btn btn-primary btn-sm" href="/writeJobHuntPost">Writing</a>
-					</c:if>
-					<c:if test="${member == null }">
-						<a class="btn btn-primary btn-sm" onclick="message()">Writing</a>
-					</c:if>
-				</div>
+
 				<div class="col-md-9">
 					<div class="nav-tabs-group">
 						<ul class="nav-tabs-list">
-							<li onclick="sortItems('all')">All</li>
+							<li class="active" onclick="sortItems('all')"><a href="#">All</a></li>
+							<li><a href="#">Latest</a></li>
+							<li><a href="#">Popular</a></li>
+							<li><a href="#">Trending</a></li>
+							<li><a href="#">Videos</a></li>
 						</ul>
 						<div class="nav-tabs-right">
 							<!-- 오름차순, 내림차순 정렬 -->
@@ -209,21 +225,24 @@ div .inner p {
 						</div>
 					</div>
 
+					<div class="search-result">Define style with your exceptional
+						models.</div>
+
+
 					<!-- 게시글 전체 갯수가 출력되게 처리 -->
-					<div class="col-md-9">
-						<div class="row">
-							<!-- 게시글 목록 출력 장소 시작 게시판마다 명이 다르다. -->
-							<div id="postDatasContainer" data-displayreviewdata='${jobHuntPostList}'></div>
-							<!-- 게시글 목록 출력 장소 종료-->
-	
-							<!-- 페이지 이동 버튼 -->
-							<!-- 페이징처리 시 1~10 까지 출력 글이 적으면 1~a 만 출력할 수 있게 처리  -->
-							<div class="col-md-12 text-center" >
-								<ul class='pagination' id="paginationContainer">
-								</ul>
-							</div>
-							<!-- 페이징 끝 -->
+					<div class="row">
+						<!-- 게시글 목록 출력 장소 시작 게시판마다 명이 다르다. -->
+						<div id="postDatasContainer"
+							data-displayreviewdata='${jobHuntPostList}'></div>
+						<!-- 게시글 목록 출력 장소 종료-->
+
+						<!-- 페이지 이동 버튼 -->
+						<!-- 페이징처리 시 1~10 까지 출력 글이 적으면 1~a 만 출력할 수 있게 처리  -->
+						<div class="col-md-12 text-center">
+							<ul class='pagination' id="paginationContainer">
+							</ul>
 						</div>
+						<!-- 페이징 끝 -->
 					</div>
 				</div>
 			</div>

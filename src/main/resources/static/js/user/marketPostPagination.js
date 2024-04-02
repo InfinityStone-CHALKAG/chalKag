@@ -100,7 +100,7 @@ loadReviewData = function(loadPage) {
      let innerHTML = ''; // 새로운 내용을 담을 변수
     
         if (pageDatas === null || pageDatas.length <= 0) {
-        innerHTML = '<div class="inner"><p>there are no registered posts...</p></div>'; // 데이터가 없을 때 메시지 출력
+        innerHTML = '<div class="inner"><h3 style="margin-left:1.5%;">there are no registered posts...</h3></div>'; // 데이터가 없을 때 메시지 출력
     } else {
         pageDatas.forEach(function(marketPostList) {
 			
@@ -133,36 +133,34 @@ loadReviewData = function(loadPage) {
 		        postContent = postContent.substring(0, 30) + "...";
 		    }
             
-               innerHTML =  `
-               <article class="col-md-12 article-list">
+               innerHTML +=  `
+               	<article class="col-md-12 article-list">
                		<div class="inner">
                         <figure>
-                            <a href="/marketPostSingle?marketPostId=${marketPostList.marketPostId}">
-                                <img src="/postImg/${marketPostList.postImgId}">
+                        	<a href="/marketPostSingle?marketPostId=${marketPostList.marketPostId}">
+                               <img src="/postImg/${marketPostList.postImgName}"  style="width: 100%; height: 100%; object-fit: cover;">
                             </a>
                         </figure>
                         <div class="details">
                             <div class="detail">
-                                <div class="category" style="display:flex;">
-                                    <p>${marketPostList.memberNickname}</p>
-	                                <time style="width: 100px; text-align: center; padding-top: 5px;">${timeString}</time>
+                                <div class="category">
+                                    <a href="memberPage?memberId=${marketPostList.memberId}" style="font-size:14px; font-weight:600;">${marketPostList.memberNickname}</a>
                                 </div>
+                                	 &nbsp;&nbsp;<time>${timeString}</time>
                             </div>
-                            <h1><a href="/marketPostSingle?marketPostId=${marketPostList.marketPostId}">${marketPostList.marketPostTitle}</a></h1>
-                           <p class="postContentText">${postContent}</p>
+                            <h1 style="width: 522.5px; max-height: 56px; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;"><a href="/marketPostSingle?marketPostId=${marketPostList.marketPostId}">${marketPostList.marketPostTitle}</a></h1>
+                             <p style="width: 522.5px; max-height: 52px; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;">${marketPostList.marketPostContent}</p>
                             <footer>
-                            	<!-- 추천수 링크 추후 수정 -->
                                 <a href="#" class="love"><i class="ion-android-favorite-outline"></i> <div>${marketPostList.recommendCnt}</div></a>
                                 <a class="btn btn-primary more" href="/marketPostSingle?marketPostId=${marketPostList.marketPostId}">
-                                    <div>
-                                    	More
-                                    </div>
+                                    <div>More</div>
                                     <div><i class="ion-ios-arrow-thin-right"></i></div>
                                 </a>
                             </footer>
-                    </div>
-                </div>
-              </article>`;
+                    	</div>
+                	</div>
+                </article>`
+                ;
     
             });
         }

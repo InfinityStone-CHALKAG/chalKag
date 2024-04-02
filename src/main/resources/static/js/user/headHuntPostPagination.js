@@ -2,7 +2,7 @@
 var filterData; // 필터 데이터를 저장함는 함수
 var loadReviewData; // 데이터를 로드하는 함수
 const dataContainer = document.getElementById('postDatasContainer'); // 데이터 컨테이너 요소를 가져옴
-const postDatas = JSON.parse(dataContainer.dataset.displayreviewdata); // 게시글 데이터를 가져옴 
+const postDatas = JSON.parse(dataContainer.dataset.displayreviewdata); // 게시글 데이터를 가져옴  
 console.log("postDatas : " + postDatas);
 var currentPage = 0;        // 첫 페이지
 var totalPages = 0;         // 총 페이지
@@ -130,8 +130,6 @@ loadReviewData = function(loadPage) {
 		        timeString = `${mins}분 전`;
 		    }
 			
-            
-      
 		    
                innerHTML +=  `
                	<article class="col-md-12 article-list">

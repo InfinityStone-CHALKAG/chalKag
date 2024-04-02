@@ -17,7 +17,7 @@ public class MarketPostDAO {
 	private JdbcTemplate jdbcTemplate;
 
 	// 삽니다 글 전체 출력
-	private static final String SELECTALL_SELLMARKETPOST = "SELECT  "
+	private static final String SELECTALL_MARKETPOSTSELLLIST = "SELECT  "
 			+ "    'MarketPost' AS POST_category,  "
 			+ "    MARKETPOST.MARKETPOST_id,  "
 			+ "    MARKETPOST.MEMBER_id,  "
@@ -49,7 +49,7 @@ public class MarketPostDAO {
 			+ "    MARKETPOST.MARKETPOST_id DESC";
 	
 	// 팝니다 글 전체 출력
-	private static final String SELECTALL_BUYMARKETPOST="SELECT  "
+	private static final String SELECTALL_MARKETPOSTBUYLIST="SELECT  "
 			+ "    'MarketPost' AS POST_category,  "
 			+ "    MARKETPOST.MARKETPOST_id,  "
 			+ "    MARKETPOST.MEMBER_id,  "
@@ -81,7 +81,7 @@ public class MarketPostDAO {
 			+ "    MARKETPOST.MARKETPOST_id DESC";
 	
 	// 무료나눔 글 전체 출력
-	private static final String SELECTALL_FREECYCLEFREEPOST="SELECT  "
+	private static final String SELECTALL_MARKETPOSTFREECYCLELIST="SELECT  "
 			+ "    'MarketPost' AS POST_category,  "
 			+ "    MARKETPOST.MARKETPOST_id,  "
 			+ "    MARKETPOST.MEMBER_id,  "
@@ -130,33 +130,46 @@ public class MarketPostDAO {
 
 	private static final String SELECTONE_MAXPOSTID = "SELECT MAX(MARKETPOST_id) FROM MARKETPOST";
 			
-	private static final String SELECTONE_MARKETPOST = "SELECT " 
-			+ "	MARKETPOST.MARKETPOST_id, "   
-			+ "	MARKETPOST.MEMBER_id, "
-			+ " MEMBER.MEMBER_nickname, " 
-			+ "	MARKETPOST.MARKETPOST_date, "
-			+ "	MARKETPOST.MARKETPOST_price, " 
-			+ "	MARKETPOST.MARKETPOST_category, "
-			+ "	MARKETPOST.MARKETPOST_company, " 
-			+ "	MARKETPOST.MARKETPOST_status, "
-			+ "	MARKETPOST.MARKETPOST_title, " 
-			+ "	MARKETPOST.MARKETPOST_content, "
-			+ "	MARKETPOST.MARKETPOST_viewcnt, " 
-			+ "	COUNT(RECOMMEND.POST_id) AS RECOMMEND_cnt "
-			+ " FROM " 
-			+ "		MARKETPOST " 
-			+ " INNER JOIN "
-		    + "		MEMBER "
-			+ " LEFT JOIN "
-			+ "		RECOMMEND ON MARKETPOST.MARKETPOST_id = RECOMMEND.POST_id "
-			+ " LEFT JOIN "
-			+ "    PROFILEIMG ON MARKETPOST.MEMBER_id = PROFILEIMG.MEMBER_id "
-			+ " WHERE"
-			+ "	 	MARKETPOST.MARKETPOST_id =? " 
-			+ " GROUP BY "
-			+ "		MARKETPOST.MARKETPOST_id, "
-			+ "		MEMBER.MEMBER_nickname, "
-			+ " 	PROFILEIMG.PROFILEIMG_name";
+	private static final String SELECTONE_MARKETPOSTSINGLE = "SELECT "
+			+ "		'MARKETPost' AS POST_category, " //  게시판의 카테고리 설정  
+			+ "		 MARKETPOST.MARKETPOST_id, "
+			+ "		 MARKETPOST.MEMBER_id, "
+			+ "		 MEMBER.MEMBER_nickname, "
+			+ "		 MARKETPOST.MARKETPOST_price, "
+			+ "	 	 MARKETPOST.MARKETPOST_category, "
+			+ "		 MARKETPOST.MARKETPOST_company, "
+			+ "	 	 MARKETPOST.MARKETPOST_status, "
+			+ "		 MARKETPOST.MARKETPOST_title, "
+			+ "		 MARKETPOST.MARKETPOST_content, "
+			+ "		 MARKETPOST.MARKETPOST_date, "
+			+ "		 MARKETPOST.MARKETPOST_viewcnt, "
+			+ "		 ( "
+			+ "		   SELECT "
+			+ "		        PROFILEIMG.PROFILEIMG_name "
+			+ "		    FROM "
+			+ "		        PROFILEIMG "
+			+ "      WHERE "
+			+ "		     PROFILEIMG.MEMBER_id = MARKETPOST.MEMBER_id "
+			+ "		 ORDER BY "
+			+ "		     PROFILEIMG.PROFILEIMG_id DESC "
+			+ "	     LIMIT 1 "
+			+ "		     ) AS PROFILEIMG_name,"
+			+ "		     (  "
+			+ "		 SELECT "
+			+ "		       COUNT(*) "
+			+ "      FROM "
+			+ "            RECOMMEND "
+			+ "      WHERE "
+			+ "		       RECOMMEND.POST_id = MARKETPOST.MARKETPOST_id  "
+			+ "		     ) AS RECOMMEND_cnt  "
+			+ "		 FROM "
+			+ "		     MARKETPOST "
+			+ "		 INNER JOIN "
+			+ "		     MEMBER ON MARKETPOST.MEMBER_id = MEMBER.MEMBER_id  "
+			+ "		 LEFT JOIN "
+			+ "		     RECOMMEND ON MARKETPOST.MARKETPOST_id = RECOMMEND.POST_id  "
+			+ "		 WHERE   "
+			+ "		     MARKETPOST.MARKETPOST_id = ? ";
 	
 	private static final String INSERT = "INSERT INTO MARKETPOST(MEMBER_id,MARKETPOST_price,MARKETPOST_category,MARKETPOST_company,MARKETPOST_status,MARKETPOST_title,MARKETPOST_content,MARKETPOST_viewcnt)"
 			+ "							VALUES(?,?,?,?,?,?,?,0)";
@@ -173,19 +186,19 @@ public class MarketPostDAO {
 		try {
 			// 팝니다 글 상태 글 출력
 			if (marketPostDTO.getSearchCondition().equals("marketPostSellList")) {
-				result = (List<MarketPostDTO>) jdbcTemplate.query(SELECTALL_SELLMARKETPOST, new MarketPostSelectAllRowMapper());
+				result = (List<MarketPostDTO>) jdbcTemplate.query(SELECTALL_MARKETPOSTSELLLIST, new MarketPostSelectAllRowMapper());
 				System.out.println("MarketPostDAO(SellselectAll) 로그 = [" + result + "]");
 				return result;
 			}
 			// 삽니다 글 상태 글 출력
 			else if (marketPostDTO.getSearchCondition().equals("marketPostBuyList")) {
-				result = (List<MarketPostDTO>) jdbcTemplate.query(SELECTALL_BUYMARKETPOST, new MarketPostSelectAllRowMapper());
+				result = (List<MarketPostDTO>) jdbcTemplate.query(SELECTALL_MARKETPOSTBUYLIST, new MarketPostSelectAllRowMapper());
 				System.out.println("MarketPostDAO(BuyselectAll) 로그 = [" + result + "]");
 				return result;
 			}
 			// 무료나눔 글 상태 글 출력
 			else if (marketPostDTO.getSearchCondition().equals("marketPostFreecycleList")) {
-				result = (List<MarketPostDTO>) jdbcTemplate.query(SELECTALL_FREECYCLEFREEPOST, new MarketPostSelectAllRowMapper());
+				result = (List<MarketPostDTO>) jdbcTemplate.query(SELECTALL_MARKETPOSTFREECYCLELIST, new MarketPostSelectAllRowMapper());
 				System.out.println("MarketPostDAO(FreecycleSelectAll) 로그 = [" + result + "]");
 				return result;
 			}
@@ -208,7 +221,7 @@ public class MarketPostDAO {
 		Object[] args = { marketPostDTO.getMarketPostId() };
 		try {
 			if(marketPostDTO.getSearchCondition().equals("marketPostSingle")) {
-				result = jdbcTemplate.queryForObject(SELECTONE_MARKETPOST, args, new MarketPostSelectOneRowMapper());
+				result = jdbcTemplate.queryForObject(SELECTONE_MARKETPOSTSINGLE, args, new MarketPostSelectOneRowMapper());
 				return result;
 			}else if(marketPostDTO.getSearchCondition().equals("maxPostId")) {
 				result = jdbcTemplate.queryForObject(SELECTONE_MAXPOSTID, new SelectOneMaxPostIdRowMapper());
@@ -262,9 +275,13 @@ class MarketPostSelectAllRowMapper implements RowMapper<MarketPostDTO> {
 		data.setPostCategory(rs.getString("POST_category"));
 		data.setMarketPostId(rs.getString("MARKETPOST_id"));
 		data.setMemberId(rs.getString("MEMBER_id"));
+		data.setMemberNickname(rs.getString("MEMBER_nickname"));
+		data.setMarketPostDate(rs.getString("FREEPOST_date"));
 		data.setMarketPostTitle(rs.getString("MARKETPOST_title"));
 		data.setMarketPostContent(rs.getString("MARKETPOST_content"));
 		data.setMarketPostViewcnt(rs.getString("MARKETPOST_viewcnt"));
+		data.setRecommendCnt(rs.getString("RECOMMEND_cnt"));
+		data.setPostImgName(rs.getString("POSTIMG_name"));
 
 		return data;
 	}
@@ -292,7 +309,7 @@ class MarketPostSelectOneRowMapper implements RowMapper<MarketPostDTO> {
 		data.setMarketPostTitle(rs.getString("MARKETPOST_title"));
 		data.setMarketPostContent(rs.getString("MARKETPOST_content"));
 		data.setMarketPostViewcnt(rs.getString("MARKETPOST_viewcnt"));
-
+		
 		return data;
 	}
 
@@ -313,7 +330,7 @@ class MarketPostPremiumSelectAllRowMapper implements RowMapper<MarketPostDTO>{
 	
 }
 
-//
+// 저장 시 최대값
 class SelectOneMaxPostIdRowMapper implements RowMapper<MarketPostDTO> {
 	@Override
 	public MarketPostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {

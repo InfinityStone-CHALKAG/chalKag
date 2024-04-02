@@ -126,6 +126,7 @@
                     </div>
 
                 </section>
+                <div class="hidden" id="memberGrade" value="${memberInfo.memberGrade}"></div>
 
                 <chalKagTags:webFooter />
 
