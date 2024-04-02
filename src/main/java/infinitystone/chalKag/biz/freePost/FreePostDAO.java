@@ -73,6 +73,7 @@ public class FreePostDAO {
 			+ "	FREEPOST.FREEPOST_id, "
 			+ "	FREEPOST.MEMBER_id, "
 			+ "	MEMBER.MEMBER_nickname, "
+			+ " MEMBER.MEMBER_introduction , "
 			+ "	FREEPOST.FREEPOST_title, "
 			+ "	FREEPOST.FREEPOST_content, "
 			+ "	FREEPOST.FREEPOST_date, "
@@ -218,6 +219,7 @@ class FreePostSelectOneRowMapper implements RowMapper<FreePostDTO> {
 		data.setFreePostId(rs.getString("FREEPOST_id"));
 		data.setMemberId(rs.getString("MEMBER_id"));
 		data.setMemberNickname(rs.getString("MEMBER_nickname"));
+		data.setMemberIntroduction(rs.getString("MEMBER_introduction"));
 		data.setProfileImgName(rs.getString("PROFILEIMG_name"));
 		data.setFreePostDate(rs.getString("FREEPOST_date"));
 		data.setFreePostTitle(rs.getString("FREEPOST_title"));

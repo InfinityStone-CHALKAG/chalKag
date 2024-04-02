@@ -42,8 +42,11 @@ public class ReplyDAO {
       "WHERE REPLY_id = ?";
 
   public List<ReplyDTO> selectAll(ReplyDTO replyDTO) {
+	  List<ReplyDTO> result = null;
+	  Object[] args = {replyDTO.getCommentId()};
     try {
-      return (List<ReplyDTO>) jdbcTemplate.queryForObject(SELECTALL, new ReplyRowMapper());
+    	result=  (List<ReplyDTO>) jdbcTemplate.query(SELECTALL, args,new ReplyRowMapper());
+      return result; 
     } catch (Exception e) {
       e.printStackTrace();
       return null;
@@ -55,21 +58,22 @@ public class ReplyDAO {
   }
 
   public boolean insert(ReplyDTO replyDTO) {
-    if (jdbcTemplate.update(INSERT) <= 0) {
+	  int result = jdbcTemplate.update(INSERT,replyDTO.getCommentId(),replyDTO.getMemberId(),replyDTO.getReplyContent());
+    if (result <= 0) {
       return false;
     }
     return true;
   }
 
   public boolean update(ReplyDTO replyDTO) {
-    if (jdbcTemplate.update(UPDATE) <= 0) {
+    if (jdbcTemplate.update(UPDATE,replyDTO.getReplyContent(),replyDTO.getReplyId()) <= 0) {
       return false;
     }
     return true;
   }
 
   public boolean delete(ReplyDTO replyDTO) {
-    if (jdbcTemplate.update(DELETE) <= 0) {
+    if (jdbcTemplate.update(DELETE,replyDTO.getReplyId()) <= 0) {
       return false;
     }
     return true;

@@ -20,18 +20,26 @@ public class CommentDAO {
 			+ "    COMMENT.COMMENT_id, "
 			+ "    COMMENT.POST_id, "
 			+ "    COMMENT.MEMBER_id, "
-			+ "    MEMBER.MEMBER_nickname , "
+			+ "    MEMBER.MEMBER_nickname, "
 			+ "    COMMENT.COMMENT_date, "
 			+ "    COMMENT.COMMENT_content, "
-			+ "    PROFILEIMG.PROFILEIMG_name "
+			+ "    ( "
+			+ "        SELECT  "
+			+ "        	PROFILEIMG.PROFILEIMG_name "
+			+ "        FROM  "
+			+ "        	PROFILEIMG "
+			+ "        WHERE  "
+			+ "        	PROFILEIMG.MEMBER_id = COMMENT.MEMBER_id "
+			+ "        ORDER BY  "
+			+ "        	PROFILEIMG.PROFILEIMG_id DESC "
+			+ "        LIMIT 1 "
+			+ "    ) AS PROFILEIMG_name "
 			+ "FROM "
 			+ "    COMMENT "
-			+ "LEFT JOIN "
-			+ "    PROFILEIMG ON COMMENT.MEMBER_id = PROFILEIMG.MEMBER_id "
 			+ "INNER JOIN "
 			+ "    MEMBER ON COMMENT.MEMBER_id = MEMBER.MEMBER_id "
 			+ "WHERE "
-			+ "    COMMENT.POST_id = ? ";
+			+ "    COMMENT.POST_id = ?";
 
 	
 	// 대댓글할 때 사용할 댓글 셀렉트원
