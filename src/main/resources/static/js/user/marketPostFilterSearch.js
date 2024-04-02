@@ -10,16 +10,17 @@ document.getElementById('minPrice').addEventListener('input', handleFilterChange
 document.getElementById('maxPrice').addEventListener('input', handleFilterChange);
 document.getElementById('productCategory').addEventListener('input', handleFilterChange);
 document.getElementById('productCompany').addEventListener('input', handleFilterChange);
-document.getElementById('productStatus').addEventListener('input', handleFilterChange);
 
 document.getElementById('product').addEventListener('change', function() {
     if(this.checked) {
         // 체크박스가 선택되었을 때 실행되는 로직
-        document.getElementById('minPrice').value = ''; // 최소 가격 초기화
-        document.getElementById('maxPrice').value = ''; // 최대 가격 초기화
-        document.getElementById('productCategory').value = ''; // 상품 종류 초기화
-        document.getElementById('productCompany').value = ''; // 제조사 초기화
-        document.getElementById('productStatus').value = ''; // 판매 상태 초기화
+        document.getElementById('searchInput').value = '';
+        ddocument.getElementById('searchField').selectedIndex = 0;
+        document.getElementById('Anytime').checked = true; 
+        document.getElementById('minPrice').value = 1; 
+        document.getElementById('maxPrice').value = 1; 
+		document.getElementById('productCategory').selectedIndex = 0;
+		document.getElementById('productCompany').selectedIndex = 0;
         
         // 필요하다면, 변수 업데이트 및 데이터 요청 로직도 여기서 호출
         updateVariables(); // 필터링 및 정렬에 사용되는 변수들 업데이트
@@ -105,7 +106,6 @@ function updateVariables() {
 	maxPrice = $('maxPrice').val();
 	productCategory = $('productCategory').val();
 	productCompany = $('productCompany').val();
-	productStatus = $('productStatus').val();
 	
    // 정렬 순서
   sortOrder = $('#sortOrder').val();
@@ -125,8 +125,7 @@ function performAjaxRequest() {
     minPrice : minPrice,
     maxPrice : maxPrice,
     productCategory : productCategory, 
-    productCompany : productCompany,
-    productStatus : productStatus
+    productCompany : productCompany
     };
 
     // jQuery를 사용한 AJAX 요청

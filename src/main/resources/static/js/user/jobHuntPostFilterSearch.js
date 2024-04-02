@@ -7,6 +7,8 @@ var region;		// 지역
 var startDate;	// 작업 시작일 
 var endDate;	// 작업 종료일
 var concept;	// 촬영컨셉
+var minDate;
+var maxDate;
 
 document.getElementById('minPay').addEventListener('input', handleFilterChange);
 document.getElementById('maxPay').addEventListener('input', handleFilterChange);
@@ -16,21 +18,39 @@ document.getElementById('startDate').addEventListener('input', handleFilterChang
 document.getElementById('endDate').addEventListener('input', handleFilterChange);
 document.getElementById('concept').addEventListener('input', handleFilterChange);
 
-document.getElementById('jobHunt').addEventListener('change', function() {
-    if(this.checked) {
-        // 체크박스가 선택되었을 때 실행되는 로직
-        document.getElementById('minPay').value = ''; 
-        document.getElementById('maxPay').value = '';
-        document.getElementById('role').value = ''; 
-        document.getElementById('region').value = ''; 
-        document.getElementById('startDate').value = '';
-        document.getElementById('endDate').value = '';
-        document.getElementById('concept').value = '';
+document.getElementById('filterReset').addEventListener('click', function() {
+			// 검색어 초기화
+							document.getElementById('searchInput').value = '';
+					
+							// 검색 필드 초기화
+							document.getElementById('searchField').selectedIndex = 0;
+					
+							// 날짜 필터 초기화
+
+							document.getElementById('Anytime').checked = true; 
+					
+							// 직업 필터 초기화
+							document.getElementById('role').selectedIndex = 0;
+					
+							// 지역 필터 초기화
+							document.getElementById('region').selectedIndex = 0;
+					
+							// Pay 필터 초기화
+							document.getElementById('minPay').value = 1;
+							document.getElementById('maxPay').value = 1;
+					
+							// 작업 날짜 필터 초기화
+							document.getElementById('startDate').value = '';
+							document.getElementById('endDate').value = '';
+					
+							// 촬영 컨셉 필터 초기화
+							document.getElementById('concept').selectedIndex = 0;
+    
         
         // 필요하다면, 변수 업데이트 및 데이터 요청 로직도 여기서 호출
         updateVariables(); // 필터링 및 정렬에 사용되는 변수들 업데이트
         performAjaxRequest(); // 필터링된 데이터 요청
-    }
+    
 });
 
 $(document).ready(function() {
