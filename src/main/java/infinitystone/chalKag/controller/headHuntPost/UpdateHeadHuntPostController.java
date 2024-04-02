@@ -47,7 +47,7 @@ public class UpdateHeadHuntPostController {
 	}
 	
 	@RequestMapping(value = "/updateHeadHuntPost", method = RequestMethod.POST)
-	public String updateHeadHuntPost(HeadHuntPostDTO headHuntPostDTO, PostImgDTO postImgDTO, HttpSession session,  @RequestParam("file") MultipartFile[] files) {
+	public String updateHeadHuntPost(HeadHuntPostDTO headHuntPostDTO, PostImgDTO postImgDTO, HttpSession session,  @RequestParam(value = "file", required = false) MultipartFile[] files) {
 		// 사용자의 글을 수정
 		headHuntPostDTO.setMemberId((String) session.getAttribute("member"));
 
@@ -60,21 +60,15 @@ public class UpdateHeadHuntPostController {
 		uploadDir = uploadDir.substring(1, uploadDir.indexOf("chalKag")) + "chalKag/src/main/resources/static/postImg";
 		System.out.println("UpdateHeadHuntPostController Log02 = [" + uploadDir + "]");
 
-		// Add the user-written post
+		// Update the user-written post
 		if (!headHuntPostService.update(headHuntPostDTO)) {
-			System.out.println("UpdateHeadHuntPostController insertion of post failed");
+			System.out.println("UpdateHeadHuntPostController Update of post failed");
 		}
-
-		headHuntPostDTO.setSearchCondition("maxPostId");
-		HeadHuntPostDTO maxPostIdDTO = headHuntPostService.selectOne(headHuntPostDTO);
-		headHuntPostDTO.setHeadHuntPostId(maxPostIdDTO.getHeadHuntPostId());
-
-		System.out.println(maxPostIdDTO.getHeadHuntPostId());
-
 		postImgDTO.setPostId(headHuntPostDTO.getHeadHuntPostId());
 
-
-
+		if(!postImgService.update(postImgDTO)){
+			System.out.println("UpdateHeadHuntPostController Update of post images failed");
+		}
 
 		for (MultipartFile file : files) {
 			if (file != null && !file.isEmpty()) {
@@ -99,6 +93,6 @@ public class UpdateHeadHuntPostController {
 	
 		
 		
-		return "redirect:headHuntPostList";
+		return "redirect:headHuntPostSingle";
 	}
 }
