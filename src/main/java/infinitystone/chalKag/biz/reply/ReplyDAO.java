@@ -21,6 +21,7 @@ public class ReplyDAO {
   		+ "    MEMBER.MEMBER_nickname,  "
   		+ "    REPLY.REPLY_content,  "
   		+ "    REPLY.REPLY_date,  "
+  		+ "    REPLY.COMMENT_id, "
   		+ "    ( "
   		+ "        SELECT   "
   		+ "        PROFILEIMG.PROFILEIMG_name  "
