@@ -98,7 +98,7 @@
 							</div>
 							
 							<!-- 게시글 내용 출력 -->
-							<p>${freePostSingle.freePostContent}</p>
+							<pre style="background: none; border: none; font-size: 15px; font-style: 'Malgun Gothic'; line-height: 210%;">${freePostSingle.freePostContent}</pre>
 						</div>
 						<footer>
 							<div class="col">
