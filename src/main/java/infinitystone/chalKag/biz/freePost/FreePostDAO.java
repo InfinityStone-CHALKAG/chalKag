@@ -19,13 +19,13 @@ public class FreePostDAO {
 	
 	// 게시글 전체 보기 자유게시판, 게시판 이미지, 좋아요 테이블 조인문
 	private static final String SELECTALL_FREEPOSTLIST = "SELECT  "
-			+ "	'FREEPost' AS POST_category,  "
-			+ "	FREEPOST.freePOST_id,  "
+			+ "	'FreePost' AS POST_category,  "
+			+ "	FREEPOST.FREEPOST_id,  "
 			+ "	FREEPOST.MEMBER_id,  "
 			+ "	(  "
 			+ "	    SELECT POSTIMG.POSTIMG_name  "
 			+ "		FROM POSTIMG  "
-			+ "		WHERE POSTIMG.POST_id = FREEOST.FREEPOST_id  "
+			+ "		WHERE POSTIMG.POST_id = FREEPOST.FREEPOST_id  "
 			+ "		ORDER BY POSTIMG.POSTIMG_id ASC  "
 			+ "		LIMIT 1  "
 			+ "	) AS POSTIMG_name,  "
@@ -47,7 +47,7 @@ public class FreePostDAO {
 			+ "	ORDER BY  "
 			+ "	   FREEPOST.FREEPOST_id DESC ";
 	
-	// 메인페이지 프리미엄 회원글 출력
+	// 메인페이지 프리미엄 회원글 출력	SELECTALL_BY_MEMBERGRADE
 		private static final String SELECTALL_PREMIUMFREEPOSTLIST= "SELECT "
 				+ "			    FREEPOST.FREEPOST_title, "
 				+ "				   MEMBER.MEMBER_grade ,  "
@@ -65,6 +65,42 @@ public class FreePostDAO {
 	
 		
 	private static final String SELECTONE_MAXPOSTID = "SELECT MAX(FREEPOST_id) FROM FREEPOST";
+
+	// selectOneByFreePostRecent
+	
+	private static final String SELECTONE_FREEPOSTRECENT="SELECT "
+			+ "	'FreePost' AS POST_category, "
+			+ "	FREEPOST.FREEPOST_id, "
+			+ "	FREEPOST.FREEPOST_title, "
+			+ "	FREEPOST.FREEPOST_content, "
+			+ "	FREEPOST.FREEPOST_date, "
+			+ "	(	 "
+			+ "		SELECT "
+			+ "			POSTIMG.POSTIMG_name "
+			+ "		FROM "
+			+ "			POSTIMG  "
+			+ "		WHERE  "
+			+ "			POSTIMG.POST_id  = FREEPOST.FREEPOST_id  "
+			+ "		ORDER BY  "
+			+ "			POSTIMG.POSTIMG_id ASC  "
+			+ "		LIMIT 1 "
+			+ "	)AS POSTIMG_name, "
+			+ "	(SELECT "
+			+ "		COUNT(*) "
+			+ "	 FROM  "
+			+ "	 	RECOMMEND  "
+			+ "	 WHERE "
+			+ "	 	RECOMMEND.POST_id = FREEPOST.FREEPOST_id  "
+			+ "	)AS RECOMMEND_cnt "
+			+ "	FROM  "
+			+ "		FREEPOST "
+			+ "	INNER JOIN "
+			+ "		MEMBER ON FREEPOST.MEMBER_id = MEMBER.MEMBER_id  "
+			+ "	LEFT JOIN "
+			+ "		RECOMMEND ON FREEPOST.FREEPOST_id = RECOMMEND.POST_id  "
+			+ "	ORDER BY  "
+			+ "		FREEPOST.FREEPOST_date DESC  "
+			+ "	LIMIT 1 ";
 	
 	
 	// 게시글 상세보기 게시글 전체 보기 자유게시판, 게시판 이미지, 좋아요 테이블 조인문
@@ -146,6 +182,9 @@ public class FreePostDAO {
 			}else if(freePostDTO.getSearchCondition().equals("maxPostId")) {
 				result = jdbcTemplate.queryForObject(SELECTONE_MAXPOSTID, new SelectOneMaxPostIdRowMapper());
 				return result;
+				// 메인페이지 최근게시글 출력
+			}else if(freePostDTO.getSearchCondition().equals("freePostRecentSingle")) {
+				result = jdbcTemplate.queryForObject(SELECTONE_FREEPOSTRECENT, new SelectOneFreePostRecentRowMapper());
 			}
 		} catch (Exception e) {
 			return null;
@@ -257,4 +296,21 @@ class SelectOneMaxPostIdRowMapper implements RowMapper<FreePostDTO> {
 		System.out.println("RowMapper OUT");
 		return data;
 	}
+}
+
+class SelectOneFreePostRecentRowMapper implements RowMapper<FreePostDTO>{
+
+	@Override
+	public FreePostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+		FreePostDTO data = new FreePostDTO();
+		data.setFreePostId(rs.getString("FREEPOST_id"));
+		data.setFreePostTitle(rs.getString("FREEPOST_title"));
+		data.setFreePostContent(rs.getString("FREEPOST_content"));
+		data.setFreePostDate(rs.getString("FREEPOST_date"));
+		data.setPostImgName(rs.getString("POSTIMG_name"));
+		data.setRecommendCnt(rs.getString("RECOMMEND_cnt"));
+
+		return data;
+	}
+	
 }
