@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="infinitystone.chalKag.biz.jobHuntPost.IJobHuntPostDAO">
+	<select id="selectAll" resultMap="jobHuntPostMap">
+	SELECT
+	JOBHUNTPOST.JOBHUNTPOST_id, 
+	JOBHUNTPOST.MEMBER_id, 
+	(
+		SELECT
+			POSTIMG.POSTIMG_name 
+		FROM 
+			POSTIMG 
+		WHERE 
+			POSTIMG.POST_id = JOBHUNTPOST.JOBHUNTPOST_id 
+		ORDER BY 
+			POSTIMG.POSTIMG_id ASC 
+		LIMIT 1
+	) AS POSTIMG_name, 
+	MEMBER.MEMBER_nickname, 
+	JOBHUNTPOST.JOBHUNTPOST_title, 
+	JOBHUNTPOST.JOBHUNTPOST_content, 
+	JOBHUNTPOST.JOBHUNTPOST_date, 
+	JOBHUNTPOST.JOBHUNTPOST_viewcnt, 
+	(
+		SELECT
+			COUNT(*) 
+		FROM 
+			RECOMMEND 
+		WHERE 
+			RECOMMEND.POST_id = JOBHUNTPOST.JOBHUNTPOST_id
+	) AS RECOMMEND_cnt 
+	FROM 
+		JOBHUNTPOST
+		INNER JOIN 
+			MEMBER ON JOBHUNTPOST.MEMBER_id = MEMBER.MEMBER_id 
+		LEFT JOIN 
+			RECOMMEND ON JOBHUNTPOST.JOBHUNTPOST_id = RECOMMEND.POST_id 
+	WHERE 1=1
+	
+	<if test="jobHuntPostTitle != null">
+		AND JOBHUNTPOST_title LIKE CONCAT('%',#{jobHuntPostTitle},'%')
+	</if>
+	
+	<if test="jobHuntPostContent != null">
+		AND JOBHUNTPOST_content LIKE CONCAT('%',#{jobHuntPostContent},'%')
+	</if>
+	
+	<if test="memberNickname != null">
+		AND member_nickname LIKE CONCAT('%',#{memberNickname},'%')
+	</if>
+	
+	<!--제목 내용 검색-->
+	<if test="titleAndContents != null">
+		AND JOBHUNTPOST_title LIKE CONCAT('%',#{titleAndContents},'%')
+	</if>
+	
+	<if test="jobHuntPostRole != null">
+		AND JOBHUNTPOST_role LIKE CONCAT('%',#{role},'%')
+	</if>
+	
+	<if test="jobHuntPostRegion != null">
+		AND JOBHUNTPOST_region LIKE CONCAT('%',#{region},'%')
+	</if>
+	
+	
+	<if test="jobHuntPostConcept != null">
+		AND JOBHUNTPOST_concept LIKE CONCAT('%',#{jobHuntPostConcept},'%')
+	</if>
+	
+	<if test="minPay != 0 and maxPay != 0">
+		AND JOBHUNTPOST_pay BETWEEN #{minPay} AND #{maxPay}
+	</if>
+
+	
+	
+	ORDER BY
+		JOBHUNTPOST.JOBHUNTPOST_date DESC
+
+
+	</select>
+	
+	<resultMap id="jobHuntPostMap" type="infinitystone.chalKag.biz.jobHuntPost.JobHuntPostDTO">
+		   <result column="JOBHUNTPOST_id" property="jobHuntPostId" jdbcType="INTEGER" javaType="String"/>
+		   <result column="MEMBER_id" property="memberId" jdbcType="VARCHAR" javaType="String"/>
+		   <result column="MEMBER_nickname" property="memberNickname" jdbcType="VARCHAR" javaType="String"/>
+		   <result column="JOBHUNTPOST_date" property="jobHuntPostDate" jdbcType="TIMESTAMP" javaType="String"/>
+		   <result column="JOBHUNTPOST_title" property="jobHuntPostTitle" jdbcType="VARCHAR" javaType="String"/>
+		   <result column="JOBHUNTPOST_content" property="jobHuntPostContent" jdbcType="VARCHAR" javaType="String"/>
+		   <result column="JOBHUNTPOST_viewcnt" property="jobHuntPostViewcnt" jdbcType="INTEGER" javaType="String"/>
+		   <result column="POSTIMG_name" property="postImgName" jdbcType="VARCHAR" javaType="String"/>
+		   <result column="RECOMMEND_cnt" property="recommendCnt" jdbcType="INTEGER" javaType="int"/>
+		   
+	</resultMap>
+</mapper>

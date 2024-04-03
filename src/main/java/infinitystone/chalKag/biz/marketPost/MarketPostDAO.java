@@ -131,10 +131,11 @@ public class MarketPostDAO {
 	private static final String SELECTONE_MAXPOSTID = "SELECT MAX(MARKETPOST_id) FROM MARKETPOST";
 			
 	private static final String SELECTONE_MARKETPOSTSINGLE = "SELECT "
-			+ "		'MARKETPost' AS POST_category, " //  게시판의 카테고리 설정  
+			+ "		'MarketPost' AS POST_category, " //  게시판의 카테고리 설정  
 			+ "		 MARKETPOST.MARKETPOST_id, "
 			+ "		 MARKETPOST.MEMBER_id, "
 			+ "		 MEMBER.MEMBER_nickname, "
+			+ " 	 MEMBER.MEMBER_introduction , "
 			+ "		 MARKETPOST.MARKETPOST_price, "
 			+ "	 	 MARKETPOST.MARKETPOST_category, "
 			+ "		 MARKETPOST.MARKETPOST_company, "
@@ -300,6 +301,7 @@ class MarketPostSelectOneRowMapper implements RowMapper<MarketPostDTO> {
 		data.setMarketPostId(rs.getString("MARKETPOST_id"));
 		data.setMemberId(rs.getString("MEMBER_id"));
 		data.setMemberNickname(rs.getString("MEMBER_nickname"));
+		data.setMemberIntroduction(rs.getString("MEMBER_introduction"));
 		data.setProfileImgName(rs.getString("PROFILEIMG_name"));
 		data.setMarketPostDate(rs.getString("MARKETPOST_date"));
 		data.setMarketPostPrice(rs.getInt("MARKETPOST_price"));

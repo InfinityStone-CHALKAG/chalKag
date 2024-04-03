@@ -20,56 +20,37 @@ public class CommentDAO {
 			+ "    COMMENT.COMMENT_id, "
 			+ "    COMMENT.POST_id, "
 			+ "    COMMENT.MEMBER_id, "
-			+ "    MEMBER.MEMBER_nickname , "
+			+ "    MEMBER.MEMBER_nickname, "
 			+ "    COMMENT.COMMENT_date, "
 			+ "    COMMENT.COMMENT_content, "
-			+ "    PROFILEIMG.PROFILEIMG_name "
+			+ "    ( "
+			+ "        SELECT  "
+			+ "        	PROFILEIMG.PROFILEIMG_name "
+			+ "        FROM  "
+			+ "        	PROFILEIMG "
+			+ "        WHERE  "
+			+ "        	PROFILEIMG.MEMBER_id = COMMENT.MEMBER_id "
+			+ "        ORDER BY  "
+			+ "        	PROFILEIMG.PROFILEIMG_id DESC "
+			+ "        LIMIT 1 "
+			+ "    ) AS PROFILEIMG_name "
 			+ "FROM "
 			+ "    COMMENT "
-			+ "LEFT JOIN "
-			+ "    PROFILEIMG ON COMMENT.MEMBER_id = PROFILEIMG.MEMBER_id "
 			+ "INNER JOIN "
 			+ "    MEMBER ON COMMENT.MEMBER_id = MEMBER.MEMBER_id "
 			+ "WHERE "
-			+ "    COMMENT.POST_id = ? ";
+			+ "    COMMENT.POST_id = ?";
 
 	
 	// 대댓글할 때 사용할 댓글 셀렉트원
-	private static final String SELECTONE = "SELECT "
-			+ "    COMMENT.COMMENT_id, "
-			+ "    COMMENT.POST_id, "
-			+ "    COMMENT.MEMBER_id, "
-			+ "    COMMENT.COMMENT_date, "
-			+ "    COMMENT.COMMENT_content, "
-			+ "    PROFILEIMG.PROFILEIMG_name "
-			+ "FROM "
-			+ "    COMMENT "
-			+ "LEFT JOIN "
-			+ "    HEADHUNTPOST ON COMMENT.POST_id = HEADHUNTPOST.HEADHUNTPOST_id "
-			+ "LEFT JOIN "
-			+ "    JOBHUNTPOST ON COMMENT.POST_id = JOBHUNTPOST.JOBHUNTPOST_id "
-			+ "LEFT JOIN "
-			+ "    MARKETPOST ON COMMENT.POST_id = MARKETPOST.MARKETPOST_id "
-			+ "LEFT JOIN "
-			+ "    FREEPOST ON COMMENT.POST_id = FREEPOST.FREEPOST_id "
-			+ "LEFT JOIN "
-			+ "    PROFILEIMG ON COMMENT.MEMBER_id = PROFILEIMG.MEMBER_id "
-			+ "JOIN "
-			+ "    MEMBER ON COMMENT.MEMBER_id = MEMBER.MEMBER_id "
-			+ "WHERE "
-			+ "    COMMENT.POST_id = ? AND COMMENT.COMMENT_id = ? "
-			+ "GROUP BY "
-			+ "    COMMENT.COMMENT_id, "
-			+ "    PROFILEIMG.PROFILEIMG_name "
-			+ "ORDER BY "
-			+ "    COMMENT.COMMENT_date DESC ";
+	private static final String SELECTONE = "";
 
 	private static final String INSERT = "INSERT INTO COMMENT (POST_id, MEMBER_id, COMMENT_content)"
 			+ "VALUES (?, ?, ?)";
 
-	private static final String UPDATE = "UPDATE COMMENT SET COMMENTCONTENT = ? " + "WHERE COMMENTID = ?";
+	private static final String UPDATE = "UPDATE COMMENT SET COMMENT_content = ? " + "WHERE COMMENT_id = ?";
 
-	private static final String DELETE = "DELETE FROM COMMENT WHERE COMMENTID = ?";
+	private static final String DELETE = "DELETE FROM COMMENT WHERE COMMENT_id = ?";
 
 	public List<CommentDTO> selectAll(CommentDTO commentDTO) {
 		List<CommentDTO> result = null;
@@ -86,17 +67,8 @@ public class CommentDAO {
 
 	public CommentDTO selectOne(CommentDTO commentDTO) {
 
-		CommentDTO result = null;
-		Object[] args = { commentDTO.getCommentId() };
-		try {
-			result = jdbcTemplate.queryForObject(SELECTONE, args, new CommentSelectOneRowMapper());
-			System.out.println("commentDTO(selectOne) 로그 =" + "[" + result + "]");
-			return result;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
+		return null;
 		}
-	}
 
 	public boolean insert(CommentDTO commentDTO) {
 		System.out.println("commentDTO(insert) 로그 =" + "[" + commentDTO + "]");

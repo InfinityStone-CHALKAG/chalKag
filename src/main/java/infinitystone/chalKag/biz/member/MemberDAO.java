@@ -1,5 +1,6 @@
 package infinitystone.chalKag.biz.member;
 
+import org.hibernate.annotations.processing.SQL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -16,6 +17,27 @@ public class MemberDAO {
   @Autowired
   private JdbcTemplate jdbcTemplate;
 
+  // 메인페이지 레벨순위 맴버 출력.안승준
+  private static final String SELECTALL_LEVELRANK = "SELECT MEMBER_id, " +
+      "MEMBER_nickname, " +
+      "(SELECT MAX(LEVEL_id) " +
+      "FROM LEVEL " +
+      "WHERE LEVEL_requiredexp <= MEMBER_exp) AS CURRENT_LEVEL " +
+      "FROM MEMBER " +
+      "ORDER BY MEMBER_exp DESC " +
+      "LIMIT 10";
+
+  private static final String SELECTALL_TIMEOUTLIST = "SELECT MEMBER_id, " +
+      "MEMBER_nickname, " +
+      "(SELECT TIMEOUT_startdate " +
+      "FROM TIMEOUT " +
+      "WHERE TIMEOUT.MEMBER_id = MEMBER.MEMBER_id " +
+      "ORDER BY " +
+      "TIMEOUT_id DESC " +
+      "LIMIT 1) AS TIMEOUT_date " +
+      "FROM MEMBER " +
+      "WHERE MEMBER_grade = 'TIMEOUT'";
+
   // 아이디 중복검사.안승준
   private static final String SELECTONE_CHECKID = "SELECT MEMBER_id " +
       "FROM MEMBER " +
@@ -30,16 +52,6 @@ public class MemberDAO {
   private static final String SELECTONE_CHECKNICKNAME = "SELECT MEMBER_nickname " +
       "FROM MEMBER " +
       "WHERE MEMBER_nickname = ?";
-
-  // 메인페이지 레벨순위 맴버 출력.안승준
-  private static final String SELECTALL_LEVELRANK = "SELECT MEMBER_id, " +
-      "MEMBER_nickname, " +
-      "(SELECT MAX(LEVEL_id) " +
-      "FROM LEVEL " +
-      "WHERE LEVEL_requiredexp <= MEMBER_exp) AS CURRENT_LEVEL " +
-      "FROM MEMBER " +
-      "ORDER BY MEMBER_exp DESC " +
-      "LIMIT 10";
 
   // 로그인.안승준
   private static final String SELECTONE_SIGNIN = "SELECT MEMBER_id , MEMBER_grade " +
@@ -204,6 +216,16 @@ public class MemberDAO {
       "SET MEMBER_grade = 'delete' " +
       "WHERE MEMBER_id = ?";
 
+  // 회원 정지.안승준
+  private static final String UPDATE_TIMEOUT = "UPDATE MEMBER " +
+      "SET MEMBER_grade = 'TIMEOUT', " +
+      "MEMBER_exp = '0' " +
+      "WHERE MEMBER_id = ?";
+
+  private static final String UPDATE_UNHOLD = "UPDATE MEMBER " +
+      "SET MEMBER_grade = 'USER' " +
+      "WHERE MEMBER_id = ?";
+
   // 사용 안 할 예정.안승준
   private static final String DELETE = "";
 
@@ -213,6 +235,10 @@ public class MemberDAO {
     try {
       if (memberDTO.getSearchCondition().equals("levelRank")) {
         result = (List<MemberDTO>) jdbcTemplate.query(SELECTALL_LEVELRANK, new LevelRankRowMapper());
+        System.out.println("MemberDAO(selectAll) Out로그 = [" + result + "]");
+        return result;
+      } else if (memberDTO.getSearchCondition().equals("timeOutList")) {
+        result = (List<MemberDTO>) jdbcTemplate.query(SELECTALL_TIMEOUTLIST, new TimeOutListRowMapper());
         System.out.println("MemberDAO(selectAll) Out로그 = [" + result + "]");
         return result;
       }
@@ -331,6 +357,14 @@ public class MemberDAO {
         return false;
       }
       return true;
+    } else if (memberDTO.getSearchCondition().equals("timeOut")) {
+      if (jdbcTemplate.update(UPDATE_TIMEOUT, memberDTO.getMemberId()) <= 0) {
+        return false;
+      }
+    } else if (memberDTO.getSearchCondition().equals("unHold")) {
+      if (jdbcTemplate.update(UPDATE_UNHOLD, memberDTO.getMemberId()) <= 0) {
+        return false;
+      }
     }
     System.out.println("MemberDAO(update) Error로그 = [" + memberDTO.getSearchCondition() + "]");
     return false;
@@ -352,6 +386,17 @@ class LevelRankRowMapper implements RowMapper<MemberDTO> {
     memberDTO.setMemberId(rs.getString("MEMBER_id"));
     memberDTO.setMemberNickname(rs.getString("MEMBER_nickname"));
     memberDTO.setCurrentLevel(rs.getString("CURRENT_level"));
+    return memberDTO;
+  }
+}
+
+class TimeOutListRowMapper implements RowMapper<MemberDTO> {
+  @Override
+  public MemberDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+    MemberDTO memberDTO = new MemberDTO();
+    memberDTO.setMemberId(rs.getString("MEMBER_id"));
+    memberDTO.setMemberNickname(rs.getString("MEMBER_nickname"));
+    memberDTO.setTimeOutDate(rs.getString("TIMEOUT_date"));
     return memberDTO;
   }
 }

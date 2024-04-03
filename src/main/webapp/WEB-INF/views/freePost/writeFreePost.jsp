@@ -19,6 +19,12 @@
       height: 500px; /* 원하는 높이 설정 */
 			margin-bottom: 3%;
     }
+    
+        	.main pre {
+    white-space: pre-wrap; /* CSS3의 white-space 속성을 사용해 텍스트가 영역을 벗어나지 않도록 함 */
+    word-wrap: break-word; /* 긴 단어도 줄바꿈될 수 있도록 함 */
+    overflow-x: hidden; /* 가로 스크롤바를 숨김 */
+}
 
 		</style>
 </head>

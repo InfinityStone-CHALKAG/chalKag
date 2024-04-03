@@ -25,7 +25,7 @@ public class AdminReportSingleController {
 		if (reportDTO.getReportState().equals("UNREAD")) {
 			reportDTO.setSearchCondition("reportStateRead");
 			if (!reportService.update(reportDTO)) {
-				System.out.println("AdminTimeOutController reportUpdate failed");
+				System.out.println("AdminTimeOutListController reportUpdate failed");
 			}
 		}
 

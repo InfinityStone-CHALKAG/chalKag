@@ -280,11 +280,20 @@ div .inner p {
 		});
 	</script>
 	<script>
-		function message() {
-			swal("fail", "로그인 후 이용해주세요.", "error", {
-				button : "OK",
-			});
-		}
+	function message() {
+	    swal({
+	        title: "fail",
+	        text: "로그인 후 이용해주세요.",
+	        type: "error",
+	        showCancelButton: false,
+	        confirmButtonColor: "#DD6B55",
+	        confirmButtonText: "OK",
+	        closeOnConfirm: true
+	    }, function() {
+	        // "OK" 버튼 누르면 실행될 코드
+	        window.location.href = "/signIn"; // 로그인 페이지로 이동
+	    });
+	}
 	</script>
 </body>
 </html>
