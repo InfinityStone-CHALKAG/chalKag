@@ -92,9 +92,22 @@ public class ReportDAO { // 신고 DAO
       + "      REPORT_id = ? ";
   // 사용한 테이블 : 신고 테이블
   // 사용한 컬럼 (변경 내용) : 신고 상태
+  private static final String UPDATE_SELECTEDSTATEREAD = "UPDATE REPORT "
+	         + "SET "
+			 + "	  REPORT_state = 'READ' " 
+	         + "WHERE "
+	         + "	  REPORT_state = 'UNREAD' AND REPORT_id IN ";
 
+  private static final String UPDATE_SELECTEDSTATEDELETED = "UPDATE REPORT "
+		     + "SET "
+		     + "	  REPORT_state = 'DELETED' " 
+		     + "WHERE "
+		     + "	  REPORT_id IN ";
+  
   // 사용 안 할 예정.전미지
   private static final String DELETE = " ";
+  
+
 
 
   // 신고글 전체 출력
@@ -171,15 +184,30 @@ public class ReportDAO { // 신고 DAO
       }
       return true; // 신고글 상태를 REJECT로 변경 성공 시 true 반환
     }
+    else if (reportDTO.getSearchCondition().equals("selectedStateRead")) {
+        result = jdbcTemplate.update(UPDATE_SELECTEDSTATEREAD + reportDTO.getSelectedStateUpdateSQL());
+         if (result <= 0) {
+           System.out.println("ReportDAO(update) Out로그 = [" + result + "]");
+           return false; 
+        }
+        return true; 
+     }
+    else if (reportDTO.getSearchCondition().equals("selectedStateDeleted")) {
+        result = jdbcTemplate.update(UPDATE_SELECTEDSTATEDELETED + reportDTO.getSelectedStateUpdateSQL());
+         if (result <= 0) {
+           System.out.println("ReportDAO(update) Out로그 = [" + result + "]");
+           return false; 
+        }
+        return true; 
+     }
     System.out.println("ReportDAO(update) Error 로그 = [" + reportDTO.getSearchCondition() + "]");
     return false; // 업데이트 조건에 해당되지 않는다면 false 반환
   }
 
   // 신고글 삭제
   public boolean delete(ReportDTO reportDTO) {
-    return false;
-  }
-
+	
+	  return false;
 }
 
 //===== SELECTALL =====
@@ -221,4 +249,5 @@ class SelectOneReportRowMapper implements RowMapper<ReportDTO> {
     reportDTO.setReportState(rs.getString("REPORT_state"));        // 신고글 상태 (관리자 확인용)
     return reportDTO; // reportDTO에 저장된 데이터들을 반환
   }
+}
 }

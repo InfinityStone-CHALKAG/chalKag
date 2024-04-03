@@ -580,6 +580,7 @@
                         </footer>
                     </div>
 
+
                     <!-- Scripts -->
                     <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
                     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
@@ -643,12 +644,12 @@
                             });
                         });
 
-                        // document.querySelector('select[name="bootstrap-data-table_length"]').addEventListener('mousedown', function (event) {
-                        //     if (uncheckAllCheckboxesAlert()) {
-                        //         event.preventDefault(); // 옵션 변경 이벤트 중지
-                        //         console.log("옵션 변경 중지");
-                        //     }
-                        // });
+                        document.querySelector('select[name="bootstrap-data-table_length"]').addEventListener('mousedown', function (event) {
+                            if (uncheckAllCheckboxesAlert()) {
+                                event.preventDefault(); // 옵션 변경 이벤트 중지
+                                console.log("옵션 변경 중지");
+                            }
+                        });
 
                         $(document).on('mousedown', '.pagination .page-link', function (e) {
                             console.log("아오")
@@ -753,17 +754,13 @@
 
                             // 휴지통 아이콘 엘리먼트를 생성합니다.
                             var trashIconElement = document.createElement("a");
-                            trashIconElement.href = "#";
+                            trashIconElement.href = "selectedStateUpdate?selectedReportIds=" + selectedReportIds + "&state=toDeleted";
                             trashIconElement.innerHTML = '<i class="fa fa-trash-o"></i>';
-                            trashIconElement.onclick = function () {
-                                // 여기에 휴지통 아이콘 클릭 시 실행될 동작을 작성합니다.
-                                // 예를 들어, 클릭 시 삭제 함수를 호출하거나 다른 작업을 수행할 수 있습니다.
-                                console.log("휴지통 아이콘을 클릭했습니다.");
-                            };
+                           
 
                             // 열린 메일 아이콘 엘리먼트를 생성합니다.
                             var openedMailIconElement = document.createElement("a");
-                            openedMailIconElement.href = "selectedStateRead?selectedReportIds=" + selectedReportIds;
+                            openedMailIconElement.href = "selectedStateUpdate?selectedReportIds=" + selectedReportIds + "&state=toRead";
                             openedMailIconElement.innerHTML = '<i class="fa fa-envelope-open-o"></i>';
 
                             // 기존 내용을 지웁니다.

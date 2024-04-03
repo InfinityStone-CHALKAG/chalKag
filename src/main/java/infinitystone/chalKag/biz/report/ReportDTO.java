@@ -14,6 +14,8 @@ public class ReportDTO { // 신고 정보 관리 DTO 생성. 전미지
 	private String suspectorNickname;	// 피신고자 닉네임
 	
 	private String searchCondition;		// 신고글 검색 조건
+	
+	private String selectedStateUpdateSQL ; // 체크된 것들 담을 SQL가방...
 
 	public String getReportId() {
 		return reportId;
