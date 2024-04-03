@@ -8,16 +8,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.lang.reflect.Member;
-import java.util.List;
-
 @Controller
-public class AdminTimeOutController {
+public class AdminTimeOutListController {
 
   @Autowired
   private MemberService memberService;
 
-  @RequestMapping(value = "/timeOut", method = RequestMethod.POST)
+  @RequestMapping(value = "/adminTimeOutList", method = RequestMethod.POST)
   public String timeOutPage(MemberDTO memberDTO, Model model) {
     memberDTO.setSearchCondition("timeOutList");
     model.addAttribute("timeOutList", memberService.selectAll(memberDTO));
