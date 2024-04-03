@@ -16,17 +16,7 @@ public class DeleteCommentController {
 	private CommentService commentService;
 	
 	@RequestMapping(value="/deleteComment", method=RequestMethod.POST)
-	public @ResponseBody int deleteComment(CommentDTO commentDTO) {
-		
-		boolean commentDeleteResult = commentService.delete(commentDTO);
-		
-		if(commentDeleteResult) {
-			System.out.println("[DeleteCommentController] 댓글 삭제 성공");
-			return 1;
-		}
-		System.out.println("[DeleteCommentController] 댓글 삭제 실패");
-		return 0;
+	public @ResponseBody boolean deleteComment(CommentDTO commentDTO) {
+		return commentService.delete(commentDTO);
 	}
-	
-	
 }
