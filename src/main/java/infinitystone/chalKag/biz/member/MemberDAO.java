@@ -218,7 +218,12 @@ public class MemberDAO {
 
   // 회원 정지.안승준
   private static final String UPDATE_TIMEOUT = "UPDATE MEMBER " +
-      "SET MEMBER_grade = 'TIMEOUT' " +
+      "SET MEMBER_grade = 'TIMEOUT', " +
+      "MEMBER_exp = '0' " +
+      "WHERE MEMBER_id = ?";
+
+  private static final String UPDATE_UNHOLD = "UPDATE MEMBER " +
+      "SET MEMBER_grade = 'USER' " +
       "WHERE MEMBER_id = ?";
 
   // 사용 안 할 예정.안승준
@@ -352,8 +357,12 @@ public class MemberDAO {
         return false;
       }
       return true;
-    } else if (memberDTO.getSearchCondition().equals("timeout")) {
+    } else if (memberDTO.getSearchCondition().equals("timeOut")) {
       if (jdbcTemplate.update(UPDATE_TIMEOUT, memberDTO.getMemberId()) <= 0) {
+        return false;
+      }
+    } else if (memberDTO.getSearchCondition().equals("unHold")) {
+      if (jdbcTemplate.update(UPDATE_UNHOLD, memberDTO.getMemberId()) <= 0) {
         return false;
       }
     }

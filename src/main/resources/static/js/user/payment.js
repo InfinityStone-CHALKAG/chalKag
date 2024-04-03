@@ -25,7 +25,6 @@ function requestPay() {
     }, function (rsp) { // callback 로직
         if (rsp.success) {
             // [1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달. 안승준
-            console.log("아니 시발 왜안되는데");
             console.log(rsp);
             $.ajax({
                 url: "payment",
