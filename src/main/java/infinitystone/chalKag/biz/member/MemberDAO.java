@@ -29,14 +29,14 @@ public class MemberDAO {
 
   private static final String SELECTALL_TIMEOUTLIST = "SELECT MEMBER_id, " +
       "MEMBER_nickname, " +
-      "(SELECT TIMEOUT_date " +
+      "(SELECT TIMEOUT_startdate " +
       "FROM TIMEOUT " +
       "WHERE TIMEOUT.MEMBER_id = MEMBER.MEMBER_id " +
       "ORDER BY " +
       "TIMEOUT_id DESC " +
       "LIMIT 1) AS TIMEOUT_date " +
-      "FROM MEMBER" +
-      "WHERE MEMBER_grade = 'TIMEOUT' ";
+      "FROM MEMBER " +
+      "WHERE MEMBER_grade = 'TIMEOUT'";
 
   // 아이디 중복검사.안승준
   private static final String SELECTONE_CHECKID = "SELECT MEMBER_id " +

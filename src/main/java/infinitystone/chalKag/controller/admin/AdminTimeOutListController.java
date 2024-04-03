@@ -14,9 +14,10 @@ public class AdminTimeOutListController {
   @Autowired
   private MemberService memberService;
 
-  @RequestMapping(value = "/adminTimeOutList", method = RequestMethod.POST)
+  @RequestMapping(value = "/adminTimeOutList", method = RequestMethod.GET)
   public String timeOutPage(MemberDTO memberDTO, Model model) {
     memberDTO.setSearchCondition("timeOutList");
+
     model.addAttribute("timeOutList", memberService.selectAll(memberDTO));
     return "adminTimeOutList";
   }
