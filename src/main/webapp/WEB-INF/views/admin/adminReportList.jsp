@@ -482,7 +482,7 @@
                                                             <th id="checkbox" style="width:0%"><input type="checkbox"
                                                                     id="selectAll">
                                                             </th>
-                                                            <th style="width:0%">No</th>
+                                                            <th>No</th>
                                                             <th>Reporter</th>
                                                             <th>Suspector Email</th>
                                                             <th>Suspector Nickname</th>

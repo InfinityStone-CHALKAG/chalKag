@@ -92,6 +92,11 @@
               ul {
                 list-style: none;
               }
+
+              #bootstrap-data-table td:nth-child(5) {
+                            text-align: center;
+                            /* State 컬럼의 모든 td 요소를 가운데 정렬 */
+                        }
             </style>
           </head>
 
@@ -332,29 +337,18 @@
                               <th></th>
                             </tr>
                           </thead>
-                          <tbody>
-                            <tr>
-                              <td>Tiger Nixon</td>
-                              <td>System Architect</td>
-                              <td>Edinburgh</td>
-                              <td>$320,800</td>
-                              <td></td>
-                            </tr>
-                            <tr>
-                              <td>Garrett Winters</td>
-                              <td>Accountant</td>
-                              <td>Tokyo</td>
-                              <td>$170,750</td>
-                              <td></td>
-                            </tr>
-                            <tr>
-                              <td>Ashton Cox</td>
-                              <td>Junior Technical Author</td>
-                              <td>San Francisco</td>
-                              <td>$86,000</td>
-                              <td></td>
-                            </tr>
-                          </tbody>
+                          <c:set var="counter" value="1" />
+                          <!-- 반복문을 통해 데이터를 삽입 -->
+                          <c:forEach items="${timeOutList}" var="timeOutData">
+                              <tr>
+                                      <td>${counter}</td>
+                                      <td>${timeOutData.memberId}</td>
+                                      <td>${timeOutData.memberNickname}</td>
+                                      <td>${timeOutData.timeOutDate}</td>
+                                      <td><a href="unHold?memberId=${timeOutData.memberId}" class="btn btn-success btn-sm">UNHOLD</a></td>
+                                  <c:set var="counter" value="${counter + 1}" />
+                              </tr>
+                          </c:forEach>
                         </table>
                       </div>
                     </div>
@@ -375,6 +369,7 @@
                     </div>
                   </div>
                 </div>
+               
               </footer>
             </div><!-- /#right-panel -->
 
