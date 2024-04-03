@@ -17,20 +17,20 @@ public class ReportDAO { // 신고 DAO
 
   // 신고글 전체 출력.전미지
   private static final String SELECTALL_REPORT = "SELECT "
-      + "	REPORT.REPORT_id, "
-      + "	REPORT.MEMBER_id, "
-      + "	REPORT.REPORT_suspector, "
-      + "	MEMBER.MEMBER_nickname AS SUSPECTOR_nickname, "
-      + "	REPORT.REPORT_content, "
-      + "	REPORT.REPORT_date, "
-      + "	REPORT_state "
+      + "REPORT.REPORT_id, "
+      + "REPORT.MEMBER_id, "
+      + "REPORT.REPORT_suspector, "
+      + "MEMBER.MEMBER_nickname AS SUSPECTOR_nickname, "
+      + "REPORT.REPORT_content, "
+      + "REPORT.REPORT_date, "
+      + "REPORT_state "
       + "FROM "
-      + "	REPORT "
-      + "WHERE REPORT_state != 'DELETED' "
+      + "REPORT "
       + "INNER JOIN "
-      + "	MEMBER ON REPORT.REPORT_suspector = MEMBER.MEMBER_id "
+      + "MEMBER ON REPORT.REPORT_suspector = MEMBER.MEMBER_id "
+      + "WHERE REPORT_state != 'DELETED'"
       + "ORDER BY "
-      + "	REPORT_id DESC ";
+      + "REPORT_id DESC ";
   // 사용한 테이블 : 신고 테이블, 회원 테이블
   // 사용한 컬럼 (출력 내용) :
   // 신고글 아이디, 회원 아이디, 피신고자 아이디, 피신고자 닉네임(회원 테이블), 신고 내용, 신고글 작성 시간, 신고 상태
@@ -45,11 +45,11 @@ public class ReportDAO { // 신고 DAO
       + "	REPORT.REPORT_date, "
       + "	REPORT_state "
       + "FROM "
-      + "	REPORT "
+      + "REPORT "
       + "INNER JOIN "
-      + "	MEMBER ON REPORT.REPORT_suspector = MEMBER.MEMBER_id "
+      + "MEMBER ON REPORT.REPORT_suspector = MEMBER.MEMBER_id "
       + "WHERE "
-      + "	REPORT_id = ? ";
+      + "REPORT_id = ? ";
   // 사용한 테이블 : 신고 테이블, 회원 테이블
   // 사용한 컬럼 (출력 내용) :
   // 신고글 아이디, 회원 아이디, 피신고자 아이디, 피신고자 닉네임(회원 테이블), 신고 내용, 신고글 작성 시간, 신고 상태
