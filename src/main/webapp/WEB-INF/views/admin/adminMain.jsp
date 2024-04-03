@@ -319,7 +319,7 @@
                                                 </div>
                                                 <div class="stat-content">
                                                     <div class="text-left dib">
-                                                        <div class="stat-text"><span class="count">1450000</span></div>
+                                                        <div class="stat-text"><span class="count">${adminHeader.revenue}</span></div>
                                                         <div class="stat-heading">Revenue</div>
                                                     </div>
                                                 </div>
@@ -337,7 +337,7 @@
                                                 </div>
                                                 <div class="stat-content">
                                                     <div class="text-left dib">
-                                                        <div class="stat-text"><span class="count">1980</span></div>
+                                                        <div class="stat-text"><span class="count">${adminHeader.postDatas}</span></div>
                                                         <div class="stat-heading">PostDatas</div>
                                                     </div>
                                                 </div>
@@ -357,7 +357,7 @@
                                                 </div>
                                                 <div class="stat-content">
                                                     <div class="text-left dib">
-                                                        <div class="stat-text"><span class="count">20</span></div>
+                                                        <div class="stat-text"><span class="count">${adminHeader.premiumUsers}</span></div>
                                                         <div class="stat-heading">Premium Users</div>
                                                     </div>
                                                 </div>
@@ -376,7 +376,7 @@
                                                 </div>
                                                 <div class="stat-content">
                                                     <div class="text-left dib">
-                                                        <div class="stat-text"><span class="count">20</span></div>
+                                                        <div class="stat-text"><span class="count">${adminHeader.users}</span></div>
                                                         <div class="stat-heading">Users</div>
                                                     </div>
                                                 </div>
@@ -971,6 +971,7 @@
                                 </div>
                             </div>
                         </div>
+                        <h4>${adminHeader}</h4>
                     </footer>
                     <!-- /.site-footer -->
                 </div>
@@ -1009,10 +1010,7 @@
              
 
                 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('year').value = "2024"; // 연도 초기값 설정
-    document.getElementById('month').value = "3"; // 월 초기값 설정
-});
+         
 
                 </script>
 

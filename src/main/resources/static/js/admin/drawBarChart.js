@@ -5,6 +5,20 @@ var signUpCountByYear = JSON.parse(dataContainer.getAttribute("data-signUpCountB
 var signUpCountByAgeGroup = JSON.parse(dataContainer.getAttribute("data-signUpCountByAgeGroup"));
 var signUpCountByGenderGroup = JSON.parse(dataContainer.getAttribute("data-signUpCountByGenderGroup"));
 
+// 현재 날짜 객체 생성
+var currentDate = new Date();
+
+// 현재 년도 받기
+var currentYear = currentDate.getFullYear();
+
+// 현재 월 받기 (월은 0부터 시작하므로 1을 더해줌)
+var currentMonth = currentDate.getMonth() + 1;
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('year').value = currentYear; // 연도 초기값 설정
+    document.getElementById('month').value = currentMonth; // 월 초기값 설정
+});
+
+// 그래프 시작
 (function($) {
     "use strict";
     // 차트 인스턴스를 저장할 객체
