@@ -197,14 +197,19 @@ $(document).ready(function() {
 	}
 
 	function message() {
-		swal("fail", "로그인 후 이용해주세요.", "error", {
-			button : "OK",
-		}).then((value) => {
-			// "OK" 버튼 누르면 실행될 코드
-			window.location.href = "/signIn"; // 로그인 페이지로 이동
-		});
+	    swal({
+	        title: "fail",
+	        text: "로그인 후 이용해주세요.",
+	        type: "error",
+	        showCancelButton: false,
+	        confirmButtonColor: "#DD6B55",
+	        confirmButtonText: "OK",
+	        closeOnConfirm: true
+	    }, function() {
+	        // "OK" 버튼 누르면 실행될 코드
+	        window.location.href = "/signIn"; // 로그인 페이지로 이동
+	    });
 	}
-	
 
 	function toggleReplies(commentId) {
 		var replyList = document.getElementById("replyList-" + commentId);
@@ -264,7 +269,7 @@ $(document).ready(function() {
 	   	    }
 	    };
 	    
-	    window.toggleDelete = function(commentId) {
+/* 	    window.toggleDelete = function(commentId) {
 	    	   // AJAX 요청을 통해 서버에 삭제 요청
 	    	    $.ajax({
 	    	        url: "/deleteComment",
@@ -286,11 +291,8 @@ $(document).ready(function() {
 	    	            alert("댓글 삭제 중 오류가 발생했습니다.");
 	    	        }
 	    	    });
-	   	    }
-	    };
-	    
-	    
-	});
+	   	    } */
+	    });
 	
 	
 	

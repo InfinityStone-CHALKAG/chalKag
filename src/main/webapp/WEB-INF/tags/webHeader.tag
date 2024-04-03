@@ -59,9 +59,9 @@
 						
 							<li class="dropdown magz-dropdown"><a href="category.html">Market Post<i class="ion-ios-arrow-right"></i></a>
 								<ul class="dropdown-menu">
-									<li><a href="marketPostList">Sell</a></li>
-									<li><a href="BuyPost">Buy</a></li>
-									<li><a href="FreecyclePost">Freecycle</a></li>
+									<li><a href="/marketPostList?status=sell">Sell</a></li>
+									<li><a href="/marketPostList?status=buy">Buy</a></li>
+									<li><a href="/marketPostList?status=freecycle">Freecycle</a></li>
 								</ul>
 							</li>
 							<li><a href="headHuntPostList">Headhunt Post<i class="ion-ios-arrow-right"></i></a></li>
