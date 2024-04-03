@@ -1,5 +1,6 @@
 package infinitystone.chalKag.controller.admin;
 
+import infinitystone.chalKag.biz.member.MemberDTO;
 import infinitystone.chalKag.biz.member.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,9 +13,13 @@ public class UnholdController {
   private MemberService memberService;
 
   @RequestMapping(value = "/unHold")
-  public String unHold() {
+  public String unHold(MemberDTO memberDTO) {
 
-    return null;
+    memberDTO.setSearchCondition("unHold");
+
+    memberService.update(memberDTO);
+
+    return "redirect:adminTimeOutList";
   }
 
 }
