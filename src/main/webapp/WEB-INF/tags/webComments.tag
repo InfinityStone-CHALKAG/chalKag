@@ -269,7 +269,7 @@ $(document).ready(function() {
 	   	    }
 	    };
 	    
-/* 	    window.toggleDelete = function(commentId) {
+    window.toggleDelete = function(commentId) {
 	    	   // AJAX 요청을 통해 서버에 삭제 요청
 	    	    $.ajax({
 	    	        url: "/deleteComment",
@@ -283,15 +283,33 @@ $(document).ready(function() {
 	    	            console.log('삭제 완료:', response);
 	    	            // UI에서 삭제된 댓글 제거 또는 사용자에게 성공 알림
 	    	            // 예: $('#commentSection_' + commentId).remove();
-	    	            alert("댓글이 성공적으로 삭제되었습니다.");
+	    	            swal({
+	    	    	        title: "success",
+	    	    	        text: "댓글이 성공적으로 삭제되었습니다.",
+	    	    	        type: "success",
+	    	    	        confirmButtonColor: "#DD6B55",
+	    	    	        confirmButtonText: "OK",
+	    	    	        closeOnConfirm: true
+	    	    	    }, function() {
+	    	    	        // "OK" 버튼 누르면 실행될 코드
+	    	    	        window.location.href = "/signIn"; // 로그인 페이지로 이동
+	    	    	    });
 	    	        },
 	    	        error: function(error) {
 	    	            console.error('에러 발생:', error);
 	    	            // 사용자에게 에러 발생을 알림
-	    	            alert("댓글 삭제 중 오류가 발생했습니다.");
+	    	            swal({
+	    	    	        title: "fail",
+	    	    	        text: "댓글을 삭제하는 도중 에러가 발생했습니다.",
+	    	    	        type: "error",
+	    	    	        showCancelButton: false,
+	    	    	        confirmButtonColor: "#DD6B55",
+	    	    	        confirmButtonText: "OK",
+	    	    	        closeOnConfirm: true
+	    	    	    });
 	    	        }
 	    	    });
-	   	    } */
+	   	    } 
 	    });
 	
 	
