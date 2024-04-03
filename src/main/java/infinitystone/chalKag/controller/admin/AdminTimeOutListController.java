@@ -19,7 +19,7 @@ public class AdminTimeOutListController {
     memberDTO.setSearchCondition("timeOutList");
 
     model.addAttribute("timeOutList", memberService.selectAll(memberDTO));
-    return "adminTimeOutList";
+    return "admin/adminTimeOutList";
   }
 
 }

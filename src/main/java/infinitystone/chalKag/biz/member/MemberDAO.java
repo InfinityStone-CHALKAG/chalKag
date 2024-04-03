@@ -394,7 +394,7 @@ class TimeOutListRowMapper implements RowMapper<MemberDTO> {
   @Override
   public MemberDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
     MemberDTO memberDTO = new MemberDTO();
-    memberDTO.setMemberId(rs.getString("MEMBER_Id"));
+    memberDTO.setMemberId(rs.getString("MEMBER_id"));
     memberDTO.setMemberNickname(rs.getString("MEMBER_nickname"));
     memberDTO.setTimeOutDate(rs.getString("TIMEOUT_date"));
     return memberDTO;
