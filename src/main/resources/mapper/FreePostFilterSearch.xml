@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="infinitystone.chalKag.biz.jobHuntPost.IFreePostDAO">
+	<select id="selectAll" resultMap="freePostMap">
+		SELECT  
+    'FreePost' AS POST_category,  
+    FREEPOST.FREEPOST_id,  
+    FREEPOST.MEMBER_id,  
+    (
+        SELECT POSTIMG.POSTIMG_name  
+        FROM POSTIMG  
+        WHERE POSTIMG.POST_id = FREEPOST.FREEPOST_id  
+        ORDER BY POSTIMG.POSTIMG_id ASC  
+        LIMIT 1  
+    ) AS POSTIMG_name,  
+    MEMBER.MEMBER_nickname,  
+    FREEPOST.FREEPOST_title,  
+    FREEPOST.FREEPOST_content,  
+    FREEPOST.FREEPOST_date,  
+    FREEPOST.FREEPOST_viewcnt,  
+    COUNT(RECOMMEND.POST_id) AS RECOMMEND_cnt  
+FROM  
+    FREEPOST  
+INNER JOIN  
+    MEMBER ON FREEPOST.MEMBER_id = MEMBER.MEMBER_id  
+LEFT JOIN  
+    RECOMMEND ON FREEPOST.FREEPOST_id = RECOMMEND.POST_id 
+WHERE
+	1=1
+	
+	<if test="freePostTitle != null">
+		AND FREEPOST_title LIKE CONCAT('%',#{freePostTitle},'%')
+	</if>
+	
+	<if test="freePostContent != null">
+		AND FREEPOST_content LIKE CONCAT('%',#{freePostContent},'%')
+	</if>
+	
+	<if test="memberNickname != null">
+		AND MEMBER_nickname LIKE CONCAT('%',#{memberNickname},'%')
+	</if>
+	
+	<if test="titleAndContents != null">
+		AND FREEPOST_title || FREEPOST_content LIKE CONCAT('%',#{titleAndContents},'%')
+	</if>
+	
+	ORDER BY
+		FREEPOST.FREEPOST_date DESC
+	
+	</select>
+	
+	
+	<resultMap id="freePostMap" type="infinitystone.chalKag.biz.jobHuntPost.FreePostDTO">
+		<result column="FREEPOST_id" property="freePostId" jdbcType="INTEGER" javaType="String"/>
+		<result column="MEMBER_id" property="memberId" jdbcType="VARCHAR" javaType="String"/>
+		<result column="MEMBER_nickname" property="memberNickname" jdbcType="VARCHAR" javaType="String"/>
+		<result column="FREEPOST_date" property="freePostDate" jdbcType="TIMESTAMP" javaType="String"/>
+		<result column="JOBHUNTPOST_title" property="jobHuntPostTitle" jdbcType="VARCHAR" javaType="String"/>
+	   	<result column="FREEPOST_content" property="freePostContent" jdbcType="VARCHAR" javaType="String"/>
+	   	<result column="FREEPOST_viewcnt" property="freePostViewcnt" jdbcType="INTEGER" javaType="String"/>
+	   	<result column="POSTIMG_name" property="postImgName" jdbcType="VARCHAR" javaType="String"/>
+	   	<result column="RECOMMEND_cnt" property="recommendCnt" jdbcType="INTEGER" javaType="int"/>
+	</resultMap>
+
+</mapper>
