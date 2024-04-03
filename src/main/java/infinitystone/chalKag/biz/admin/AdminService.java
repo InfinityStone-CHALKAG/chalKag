@@ -30,5 +30,4 @@ public class AdminService {
   public List<AdminDTO> signUpCountByYear(AdminDTO adminDTO) {
     return adminDAO.selectAll(adminDTO);
   }
-
 }
