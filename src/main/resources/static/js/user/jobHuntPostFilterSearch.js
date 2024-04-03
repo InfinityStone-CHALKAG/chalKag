@@ -145,11 +145,9 @@ function updateVariables() {
 function performAjaxRequest() {
     // 서버에 보낼 데이터 준비. 예를 들어, minDate, maxDate
     const requestData = {
-    minDate: minDate,
-    maxDate: maxDate,
-    searchField: searchField,
-    searchInput: searchInput,
-    sortOrder: sortOrder,
+    searchField: searchField,	// search Condition(제목, 내용, 제목 + 내용)
+    searchInput: searchInput,	// search Condition (입력값)
+    sortOrder: sortOrder,	// 오름차순 정렬, 내림차순 정렬
     minPay : minPay,
     maxPay : maxPay,
     role : role, 
@@ -161,7 +159,7 @@ function performAjaxRequest() {
 
     // jQuery를 사용한 AJAX 요청
     $.ajax({
-        url: '/jobHuntPostSearchList', // 서버의 엔드포인트 URL
+        url: '/jobHuntPostFilterSearch', // 서버의 엔드포인트 URL
         type: 'GET', // 또는 'POST', 서버의 요구 사항에 따라
         data: requestData, // 서버에 보낼 데이터
         success: function(filterData) {
