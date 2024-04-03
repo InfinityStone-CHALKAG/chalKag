@@ -70,8 +70,8 @@ public class AdminDAO {
       + "FROM MEMBER "
       + "WHERE MEMBER_grade = 'USER'";
 
-  private static final String SELECTONE_ADMINHEADER = "SELECT (SELECT SUM(AMOUNT) " +
-      "FROM PAYMENT) AS REVENUE, " +
+  private static final String SELECTONE_ADMINHEADER = "SELECT (COALESCE(SELECT SUM(AMOUNT) " +
+      "FROM PAYMENT),0) AS REVENUE, " +
       "(SELECT SUM(POST_count) AS TOTAL_posts " +
       "FROM (SELECT COUNT(*) AS POST_count " +
       "FROM HEADHUNTPOST " +
