@@ -120,6 +120,11 @@ public class JobHuntPostDAO {
 	private static final String SELECTONE_MAXPOSTID = "SELECT MAX(JOBHUNTPOST_id) FROM JOBHUNTPOST";
 	
 
+	// 최근으로 작성한 구직 게시글
+	private static final String SELECTONE_RECENTJOBHUNTPOST="";
+	
+	
+	
 	private static final String INSERT = "INSERT "
 			+ " INTO JOBHUNTPOST" 
 			+ "(MEMBER_id," 
@@ -239,7 +244,7 @@ class JobHuntPostSelecAllRowMapper implements RowMapper<JobHuntPostDTO> {
 		data.setJobHuntPostContent(rs.getString("JOBHUNTPOST_content"));
 		data.setJobHuntPostDate(rs.getString("JOBHUNTPOST_date"));
 		data.setJobHuntPostViewcnt(rs.getString("JOBHUNTPOST_viewcnt"));
-		data.setRecommendCnt(rs.getString("RECOMMEND_cnt"));
+		data.setRecommendCnt(rs.getInt("RECOMMEND_cnt"));
 		data.setPostImgName(rs.getString("POSTIMG_name"));
 
 		return data;
@@ -267,7 +272,7 @@ class JobHuntPostOneRowMapper implements RowMapper<JobHuntPostDTO> {
 		data.setJobHuntPostContent(rs.getString("JOBHUNTPOST_content"));
 		data.setJobHuntPostDate(rs.getString("JOBHUNTPOST_date"));
 		data.setJobHuntPostViewcnt(rs.getString("JOBHUNTPOST_viewcnt"));
-		data.setRecommendCnt(rs.getString("RECOMMEND_cnt"));
+		data.setRecommendCnt(rs.getInt("RECOMMEND_cnt"));
 //		data.setPostImgName(rs.getString("POSTIMG_name"));
 		
 		return data;

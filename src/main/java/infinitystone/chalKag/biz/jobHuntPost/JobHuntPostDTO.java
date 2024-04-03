@@ -13,6 +13,21 @@ public class JobHuntPostDTO {
 	private String jobHuntPostRole;
 	private String jobHuntPostRegion;
 	private int    jobHuntPostPay;
+	
+	// 제목 내용 검색 DTO
+	private String titleAndContents;
+	
+	// 최대 금액
+	private int	   maxPay;
+	// 최소 금액
+	private int	   minPay;
+	
+	
+	// 작업 기간
+	private int		startWorkDate;
+	private int		endWorkDate;
+	
+	
 	private String jobHuntPostWorkDate;
 	private String jobHuntPostConcept;
 	private String jobHuntPostTitle;
@@ -23,7 +38,7 @@ public class JobHuntPostDTO {
 	
 	private String postCategory;
 	
-	private String recommendCnt;
+	private int recommendCnt;
 	
 	private String searchCondition;
 	

@@ -48,9 +48,9 @@ public class CommentDAO {
 	private static final String INSERT = "INSERT INTO COMMENT (POST_id, MEMBER_id, COMMENT_content)"
 			+ "VALUES (?, ?, ?)";
 
-	private static final String UPDATE = "UPDATE COMMENT SET COMMENTCONTENT = ? " + "WHERE COMMENTID = ?";
+	private static final String UPDATE = "UPDATE COMMENT SET COMMENT_content = ? " + "WHERE COMMENT_id = ?";
 
-	private static final String DELETE = "DELETE FROM COMMENT WHERE COMMENTID = ?";
+	private static final String DELETE = "DELETE FROM COMMENT WHERE COMMENT_id = ?";
 
 	public List<CommentDTO> selectAll(CommentDTO commentDTO) {
 		List<CommentDTO> result = null;
