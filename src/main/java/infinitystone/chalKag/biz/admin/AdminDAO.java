@@ -1,6 +1,7 @@
 package infinitystone.chalKag.biz.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -69,6 +70,27 @@ public class AdminDAO {
       + "FROM MEMBER "
       + "WHERE MEMBER_grade = 'USER'";
 
+  private static final String SELECTONE_ADMINHEADER = "SELECT (SELECT SUM(AMOUNT) " +
+      "FROM PAYMENT) AS REVENUE, " +
+      "(SELECT SUM(POST_count) AS TOTAL_posts " +
+      "FROM (SELECT COUNT(*) AS POST_count " +
+      "FROM HEADHUNTPOST " +
+      "UNION ALL " +
+      "SELECT COUNT(*) " +
+      "FROM JOBHUNTPOST " +
+      "UNION ALL " +
+      "SELECT COUNT(*) " +
+      "FROM FREEPOST " +
+      "UNION ALL " +
+      "SELECT COUNT(*) " +
+      "FROM MARKETPOST) AS COUNTS) AS POSTDATAS, " +
+      "(SELECT COUNT(*) " +
+      "FROM MEMBER " +
+      "WHERE MEMBER_grade = 'PREMIUM') AS PREMIUMUSERS, " +
+      "(SELECT COUNT(*) " +
+      "FROM MEMBER " +
+      "WHERE MEMBER_grade != 'ADMIN') AS USERS";
+
   private static final String SELECTONE = "";
   private static final String INSERT = "";
   private static final String UPDATE = "";
@@ -113,6 +135,10 @@ public class AdminDAO {
       if (adminDTO.getSearchCondition().equals("signUpCountByGenderGroup")) {
         result = jdbcTemplate.queryForObject(SELECTONE_SIGNUPCOUNTBYGENDERGROUP,
             new SignUpCountByGenderGroupRowMapper());
+        System.out.println("AdminDAO(selectOne) Out로그 = [" + result + "]");
+        return result;
+      } else if (adminDTO.getSearchCondition().equals("adminHeader")) {
+        result = jdbcTemplate.queryForObject(SELECTONE_ADMINHEADER, new AdminHeaderRowMapper());
         System.out.println("AdminDAO(selectOne) Out로그 = [" + result + "]");
         return result;
       }
@@ -186,6 +212,18 @@ class SignUpCountByYearRowMapper implements RowMapper<AdminDTO> {
     AdminDTO adminDTO = new AdminDTO();
     adminDTO.setYear(rs.getString("YEAR"));
     adminDTO.setSignUpCount(rs.getString("SIGNUPCOUNT"));
+    return adminDTO;
+  }
+}
+
+class AdminHeaderRowMapper implements RowMapper<AdminDTO> {
+  @Override
+  public AdminDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+    AdminDTO adminDTO = new AdminDTO();
+    adminDTO.setRevenue(rs.getString("REVENUE"));
+    adminDTO.setPostDatas(rs.getString("POSTDATAS"));
+    adminDTO.setPremiumUsers(rs.getString("PREMIUMUSERS"));
+    adminDTO.setUsers(rs.getString("USERS"));
     return adminDTO;
   }
 }
