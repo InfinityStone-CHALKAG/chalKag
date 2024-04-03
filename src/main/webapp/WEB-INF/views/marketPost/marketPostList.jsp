@@ -108,22 +108,22 @@ div .inner p {
 								style="font-weight: bold; margin-bottom: 2%;">DATE</div>
 							<div class="form-group">
 								<!-- 모든 시간 selectAll -->
-								<label><input type="radio" name="date" id="Anytime"
+								<label><input type="radio" name="marketPostDate" id="Anytime"
 									checked>&nbsp; Anytime</label>
 							</div>
 							<div class="form-group">
 								<!-- 오늘 하루 동안 작성한 글들 selectAll_today -->
-								<label><input type="radio" name="date" id="Today">&nbsp;
+								<label><input type="radio" name="marketPostDate" id="Today">&nbsp;
 									Today</label>
 							</div>
 							<div class="form-group">
 								<!-- 지난주 동안 작성한 글들 selectAll_today -->
-								<label><input type="radio" name="date" id="LastWeek">&nbsp;
+								<label><input type="radio" name="marketPostDate" id="LastWeek">&nbsp;
 									Last Week</label>
 							</div>
 							<div class="form-group">
 								<!-- 전 달동안 작성한 글들 selectAll_today -->
-								<label><input type="radio" name="date" id="LastMonth">&nbsp;
+								<label><input type="radio" name="marketPostDate" id="LastMonth">&nbsp;
 									Last Month</label>
 							</div>
 							<br>
@@ -132,7 +132,7 @@ div .inner p {
 								style="font-weight: bold; margin-bottom: 2%;">COMPANY</div>
 							<div class="form-group">
 								<select
-									style="width: 100%; height: 40px;" id="role" name="company">
+									style="width: 100%; height: 40px;" id="role" name="marketPostCompany">
 									<option value="" disabled selected>Select</option>
 									<option value="Canon">Canon</option>
 									<option value="Sony">Sony</option>
@@ -145,7 +145,7 @@ div .inner p {
 								style="font-weight: bold; margin-bottom: 2%;">PRODUCT CATEGORY</div>
 							<div class="form-group">
 								<select style="width: 100%; height: 40px;" id="productCategory"
-									name="productCategory">
+									name="marketPostCategory">
 									<option value="" disabled selected>Select</option>
 									<option value="DSLR">DSLR</option>
 									<option value="MirrorLess">Mirror Less</option>
@@ -158,9 +158,9 @@ div .inner p {
 								style="font-weight: bold; margin-bottom: 2%;">PRICE</div>
 							<div class="form-group">
 								<input type="range"
-									id="minPrice" name="minPay" min="0" max="1000000" value="1">
+									id="minPrice" name="minPrice" min="0" max="1000000" value="1">
 								<label for="maxPrice">최대 Price:</label> <input type="range"
-									id="maxPrice" name="maxPay" min="0" max="1000000" value="1">
+									id="maxPrice" name="maxPrice" min="0" max="1000000" value="1">
 							</div>
 							<br>
 							
