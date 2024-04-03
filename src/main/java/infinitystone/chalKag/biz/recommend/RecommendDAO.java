@@ -14,199 +14,372 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+
+//----------------------------------------------------------------- 메인 페이지 SELECTALL -----------------------------------------------------------------
+
+	// 좋아요 수가 높은 게시글 목록 출력 (출력 게시판 통합. 8개 출력).전미지  
+	private static final String SELECTALL_RECOMMENDBEST = "SELECT "
+			  // 게시글의 데이터 중 가져올 정보를 선택하는 쿼리끝
+			+ " SELECT "
+			+ "		RECOMMEND.POST_id, " // 게시글 아이디를 선택
+			+ "		CASE " // 게시글에 해당하는 카테고리 선택
+			+ "			WHEN HEADHUNTPOST.HEADHUNTPOST_id IS NOT NULL THEN 'HEADHUNTPOST' "
+			+ "       	WHEN JOBHUNTPOST.JOBHUNTPOST_id IS NOT NULL THEN 'JOBHUNTPOST' "
+			+ "       	WHEN FREEPOST.FREEPOST_id IS NOT NULL THEN 'FREEPOST' "
+			+ "        	WHEN MARKETPOST.MARKETPOST_id IS NOT NULL THEN 'MARKETPOST' "
+			+ "        	ELSE 'Unknown' " // 어떤 카테고리에도 해당하지 않는 경우 'Unknown'으로 설정
+			+ "		END AS post_category, "  // 게시글의 카테고리를 선택
+	        + "    	COALESCE ( "
+	        + "			HEADHUNTPOST.HEADHUNTPOST_title, "
+	        + "			JOBHUNTPOST.JOBHUNTPOST_title, "
+	        + "			FREEPOST.FREEPOST_title, "
+	        + "			MARKETPOST.MARKETPOST_title, "
+	        + "			'Unknown' "
+	        + "		) AS post_title, " // 각 게시글의 제목을 선택
+	        + "    	COALESCE ( "
+	        + "			HEADHUNTPOST.HEADHUNTPOST_date, "
+	        + "			JOBHUNTPOST.JOBHUNTPOST_date, "
+	        + "			FREEPOST.FREEPOST_date, "
+	        + "			MARKETPOST.MARKETPOST_date, "
+	        + "			'Unknown' "
+	        + "		) AS post_date, " // 각 게시글의 날짜를 선택
+	        + "		COUNT (RECOMMEND.POST_id) AS post_recommendcnt, " // 각 게시글의 좋아요 수를 합산
+	        + "		COALESCE( " // 대표 이미지 설정 쿼리
+	        + "			( " // 게시글의 대표 이미지 지정
+	        + "				SELECT "
+	        + "					POSTIMG.POSTIMG_name "  // 게시글 이미지 선택
+	        + "				FROM "
+	        + "					POSTIMG " // 게시글 이미지 테이블
+	        + "				WHERE "
+	        + "					POSTIMG.POST_id = COALESCE ("
+	        + "										HEADHUNTPOST.HEADHUNTPOST_id, "
+	        + "										JOBHUNTPOST.JOBHUNTPOST_id, "
+	        + "										FREEPOST.FREEPOST_id, "
+	        + "										MARKETPOST.MARKETPOST_id) " // 게시글 아이디와 이미지 테이블의 게시글 아이디가 동일한 것을 선택
+	        + "				ORDER BY "
+	        + "					POSTIMG.POSTIMG_id ASC " // 이미지 아이디를 기준으로 오름차순 정렬
+	        + "				LIMIT 1 " // 이미지를 1개만 가져오도록 설정
+	        + "        ), "
+	        + "        'Unknown' " // 대표 이마지가 없을 경우 'Unknown'으로 설정
+	        + "    ) AS POSTIMG_name " // 대표 이미지의 이름
+	          // 게시글의 데이터 중 가져올 정보를 선택하는 쿼리 끝
+	          // 게시글과 좋아요 정보를 JOIN하는 쿼리 시작
+	        + "FROM " 
+	        + "		RECOMMEND " // 좋아요 테이블
+	        + "LEFT JOIN " // 각 게시글 테이블과 좋아요 테이블을 LEFT JOIN하여 게시글 정보를 가져옴
+	        + "		HEADHUNTPOST ON RECOMMEND.POST_id = HEADHUNTPOST.HEADHUNTPOST_id "
+	        + "LEFT JOIN " 
+	        + "		JOBHUNTPOST ON RECOMMEND.POST_id = JOBHUNTPOST.JOBHUNTPOST_id " 
+	        + "LEFT JOIN "
+	        + "		FREEPOST ON RECOMMEND.POST_id = FREEPOST.FREEPOST_id " 
+	        + "LEFT JOIN "
+	        + "		MARKETPOST ON RECOMMEND.POST_id = MARKETPOST.MARKETPOST_id "
+	          // 게시글과 좋아요 정보를 JOIN하는 쿼리 끝
+			+ "GROUP BY "
+			+ "		RECOMMEND.POST_id, " // 게시글 아이디를 기준으로 결과를 그룹화
+			+ "		CASE "
+			+ "			WHEN HEADHUNTPOST.HEADHUNTPOST_id IS NOT NULL THEN 'HEADHUNTPOST' "
+			+ "			WHEN JOBHUNTPOST.JOBHUNTPOST_id IS NOT NULL THEN 'JOBHUNTPOST' "
+			+ "			WHEN FREEPOST.FREEPOST_id IS NOT NULL THEN 'FREEPOST' "
+			+ "			WHEN MARKETPOST.MARKETPOST_id IS NOT NULL THEN 'MARKETPOST' "
+			+ "			ELSE 'Unknown' "
+			+ "		END, "
+			+ "		COALESCE ( "
+			+ "			HEADHUNTPOST.HEADHUNTPOST_title, "
+			+ "			JOBHUNTPOST.JOBHUNTPOST_title, "
+			+ "			FREEPOST.FREEPOST_title, "
+			+ "			MARKETPOST.MARKETPOST_title, "
+			+ "			'Unknown' "
+			+ "		), "
+			+ "		COALESCE ( "
+			+ "			HEADHUNTPOST.HEADHUNTPOST_date, "
+			+ "			JOBHUNTPOST.JOBHUNTPOST_date,"
+			+ "			FREEPOST.FREEPOST_date, "
+			+ "			MARKETPOST.MARKETPOST_date, "
+			+ "			'Unknown' "
+			+ "		), "
+			+ "ORDER BY "
+			+ "		post_recommendcnt DESC DESC " // 좋아요 수를 기준으로 내림차순 정렬 
+			+ "LIMIT 8 "; // 글을 8개만 가져오도록 설정
 	
-	// 오라클 쿼리문 (NVL 사용)
-//	private static final String SELECTONE = "SELECT POST_ID, MEMBER_ID FROM RECOMMEND WHERE POST_ID = ? AND MEMBER_ID = ? ";
-//	private static final String INSERT = "INSERT INTO RECOMMEND (RECOMMENDNUM, POST_ID, MEMBER_ID) "
-//			+ "VALUES ((SELECT NVL(MAX(RECOMMENDNUM),0)+1 FROM RECOMMEND), ?, ?) ";
-//	private static final String DELETE = "DELETE FROM RECOMMEND WHERE POST_ID = ? AND MEMBER_ID = ?";
+//----------------------------------------------------------------- 마이 페이지 SELECTALL --------------------------------------
 	
-	// MySQL 쿼리문 (AUTO_INCREMENT 함수를 사용해 RECOMMEND_id를 자동 증감시킴)	
 	// 특정 회원이 좋아요한 구인글 목록 출력 (구인글만 출력).전미지	
 	private static final String SELECTALL_HEADHUNTPOSTRECOMMEND = "SELECT "
-	        + "    RECOMMEND.POST_id, " // 게시글 아이디를 선택
-	        + "    'HEADHUNTPOST' AS post_category, " // 카테고리를 구인글로 선택
-	        + "    COALESCE(HEADHUNTPOST.HEADHUNTPOST_id, 'Unknown') AS post_id, " // 게시글 아이디를 선택
-	        + "    COALESCE(HEADHUNTPOST.HEADHUNTPOST_title, 'Unknown') AS post_title, " // 게시글 제목을 선택
-	        + "    COALESCE(HEADHUNTPOST.HEADHUNTPOST_date, 'Unknown') AS post_date, " // 게시글 날짜를 선택
-	        + "    COALESCE(HEADHUNTPOST.HEADHUNTPOST_viewcnt, 'Unknown') AS post_viewcnt, " // 게시글 조회수를 선택
-	        + "    COUNT(RECOMMEND.POST_id) AS post_recommendcnt " // 게시글의 좋아요 수를 합산
+	        + "    	RECOMMEND.POST_id, " // 게시글 아이디를 선택
+	        + "		'HeadHuntPost' AS POST_category, " // 게시판 카테고리 설정
+	        + "    	COALESCE(HEADHUNTPOST.HEADHUNTPOST_id, 'Unknown') AS post_id, "// 게시글 아이디를 선택
+	        + "    	COALESCE(HEADHUNTPOST.HEADHUNTPOST_title, 'Unknown') AS post_title, " // 게시글 제목을 선택
+	        + "    	COALESCE(HEADHUNTPOST.HEADHUNTPOST_content, 'Unknown') AS post_content, " // 게시글 내용을 선택
+	        + "    	COALESCE(HEADHUNTPOST.HEADHUNTPOST_date, 'Unknown') AS post_date, " // 게시글 날짜를 선택
+	        + "    	COALESCE(HEADHUNTPOST.HEADHUNTPOST_viewcnt, 'Unknown') AS post_viewcnt, " // 게시글 조회수를 선택
+	        + "		( " // 게시글의 좋아요 수를 합산
+	        + "		SELECT "
+	        + "            COUNT(*) " // 해당 게시글에 대한 좋아요 수를 COUNT 함수를 사용해 합산
+	        + "		FROM "
+	        + "            RECOMMEND " // 좋아요 테이블에서 가져옴
+	        + "		WHERE "
+	        + "            RECOMMEND.POST_id = HEADHUNTPOST.HEADHUNTPOST_id " // 게시글 아이디와 좋아요 테이블의 게시글 아이디가 동일한 것을 선택
+	        + "		) AS RECOMMEND_cnt, " // 좋아요 수
+			+ "		( " // 대표 이미지 설정
+	        + "			SELECT "
+	        + "				POSTIMG.POSTIMG_name " // 게시글 이미지를 선택
+	        + "			FROM "
+	        + "				POSTIMG " // 게시글 이미지 테이블
+	        + "			WHERE "
+	        + "				POSTIMG.POST_id = HEADHUNTPOST.HEADHUNTPOST_id " // 게시글 아이디와 이미지 테이블의 게시글 아이디가 동일한 것을 선택
+	        + "			ORDER BY "
+	        + "				POSTIMG.POSTIMG_id ASC " // 이미지 아이디를 기준으로 오름차순 정렬
+	        + "			LIMIT 1 " // 이미지를 1개만 가져오도록 설정
+	        + "	 	) AS POSTIMG_name " // 대표 이미지의 이름	        
 	        + "FROM "
-	        + "    RECOMMEND " // 좋아요 테이블에서 데이터를 가져옴
+	        + "		RECOMMEND " // 좋아요 테이블에서 데이터를 가져옴
 	        + "LEFT JOIN " // 구인글 테이블과 좋아요 테이블을 LEFT JOIN하여 게시글 정보를 가져옴
-	        + "    HEADHUNTPOST ON RECOMMEND.POST_id = HEADHUNTPOST.HEADHUNTPOST_id "
+	        + "    	HEADHUNTPOST ON RECOMMEND.POST_id = HEADHUNTPOST.HEADHUNTPOST_id "
 	        + "WHERE " // 회원이 좋아요한 게시글 선택 (조회할 멤버 아이디 입력)
-	        + "    RECOMMEND.MEMBER_id = ? " 
-	        + "GROUP BY "
-	        + "    RECOMMEND.POST_id, " // 게시글 아이디를 기준으로 결과를 그룹화
-	        + "    post_id, " // 게시글의 아이디를 기준으로 결과를 그룹화
-	        + "    post_title, " // 게시글의 제목을 기준으로 결과를 그룹화
-	        + "    post_date, " // 게시글의 날짜를 기준으로 결과를 그룹화
-	        + "    post_viewcnt " // 게시글의 조회수를 기준으로 결과를 그룹화
+	        + "    	RECOMMEND.MEMBER_id = ? " 
 			+ "ORDER BY "
-			+ "		POST_id DESC ";
+			+ "		POST_id DESC "; // 게시글 아이디를 기준으로 내림차순 정렬
+	
 	
 	// 특정 회원이 좋아요한 구직글 목록 출력 (구직글만 출력).전미지	
 	private static final String SELECTALL_JOBHUNTPOSTRECOMMEND = "SELECT "
-	        + "    RECOMMEND.POST_id, " // 게시글 아이디를 선택
-	        + "    'JOBHUNTPOST' AS post_category, " // 카테고리를 구직글로 지정
-	        + "    COALESCE(JOBHUNTPOST.JOBHUNTPOST_id, 'Unknown') AS post_id, " // 게시글 아이디를 선택
-	        + "    COALESCE(JOBHUNTPOST.JOBHUNTPOST_title, 'Unknown') AS post_title, " // 게시글 제목을 선택
-	        + "    COALESCE(JOBHUNTPOST.JOBHUNTPOST_date, 'Unknown') AS post_date, " // 게시글 날짜를 선택
-	        + "    COALESCE(JOBHUNTPOST.JOBHUNTPOST_viewcnt, 'Unknown') AS post_viewcnt, " // 게시글 조회수를 선택
-	        + "    COUNT(RECOMMEND.POST_id) AS post_recommendcnt " // 게시글의 좋아요 수를 합산
+	        + "		RECOMMEND.POST_id, " // 게시글 아이디를 선택
+	        + "		'JOBHUNTPOST' AS post_category, " // 카테고리를 구직글로 지정
+	        + "		COALESCE(JOBHUNTPOST.JOBHUNTPOST_id, 'Unknown') AS post_id, " // 게시글 아이디를 선택
+	        + "		COALESCE(JOBHUNTPOST.JOBHUNTPOST_title, 'Unknown') AS post_title, " // 게시글 제목을 선택
+	        + "		COALESCE(JOBHUNTPOST.JOBHUNTPOST_content, 'Unknown') AS post_content, " // 게시글 내용을 선택
+	        + "		COALESCE(JOBHUNTPOST.JOBHUNTPOST_date, 'Unknown') AS post_date, " // 게시글 날짜를 선택
+	        + "		COALESCE(JOBHUNTPOST.JOBHUNTPOST_viewcnt, 'Unknown') AS post_viewcnt, " // 게시글 조회수를 선택
+	        + "		( " // 게시글의 좋아요 수를 합산
+	        + "		SELECT "
+	        + "            COUNT(*) " // 해당 게시글에 대한 좋아요 수를 COUNT 함수를 사용해 합산
+	        + "		FROM "
+	        + "            RECOMMEND " // 좋아요 테이블에서 가져옴
+	        + "		WHERE "
+	        + "            RECOMMEND.POST_id = JOBHUNTPOST.JOBHUNTPOST_id " // 게시글 아이디와 좋아요 테이블의 게시글 아이디가 동일한 것을 선택
+	        + "		) AS RECOMMEND_cnt, " // 좋아요 수
+	        + "		( " // 대표 이미지 설정
+	        + "			SELECT "
+	        + "				POSTIMG.POSTIMG_name " // 게시글 이미지를 선택
+	        + "			FROM "
+	        + "				POSTIMG " // 게시글 이미지 테이블
+	        + "			WHERE "
+	        + "				POSTIMG.POST_id = HEADHUNTPOST.HEADHUNTPOST_id " // 게시글 아이디와 이미지 테이블의 게시글 아이디가 동일한 것을 선택
+	        + "			ORDER BY "
+	        + "				POSTIMG.POSTIMG_id ASC " // 이미지 아이디를 기준으로 오름차순 정렬
+	        + "			LIMIT 1 " // 이미지를 1개만 가져오도록 설정
+	        + "	 	) AS POSTIMG_name " // 대표 이미지의 이름	        
 	        + "FROM "
-	        + "    RECOMMEND " // 좋아요 테이블에서 데이터를 가져옴
+	        + "		RECOMMEND " // 좋아요 테이블에서 데이터를 가져옴
 	        + "LEFT JOIN " // 구직글 테이블과 좋아요 테이블을 LEFT JOIN하여 게시글 정보를 가져옴
-	        + "    JOBHUNTPOST ON RECOMMEND.POST_id = JOBHUNTPOST.JOBHUNTPOST_id "
+	        + "    	JOBHUNTPOST ON RECOMMEND.POST_id = JOBHUNTPOST.JOBHUNTPOST_id "
 	        + "WHERE " // 회원이 좋아요한 게시글 선택 (조회할 멤버 아이디 입력)
-	        + "    RECOMMEND.MEMBER_id = ? " 
-	        + "GROUP BY "
-	        + "    RECOMMEND.POST_id, " // 게시글 아이디를 기준으로 결과를 그룹화
-	        + "    post_id, " // 게시글의 아이디를 기준으로 결과를 그룹화
-	        + "    post_title, " // 게시글의 제목을 기준으로 결과를 그룹화
-	        + "    post_date, " // 게시글의 날짜를 기준으로 결과를 그룹화
-	        + "    post_viewcnt " // 게시글의 조회수를 기준으로 결과를 그룹화
+	        + "    	RECOMMEND.MEMBER_id = ? " 
 			+ "ORDER BY "
-			+ "		POST_id DESC ";
+			+ "		POST_id DESC ";  // 게시글 아이디를 기준으로 내림차순 정렬
+	
 	
 	// 특정 회원이 좋아요한 자유글 목록 출력 (자유글만 출력).전미지	
 	private static final String SELECTALL_FREEPOSTRECOMMEND = "SELECT "
-	        + "    RECOMMEND.POST_id, " // 게시글 아이디를 선택
-	        + "    'FREEPOST' AS post_category, " // 카테고리를 자유글로 지정
-	        + "    COALESCE(FREEPOST.FREEPOST_id, 'Unknown') AS post_id, " // 게시글 아이디를 선택
-	        + "    COALESCE(FREEPOST.FREEPOST_title, 'Unknown') AS post_title, " // 게시글 제목을 선택
-	        + "    COALESCE(FREEPOST.FREEPOST_date, 'Unknown') AS post_date, " // 게시글 날짜를 선택
-	        + "    COALESCE(FREEPOST.FREEPOST_viewcnt, 'Unknown') AS post_viewcnt, " // 게시글 조회수를 선택
-	        + "    COUNT(RECOMMEND.POST_id) AS post_recommendcnt " // 게시글의 좋아요 수를 합산
+	        + "		RECOMMEND.POST_id, " // 게시글 아이디를 선택
+	        + "    	'FREEPOST' AS post_category, " // 카테고리를 자유글로 지정
+	        + "    	COALESCE(FREEPOST.FREEPOST_id, 'Unknown') AS post_id, " // 게시글 아이디를 선택
+	        + "    	COALESCE(FREEPOST.FREEPOST_title, 'Unknown') AS post_title, " // 게시글 제목을 선택
+	        + "    	COALESCE(FREEPOST.FREEPOST_content, 'Unknown') AS post_content, " // 게시글 내용을 선택
+	        + "    	COALESCE(FREEPOST.FREEPOST_date, 'Unknown') AS post_date, " // 게시글 날짜를 선택
+	        + "    	COALESCE(FREEPOST.FREEPOST_viewcnt, 'Unknown') AS post_viewcnt, " // 게시글 조회수를 선택
+	        + "		( " // 게시글의 좋아요 수를 합산
+	        + "		SELECT "
+	        + "            COUNT(*) " // 해당 게시글에 대한 좋아요 수를 COUNT 함수를 사용해 합산
+	        + "		FROM "
+	        + "            RECOMMEND " // 좋아요 테이블에서 가져옴
+	        + "		WHERE "
+	        + "            RECOMMEND.POST_id = FREEPOST.FREEPOST_id " // 게시글 아이디와 좋아요 테이블의 게시글 아이디가 동일한 것을 선택
+	        + "		) AS RECOMMEND_cnt, " // 좋아요 수
+	        + "		( " // 대표 이미지 설정
+	        + "			SELECT "
+	        + "				POSTIMG.POSTIMG_name " // 게시글 이미지를 선택
+	        + "			FROM "
+	        + "				POSTIMG " // 게시글 이미지 테이블
+	        + "			WHERE "
+	        + "				POSTIMG.POST_id = HEADHUNTPOST.HEADHUNTPOST_id " // 게시글 아이디와 이미지 테이블의 게시글 아이디가 동일한 것을 선택
+	        + "			ORDER BY "
+	        + "				POSTIMG.POSTIMG_id ASC " // 이미지 아이디를 기준으로 오름차순 정렬
+	        + "			LIMIT 1 " // 이미지를 1개만 가져오도록 설정
+	        + "	 	) AS POSTIMG_name " // 대표 이미지의 이름	       
 	        + "FROM "
-	        + "    RECOMMEND " // 좋아요 테이블에서 데이터를 가져옴
+	        + "		RECOMMEND " // 좋아요 테이블에서 데이터를 가져옴
 	        + "LEFT JOIN " // 자유글 테이블과 좋아요 테이블을 LEFT JOIN하여 게시글 정보를 가져옴
-	        + "    FREEPOST ON RECOMMEND.POST_id = FREEPOST.FREEPOST_id "
+	        + "    	FREEPOST ON RECOMMEND.POST_id = FREEPOST.FREEPOST_id "
 	        + "WHERE " // 회원이 좋아요한 게시글 선택 (조회할 멤버 아이디 입력)
-	        + "    RECOMMEND.MEMBER_id = ? " 
-	        + "GROUP BY "
-	        + "    RECOMMEND.POST_id, " // 게시글 아이디를 기준으로 결과를 그룹화
-	        + "    post_id, " // 게시글의 아이디를 기준으로 결과를 그룹화
-	        + "    post_title, " // 게시글의 제목을 기준으로 결과를 그룹화
-	        + "    post_date, " // 게시글의 날짜를 기준으로 결과를 그룹화
-	        + "    post_viewcnt " // 게시글의 조회수를 기준으로 결과를 그룹화
+	        + "    	RECOMMEND.MEMBER_id = ? " 
 			+ "ORDER BY "	
-			+ "		POST_id DESC ";
+			+ "		POST_id DESC ";  // 게시글 아이디를 기준으로 내림차순 정렬
+	
 	
 	// 특정 회원이 좋아요한 장터글 목록 출력 (장터글만 출력).전미지	
 	private static final String SELECTALL_MARKETPOSTRECOMMEND = "SELECT "
-	        + "    RECOMMEND.POST_id, " // 게시글 아이디를 선택
-	        + "    'MARKETPOST' AS post_category, " // 카테고리를 장터글로 지정
-	        + "    COALESCE(MARKETPOST.MARKETPOST_id, 'Unknown') AS post_id, " // 게시글 아이디를 선택
-	        + "    COALESCE(MARKETPOST.MARKETPOST_title, 'Unknown') AS post_title, " // 게시글 제목을 선택
-	        + "    COALESCE(MARKETPOST.MARKETPOST_date, 'Unknown') AS post_date, " // 게시글 날짜를 선택
-	        + "    COALESCE(MARKETPOST.MARKETPOST_viewcnt, 'Unknown') AS post_viewcnt, " // 게시글 조회수를 선택
-	        + "    COUNT(RECOMMEND.POST_id) AS post_recommendcnt " // 게시글의 좋아요 수를 합산
+	        + "		RECOMMEND.POST_id, " // 게시글 아이디를 선택
+	        + "    	'MARKETPOST' AS post_category, " // 카테고리를 장터글로 지정
+	        + "    	COALESCE(MARKETPOST.MARKETPOST_id, 'Unknown') AS post_id, " // 게시글 아이디를 선택
+	        + "    	COALESCE(MARKETPOST.MARKETPOST_title, 'Unknown') AS post_title, " // 게시글 제목을 선택
+	        + "    	COALESCE(MARKETPOST.MARKETPOST_content, 'Unknown') AS post_content, " // 게시글 내용을 선택
+	        + "    	COALESCE(MARKETPOST.MARKETPOST_date, 'Unknown') AS post_date, " // 게시글 날짜를 선택
+	        + "    	COALESCE(MARKETPOST.MARKETPOST_viewcnt, 'Unknown') AS post_viewcnt, " // 게시글 조회수를 선택
+	        + "		( " // 게시글의 좋아요 수를 합산
+	        + "		SELECT "
+	        + "            COUNT(*) " // 해당 게시글에 대한 좋아요 수를 COUNT 함수를 사용해 합산
+	        + "		FROM "
+	        + "            RECOMMEND " // 좋아요 테이블에서 가져옴
+	        + "		WHERE "
+	        + "            RECOMMEND.POST_id = MARKETPOST.MARKETPOST_id " // 게시글 아이디와 좋아요 테이블의 게시글 아이디가 동일한 것을 선택
+	        + "		) AS RECOMMEND_cnt, " // 좋아요 수
+			+ "		( " // 대표 이미지 설정
+	        + "			SELECT "
+	        + "				POSTIMG.POSTIMG_name " // 게시글 이미지를 선택
+	        + "			FROM "
+	        + "				POSTIMG " // 게시글 이미지 테이블
+	        + "			WHERE "
+	        + "				POSTIMG.POST_id = HEADHUNTPOST.HEADHUNTPOST_id " // 게시글 아이디와 이미지 테이블의 게시글 아이디가 동일한 것을 선택
+	        + "			ORDER BY "
+	        + "				POSTIMG.POSTIMG_id ASC " // 이미지 아이디를 기준으로 오름차순 정렬
+	        + "			LIMIT 1 " // 이미지를 1개만 가져오도록 설정
+	        + "	 	) AS POSTIMG_name " // 대표 이미지의 이름	       
 	        + "FROM "
-	        + "    RECOMMEND " // 좋아요 테이블에서 데이터를 가져옴
+	        + "		RECOMMEND " // 좋아요 테이블에서 데이터를 가져옴
 	        + "LEFT JOIN " // 장터글 테이블과 좋아요 테이블을 LEFT JOIN하여 게시글 정보를 가져옴
-	        + "    MARKETPOST ON RECOMMEND.POST_id = MARKETPOST.MARKETPOST_id "
+	        + "		MARKETPOST ON RECOMMEND.POST_id = MARKETPOST.MARKETPOST_id "
 	        + "WHERE " // 회원이 좋아요한 게시글 선택 (조회할 멤버 아이디 입력)
-	        + "    RECOMMEND.MEMBER_id = ? " 
+	        + "		RECOMMEND.MEMBER_id = ? " 
 	        + "GROUP BY "
-	        + "    RECOMMEND.POST_id, " // 게시글 아이디를 기준으로 결과를 그룹화
-	        + "    post_id, " // 게시글의 아이디를 기준으로 결과를 그룹화
-	        + "    post_title, " // 게시글의 제목을 기준으로 결과를 그룹화
-	        + "    post_date, " // 게시글의 날짜를 기준으로 결과를 그룹화
-	        + "    post_viewcnt " // 게시글의 조회수를 기준으로 결과를 그룹화
+	        + "		RECOMMEND.POST_id, " // 게시글 아이디를 기준으로 결과를 그룹화
 			+ "ORDER BY "
-			+ "		POST_id DESC ";
+			+ "		POST_id DESC ";  // 게시글 아이디를 기준으로 내림차순 정렬
 	
-	// 특정 회원이 좋아요한 게시글 목록 출력 (카테고리별 출력).전미지  
-	private static final String SELECTALL_RECOMMEND2 = "SELECT "
-			+" SELECT "
-			+ "    RECOMMEND.POST_id, " // 게시글 아이디를 선택
-			+ "    CASE " // 게시글에 해당하는 카테고리 선택
-			+ "        WHEN HEADHUNTPOST.HEADHUNTPOST_id IS NOT NULL THEN 'HEADHUNTPOST' "
-			+ "        WHEN JOBHUNTPOST.JOBHUNTPOST_id IS NOT NULL THEN 'JOBHUNTPOST' "
-			+ "        WHEN FREEPOST.FREEPOST_id IS NOT NULL THEN 'FREEPOST' "
-			+ "        WHEN MARKETPOST.MARKETPOST_id IS NOT NULL THEN 'MARKETPOST' "
-			+ "        ELSE 'Unknown' " // 어떤 카테고리에도 해당하지 않는 경우 'Unknown'으로 설정
-			+ "    END AS post_category, "  // 게시글의 카테고리를 선택
-	        + "    COALESCE (HEADHUNTPOST.HEADHUNTPOST_id, JOBHUNTPOST.JOBHUNTPOST_id,"
-	        + "					FREEPOST.FREEPOST_id, MARKETPOST.MARKETPOST_id, 'Unknown') AS post_id, " // 각 게시글의 아이디를 선택
-	        + "    COALESCE (HEADHUNTPOST.HEADHUNTPOST_title, JOBHUNTPOST.JOBHUNTPOST_title,"
-	        + "					FREEPOST.FREEPOST_title, MARKETPOST.MARKETPOST_title, 'Unknown') AS post_title, " // 각 게시글의 제목을 선택
-	        + "    COALESCE (HEADHUNTPOST.HEADHUNTPOST_date, JOBHUNTPOST.JOBHUNTPOST_date,"
-	        + "					FREEPOST.FREEPOST_date, MARKETPOST.MARKETPOST_date, 'Unknown') AS post_date, " // 각 게시글의 날짜를 선택
-	        + "    COALESCE (HEADHUNTPOST.HEADHUNTPOST_viewcnt, JOBHUNTPOST.JOBHUNTPOST_viewcnt,"
-	        + "					FREEPOST.FREEPOST_viewcnt, MARKETPOST.MARKETPOST_viewcnt, 'Unknown') AS post_viewcnt, " //각 게시글의 조회수를 선택
-	        + "    COUNT (RECOMMEND.POST_id) AS post_recommendcnt " // 각 게시글의 좋아요 수를 합산
+	
+	// 특정 회원이 좋아요한 게시글 목록 출력 (카테고리 모두 출력).전미지  
+	private static final String SELECTALL_RECOMMENDTOTALCATEGORY = "SELECT "
+			  // 게시글의 데이터 중 가져올 정보를 선택하는 쿼리끝
+			+ " SELECT "
+			+ "		RECOMMEND.POST_id, " // 게시글 아이디를 선택
+			+ "		CASE " // 게시글에 해당하는 카테고리 선택
+			+ "			WHEN HEADHUNTPOST.HEADHUNTPOST_id IS NOT NULL THEN 'HEADHUNTPOST' "
+			+ "       	WHEN JOBHUNTPOST.JOBHUNTPOST_id IS NOT NULL THEN 'JOBHUNTPOST' "
+			+ "       	WHEN FREEPOST.FREEPOST_id IS NOT NULL THEN 'FREEPOST' "
+			+ "        	WHEN MARKETPOST.MARKETPOST_id IS NOT NULL THEN 'MARKETPOST' "
+			+ "        	ELSE 'Unknown' " // 어떤 카테고리에도 해당하지 않는 경우 'Unknown'으로 설정
+			+ "		END AS post_category, "  // 게시글의 카테고리를 선택
+	        + "    	COALESCE ( "
+	        + "			HEADHUNTPOST.HEADHUNTPOST_title, "
+	        + "			JOBHUNTPOST.JOBHUNTPOST_title, "
+	        + "			FREEPOST.FREEPOST_title, "
+	        + "			MARKETPOST.MARKETPOST_title, "
+	        + "			'Unknown' "
+	        + "		) AS post_title, " // 각 게시글의 제목을 선택
+	        + "    	COALESCE ( "
+	        + "			HEADHUNTPOST.HEADHUNTPOST_content, "
+	        + "			JOBHUNTPOST.JOBHUNTPOST_content, "
+	        + "			FREEPOST.FREEPOST_content, "
+	        + "			MARKETPOST.MARKETPOST_content, "
+	        + "			'Unknown' "
+	        + "		) AS post_content, " // 각 게시글의 내용을 선택
+	        + "    	COALESCE ( "
+	        + "			HEADHUNTPOST.HEADHUNTPOST_date, "
+	        + "			JOBHUNTPOST.JOBHUNTPOST_date, "
+	        + "			FREEPOST.FREEPOST_date, "
+	        + "			MARKETPOST.MARKETPOST_date, "
+	        + "			'Unknown' "
+	        + "		) AS post_date, " // 각 게시글의 날짜를 선택
+	        + "    	COALESCE ( "
+	        + "			HEADHUNTPOST.HEADHUNTPOST_date, "
+	        + "			JOBHUNTPOST.JOBHUNTPOST_date, "
+	        + "			FREEPOST.FREEPOST_date, "
+	        + "			MARKETPOST.MARKETPOST_date, "
+	        + "			'Unknown' "
+	        + "		) AS post_date, " // 각 게시글의 날짜를 선택
+	        + "    	COALESCE ( "
+	        + "			HEADHUNTPOST.HEADHUNTPOST_viewcnt, "
+	        + "			JOBHUNTPOST.JOBHUNTPOST_viewcnt, "
+	        + "			FREEPOST.FREEPOST_viewcnt, "
+	        + "			MARKETPOST.MARKETPOST_viewcnt, "
+	        + "			'Unknown' "
+	        + "		) AS post_viewcnt, " // 각 게시글의 날짜를 선택
+	        + "		COUNT (RECOMMEND.POST_id) AS post_recommendcnt, " // 각 게시글의 좋아요 수를 합산
+	        + "		COALESCE( " // 대표 이미지 설정 쿼리
+	        + "			( " // 게시글의 대표 이미지 지정
+	        + "				SELECT "
+	        + "					POSTIMG.POSTIMG_name "  // 게시글 이미지 선택
+	        + "				FROM "
+	        + "					POSTIMG " // 게시글 이미지 테이블
+	        + "				WHERE "
+	        + "					POSTIMG.POST_id = COALESCE ("
+	        + "										HEADHUNTPOST.HEADHUNTPOST_id, "
+	        + "										JOBHUNTPOST.JOBHUNTPOST_id, "
+	        + "										FREEPOST.FREEPOST_id, "
+	        + "										MARKETPOST.MARKETPOST_id) " // 게시글 아이디와 이미지 테이블의 게시글 아이디가 동일한 것을 선택
+	        + "				ORDER BY "
+	        + "					POSTIMG.POSTIMG_id ASC " // 이미지 아이디를 기준으로 오름차순 정렬
+	        + "				LIMIT 1 " // 이미지를 1개만 가져오도록 설정
+	        + "        ), "
+	        + "        'Unknown' " // 대표 이마지가 없을 경우 'Unknown'으로 설정
+	        + "    ) AS POSTIMG_name " // 대표 이미지의 이름
+	          // 게시글의 데이터 중 가져올 정보를 선택하는 쿼리 끝
+	          // 게시글과 좋아요 정보를 JOIN하는 쿼리 시작
 	        + "FROM " 
-	        + "    RECOMMEND " // 좋아요 테이블에서 데이터를 가져옴
+	        + "		RECOMMEND " // 좋아요 테이블
 	        + "LEFT JOIN " // 각 게시글 테이블과 좋아요 테이블을 LEFT JOIN하여 게시글 정보를 가져옴
-	        + "    HEADHUNTPOST ON RECOMMEND.POST_id = HEADHUNTPOST.HEADHUNTPOST_id "
+	        + "		HEADHUNTPOST ON RECOMMEND.POST_id = HEADHUNTPOST.HEADHUNTPOST_id "
 	        + "LEFT JOIN " 
-	        + "    JOBHUNTPOST ON RECOMMEND.POST_id = JOBHUNTPOST.JOBHUNTPOST_id " 
+	        + "		JOBHUNTPOST ON RECOMMEND.POST_id = JOBHUNTPOST.JOBHUNTPOST_id " 
 	        + "LEFT JOIN "
-	        + "    FREEPOST ON RECOMMEND.POST_id = FREEPOST.FREEPOST_id " 
+	        + "		FREEPOST ON RECOMMEND.POST_id = FREEPOST.FREEPOST_id " 
 	        + "LEFT JOIN "
-	        + "    MARKETPOST ON RECOMMEND.POST_id = MARKETPOST.MARKETPOST_id " 
-	        + "WHERE " // 회원이 좋아요한 게시글 선택 (조회할 멤버 아이디 입력)
-	        + "    RECOMMEND.MEMBER_id = ? " 
+	        + "		MARKETPOST ON RECOMMEND.POST_id = MARKETPOST.MARKETPOST_id "
+	          // 게시글과 좋아요 정보를 JOIN하는 쿼리 끝
+	        + "WHERE "
+	        + "		RECOMMEND.MEMBER_id = ? " // 특정 회원이 좋아요를 누른 게시글을 조회하기 위한 조건 
 			+ "GROUP BY "
-			+ "    RECOMMEND.POST_id, " // 게시글 아이디를 기준으로 결과를 그룹화
-			+ "    CASE "
-			+ "        WHEN HEADHUNTPOST.HEADHUNTPOST_id IS NOT NULL THEN 'HEADHUNTPOST' "
-			+ "        WHEN JOBHUNTPOST.JOBHUNTPOST_id IS NOT NULL THEN 'JOBHUNTPOST' "
-			+ "        WHEN FREEPOST.FREEPOST_id IS NOT NULL THEN 'FREEPOST' "
-			+ "        WHEN MARKETPOST.MARKETPOST_id IS NOT NULL THEN 'MARKETPOST' "
-			+ "        ELSE 'Unknown' "
-			+ "    END, "
-			+ "    COALESCE(HEADHUNTPOST.HEADHUNTPOST_id, JOBHUNTPOST.JOBHUNTPOST_id, FREEPOST.FREEPOST_id, MARKETPOST.MARKETPOST_id, 'Unknown'), "
-			+ "    COALESCE(HEADHUNTPOST.HEADHUNTPOST_title, JOBHUNTPOST.JOBHUNTPOST_title, FREEPOST.FREEPOST_title, MARKETPOST.MARKETPOST_title, 'Unknown'), "
-			+ "    COALESCE(HEADHUNTPOST.HEADHUNTPOST_date, JOBHUNTPOST.JOBHUNTPOST_date, FREEPOST.FREEPOST_date, MARKETPOST.MARKETPOST_date, 'Unknown'), "
-			+ "    COALESCE(HEADHUNTPOST.HEADHUNTPOST_viewcnt, JOBHUNTPOST.JOBHUNTPOST_viewcnt, FREEPOST.FREEPOST_viewcnt, MARKETPOST.MARKETPOST_viewcnt, 'Unknown') "
+			+ "		RECOMMEND.POST_id, " // 게시글 아이디를 기준으로 결과를 그룹화
+			+ "		CASE "
+			+ "			WHEN HEADHUNTPOST.HEADHUNTPOST_id IS NOT NULL THEN 'HEADHUNTPOST' "
+			+ "			WHEN JOBHUNTPOST.JOBHUNTPOST_id IS NOT NULL THEN 'JOBHUNTPOST' "
+			+ "			WHEN FREEPOST.FREEPOST_id IS NOT NULL THEN 'FREEPOST' "
+			+ "			WHEN MARKETPOST.MARKETPOST_id IS NOT NULL THEN 'MARKETPOST' "
+			+ "			ELSE 'Unknown' "
+			+ "		END, "
+			+ "		COALESCE ( "
+			+ "			HEADHUNTPOST.HEADHUNTPOST_title, "
+			+ "			JOBHUNTPOST.JOBHUNTPOST_title, "
+			+ "			FREEPOST.FREEPOST_title, "
+			+ "			MARKETPOST.MARKETPOST_title, "
+			+ "			'Unknown' "
+			+ "		), "
+			+ "		COALESCE ( "
+			+ "			HEADHUNTPOST.HEADHUNTPOST_content, "
+			+ "			JOBHUNTPOST.JOBHUNTPOST_content, "
+			+ "			FREEPOST.FREEPOST_content, "
+			+ "			MARKETPOST.MARKETPOST_content, "
+			+ "			'Unknown' "
+			+ "		), "
+			+ "		COALESCE ( "
+			+ "			HEADHUNTPOST.HEADHUNTPOST_date, "
+			+ "			JOBHUNTPOST.JOBHUNTPOST_date,"
+			+ "			FREEPOST.FREEPOST_date, "
+			+ "			MARKETPOST.MARKETPOST_date, "
+			+ "			'Unknown' "
+			+ "		), "
+			+ "		COALESCE ( "
+			+ "			HEADHUNTPOST.HEADHUNTPOST_viewcnt, "
+			+ "			JOBHUNTPOST.JOBHUNTPOST_viewcnt,"
+			+ "			FREEPOST.FREEPOST_viewcnt, "
+			+ "			MARKETPOST.MARKETPOST_viewcnt, "
+			+ "			'Unknown' "
+			+ "		) "
 			+ "ORDER BY "
-			+ "    RECOMMEND.POST_id DESC ";
-	
-	
-	// 특정 회원이 좋아요한 게시글 목록 출력 (카테고리별 출력).전미지 사용x 참고용코드
-//	private static final String SELECTALL_RECOMMEND3 = "SELECT " 
-//	        + "    RECOMMEND.POST_id, " // 게시글 아이디를 선택
-//	        + "    CASE " // 게시글에 해당하는 카테고리 선택
-//	        + "        WHEN HEADHUNTPOST.HEADHUNTPOST_id IS NOT NULL THEN 'HEADHUNTPOST' " 
-//	        + "        WHEN JOBHUNTPOST.JOBHUNTPOST_id IS NOT NULL THEN 'JOBHUNTPOST' " 
-//	        + "        WHEN FREEPOST.FREEPOST_id IS NOT NULL THEN 'FREEPOST' " 
-//	        + "        WHEN MARKETPOST.MARKETPOST_id IS NOT NULL THEN 'MARKETPOST' " 
-//	        + "        ELSE 'Unknown' " // 어떤 카테고리에도 해당하지 않는 경우 'Unknown'으로 설정
-//	        + "    END AS post_category, " // 게시글의 카테고리를 선택
-//	        + "    COALESCE (HEADHUNTPOST.HEADHUNTPOST_id, JOBHUNTPOST.JOBHUNTPOST_id,"
-//	        + "					FREEPOST.FREEPOST_id, MARKETPOST.MARKETPOST_id, 'Unknown') AS post_id, " // 각 게시글의 아이디를 선택
-//	        + "    COALESCE (HEADHUNTPOST.HEADHUNTPOST_title, JOBHUNTPOST.JOBHUNTPOST_title,"
-//	        + "					FREEPOST.FREEPOST_title, MARKETPOST.MARKETPOST_title, 'Unknown') AS post_title, " // 각 게시글의 제목을 선택
-//	        + "    COALESCE (HEADHUNTPOST.HEADHUNTPOST_date, JOBHUNTPOST.JOBHUNTPOST_date,"
-//	        + "					FREEPOST.FREEPOST_date, MARKETPOST.MARKETPOST_date, 'Unknown') AS post_date, " // 각 게시글의 날짜를 선택
-//	        + "    COALESCE (HEADHUNTPOST.HEADHUNTPOST_viewcnt, JOBHUNTPOST.JOBHUNTPOST_viewcnt,"
-//	        + "					FREEPOST.FREEPOST_viewcnt, MARKETPOST.MARKETPOST_viewcnt, 'Unknown') AS post_viewcnt, " //각 게시글의 조회수를 선택
-//	        + "    COUNT (RECOMMEND.POST_id) AS post_recommendcnt " // 각 게시글의 좋아요 수를 합산
-//	        + "FROM " 
-//	        + "    RECOMMEND " // 좋아요 테이블에서 데이터를 가져옴
-//	        + "LEFT JOIN " // 각 게시글 테이블과 좋아요 테이블을 LEFT JOIN하여 게시글 정보를 가져옴
-//	        + "    HEADHUNTPOST ON RECOMMEND.POST_id = HEADHUNTPOST.HEADHUNTPOST_id "
-//	        + "LEFT JOIN " 
-//	        + "    JOBHUNTPOST ON RECOMMEND.POST_id = JOBHUNTPOST.JOBHUNTPOST_id " 
-//	        + "LEFT JOIN "
-//	        + "    FREEPOST ON RECOMMEND.POST_id = FREEPOST.FREEPOST_id " 
-//	        + "LEFT JOIN "
-//	        + "    MARKETPOST ON RECOMMEND.POST_id = MARKETPOST.MARKETPOST_id " 
-//	        + "WHERE " // 회원이 좋아요한 게시글 선택 (조회할 멤버 아이디 입력)
-//	        + "    RECOMMEND.MEMBER_id = ? " 
-//	        + "GROUP BY "
-//	        + "    RECOMMEND.POST_id, " // 게시글 아이디를 기준으로 결과를 그룹화
-//	        + "    post_category, " // 게시글의 카테고리를 기준으로 결과를 그룹화
-//	        + "    post_id, " // 게시글의 아이디를 기준으로 결과를 그룹화
-//	        + "    post_title, " // 게시글의 제목을 기준으로 결과를 그룹화
-//	        + "    post_date, " // 게시글의 날짜를 기준으로 결과를 그룹화
-//	        + "    post_viewcnt " // 게시글의 조회수를 기준으로 결과를 그룹화
-//			+ "ORDER BY "
-//			+ "		POST_id DESC ";
+			+ "		post_date DESC "; // 게시글 작성일을 기준으로 내림차순 정렬 
+
+// ---------------------------------------------------------------------- SELECTONE ----------------------------------------------------------------------
 	
 	// 좋아요 중복검사 (좋아요를 눌렀는지 안눌렀는지 확인).전미지
 	private static final String SELECTONE_RECOMMEND = "SELECT "
@@ -217,8 +390,8 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 			+ "WHERE "
 			+ "		POST_id = ? AND MEMBER_id = ? ";
 	// 사용한 테이블 : 좋아요 테이블
-	// 사용한 컬럼 (출력 내용) :
-	// 게시글 아이디, 회원 아이디
+	// 사용한 컬럼 (출력 내용) : 게시글 아이디, 회원 아이디
+	
 	
 	// 좋아요 추가
 	private static final String INSERT_RECOMMEND = "INSERT INTO RECOMMEND ( " 
@@ -226,12 +399,13 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 			+ "MEMBER_id) "
 			+ "VALUES (?, ?) ";
 	// 사용한 테이블 : 좋아요 테이블
-	// 사용한 컬럼 (작성 내용) :
-	// 게시글 아이디, 회원 아이디
+	// 사용한 컬럼 (작성 내용) : 게시글 아이디, 회원 아이디
 	// 게시글 좋아요 아이디 테이블 생성시 AUTO_INCREMENT를 사용해 0번부터 자동 증감하게 설정
+	
 	
 	// 사용 안 할 예정.전미지
 	private static final String UPDATE = " ";
+	
 	
 	// 좋아요 삭제.전미지
 	private static final String DELETE_RECOMMEND = "DELETE "
@@ -247,27 +421,39 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 		System.out.println("RecommendDAO(selectAll) In로그 = [" + recommendDTO + "]");
 		// 검색 조건에 해당될 경우 jdbcTemplate을 사용하여 SELECTALL 쿼리 실행 후 결과를 RowMapper로 매핑하여 반환
 		try {
-			// 특정 회원이 좋아요한 구인글 목록 출력
-			if (recommendDTO.getSearchCondition().equals("headHuntPostListRecommend")) {
-				result = (List<RecommendDTO>) jdbcTemplate.query(SELECTALL_HEADHUNTPOSTRECOMMEND, new HeadHuntPostListRecommendRowMapper());
+			// 메인 페이지 - 좋아요 수가 높은 게시글 목록 출력
+			if (recommendDTO.getSearchCondition().equals("recommendBestListRecommend")) {
+				result = (List<RecommendDTO>) jdbcTemplate.query(SELECTALL_RECOMMENDBEST, new RecommendBestRecommendRowMapper());
 				System.out.println("RecommendDAO(selectAll) Out로그 = [" + result + "]");
 				return result;
 			}
-			// 특정 회원이 좋아요한 구직글 목록 출력
-			else if (recommendDTO.getSearchCondition().equals("jobHuntPostListRecommend")) {
-				result = (List<RecommendDTO>) jdbcTemplate.query(SELECTALL_JOBHUNTPOSTRECOMMEND, new JobHuntPostListRecommendRowMapper());
+			// 회원 페이지 - 특정 회원이 좋아요한 구인글 목록 출력
+			else if (recommendDTO.getSearchCondition().equals("headHuntPostRecommendList")) {
+				result = (List<RecommendDTO>) jdbcTemplate.query(SELECTALL_HEADHUNTPOSTRECOMMEND, new HeadHuntPostRecommendRowMapper());
 				System.out.println("RecommendDAO(selectAll) Out로그 = [" + result + "]");
 				return result;
 			}
-			// 특정 회원이 좋아요한 자유글 목록 출력
-			else if (recommendDTO.getSearchCondition().equals("freePostListRecommen")) {
-				result = (List<RecommendDTO>) jdbcTemplate.query(SELECTALL_FREEPOSTRECOMMEND, new FreePostListRecommendRowMapper());
+			// 회원 페이지 - 특정 회원이 좋아요한 구직글 목록 출력
+			else if (recommendDTO.getSearchCondition().equals("jobHuntPostListRecommendList")) {
+				result = (List<RecommendDTO>) jdbcTemplate.query(SELECTALL_JOBHUNTPOSTRECOMMEND, new JobHuntPostRecommendRowMapper());
 				System.out.println("RecommendDAO(selectAll) Out로그 = [" + result + "]");
 				return result;
 			}
-			// 특정 회원이 좋아요한 장터글 목록 출력
+			// 회원 페이지 - 특정 회원이 좋아요한 자유글 목록 출력
+			else if (recommendDTO.getSearchCondition().equals("freePostListRecommenList")) {
+				result = (List<RecommendDTO>) jdbcTemplate.query(SELECTALL_FREEPOSTRECOMMEND, new FreePostRecommendRowMapper());
+				System.out.println("RecommendDAO(selectAll) Out로그 = [" + result + "]");
+				return result;
+			}
+			// 회원 페이지 - 특정 회원이 좋아요한 장터글 목록 출력
+			else if (recommendDTO.getSearchCondition().equals("marketPostListRecommendList")) {
+				result = (List<RecommendDTO>) jdbcTemplate.query(SELECTALL_MARKETPOSTRECOMMEND, new MarketPostRecommendRowMapper());
+				System.out.println("RecommendDAO(selectAll) Out로그 = [" + result + "]");
+				return result;
+			}
+			// 회원 페이지 - 특정 회원이 좋아요한 게시글 목록 출력 (카테고리 모두 출력)
 			else if (recommendDTO.getSearchCondition().equals("marketPostListRecommend")) {
-				result = (List<RecommendDTO>) jdbcTemplate.query(SELECTALL_MARKETPOSTRECOMMEND, new MarketPostListRecommendRowMapper());
+				result = (List<RecommendDTO>) jdbcTemplate.query(SELECTALL_RECOMMENDTOTALCATEGORY, new RecommendTotalCategoryRowMapper());
 				System.out.println("RecommendDAO(selectAll) Out로그 = [" + result + "]");
 				return result;
 			}
@@ -279,6 +465,7 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 		return null; // 좋아요 상세 출력 조건에 해당되지 않거나 처리되지 않은 경우 null 반환
 	}
  
+	
 	// 좋아요 중복검사(좋아요를 눌렀는지 안눌렀는지 확인)
 	public RecommendDTO selectOne(RecommendDTO recommendDTO) {
 		RecommendDTO result = null;
@@ -295,6 +482,7 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 		}
 	}
 
+	
 	// 게시글 좋아요 추가
 	public boolean insert(RecommendDTO recommendDTO) {
 		int result = 0;
@@ -308,11 +496,13 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 		return true; // 좋아요 추가 성공 시 true 반환
 	}
 	
+	
 	// 사용 안 할 예정
 	public boolean update(RecommendDTO recommendDTO) {
 		return false;
 	}
 
+	
 	// 게시글 좋아요 삭제
 	public boolean delete(RecommendDTO recommendDTO) {
 		int result = 0;
@@ -329,25 +519,25 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 
 // ===== SELECTALL =====
 
-// 특정 회원이 좋아요한 구인글 목록 출력 시 필요한 데이터를 저장할 RowMapper 클래스.전미지
-class HeadHuntPostListRecommendRowMapper implements RowMapper<RecommendDTO>{
+// 매인 페이지 - 추천순 게시글 목록 출력 시 필요한 데이터를 저장할 RowMapper 클래스.전미지
+class RecommendBestRecommendRowMapper implements RowMapper<RecommendDTO>{
 	@Override // mapRow 메서드 오버라이드
 	public RecommendDTO mapRow(ResultSet rs,int rowNum) throws SQLException{
 		// ResultSet에 저장된 데이터를 RecommendDTO 객체에 매핑(저장)하는 메서드
 		
 		RecommendDTO recommendDTO = new RecommendDTO(); // 새로운 RecommendDTO 객체 생성	
-		// ResultSet에 저장된 데이터를 RecommendDTO 객체에 저장
-		recommendDTO.setPostId(rs.getString("post_id"));			// 게시글 아이디	
-		recommendDTO.setPostId(rs.getString("post_title"));			// 게시글 제목
-		recommendDTO.setPostId(rs.getString("post_date"));			// 게시글 작성일
-		recommendDTO.setPostId(rs.getString("post_viewcnt"));		// 게시글 조회수
-		recommendDTO.setPostId(rs.getString("post_recommendcnt"));	// 게시글의 좋아요 수
+		// ResultSet에 저장된 데이터를 RecommendDTO 객체에 저장	
+		recommendDTO.setPostCategory(rs.getString("post_category"));			// 게시글 카테고리
+		recommendDTO.setPostTitle(rs.getString("post_title"));					// 게시글 제목
+		recommendDTO.setPostDate(rs.getString("post_date"));					// 게시글 작성일
+		recommendDTO.setPostRecommendCnt(rs.getString("post_recommendcnt"));	// 게시글의 좋아요 수
+		recommendDTO.setPostImgName(rs.getString("post_imgname"));				// 게시글 대표 이미지
 		return recommendDTO; // recommendDTO에 저장된 데이터들을 반환		
 	}
 }
 
-// 특정 회원이 좋아요한 구직글 목록 출력 시 필요한 데이터를 저장할 RowMapper 클래스.전미지
-class JobHuntPostListRecommendRowMapper implements RowMapper<RecommendDTO>{
+// 회원 페이지 - 특정 회원이 좋아요한 구인글 목록 출력 시 필요한 데이터를 저장할 RowMapper 클래스.전미지
+class HeadHuntPostRecommendRowMapper implements RowMapper<RecommendDTO>{
 	@Override // mapRow 메서드 오버라이드
 	public RecommendDTO mapRow(ResultSet rs,int rowNum) throws SQLException{
 		// ResultSet에 저장된 데이터를 RecommendDTO 객체에 매핑(저장)하는 메서드
@@ -356,15 +546,36 @@ class JobHuntPostListRecommendRowMapper implements RowMapper<RecommendDTO>{
 		// ResultSet에 저장된 데이터를 RecommendDTO 객체에 저장
 		recommendDTO.setPostId(rs.getString("post_id"));			// 게시글 아이디	
 		recommendDTO.setPostId(rs.getString("post_title"));			// 게시글 제목
+		recommendDTO.setPostContent(rs.getString("post_content"));	// 게시글 내용
 		recommendDTO.setPostId(rs.getString("post_date"));			// 게시글 작성일
 		recommendDTO.setPostId(rs.getString("post_viewcnt"));		// 게시글 조회수
 		recommendDTO.setPostId(rs.getString("post_recommendcnt"));	// 게시글의 좋아요 수
+		recommendDTO.setPostImgName(rs.getString("post_imgname"));	// 게시글 대표 이미지
+		return recommendDTO; // recommendDTO에 저장된 데이터들을 반환	
+	}
+}
+
+// 회원 페이지 - 특정 회원이 좋아요한 구직글 목록 출력 시 필요한 데이터를 저장할 RowMapper 클래스.전미지
+class JobHuntPostRecommendRowMapper implements RowMapper<RecommendDTO>{
+	@Override // mapRow 메서드 오버라이드
+	public RecommendDTO mapRow(ResultSet rs,int rowNum) throws SQLException{
+		// ResultSet에 저장된 데이터를 RecommendDTO 객체에 매핑(저장)하는 메서드
+		
+		RecommendDTO recommendDTO = new RecommendDTO(); // 새로운 RecommendDTO 객체 생성	
+		// ResultSet에 저장된 데이터를 RecommendDTO 객체에 저장
+		recommendDTO.setPostId(rs.getString("post_id"));			// 게시글 아이디	
+		recommendDTO.setPostId(rs.getString("post_title"));			// 게시글 제목
+		recommendDTO.setPostContent(rs.getString("post_content"));	// 게시글 내용
+		recommendDTO.setPostId(rs.getString("post_date"));			// 게시글 작성일
+		recommendDTO.setPostId(rs.getString("post_viewcnt"));		// 게시글 조회수
+		recommendDTO.setPostId(rs.getString("post_recommendcnt"));	// 게시글의 좋아요 수
+		recommendDTO.setPostImgName(rs.getString("post_imgname"));	// 게시글 대표 이미지
 		return recommendDTO; // recommendDTO에 저장된 데이터들을 반환
 	}
 }
 
-// 특정 회원이 좋아요한 자유글 목록 출력 시 필요한 데이터를 저장할 RowMapper 클래스.전미지
-class FreePostListRecommendRowMapper implements RowMapper<RecommendDTO>{
+// 회원 페이지 - 특정 회원이 좋아요한 자유글 목록 출력 시 필요한 데이터를 저장할 RowMapper 클래스.전미지
+class FreePostRecommendRowMapper implements RowMapper<RecommendDTO>{
 	@Override // mapRow 메서드 오버라이드
 	public RecommendDTO mapRow(ResultSet rs,int rowNum) throws SQLException{
 		// ResultSet에 저장된 데이터를 RecommendDTO 객체에 매핑(저장)하는 메서드
@@ -373,15 +584,17 @@ class FreePostListRecommendRowMapper implements RowMapper<RecommendDTO>{
 		// ResultSet에 저장된 데이터를 RecommendDTO 객체에 저장
 		recommendDTO.setPostId(rs.getString("post_id"));			// 게시글 아이디	
 		recommendDTO.setPostId(rs.getString("post_title"));			// 게시글 제목
+		recommendDTO.setPostContent(rs.getString("post_content"));	// 게시글 내용
 		recommendDTO.setPostId(rs.getString("post_date"));			// 게시글 작성일
 		recommendDTO.setPostId(rs.getString("post_viewcnt"));		// 게시글 조회수
 		recommendDTO.setPostId(rs.getString("post_recommendcnt"));	// 게시글의 좋아요 수
+		recommendDTO.setPostImgName(rs.getString("post_imgname"));	// 게시글 대표 이미지
 		return recommendDTO; // recommendDTO에 저장된 데이터들을 반환
 	}
 }
 
-// 특정 회원이 좋아요한 장터글 목록 출력 시 필요한 데이터를 저장할 RowMapper 클래스.전미지
-class MarketPostListRecommendRowMapper implements RowMapper<RecommendDTO>{
+// 회원 페이지 - 특정 회원이 좋아요한 장터글 목록 출력 시 필요한 데이터를 저장할 RowMapper 클래스.전미지
+class MarketPostRecommendRowMapper implements RowMapper<RecommendDTO>{
 	@Override // mapRow 메서드 오버라이드
 	public RecommendDTO mapRow(ResultSet rs,int rowNum) throws SQLException{
 		// ResultSet에 저장된 데이터를 RecommendDTO 객체에 매핑(저장)하는 메서드
@@ -390,9 +603,30 @@ class MarketPostListRecommendRowMapper implements RowMapper<RecommendDTO>{
 		// ResultSet에 저장된 데이터를 RecommendDTO 객체에 저장
 		recommendDTO.setPostId(rs.getString("post_id"));			// 게시글 아이디	
 		recommendDTO.setPostId(rs.getString("post_title"));			// 게시글 제목
+		recommendDTO.setPostContent(rs.getString("post_content"));	// 게시글 내용
 		recommendDTO.setPostId(rs.getString("post_date"));			// 게시글 작성일
 		recommendDTO.setPostId(rs.getString("post_viewcnt"));		// 게시글 조회수
 		recommendDTO.setPostId(rs.getString("post_recommendcnt"));	// 게시글의 좋아요 수
+		recommendDTO.setPostImgName(rs.getString("post_imgname"));	// 게시글 대표 이미지
+		return recommendDTO; // recommendDTO에 저장된 데이터들을 반환
+	}
+}
+
+// 회원 페이지 - 특정 회원이 좋아요한 게시글 카테고리별 출력 시 필요한 데이터를 저장할 RowMapper 클래스.전미지
+class  RecommendTotalCategoryRowMapper implements RowMapper<RecommendDTO>{
+	@Override // mapRow 메서드 오버라이드
+	public RecommendDTO mapRow(ResultSet rs,int rowNum) throws SQLException{
+		// ResultSet에 저장된 데이터를 RecommendDTO 객체에 매핑(저장)하는 메서드
+		
+		RecommendDTO recommendDTO = new RecommendDTO(); // 새로운 RecommendDTO 객체 생성	
+		// ResultSet에 저장된 데이터를 RecommendDTO 객체에 저장
+		recommendDTO.setPostId(rs.getString("post_id"));			// 게시글 아이디	
+		recommendDTO.setPostId(rs.getString("post_title"));			// 게시글 제목
+		recommendDTO.setPostContent(rs.getString("post_content"));	// 게시글 내용
+		recommendDTO.setPostId(rs.getString("post_date"));			// 게시글 작성일
+		recommendDTO.setPostId(rs.getString("post_viewcnt"));		// 게시글 조회수
+		recommendDTO.setPostId(rs.getString("post_recommendcnt"));	// 게시글의 좋아요 수
+		recommendDTO.setPostImgName(rs.getString("post_imgname"));	// 게시글 대표 이미지
 		return recommendDTO; // recommendDTO에 저장된 데이터들을 반환
 	}
 }
