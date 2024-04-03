@@ -169,6 +169,8 @@
                                 <li> <a href="adminProfit"><i class="menu-icon fa fa-signal"></i>Profit</a> </li>
                                 <li> <a href="adminReportList"><i class="menu-icon fa fa-warning (alias)"></i>Report</a>
                                 </li>
+                                <li> <a href="adminTimeOutList"><i class="menu-icon fa fa-ban"></i>TimeOut List</a>
+                                </li>
                                 <li> <a href="adminWebContent"><i class="menu-icon fa fa-picture-o"></i>Web Content</a>
                                 </li>
 
