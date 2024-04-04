@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
     <%@ taglib tagdir="/WEB-INF/tags" prefix="chalKagTags" %>
         <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+        <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
             <!doctype html>
-            <html class="no-js" lang=""> 
+            <html class="no-js" lang="">
 
             <head>
                 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -33,7 +34,7 @@
                 <link href="https://cdn.jsdelivr.net/npm/weathericons@2.1.0/css/weather-icons.css" rel="stylesheet" />
                 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.css"
                     rel="stylesheet" />
-                      
+
 
                 <style>
                     #weatherWidget .currentDesc {
@@ -135,23 +136,24 @@
 
                     /* select 디자인 */
                     select {
-            background-color: #ffffff;
-            color: rgb(0, 0, 0);
-            padding: 10px;
-            width: 200px;
-            border: none;
-            font-size: 16px;
-            border-radius: 5px;
-            margin: 10px;
-            border: 3px solid #F73F52;
-        }
+                        background-color: #ffffff;
+                        color: rgb(0, 0, 0);
+                        padding: 10px;
+                        width: 200px;
+                        border: none;
+                        font-size: 16px;
+                        border-radius: 5px;
+                        margin: 10px;
+                        border: 3px solid #F73F52;
+                    }
 
-        /* 텝 그래프간의 간격 조절 */
-        dl, ol, ul {
-    margin-top: 0;
-    margin-bottom: 0rem;
-}
-
+                    /* 텝 그래프간의 간격 조절 */
+                    dl,
+                    ol,
+                    ul {
+                        margin-top: 0;
+                        margin-bottom: 0rem;
+                    }
                 </style>
             </head>
 
@@ -319,7 +321,8 @@
                                                 </div>
                                                 <div class="stat-content">
                                                     <div class="text-left dib">
-                                                        <div class="stat-text"><span class="count">${adminHeader.revenue}</span></div>
+                                                        <div class="stat-text"><span
+                                                                class="count">${adminHeader.revenue}</span></div>
                                                         <div class="stat-heading">Revenue</div>
                                                     </div>
                                                 </div>
@@ -337,7 +340,8 @@
                                                 </div>
                                                 <div class="stat-content">
                                                     <div class="text-left dib">
-                                                        <div class="stat-text"><span class="count">${adminHeader.postDatas}</span></div>
+                                                        <div class="stat-text"><span
+                                                                class="count">${adminHeader.postDatas}</span></div>
                                                         <div class="stat-heading">PostDatas</div>
                                                     </div>
                                                 </div>
@@ -357,7 +361,8 @@
                                                 </div>
                                                 <div class="stat-content">
                                                     <div class="text-left dib">
-                                                        <div class="stat-text"><span class="count">${adminHeader.premiumUsers}</span></div>
+                                                        <div class="stat-text"><span
+                                                                class="count">${adminHeader.premiumUsers}</span></div>
                                                         <div class="stat-heading">Premium Users</div>
                                                     </div>
                                                 </div>
@@ -376,7 +381,8 @@
                                                 </div>
                                                 <div class="stat-content">
                                                     <div class="text-left dib">
-                                                        <div class="stat-text"><span class="count">${adminHeader.users}</span></div>
+                                                        <div class="stat-text"><span
+                                                                class="count">${adminHeader.users}</span></div>
                                                         <div class="stat-heading">Users</div>
                                                     </div>
                                                 </div>
@@ -761,100 +767,40 @@
                                                             <tr>
                                                                 <th class="serial">#</th>
                                                                 <th class="avatar">Profile</th>
-                                                                <th>ID</th>
-                                                                <th>Name</th>
+                                                                <th>Lv</th>
+                                                                <th>EMAIL</th>
+                                                                <th>NICNAME</th>
                                                                 <th>Register Date</th>
-                                                                <th>Last Visit</th>
-                                                                <th>Total Payment</th>
+                                                                <th>GRADE</th>
                                                             </tr>
                                                         </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td class="serial">1.</td>
-                                                                <td class="avatar">
-                                                                    <div class="round-img">
-                                                                        <a href="#"><img class="rounded-circle"
-                                                                                src="css/admin/images/avatar/1.jpg"
-                                                                                alt=""></a>
-                                                                    </div>
-                                                                </td>
-                                                                <td> #5469 </td>
-                                                                <td> <span class="name">Louis Stanley</span> </td>
-                                                                <td> <span class="product">iMax</span> </td>
-                                                                <td><span class="count">231</span></td>
-                                                                <td>
-                                                                    <span class="badge badge-complete">Complete</span>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="serial">2.</td>
-                                                                <td class="avatar">
-                                                                    <div class="round-img">
-                                                                        <a href="#"><img class="rounded-circle"
-                                                                                src="css/admin/s/avatar/2.jpg"
-                                                                                alt=""></a>
-                                                                    </div>
-                                                                </td>
-                                                                <td> #5468 </td>
-                                                                <td> <span class="name">Gregory Dixon</span> </td>
-                                                                <td> <span class="product">iPad</span> </td>
-                                                                <td><span class="count">250</span></td>
-                                                                <td>
-                                                                    <span class="badge badge-complete">Complete</span>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="serial">3.</td>
-                                                                <td class="avatar">
-                                                                    <div class="round-img">
-                                                                        <a href="#"><img class="rounded-circle"
-                                                                                src="css/admin/images/avatar/3.jpg"
-                                                                                alt=""></a>
-                                                                    </div>
-                                                                </td>
-                                                                <td> #5467 </td>
-                                                                <td> <span class="name">Catherine Dixon</span> </td>
-                                                                <td> <span class="product">SSD</span> </td>
-                                                                <td><span class="count">250</span></td>
-                                                                <td>
-                                                                    <span class="badge badge-complete">Complete</span>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="serial">4.</td>
-                                                                <td class="avatar">
-                                                                    <div class="round-img">
-                                                                        <a href="#"><img class="rounded-circle"
-                                                                                src="css/admin/images/avatar/4.jpg"
-                                                                                alt=""></a>
-                                                                    </div>
-                                                                </td>
-                                                                <td> #5466 </td>
-                                                                <td> <span class="name">Mary Silva</span> </td>
-                                                                <td> <span class="product">Magic Mouse</span> </td>
-                                                                <td><span class="count">250</span></td>
-                                                                <td>
-                                                                    <span class="badge badge-pending">Pending</span>
-                                                                </td>
-                                                            </tr>
-                                                            <tr class=" pb-0">
-                                                                <td class="serial">5.</td>
-                                                                <td class="avatar pb-0">
-                                                                    <div class="round-img">
-                                                                        <a href="#"><img class="rounded-circle"
-                                                                                src="css/admin/images/avatar/6.jpg"
-                                                                                alt=""></a>
-                                                                    </div>
-                                                                </td>
-                                                                <td> #5465 </td>
-                                                                <td> <span class="name">Johnny Stephens</span> </td>
-                                                                <td> <span class="product">Monitor</span> </td>
-                                                                <td><span class="count">250</span></td>
-                                                                <td>
-                                                                    <span class="badge badge-complete">Complete</span>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
+                                                        <c:set var="counter" value="1" />
+                                                        <!-- 반복문을 통해 데이터를 삽입 -->
+                                                        <c:forEach items="${adminLevelRank}" var="adminLevelRankData">
+                                                            <c:if test="${counter <=5}">
+                                                                <tr>
+                                                                    <td>${counter}</td>
+                                                                    <td class="avatar">
+                                                                        <div class="round-img">
+                                                                            <img class="rounded-circle" src="profileImg/${adminLevelRankData.profileImgName}" alt="" style="height: 45px; width: 45px;">
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>${adminLevelRankData.currentLevel}</td>
+                                                                    <td>${adminLevelRankData.memberId}</td>
+                                                                    <td>${adminLevelRankData.memberNickname}</td>
+                                                                    <td>${fn:substring(adminLevelRankData.signUpDate, 0, 10)}</td>
+                                                                    <c:if test="${adminLevelRankData.memberGrade eq 'PREMIUM'}">
+                                                                    <td><span class="badge badge-primary">${adminLevelRankData.memberGrade}</span></td>
+                                                                    </c:if>
+                                                                    <c:if test="${adminLevelRankData.memberGrade eq 'USER'}">
+                                                                    <td><span class="badge badge-light">${adminLevelRankData.memberGrade}</span></td>
+                                                                    </c:if>
+
+                                                                    
+                                                                </tr>
+                                                            <c:set var="counter" value="${counter + 1}" />
+                                                        </c:if>
+                                                        </c:forEach>
                                                     </table>
                                                 </div> <!-- /.table-stats -->
                                             </div>
@@ -957,7 +903,7 @@
                         <!-- .animated -->
                     </div>
                     <!-- /.content -->
-                    
+
                     <div class="clearfix"></div>
                     <!-- Footer -->
                     <footer class="site-footer">
@@ -971,13 +917,18 @@
                                 </div>
                             </div>
                         </div>
-                        <h4>${adminHeader}</h4>
+                        <h4>${signInCountByDayOfWeek}</h4>
+                        <h4>${adminLevelRank}</h4>
                     </footer>
                     <!-- /.site-footer -->
                 </div>
                 <!-- /#right-panel -->
-                <div id="dataContainer" data-signUpCountByAgeGroup='${signUpCountByAgeGroup}' data-signUpCountByGenderGroup='${signUpCountByGenderGroup}' data-signInCountByYearMonthDate='${signInCountByYearMonthDate}' data-signInCountByDayOfWeek='${signInCountByDayOfWeek}' data-signUpCountByYear='${signUpCountByYear}'></div>
-                
+                <div id="dataContainer" data-signUpCountByAgeGroup='${signUpCountByAgeGroup}'
+                    data-signUpCountByGenderGroup='${signUpCountByGenderGroup}'
+                    data-signInCountByYearMonthDate='${signInCountByYearMonthDate}'
+                    data-signInCountByDayOfWeek='${signInCountByDayOfWeek}'
+                    data-signUpCountByYear='${signUpCountByYear}'></div>
+
                 <!-- Scripts -->
                 <script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
                 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
@@ -1007,10 +958,10 @@
 
                 <script src="js/admin/leftPanalActive.js"></script>
                 <script src="js/admin/drawBarChart.js"></script>
-             
+
 
                 <script>
-         
+
 
                 </script>
 

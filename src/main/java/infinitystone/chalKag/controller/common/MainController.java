@@ -1,6 +1,7 @@
 package infinitystone.chalKag.controller.common;
 
 import infinitystone.chalKag.biz.freePost.FreePostService;
+import infinitystone.chalKag.biz.headHuntPost.HeadHuntPostDTO;
 import infinitystone.chalKag.biz.headHuntPost.HeadHuntPostService;
 import infinitystone.chalKag.biz.jobHuntPost.JobHuntPostService;
 import infinitystone.chalKag.biz.marketPost.MarketPostService;
@@ -33,7 +34,7 @@ public class MainController {
   private FreePostService freePostService;
 
   @RequestMapping("/main")
-  public String main(MemberDTO memberDTO, Model model, HttpSession session) {
+  public String main(MemberDTO memberDTO, HeadHuntPostDTO headHuntPostDTO, Model model, HttpSession session) {
 
     System.out.println("MainController In로그");
 
@@ -48,9 +49,15 @@ public class MainController {
 
     }
 
+    // 메인페이지 회원 레벨 순위 출력.안승준
     memberDTO.setSearchCondition("levelRank");
     List<MemberDTO> levelRankResult = memberService.selectAll(memberDTO);
     model.addAttribute("levelRank", levelRankResult);
+
+    // 메인페이지 최신 구인글
+    headHuntPostDTO.setSearchCondition("headHuntPostRecentPostSingle");
+    HeadHuntPostDTO latestHeadHuntPost = headHuntPostService.selectOne(headHuntPostDTO);
+    model.addAttribute("latestHeadHuntPost", latestHeadHuntPost);
 
     System.out.println("MainController Out로그");
 

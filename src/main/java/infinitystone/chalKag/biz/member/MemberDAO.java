@@ -25,6 +25,7 @@ public class MemberDAO {
       "FROM LEVEL " +
       "WHERE LEVEL_requiredexp <= MEMBER_exp) AS CURRENT_level " +
       "FROM MEMBER " +
+      "WHERE MEMBER_grade = 'USER' " +
       "ORDER BY MEMBER_exp DESC " +
       "LIMIT 10";
 
@@ -55,9 +56,8 @@ public class MemberDAO {
       "MEMBER.MEMBER_signupdate, " +
       "MEMBER.MEMBER_grade " +
       "FROM MEMBER " +
-      "JOIN PROFILEIMG ON PROFILEIMG.MEMBER_id = MEMBER.MEMBER_id " +
-      "JOIN SIGNINLOG ON SIGNINLOG.MEMBER_id = MEMBER.MEMBER_id " +
-      "ORDER BY CURRENT_level DESC " +
+      "WHERE MEMBER_grade != 'ADMIN' " +
+      "ORDER BY MEMBER_exp DESC " +
       "LIMIT 5";
 
   // 아이디 중복검사.안승준
@@ -436,7 +436,7 @@ class AdminLevelRankRowMapper implements RowMapper<MemberDTO> {
     memberDTO.setMemberNickname(rs.getString("MEMBER.MEMBER_nickname"));
     memberDTO.setCurrentLevel(rs.getString("CURRENT_level"));
     memberDTO.setSignUpDate(rs.getString("MEMBER.MEMBER_signupdate"));
-    memberDTO.setMemberGrade(rs.getString("MEMBER.MEMBER_signupdate"));
+    memberDTO.setMemberGrade(rs.getString("MEMBER.MEMBER_grade"));
     return memberDTO;
   }
 }

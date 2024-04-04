@@ -30,8 +30,11 @@ public class JobHuntPostServiceImpl implements JobHuntPostService {
 		map.put("minPay", jobHuntPostDTO.getMinPay());
 		map.put("maxPay", jobHuntPostDTO.getMaxPay());
 		map.put("jobHuntPostConcept", jobHuntPostDTO.getJobHuntPostConcept());
+
 		// 작업일 
 		map.put("jobHuntPostWorkdate", jobHuntPostDTO.getJobHuntPostWorkDate());
+
+
 		map.put("startWorkDate", jobHuntPostDTO.getStartWorkDate());
 		map.put("endWorkDate", jobHuntPostDTO.getEndWorkDate());
 		// TODO Auto-generated method stub
