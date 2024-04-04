@@ -13,9 +13,13 @@ public class MarketPostServiceImpl implements MarketPostService{
 	@Autowired
 	private MarketPostDAO marketPostDAO;
 	
+	@Autowired
+	private MarketPostDAO iMarketPostDAO;
+	
 	@Override
 	public List<MarketPostDTO> selectAll(MarketPostDTO marketPostDTO) {
 		Map<String, Object> map = new HashMap<String, Object>();
+		
 		if(marketPostDTO.getSearchCondition().equals("marketPostSellList")) {
 			map.put("marketPostId", marketPostDTO.getMarketPostId());
 			map.put("marketPostTitle", marketPostDTO.getMarketPostTitle());
@@ -51,7 +55,8 @@ public class MarketPostServiceImpl implements MarketPostService{
 			map.put("minPrice", marketPostDTO.getMinPrice());
 			map.put("maxPrice", marketPostDTO.getMaxPrice());
 		}
-		return marketPostDAO.selectAll(marketPostDTO);
+										// 나중에 확인바람
+		return iMarketPostDAO.selectAll((MarketPostDTO) map);
 	}
 
 	@Override

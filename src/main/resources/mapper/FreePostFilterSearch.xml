@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="infinitystone.chalKag.biz.jobHuntPost.IFreePostDAO">
+<mapper namespace="infinitystone.chalKag.biz.freePost.IFreePostDAO">
 	<select id="selectAll" resultMap="freePostMap">
 		SELECT  
     'FreePost' AS POST_category,  
@@ -50,7 +50,7 @@ WHERE
 	</select>
 	
 	
-	<resultMap id="freePostMap" type="infinitystone.chalKag.biz.jobHuntPost.FreePostDTO">
+	<resultMap id="freePostMap" type="infinitystone.chalKag.biz.freePost.FreePostDTO">
 		<result column="FREEPOST_id" property="freePostId" jdbcType="INTEGER" javaType="String"/>
 		<result column="MEMBER_id" property="memberId" jdbcType="VARCHAR" javaType="String"/>
 		<result column="MEMBER_nickname" property="memberNickname" jdbcType="VARCHAR" javaType="String"/>
