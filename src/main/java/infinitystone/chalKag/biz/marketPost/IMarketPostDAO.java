@@ -8,5 +8,6 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface IMarketPostDAO {
 	
-	List<MarketPostDTO> selecAll(Map<String, Object>map);
+	List<MarketPostDTO> selectAll(Map<String, Object> map);
+//	List<MarketPostDTO> selecAllBuy(Map<String, Object>map);
 }
