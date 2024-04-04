@@ -92,8 +92,13 @@
 							<footer style="display: flex; flex-wrap: wrap; justify-content: flex-end;">
 								<!-- 미 로그인 시 답글 버튼에 경고 버튼 -->
 								<c:if test="${member == null}">
-									<input class="btn btn-primary btn-rounded" type="button"
-										style="width: 25%;" value="Reply" onclick="message()" />
+								
+									<i class="ion-edit" id="nullMemberIcon"
+									onclick="document.getElementById('nullMember').click();" 
+									style="cursor: pointer; font-size: 25px;"></i>
+									
+									<input id="nullMember" type="button"
+										style="display: none;" value="Reply" onclick="message()" />
 								</c:if>
 
 								<!-- 작성자가 자기 댓글을 수정 또는 삭제를 할 경우 -->
@@ -509,9 +514,12 @@ function toggleReply(commentId) {
         	    	        '<a href="/memberPage?memberId=' + data[i].memberId + '">' + data[i].memberId + '</a></h5>' +
         	    	        '<div class="time"></div>' +
         	    	        '<div class="description" value="Update" id="replyContent_' + data[i].replyId + '">' + data[i].replyContent + '</div>' + 
-        	    	        '<input type="button" class="btn btn-primary btn-rounded" id="replyUpdate_'+ data[i].replyId +'" style="width: 25%; margin-right: 10px;" value="Update" onclick="replyUpdate(' + data[i].replyId + ', \'' + data[i].replyContent + '\')">' +
-							'<input type="button" class="btn btn-primary btn-rounded" id="replyDelete_'+ data[i].replyId +'" style="width: 25%; margin-right: 10px;" value="Delete" onclick="replyDelete(' + data[i].replyId + ')">' +
-							'</div></div></div>';
+        	    	        '<div style="display: flex; flex-wrap: wrap; justify-content: flex-end;">' +
+        	    	    	'<i class="ion-android-refresh" id="replyUpdateIcon_' + data[i].replyId + '" onclick="document.getElementById(\'replyUpdate_' + data[i].replyId + '\').click();" style="cursor: pointer; font-size: 25px; margin-right: 10px;"></i>' +
+        	    	        '<input type="button" style="display: none;" id="replyUpdate_'+ data[i].replyId +'" style="width: 25%; margin-right: 10px;" value="Update" onclick="replyUpdate(' + data[i].replyId + ', \'' + data[i].replyContent + '\')">' +
+        	    	        '<i class="ion-trash-a" id="replyDeleteIcon_' + data[i].replyId + '" onclick="document.getElementById(\'replyDelete_' + data[i].replyId + '\').click();" style="cursor: pointer; font-size: 25px; margin-right: 10px;"></i>' +
+        	    	        '<input type="button" style="display: none;" id="replyDelete_'+ data[i].replyId +'" style="width: 25%; margin-right: 10px;" value="Delete" onclick="replyDelete(' + data[i].replyId + ')">' +
+							'</div></div></div></div>';
         	    	        } else {
         	    	        	 var itemHtml = 
         	        	    	        '<div class="item" id="item_'+ data[i].replyId +'">' +
