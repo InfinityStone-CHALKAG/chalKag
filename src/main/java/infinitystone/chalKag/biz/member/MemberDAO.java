@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.lang.reflect.Member;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -22,7 +23,7 @@ public class MemberDAO {
       "MEMBER_nickname, " +
       "(SELECT MAX(LEVEL_id) " +
       "FROM LEVEL " +
-      "WHERE LEVEL_requiredexp <= MEMBER_exp) AS CURRENT_LEVEL " +
+      "WHERE LEVEL_requiredexp <= MEMBER_exp) AS CURRENT_level " +
       "FROM MEMBER " +
       "ORDER BY MEMBER_exp DESC " +
       "LIMIT 10";
@@ -37,6 +38,22 @@ public class MemberDAO {
       "LIMIT 1) AS TIMEOUT_date " +
       "FROM MEMBER " +
       "WHERE MEMBER_grade = 'TIMEOUT'";
+
+  //(관리자)레벨별 회원 순서 출력.안승준
+  private static final String SELECTALL_ADMINLEVELRANK = "SELECT " +
+      "PROFILEIMG_name, " +
+      "MEMBER.MEMBER_id, " +
+      "MEMBER.MEMBER_nickname, " +
+      "(SELECT MAX(LEVER_id) " +
+      "FROM LEVEL " +
+      "WHERE LEVEL_requiredexp <= MEMBER_exp) AS CURRENT_level, " +
+      "MEMBER.MEMBER_signupdate, " +
+      "MEMBER.MEMBER_grade " +
+      "FROM MEMBER" +
+      "JOIN PROFILEIMG ON PROFILIMG.MEMBER_id = MEMBER.MEMBER_id " +
+      "JOIN SIGNINLOG ON SIGNINLOG.MEMBER_id = MEMBER.MEMBER_id " +
+      "ORDER BY CURRENT_level DESC " +
+      "LIMIT 5";
 
   // 아이디 중복검사.안승준
   private static final String SELECTONE_CHECKID = "SELECT MEMBER_id " +
@@ -241,6 +258,10 @@ public class MemberDAO {
         result = (List<MemberDTO>) jdbcTemplate.query(SELECTALL_TIMEOUTLIST, new TimeOutListRowMapper());
         System.out.println("MemberDAO(selectAll) Out로그 = [" + result + "]");
         return result;
+      } else if (memberDTO.getSearchCondition().equals("adminLevelRank")) {
+        result = (List<MemberDTO>) jdbcTemplate.query(SELECTALL_ADMINLEVELRANK, new AdminLevelRankRowMapper());
+        System.out.println("MemberDAO(selectAll) Out로그 = [" + result + "]");
+        return result;
       }
     } catch (Exception e) {
       e.printStackTrace();
@@ -397,6 +418,20 @@ class TimeOutListRowMapper implements RowMapper<MemberDTO> {
     memberDTO.setMemberId(rs.getString("MEMBER_id"));
     memberDTO.setMemberNickname(rs.getString("MEMBER_nickname"));
     memberDTO.setTimeOutDate(rs.getString("TIMEOUT_date"));
+    return memberDTO;
+  }
+}
+
+class AdminLevelRankRowMapper implements RowMapper<MemberDTO> {
+  @Override
+  public MemberDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+    MemberDTO memberDTO = new MemberDTO();
+    memberDTO.setProfileImgName(rs.getString("PROFILEIMG_name"));
+    memberDTO.setMemberId(rs.getString("MEMBER.MEMBER_id"));
+    memberDTO.setMemberNickname(rs.getString("MEMBER.MEMBER_nickname"));
+    memberDTO.setCurrentLevel(rs.getString("CURRENT_level"));
+    memberDTO.setSignUpDate(rs.getString("MEMBER.MEMBER_signupdate"));
+    memberDTO.setMemberGrade(rs.getString("MEMBER.MEMBER_signupdate"));
     return memberDTO;
   }
 }

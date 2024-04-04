@@ -3,6 +3,8 @@ package infinitystone.chalKag.controller.admin;
 import com.google.gson.Gson;
 import infinitystone.chalKag.biz.admin.AdminDTO;
 import infinitystone.chalKag.biz.admin.AdminService;
+import infinitystone.chalKag.biz.member.MemberDTO;
+import infinitystone.chalKag.biz.member.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Controller;
@@ -18,8 +20,11 @@ public class AdminMainController {
   @Autowired
   private AdminService adminService;
 
+  @Autowired
+  private MemberService memberService;
+
   @RequestMapping("/adminMain")
-  public String adminMain(AdminDTO adminDTO, Gson gson, Model model) {
+  public String adminMain(AdminDTO adminDTO, MemberDTO memberDTO, Gson gson, Model model) {
     System.out.println("AdminMainController In로그");
 
     // 헤더 정보 출력
@@ -63,6 +68,11 @@ public class AdminMainController {
     String signUpCountByYearResult = gson.toJson(adminService.signUpCountByYear(adminDTO));
 
     model.addAttribute("signUpCountByYear", signUpCountByYearResult);
+
+    // 레벨 별 회원 순위 출력
+    memberDTO.setSearchCondition("adminLevelRank");
+
+    model.addAttribute("adminLevelRank", memberService.selectAll(memberDTO));
 
     return "admin/adminMain";
   }

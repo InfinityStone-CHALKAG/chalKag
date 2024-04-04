@@ -54,8 +54,8 @@ public class AdminDAO {
       "GROUP BY D.WEEKDAY, D.DAYOFWEEK " +
       "ORDER BY D.WEEKDAY";
 
-  //(관리자)연별 회원 수. 안승준
-  private static final String SELECT_SIGNUPCOUNTBYYEAR = "SELECT YEAR(MEMBER_signupdate) AS YEAR, " +
+  //(관리자)연별 회원 수.안승준
+  private static final String SELECTALL_SIGNUPCOUNTBYYEAR = "SELECT YEAR(MEMBER_signupdate) AS YEAR, " +
       "COUNT(MEMBER_id) AS SIGNUPCOUNT " +
       "FROM MEMBER " +
       "WHERE MEMBER_grade = 'USER' " +
@@ -116,7 +116,7 @@ public class AdminDAO {
         System.out.println("AdminDAO(selectAll) Out로그 = [" + result + "]");
         return result;
       } else if (adminDTO.getSearchCondition().equals("signUpCountByYear")) {
-        result = (List<AdminDTO>) jdbcTemplate.query(SELECT_SIGNUPCOUNTBYYEAR, new SignUpCountByYearRowMapper());
+        result = (List<AdminDTO>) jdbcTemplate.query(SELECTALL_SIGNUPCOUNTBYYEAR, new SignUpCountByYearRowMapper());
         System.out.println("AdminDAO(selectAll) Out로그 = [" + result + "]");
         return result;
       }
