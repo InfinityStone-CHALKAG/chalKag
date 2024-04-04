@@ -94,21 +94,21 @@ div .inner p {
 							<div class="group-title">Date</div>
 							<div class="form-group">
 								<!-- 모든 시간 selectAll -->
-								<label><input type="radio" name="date" checked>
+								<label><input type="radio" name="freePostDate" checked>
 									Anytime</label>
 							</div>
 							<div class="form-group">
 								<!-- 오늘 하루 동안 작성한 글들 selectAll_today -->
-								<label><input type="radio" name="date"> Today</label>
+								<label><input type="radio" name="freePostDate"> Today</label>
 							</div>
 							<div class="form-group">
 								<!-- 지난주 동안 작성한 글들 selectAll_today -->
-								<label><input type="radio" name="date"> Last
+								<label><input type="radio" name="freePostDate"> Last
 									Week</label>
 							</div>
 							<div class="form-group">
 								<!-- 전 달동안 작성한 글들 selectAll_today -->
-								<label><input type="radio" name="date"> Last
+								<label><input type="radio" name="freePostDate"> Last
 									Month</label>
 							</div>
 						</div>
@@ -200,11 +200,20 @@ div .inner p {
 		});
 	</script>
 	<script>
-		function message() {
-			swal("fail", "로그인 후 이용해주세요.", "error", {
-				button : "OK",
-			});
-		}
+	function message() {
+	    swal({
+	        title: "fail",
+	        text: "로그인 후 이용해주세요.",
+	        type: "error",
+	        showCancelButton: false,
+	        confirmButtonColor: "#DD6B55",
+	        confirmButtonText: "OK",
+	        closeOnConfirm: true
+	    }, function() {
+	        // "OK" 버튼 누르면 실행될 코드
+	        window.location.href = "/signIn"; // 로그인 페이지로 이동
+	    });
+	}
 	</script>
 </body>
 </html>

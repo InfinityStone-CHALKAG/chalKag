@@ -79,9 +79,9 @@ div .inner p {
 							<!-- 검색창 옵션(제목, 내용, 작성자, 제목 + 작성자) -->
 							<select id="searchField" name="searchField" class="searchOption"
 								style="margin-bottom: 5%; padding-left: 10px; border-color: gray; border-radius: 5px; height: 40px; width: 100%;">
-								<option value="title">title</option>
-								<option value="contents">contents</option>
-								<option value="writer">writer</option>
+								<option value="jobHuntPostTitle">title</option>
+								<option value="jobHuntPostContent">contents</option>
+								<option value="memberNickname">writer</option>
 								<option value="titleAndContents">title + contents</option>
 							</select>
 							<div class="form-group">
@@ -106,22 +106,22 @@ div .inner p {
 								style="font-weight: bold; margin-bottom: 2%;">DATE</div>
 							<div class="form-group">
 								<!-- 모든 시간 selectAll -->
-								<label><input type="radio" name="date" id="Anytime"
+								<label><input type="radio" name="jobHuntPostDate" id="Anytime"
 									checked>&nbsp; Anytime</label>
 							</div>
 							<div class="form-group">
 								<!-- 오늘 하루 동안 작성한 글들 selectAll_today -->
-								<label><input type="radio" name="date" id="Today">&nbsp;
+								<label><input type="radio" name="jobHuntPostDate" id="Today">&nbsp;
 									Today</label>
 							</div>
 							<div class="form-group">
 								<!-- 지난주 동안 작성한 글들 selectAll_today -->
-								<label><input type="radio" name="date" id="LastWeek">&nbsp;
+								<label><input type="radio" name="jobHuntPostDate" id="LastWeek">&nbsp;
 									Last Week</label>
 							</div>
 							<div class="form-group">
 								<!-- 전 달동안 작성한 글들 selectAll_today -->
-								<label><input type="radio" name="date" id="LastMonth">&nbsp;
+								<label><input type="radio" name="jobHuntPostDate" id="LastMonth">&nbsp;
 									Last Month</label>
 							</div>
 							<br>
@@ -130,7 +130,7 @@ div .inner p {
 							<div class="group-title"
 								style="font-weight: bold; margin-bottom: 2%;">ROLE</div>
 							<div class="form-group">
-								<select style="width: 100%; height: 40px;" id="role" name="role">
+								<select style="width: 100%; height: 40px;" id="role" name="jobHuntPostRole">
 									<option value="" disabled selected>Select</option>
 									<option value="Model">Model</option>
 									<option value="Photographer">Photographer</option>
@@ -142,8 +142,8 @@ div .inner p {
 							<div class="group-title"
 								style="font-weight: bold; margin-bottom: 2%;">REGION</div>
 							<div class="form-group">
-								<select style="width: 100%; height: 40px;" id="region"
-									name="region">
+								<select style="width: 100%; height: 40px;"
+									id="region" name="jobHuntPostRegion">
 									<option value="" disabled selected>Select</option>
 									<option value="SEOUL">SEOUL</option>
 									<option value="GYEONGGI">GYEONGGI</option>
@@ -160,10 +160,10 @@ div .inner p {
 							<div class="group-title"
 								style="font-weight: bold; margin-bottom: 2%;">PAY</div>
 							<div class="form-group">
-								<label for="minPrice">Min</label> <input type="range"
-									id="minPay" name="minPay" min="0" max="1000000" value="1">
-								<label for="maxPrice">Max</label> <input type="range"
-									id="maxPay" name="maxPay" min="0" max="1000000" value="1">
+								<label for="minPay">Min</label> <input type="range" id="minPay"
+									name="minPay" min="0" max="1000000" value="1"> <label
+									for="maxPay">Max</label> <input type="range" id="maxPay"
+									name="maxPay" min="0" max="1000000" value="1">
 							</div>
 							<br>
 
@@ -171,12 +171,11 @@ div .inner p {
 							<div class="group-title"
 								style="font-weight: bold; margin-bottom: 2%;">WORK DATE</div>
 							<div class="form-group">
-								<label for="workdate" style="margin-bottom: 2%;">Start</label> <input
-									style="width: 100%; height: 40px; margin-bottom: 2%;"
-									type="date" id="startDate" name="startDate"> <label
-									for="workdate" style="margin-bottom: 2%;">End</label> <input
-									style="width: 100%; height: 40px; margin-bottom: 2%;"
-									type="date" id="endDate" name="endDate">
+								<label for="workdate" style="margin-bottom: 2%;">Start</label> 
+								<input style="width: 100%; height: 40px; margin-bottom: 2%;" type="date" id="startDate" name="startWorkDate"> 
+									<label for="workdate" style="margin-bottom: 2%;">End</label> 
+								<input style="width: 100%; height: 40px; margin-bottom: 2%;"
+									type="date" id="endDate" name="endWorkDate">
 							</div>
 							<br>
 
@@ -185,7 +184,7 @@ div .inner p {
 								style="font-weight: bold; margin-bottom: 2%;">WORK CONCEPT
 							</div>
 							<div class="form-group">
-								<select id="concept" name="concept"
+								<select id="concept" name="jobHuntPostConcept"
 									style="width: 100%; height: 40px;">
 									<option value="" disabled selected>Select</option>
 									<option value="snap">Snap</option>
@@ -219,8 +218,8 @@ div .inner p {
 						<div class="nav-tabs-right">
 							<!-- 오름차순, 내림차순 정렬 -->
 							<select class="form-control" id="sortOrder">
-								<option value="desc">Descending</option>
-								<option value="asc">Ascending</option>
+								<option value="DESC">Descending</option>
+								<option value="ASC">Ascending</option>
 							</select>
 						</div>
 					</div>
@@ -281,8 +280,17 @@ div .inner p {
 	</script>
 	<script>
 		function message() {
-			swal("fail", "로그인 후 이용해주세요.", "error", {
-				button : "OK",
+			swal({
+				title : "fail",
+				text : "로그인 후 이용해주세요.",
+				type : "error",
+				showCancelButton : false,
+				confirmButtonColor : "#DD6B55",
+				confirmButtonText : "OK",
+				closeOnConfirm : true
+			}, function() {
+				// "OK" 버튼 누르면 실행될 코드
+				window.location.href = "/signIn"; // 로그인 페이지로 이동
 			});
 		}
 	</script>

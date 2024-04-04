@@ -16,17 +16,7 @@ public class DeleteReplyController {
 	private ReplyService replyService;
 	
 	@RequestMapping(value="/deleteReply", method=RequestMethod.POST)
-	public @ResponseBody int deleteReply(ReplyDTO replyDTO) {
-		
-		boolean replyDeleteResult = replyService.delete(replyDTO);
-		
-		if(replyDeleteResult) {
-			System.out.println("[DeleteReplyController] 댓글 삭제 성공");
-			return 1;
-		}
-		System.out.println("[DeleteReplyController] 댓글 삭제 실패");
-		return 0;
+	public @ResponseBody boolean deleteReply(ReplyDTO replyDTO) {
+		return replyService.delete(replyDTO);
 	}
-	
-	
 }

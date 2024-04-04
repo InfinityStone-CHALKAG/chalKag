@@ -187,7 +187,7 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <a href="#" class="btn btn-magz"
+                                <a href="payment" class="btn btn-magz"
                                     style="text-transform: uppercase; font-weight: 500; margin-top:100px">BOOST<i
                                         class="ion-ios-fastforward" style="font-size: 20px;"></i></a>
                             </nav>

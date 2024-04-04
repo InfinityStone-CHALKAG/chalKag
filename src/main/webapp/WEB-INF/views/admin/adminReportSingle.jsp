@@ -376,7 +376,7 @@
                                                     value="${reportSingle.reportId}">
 
                                                 <div class="row form-group">
-                                                    <div class="col col-md-3"><label for="text-input"
+                                                    <div class="col col-md-3"><label
                                                             class=" form-control-label">Date</label></div>
                                                     <div class="col-12 col-md-9"><input type="text" id="text-input"
                                                             name="text-input" class="form-control"
@@ -384,7 +384,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="row form-group">
-                                                    <div class="col col-md-3"><label for="email-input"
+                                                    <div class="col col-md-3"><label
                                                             class=" form-control-label">Reporter</label></div>
                                                     <div class="col-12 col-md-9"><input type="email" id="reporter"
                                                             name="reporter" class="form-control"
@@ -392,21 +392,43 @@
                                                     </div>
                                                 </div>
                                                 <div class="row form-group">
-                                                    <div class="col col-md-3"><strong for="password-input"
+                                                    <div class="col col-md-3"><strong
                                                             class=" form-control-label">Suspector Email</Strong></div>
                                                     <div class="col-12 col-md-9"><input type="email" id="memberId"
                                                             name="memberId" class="form-control"
-                                                            value="${reportSingle.reportSuspector}" readonly></div>
+                                                            value="${reportSingle.reportSuspector}"
+                                                            style="font-weight: bold;" readonly></div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <div class="col col-md-3"><strong class=" form-control-label"
+                                                            style="font-size:15px;">Suspector Nickname</Strong></div>
+                                                    <div class="col-12 col-md-9"><input type="email" id="memberNickname"
+                                                            name="memberNickname" class="form-control"
+                                                            value="${reportSingle.suspectorNickname}"
+                                                            style="font-weight: bold;" readonly></div>
                                                 </div>
 
                                                 <div class="row form-group">
-                                                    <div class="col col-md-3"><label for="textarea-input"
+                                                    <div class="col col-md-3"><label
                                                             class=" form-control-label">Textarea</label></div>
                                                     <div class="col-12 col-md-9"><textarea name="reportContent"
                                                             id="reportContent" rows="9" style="resize: none;"
                                                             class="form-control"
                                                             readonly>${reportSingle.reportContent}</textarea></div>
                                                 </div>
+
+                                                <c:if test="${reportSingle.reportState eq 'HOLD'}">
+                                                    <div class="row form-group">
+                                                        <div class="col col-md-3"></div>
+                                                        <div class="col col-md-9">
+                                                            <button id="reportStateUnHold"
+                                                                class="btn btn-outline-success" style="width: 120px; 
+                                                            height: 40px; 
+                                                            font-size: 16px; 
+                                                            padding: 5px 10px;">User UnHold</button>
+                                                        </div>
+                                                    </div>
+                                                </c:if>
 
                                                 <c:if
                                                     test="${reportSingle.reportState eq 'READ' || reportSingle.reportState eq 'UNREAD'}">
@@ -493,31 +515,42 @@
 
                 <script>
                     document.addEventListener('DOMContentLoaded', function () {
-                        document.getElementById('reportStateReject').addEventListener('click', function (event) {
-                            event.preventDefault();
-                            swal({
-                                title: 'WARNING',
-                                text: '정말 Reject 하시겠습니까?',
-                                type: 'warning',
-                                showCancelButton: true, // 확인, 취소 버튼 표시
-                                confirmButtonText: 'OK',
-                                cancelButtonText: 'Cancel'
-                            }, function (isConfirmed) {
-                                // 확인 버튼을 클릭했을 때의 동작
-                                if (isConfirmed) {
-                                    // location.href를 사용하여 로그인 페이지로 이동
-                                    window.location.href = "reportStateReject?reportId=${reportSingle.reportId}";
-                                }
+                        if (document.getElementById('reportStateReject')) {
+                            document.getElementById('reportStateReject').addEventListener('click', function (event) {
+                                event.preventDefault();
+                                swal({
+                                    title: 'WARNING',
+                                    text: '정말 Reject 하시겠습니까?',
+                                    type: 'warning',
+                                    showCancelButton: true, // 확인, 취소 버튼 표시
+                                    confirmButtonText: 'OK',
+                                    cancelButtonText: 'Cancel'
+                                }, function (isConfirmed) {
+                                    // 확인 버튼을 클릭했을 때의 동작
+                                    if (isConfirmed) {
+                                        // location.href를 사용하여 신고 전체 출력 페이지로 이동
+                                        window.location.href = "reportStateReject?reportId=${reportSingle.reportId}";
+                                    }
+                                });
                             });
+                        }
+                    });
+                    if (document.getElementById("reportStateHold")) {
+                        // User Hold 버튼을 클릭했을 때의 이벤트 처리
+                        document.getElementById("reportStateHold").addEventListener("click", function (event) {
+                            console.log("HOLD");
+                            event.preventDefault(); // 이벤트 전파 중지
+                            reportStateCheck(); // reportStateCheck() 함수 호출
                         });
-                    });
 
-
-                    // User Hold 버튼을 클릭했을 때의 이벤트 처리
-                    document.getElementById("reportStateHold").addEventListener("click", function (event) {
-                        event.preventDefault(); // 이벤트 전파 중지
-                        reportStateCheck(); // reportStateCheck() 함수 호출
-                    });
+                    }
+                    if (document.getElementById("reportStateUnHold")) {
+                        // User UnHold 버튼을 클릭했을 때의 이벤트 처리
+                        document.getElementById("reportStateUnHold").addEventListener("click", function (event) {
+                            event.preventDefault(); // 이벤트 전파 중지
+                            window.location.href = "reportStateUnHold?reportId=${reportSingle.reportId}&memberId=${reportSingle.reportSuspector}";
+                        });
+                    }
 
 
                     function reportStateCheck() {

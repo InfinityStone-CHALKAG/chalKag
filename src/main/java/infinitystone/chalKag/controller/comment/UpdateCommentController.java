@@ -16,16 +16,16 @@ public class UpdateCommentController {
 	private CommentService commentService;
 	
 	@RequestMapping(value="/updateComment", method=RequestMethod.POST)
-	public @ResponseBody int updateComment(CommentDTO commentDTO) {
+	public @ResponseBody CommentDTO updateComment(CommentDTO commentDTO) {
 		
-		boolean commentUpdateResult = commentService.delete(commentDTO);
+		boolean commentUpdateResult = commentService.update(commentDTO);
 		
 		if(commentUpdateResult) {
 			System.out.println("[DeleteCommentController] 댓글 수정 성공");
-			return 1;
+			return commentDTO;
 		}
 		System.out.println("[DeleteCommentController] 댓글 수정 실패");
-		return 0;
+		return null;
 	}
 	
 	

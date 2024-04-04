@@ -130,7 +130,7 @@ function performAjaxRequest() {
 
     // jQuery를 사용한 AJAX 요청
     $.ajax({
-        url: '/marketPostSearchList', // 서버의 엔드포인트 URL
+        url: '/marketPostFilterSearch', // 서버의 엔드포인트 URL
         type: 'GET', // 또는 'POST', 서버의 요구 사항에 따라
         data: requestData, // 서버에 보낼 데이터
         success: function(filterData) {

@@ -20,6 +20,8 @@ public class MemberDTO {
   private String currentNextExp;
   private String profileImgName;
   private String postCount;
+  private String timeOutDate;
+  private String signUpDate;
 
   private String searchCondition;
 

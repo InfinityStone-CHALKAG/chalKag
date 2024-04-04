@@ -32,7 +32,11 @@ public class TimeOutDAO {
 	
 	private static final String UPDATE_TIMEOUT = " ";
 	
-	private static final String DELETE_TIMEOUT = "";
+	private static final String DELETE_TIMEOUT = "DELETE "
+			+ "FROM "
+			+ "		TIMEOUT "
+			+ "WHERE "
+			+ "		MEMBER_id = ? ";
 	
 	
 	public List<TimeOutDTO> selectAll(TimeOutDTO timeOutDTO) {
@@ -75,8 +79,11 @@ public class TimeOutDAO {
 	}
 
 	public boolean delete(TimeOutDTO timeOutDTO) {
-	
-		return true; 
+		int result = jdbcTemplate.update(DELETE_TIMEOUT,timeOutDTO.getMemberId());
+		if (result <= 0) {
+			return false;
+		}
+		return true;
 	}
 
 

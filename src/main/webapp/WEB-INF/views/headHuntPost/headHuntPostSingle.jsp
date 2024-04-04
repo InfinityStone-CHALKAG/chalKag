@@ -161,10 +161,6 @@
 							</figure>
 							<div class="details">
 								<h3 class="name">${headHuntPostSingle.memberNickname}</h3>
-								<p>I enjoy capturing small moments in everyday life with my camera as a
-									hobby. I strive to capture the beauty of daily life through photos so
-									that everyone can share in those precious moments together. Let's share
-									these precious moments together!</p>
 								<%-- <p>${headHuntPostSingle.memberIntroduction}</p> --%>
 							</div>
 						</div>

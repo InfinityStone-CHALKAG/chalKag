@@ -21,127 +21,134 @@
 		</c:if>
 	</div>
 	<br>
-		<!-- 댓글 입력 -->
-		<div id="writeResponseForm" style="display: none; text-align: center;">
-			<form id="commentForm" action="/writeComment" method="post"
-				class="row">
-				<c:if test="${not empty headHuntPostSingle}">
-					<input type="hidden" name="postId"
-						value="${headHuntPostSingle.headHuntPostId}">
-				</c:if>
-				<c:if test="${not empty jobHuntPostSingle}">
-					<input type="hidden" name="postId"
-						value="${jobHuntPostSingle.jobHuntPostId}">
-				</c:if>
-				<c:if test="${not empty freePostSingle}">
-					<input type="hidden" name="postId"
-						value="${freePostSingle.freePostId}">
-				</c:if>
-				<c:if test="${not empty marketPostSingle}">
-					<input type="hidden" name="postId"
-						value="${marketPostSingle.marketPostId}">
-				</c:if>
-
-				<div class="form-group col-md-12">
-					<label for="message">Response <span class="required"></span></label>
-					<textarea class="form-control" name="commentContent"
-						placeholder="Write your response ..."></textarea>
-				</div>
-				<div class="form-group col-md-12">
-					<button class="btn btn-primary">Send Response</button>
-				</div>
-			</form>
-		</div>
-
-		<div class="comment-list">
-			<!-- 댓글이 없을 경우 출력 문구 -->
-			<c:if test="${commentList == null || fn:length(commentList) <= 0}">
-				<h5 style="text-align: center;">댓글이 없습니다. 가장 먼저 댓글을 남겨보세요!</h5>
+	<!-- 댓글 입력 -->
+	<div id="writeResponseForm" style="display: none; text-align: center;">
+		<form id="commentForm" action="/writeComment" method="post"
+			class="row">
+			<c:if test="${not empty headHuntPostSingle}">
+				<input type="hidden" name="postId"
+					value="${headHuntPostSingle.headHuntPostId}">
+			</c:if>
+			<c:if test="${not empty jobHuntPostSingle}">
+				<input type="hidden" name="postId"
+					value="${jobHuntPostSingle.jobHuntPostId}">
+			</c:if>
+			<c:if test="${not empty freePostSingle}">
+				<input type="hidden" name="postId"
+					value="${freePostSingle.freePostId}">
+			</c:if>
+			<c:if test="${not empty marketPostSingle}">
+				<input type="hidden" name="postId"
+					value="${marketPostSingle.marketPostId}">
 			</c:if>
 
-			<!-- 댓글이 있을 경우 목록 출력 -->
-			<c:if test="${fn:length(commentList) > 0 }">
-				<c:forEach var="commentList" items="${commentList}">
+			<div class="form-group col-md-12">
+				<label for="message">Response <span class="required"></span></label>
+				<textarea class="form-control" name="commentContent"
+					placeholder="Write your response ..."></textarea>
+			</div>
+			<div class="form-group col-md-12">
+				<button class="btn btn-primary">Send Response</button>
+			</div>
+		</form>
+	</div>
 
-					<!-- 댓글 내용 출력 -->
-					<div class="item">
-						<div class="user">
+	<div class="comment-list">
+		<!-- 댓글이 없을 경우 출력 문구 -->
+		<c:if test="${commentList == null || fn:length(commentList) <= 0}">
+			<h5 style="text-align: center;">There are no comments. Be the first to leave a comment!</h5>
+		</c:if>
 
-							<!-- 회원 프로필 이미지 -->
-							<figure>
-								<img src="profileImg/${commentList.profileImgName}">
-							</figure>
+		<!-- 댓글이 있을 경우 목록 출력 -->
+		<c:if test="${fn:length(commentList) > 0 }">
+			<c:forEach var="commentList" items="${commentList}">
 
-							<div class="details">
-								<h5 class="title">${commentList.memberNickname}
-									<c:if
-										test="${member == null || member != commentList.memberId}">
-										<a href="/memberPage?memberId=${commentList.memberId}">${commentList.memberId}</a>
-									</c:if>
-									<c:if test="${member == commentList.memberId}">
-										<a href="/myPage?memberId=${member}">${commentList.memberId}</a>
-									</c:if>
-								</h5>
-								<div class="time"></div>
-								<div class="description" id="commentContent_${commentList.commentId}">${commentList.commentContent}</div>
+				<!-- 댓글 내용 출력 -->
+				<div class="item">
+					<div class="user">
 
-								<!-- 답글 달기 -->
-								<footer style="display: flex; flex-wrap: wrap;">
-									<c:if test="${fn:length(replyList) > 0}">
-										<a href="javascript:void(0);" onclick="toggleReply()"
-											style="justify-content: left;">Reply</a>
-										<div id="webReply" style="display: none;">
-											<webComments:webReply />
-										</div>
-									</c:if>
+						<!-- 회원 프로필 이미지 -->
+						<figure>
+							<img src="profileImg/${commentList.profileImgName}">
+						</figure>
 
-									<!-- 미 로그인 시 경고 버튼 -->
-									<c:if test="${member == null}">
-										<input class="btn btn-primary btn-rounded" type="button"
-											style="width: 25%;" value="Reply" onclick="message()" />
-									</c:if>
+						<!-- 댓글 내용 출력 -->
+						<div class="details">
+							<!-- 댓글 제목 -->
+							<h5 class="title">${commentList.memberNickname}
+								<c:if test="${member == null || member != commentList.memberId}">
+									<a href="/memberPage?memberId=${commentList.memberId}">${commentList.memberId}</a>
+								</c:if>
+								<c:if test="${member == commentList.memberId}">
+									<a href="/myPage?memberId=${member}">${commentList.memberId}</a>
+								</c:if>
+							</h5>
+							<div class="time"></div>
+							<div class="description"
+								id="commentContent_${commentList.commentId}">${commentList.commentContent}</div>
 
-									<!-- 작성자가 자기 댓글을 수정할 경우 -->
-									<c:if test="${commentList.memberId == member}">
-										<input class="btn btn-primary btn-rounded" type="button"
-											style="width: 25%; margin-right: 10px;" value="Update"
-											id="commentUpdateBtn_${commentList.commentId}" onclick="toggleUpdate(${commentList.commentId}, '${commentList.commentContent}')">
+							<!-- 답글 달기 -->
+							<footer style="display: flex; flex-wrap: wrap;">
+								<!-- 미 로그인 시 답글 버튼에 경고 버튼 -->
+								<c:if test="${member == null}">
+									<input class="btn btn-primary btn-rounded" type="button"
+										style="width: 25%;" value="Reply" onclick="message()" />
+								</c:if>
 
-										<input class="btn btn-primary btn-rounded" type="button"
-											style="width: 25%; margin-right: 10px;" value="Delete"
-											id="commentDeleteBtn_${commentList.commentId}" onclick="toggleDelete('${commentList.commentId}')">
-									</c:if>
+								<!-- 작성자가 자기 댓글을 수정 또는 삭제를 할 경우 -->
+								<c:if test="${commentList.memberId == member}">
+									<!-- 수정 버튼 -->
+									<input class="btn btn-primary btn-rounded" type="button"
+										style="width: 25%; margin-right: 10px;" value="Update"
+										id="commentUpdateBtn_${commentList.commentId}"
+										onclick="toggleUpdate(${commentList.commentId}, '${commentList.commentContent}')">
+									<!-- 삭제 버튼 -->
+									<input class="btn btn-primary btn-rounded" type="button"
+										style="width: 25%; margin-right: 10px;" value="Delete"
+										id="commentDeleteBtn_${commentList.commentId}"
+										onclick="toggleDelete('${commentList.commentId}')">
+								</c:if>
 
-									<!-- 답글 작성 버튼 클릭 이벤트 -->
-									<c:if test="${member != null}">
-										<input class="btn btn-primary btn-rounded" type="button"
-											style="width: 25%;" value="Reply"
-											onclick="toggleReplyWrite(this)"
-											data-comment-id="${commentList.commentId}" />
-										<!-- 답글 입력 -->
-										<div id="writeReplyForm-${commentList.commentId}"
-											style="display: none; flex-basis: 100%;">
-											<form action="/writeReply" method="post" class="row">
-												<div class="form-group col-md-12" style="text-align: left;">
-													<label for="message">Reply <span class="required"></span></label>
-													<textarea class="form-control" id="commentContent"
-														name="commentContent" placeholder="Write your Reply ..."></textarea>
-												</div>
-												<div class="form-group col-md-12" style="text-align: right;">
-													<button class="btn btn-primary">Send Reply</button>
-												</div>
-											</form>
-										</div>
-									</c:if>
-
-								</footer>
-							</div>
+								<!-- 답글 작성 버튼 클릭 이벤트 -->
+								<c:if test="${member != null}">
+									<input class="btn btn-primary btn-rounded" type="button"
+										style="width: 25%;" value="Reply"
+										onclick="toggleReplyWrite(this)"
+										data-comment-id="${commentList.commentId}" />
+									<!-- 답글 입력 -->
+									<div id="writeReplyForm_${commentList.commentId}"
+										style="display: none; flex-basis: 100%;">
+										<form id="replyForm" action="/writeReply" method="post"
+											class="row">
+											<input type="hidden" name="commentId"
+												value="${commentList.commentId}">
+											<div class="form-group col-md-12" style="text-align: left;">
+												<label for="message">Reply <span class="required"></span></label>
+												<textarea class="form-control" id="replyContent"
+													name="replyContent" placeholder="Write your Reply ..."></textarea>
+											</div>
+											<div class="form-group col-md-12" style="text-align: right;">
+												<button class="btn btn-primary reply-submit-btn">Send
+													Reply</button>
+											</div>
+										</form>
+									</div>
+								</c:if>
+							</footer>
+							
 						</div>
 					</div>
-				</c:forEach>
-			</c:if>
-		</div>
+					<div style="margin-top: 20px;">
+						<div class="reply-list">
+							<a href="javascript:void(0);" onclick="toggleReply('${commentList.commentId}')" style="justify-content: left;">Reply List ▼</a>
+							<div id="webReply-${commentList.commentId}" class="webReply" style="display: none;"></div>
+						</div>
+					</div>
+				</div>
+			</c:forEach>
+		</c:if>
 	</div>
+</div>
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -174,16 +181,6 @@ $(document).ready(function() {
     });
 });
 
-	//토글 기능을 수행하는 JavaScript 함수
-	function toggleReply() {
-		var replyElement = document.getElementById("webReply");
-		if (replyElement.style.display === "none") {
-			replyElement.style.display = "block"; // 요소를 보여줍니다.
-		} else {
-			replyElement.style.display = "none"; // 요소를 숨깁니다.
-		}
-	}
-
 	function toggleWrite() {
 		$("#writeResponseForm").toggle(); // jQuery를 사용하여 토글
 	}
@@ -192,19 +189,54 @@ $(document).ready(function() {
 		var commentId = $(element).data('comment-id');
 
 		// 해당 댓글 ID에 기반한 위치에 답글 입력창을 표시
-		//입력창을 해당 댓글의 바로 아래에 표시하고 싶다면, 해당 댓글의 마크업 구조에 따라 적절한 선택자를 사용하여 위치를 지정
-		$("#writeReplyForm-" + commentId).toggle();
+		// 입력창을 해당 댓글의 바로 아래에 표시하고 싶다면, 해당 댓글의 마크업 구조에 따라 적절한 선택자를 사용하여 위치를 지정
+		$("#writeReplyForm_" + commentId).toggle();
 	}
 
-	function message() {
-		swal("fail", "로그인 후 이용해주세요.", "error", {
-			button : "OK",
-		}).then((value) => {
-			// "OK" 버튼 누르면 실행될 코드
-			window.location.href = "/signIn"; // 로그인 페이지로 이동
-		});
-	}
 	
+	$(document).on('click', '.reply-submit-btn', function(e) {
+	    e.preventDefault(); // 폼 기본 제출 방지
+
+	    var form = $(this).closest('form'); // 'Send Reply' 버튼이 속한 폼 선택
+	    var formData = form.serialize(); // 폼 데이터 직렬화
+
+	    $.ajax({
+	        type: "POST",
+	        url: "/writeReply",
+	        data: formData,
+	        success: function(response) {
+	            // 성공적으로 답글이 작성된 후 필요한 동작 수행, 예를 들어 페이지를 새로고침하거나, 답글 목록을 업데이트
+	            location.reload(); // 페이지를 새로고침하여 답글을 보여줄 수 있음
+	        },
+	        error: function() {
+	            // 답글 작성 실패 시 로직
+	            swal({
+	    	        title: "fail",
+	    	        text: "답글 작성에 실패했습니다.",
+	    	        type: "error",
+	    	        showCancelButton: false,
+	    	        confirmButtonColor: "#DD6B55",
+	    	        confirmButtonText: "OK",
+	    	        closeOnConfirm: true
+	    	    });
+	        }
+	    });
+	});
+	
+	function message() {
+	    swal({
+	        title: "fail",
+	        text: "로그인 후 이용해주세요.",
+	        type: "error",
+	        showCancelButton: false,
+	        confirmButtonColor: "#DD6B55",
+	        confirmButtonText: "OK",
+	        closeOnConfirm: true
+	    }, function() {
+	        // "OK" 버튼 누르면 실행될 코드
+	        window.location.href = "/signIn"; // 로그인 페이지로 이동
+	    });
+	}
 
 	function toggleReplies(commentId) {
 		var replyList = document.getElementById("replyList-" + commentId);
@@ -228,7 +260,7 @@ $(document).ready(function() {
 	   	    if (updateBtn.val() === 'Update') {
 	   	        // 내용을 텍스트 에리어로 변환
 	   	        var divContent = $('#commentContent_' + commentId).text();
-	   	        var textarea = $('<textarea>').val(divContent.trim()).attr('rows', 5).attr('id', 'textarea_' + commentId);
+	   	        var textarea = $('<textarea class="form-control">').val(divContent.trim()).attr('rows', 5).attr('id', 'textarea_' + commentId);
 	   	        $('#commentContent_' + commentId).empty().append(textarea);
 
 	   	        // 버튼의 텍스트를 '저장'으로 변경
@@ -264,7 +296,7 @@ $(document).ready(function() {
 	   	    }
 	    };
 	    
-	    window.toggleDelete = function(commentId) {
+    window.toggleDelete = function(commentId) {
 	    	   // AJAX 요청을 통해 서버에 삭제 요청
 	    	    $.ajax({
 	    	        url: "/deleteComment",
@@ -278,20 +310,95 @@ $(document).ready(function() {
 	    	            console.log('삭제 완료:', response);
 	    	            // UI에서 삭제된 댓글 제거 또는 사용자에게 성공 알림
 	    	            // 예: $('#commentSection_' + commentId).remove();
-	    	            alert("댓글이 성공적으로 삭제되었습니다.");
+	    	            swal({
+	    	    	        title: "success",
+	    	    	        text: "댓글이 성공적으로 삭제되었습니다.",
+	    	    	        type: "success"
+	    	    	    });
 	    	        },
 	    	        error: function(error) {
 	    	            console.error('에러 발생:', error);
 	    	            // 사용자에게 에러 발생을 알림
-	    	            alert("댓글 삭제 중 오류가 발생했습니다.");
+	    	            swal({
+	    	    	        title: "fail",
+	    	    	        text: "댓글을 삭제하는 도중 에러가 발생했습니다.",
+	    	    	        type: "error",
+	    	    	        showCancelButton: false,
+	    	    	        confirmButtonColor: "#DD6B55",
+	    	    	        confirmButtonText: "OK",
+	    	    	        closeOnConfirm: true
+	    	    	    });
 	    	        }
 	    	    });
-	   	    }
-	    };
-	    
-	    
-	});
+	   	    } 
+	    });
 	
 	
+	// 답글 목록 출력
+function toggleReply(commentId) {
+    var replyElement = document.getElementById("webReply-" + commentId);
+    if (replyElement.style.display === "none") {
+        replyElement.style.display = "block"; // 요소를 보여줍니다.
+       
+        $.ajax({
+        	  url: '/replyList',
+        	  method: 'GET',
+        	  data: {
+        	       'commentId': commentId
+        	  },
+        	  dataType: 'json',
+        	  success: function(data) {
+        	        		
+        	    if (data.length > 0) {
+        	    	
+        	    	
+        	    	for(var i = 0; i < data.length; i++) {
+        	    		  var itemHtml = 
+        	    		    `<div class="item">
+        	    		        <div class="user">
+        	    		            <figure><img src="profileImg/${ data[i].profileImgName}"></figure>
+        	    		            <div class="details">
+        	    		            <h5 class="title">${data[i].memberId}<a href="/memberPage?memberId=${data[i].memberId}">${data[i].memberNickname}</a></h5>
+        	    		            <div class="time"></div>
+        	    		            <div class="description">${data[i].replyContent}</div>
+        	    		            </div>
+        	    		        </div>
+        	    		      </div>`;
+        	    		      
+        	    		  // 기존 내용에 추가
+        	    		  replyElement.innerHTML += itemHtml;
+        	    		}
+        	    	 
+						/* data.forEach(function(reply) {
+        	    		  const itemHtml = 
+        	    		    `<div class="item">
+        	    		        <div class="user">
+        	    		            <figure><img src="profileImg/${reply.profileImgName}"></figure>
+        	    		            <div class="details">
+        	    		            <h5 class="title">${reply.memberId} APPLE<a href="/memberPage?memberId=${reply.memberId}">BANANA${reply.memberNickname}</a></h5>
+        	    		            <div class="time"></div>
+        	    		            <div class="description">${reply.replyContent}</div>
+        	    		            </div>
+        	    		        </div>
+        	    		      </div>`;
+        	    		      
+        	    		  // 기존 내용에 추가
+        	    		 replyElement.innerHTML += itemHtml;
+        	    		  console.log("잘됨!");
+        	    		}); */
+        	          	    	
+        	    	
+        	    } else {
+        	      console.log('데이터가 없습니다.');
+        	      // 데이터가 없을 경우의 처리 로직
+        	    }
+        	  },
+        	  error: function(request, status, error) {
+        	    console.error('AJAX Error:', error);
+        	  }
+        	});
+        
+    }
+}
 	
 </script>

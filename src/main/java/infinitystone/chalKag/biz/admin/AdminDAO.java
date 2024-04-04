@@ -1,6 +1,7 @@
 package infinitystone.chalKag.biz.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -53,8 +54,8 @@ public class AdminDAO {
       "GROUP BY D.WEEKDAY, D.DAYOFWEEK " +
       "ORDER BY D.WEEKDAY";
 
-  //(관리자)연별 회원 수. 안승준
-  private static final String SELECT_SIGNUPCOUNTBYYEAR = "SELECT YEAR(MEMBER_signupdate) AS YEAR, " +
+  //(관리자)연별 회원 수.안승준
+  private static final String SELECTALL_SIGNUPCOUNTBYYEAR = "SELECT YEAR(MEMBER_signupdate) AS YEAR, " +
       "COUNT(MEMBER_id) AS SIGNUPCOUNT " +
       "FROM MEMBER " +
       "WHERE MEMBER_grade = 'USER' " +
@@ -68,6 +69,27 @@ public class AdminDAO {
       + "SUM(CASE WHEN MEMBER_gender = 'female' THEN 1 ELSE 0 END) AS FEMALEGROUP "
       + "FROM MEMBER "
       + "WHERE MEMBER_grade = 'USER'";
+
+  private static final String SELECTONE_ADMINHEADER = "SELECT COALESCE((SELECT SUM(AMOUNT) " +
+      "FROM PAYMENT),0) AS REVENUE, " +
+      "(SELECT SUM(POST_count) AS TOTAL_posts " +
+      "FROM (SELECT COUNT(*) AS POST_count " +
+      "FROM HEADHUNTPOST " +
+      "UNION ALL " +
+      "SELECT COUNT(*) " +
+      "FROM JOBHUNTPOST " +
+      "UNION ALL " +
+      "SELECT COUNT(*) " +
+      "FROM FREEPOST " +
+      "UNION ALL " +
+      "SELECT COUNT(*) " +
+      "FROM MARKETPOST) AS COUNTS) AS POSTDATAS, " +
+      "(SELECT COUNT(*) " +
+      "FROM MEMBER " +
+      "WHERE MEMBER_grade = 'PREMIUM') AS PREMIUMUSERS, " +
+      "(SELECT COUNT(*) " +
+      "FROM MEMBER " +
+      "WHERE MEMBER_grade != 'ADMIN') AS USERS";
 
   private static final String SELECTONE = "";
   private static final String INSERT = "";
@@ -94,7 +116,7 @@ public class AdminDAO {
         System.out.println("AdminDAO(selectAll) Out로그 = [" + result + "]");
         return result;
       } else if (adminDTO.getSearchCondition().equals("signUpCountByYear")) {
-        result = (List<AdminDTO>) jdbcTemplate.query(SELECT_SIGNUPCOUNTBYYEAR, new SignUpCountByYearRowMapper());
+        result = (List<AdminDTO>) jdbcTemplate.query(SELECTALL_SIGNUPCOUNTBYYEAR, new SignUpCountByYearRowMapper());
         System.out.println("AdminDAO(selectAll) Out로그 = [" + result + "]");
         return result;
       }
@@ -113,6 +135,10 @@ public class AdminDAO {
       if (adminDTO.getSearchCondition().equals("signUpCountByGenderGroup")) {
         result = jdbcTemplate.queryForObject(SELECTONE_SIGNUPCOUNTBYGENDERGROUP,
             new SignUpCountByGenderGroupRowMapper());
+        System.out.println("AdminDAO(selectOne) Out로그 = [" + result + "]");
+        return result;
+      } else if (adminDTO.getSearchCondition().equals("adminHeader")) {
+        result = jdbcTemplate.queryForObject(SELECTONE_ADMINHEADER, new AdminHeaderRowMapper());
         System.out.println("AdminDAO(selectOne) Out로그 = [" + result + "]");
         return result;
       }
@@ -186,6 +212,18 @@ class SignUpCountByYearRowMapper implements RowMapper<AdminDTO> {
     AdminDTO adminDTO = new AdminDTO();
     adminDTO.setYear(rs.getString("YEAR"));
     adminDTO.setSignUpCount(rs.getString("SIGNUPCOUNT"));
+    return adminDTO;
+  }
+}
+
+class AdminHeaderRowMapper implements RowMapper<AdminDTO> {
+  @Override
+  public AdminDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+    AdminDTO adminDTO = new AdminDTO();
+    adminDTO.setRevenue(rs.getString("REVENUE"));
+    adminDTO.setPostDatas(rs.getString("POSTDATAS"));
+    adminDTO.setPremiumUsers(rs.getString("PREMIUMUSERS"));
+    adminDTO.setUsers(rs.getString("USERS"));
     return adminDTO;
   }
 }

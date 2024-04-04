@@ -14,7 +14,10 @@ public class AdminDTO {
   private String dayOfWeek;
   private String signUpCount;
   private String signInCount;
-
+  private String revenue;
+  private String postDatas;
+  private String premiumUsers;
+  private String users;
 
   private String searchCondition;
 

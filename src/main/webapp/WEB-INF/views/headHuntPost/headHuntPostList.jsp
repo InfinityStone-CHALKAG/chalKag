@@ -49,9 +49,9 @@
 										<!-- 검색창 옵션(제목, 내용, 작성자, 제목 + 작성자) -->
 										<select id="searchField" name="searchField" class="searchOption"
 											style="margin-bottom: 5%; padding-left: 10px; border-color: gray; border-radius: 5px; height: 40px; width: 100%;">
-											<option value="title">title</option>
-											<option value="contents">contents</option>
-											<option value="writer">writer</option>
+											<option value="headHuntPostTitle">title</option>
+											<option value="headHuntPostContent">contents</option>
+											<option value="memberNickname">writer</option>
 											<option value="titleAndContents">title + contents</option>
 										</select>
 										<div class="form-group">
@@ -76,22 +76,22 @@
 										</div>
 										<div class="form-group">
 											<!-- 모든 시간 selectAll -->
-											<label><input type="radio" name="date" id="Anytime" checked>&nbsp;
+											<label><input type="radio" name="headHuntPostDate" id="Anytime" checked>&nbsp;
 												Anytime</label>
 										</div>
 										<div class="form-group">
 											<!-- 오늘 하루 동안 작성한 글들 selectAll_today -->
-											<label><input type="radio" name="date" id="Today">&nbsp;
+											<label><input type="radio" name="headHuntPostDate" id="Today">&nbsp;
 												Today</label>
 										</div>
 										<div class="form-group">
 											<!-- 지난주 동안 작성한 글들 selectAll_today -->
-											<label><input type="radio" name="date" id="LastWeek">&nbsp;
+											<label><input type="radio" name="headHuntPostDate" id="LastWeek">&nbsp;
 												Last Week</label>
 										</div>
 										<div class="form-group">
 											<!-- 전 달동안 작성한 글들 selectAll_today -->
-											<label><input type="radio" name="date" id="LastMonth">&nbsp;
+											<label><input type="radio" name="headHuntPostDate" id="LastMonth">&nbsp;
 												Last Month</label>
 										</div>
 										<br>
@@ -100,7 +100,7 @@
 										<div class="group-title" style="font-weight: bold; margin-bottom: 2%;">ROLE
 										</div>
 										<div class="form-group">
-											<select style="width: 100%; height: 40px;" id="role" name="role">
+											<select style="width: 100%; height: 40px;" id="role" name="headHuntPostRole">
 												<option value="" disabled selected>Select</option>
 												<option value="Model">Model</option>
 												<option value="Photographer">Photographer</option>
@@ -112,7 +112,7 @@
 										<div class="group-title" style="font-weight: bold; margin-bottom: 2%;">REGION
 										</div>
 										<div class="form-group">
-											<select style="width: 100%; height: 40px;" id="region" name="region">
+											<select style="width: 100%; height: 40px;" id="region" name="headHuntPostRegion">
 												<option value="" disabled selected>Select</option>
 												<option value="SEOUL">SEOUL</option>
 												<option value="GYEONGGI">GYEONGGI</option>
@@ -141,10 +141,10 @@
 										<div class="form-group">
 											<label for="workdate" style="margin-bottom: 2%;">Start</label>
 											<input style="width: 100%; height: 40px; margin-bottom: 2%;" type="date"
-												id="startDate" name="startDate">
+												id="startDate" name="startWorkDate">
 											<label for="workdate" style="margin-bottom: 2%;">End</label>
 											<input style="width: 100%; height: 40px; margin-bottom: 2%;" type="date"
-												id="endDate" name="endDate">
+												id="endDate" name="endWorkDate">
 										</div>
 										<br>
 
@@ -153,7 +153,7 @@
 											CONCEPT
 										</div>
 										<div class="form-group">
-											<select id="concept" name="concept" style="width: 100%; height: 40px;">
+											<select id="concept" name="headHuntPostConcept" style="width: 100%; height: 40px;">
 												<option value="" disabled selected>Select</option>
 												<option value="snap">Snap</option>
 												<option value="pictorial">Pictorial</option>
@@ -246,16 +246,20 @@
 					}); 
 				</script>
 				<script>
-					function message() {
-						swal("fail", "로그인 후 이용해주세요.", "error", {
-							button: "OK",
-						});
-					}
-				</script>
-				<script>
-
-
-
+				function message() {
+				    swal({
+				        title: "fail",
+				        text: "로그인 후 이용해주세요.",
+				        type: "error",
+				        showCancelButton: false,
+				        confirmButtonColor: "#DD6B55",
+				        confirmButtonText: "OK",
+				        closeOnConfirm: true
+				    }, function() {
+				        // "OK" 버튼 누르면 실행될 코드
+				        window.location.href = "/signIn"; // 로그인 페이지로 이동
+				    });
+				}
 				</script>
 			</body>
 
