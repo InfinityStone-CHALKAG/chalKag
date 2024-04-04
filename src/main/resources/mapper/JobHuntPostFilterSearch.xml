@@ -76,11 +76,6 @@
 		AND JOBHUNTPOST_workdate BETWEEN #{startWorkDate} AND #{endWorkDate}
 	</if>
 	
-
-	<if test="startWorkDate !=0 and endWorkDate !=0">
-		AND JOBHUNTPOST_workdate BETWEEN #{startWorkDate} AND #{endWorkDate}
-	</if>
-
 	
 	
 	ORDER BY

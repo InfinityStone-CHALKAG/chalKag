@@ -32,7 +32,7 @@ public class JobHuntPostServiceImpl implements JobHuntPostService {
 		map.put("jobHuntPostConcept", jobHuntPostDTO.getJobHuntPostConcept());
 
 		// 작업일 
-		map.put("jobHuntPostWorkdate", jobHuntPostDTO.getJobHuntPostWorkDate());
+		map.put("jobHuntPostWorkDate", jobHuntPostDTO.getJobHuntPostWorkDate());
 
 
 		map.put("startWorkDate", jobHuntPostDTO.getStartWorkDate());
