@@ -24,8 +24,8 @@ public class JobHuntPostDTO {
 	
 	
 	// 작업 기간
-	private int		startWorkDate;
-	private int		endWorkDate;
+	private String		startWorkDate;
+	private String		endWorkDate;
 	
 	// 정렬
 	private String OrderColumnDirection;

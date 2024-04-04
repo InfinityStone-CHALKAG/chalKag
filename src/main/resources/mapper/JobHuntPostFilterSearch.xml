@@ -71,9 +71,10 @@
 		AND JOBHUNTPOST_pay BETWEEN #{minPay} AND #{maxPay}
 	</if>
 
-	<if test="startWorkDate !=0 and endWorkDate !=0">
+	<if test="startWorkDate !=null and endWorkDate !=null">
 		AND JOBHUNTPOST_workdate BETWEEN #{startWorkDate} AND #{endWorkDate}
 	</if>
+	
 	
 	
 	ORDER BY
