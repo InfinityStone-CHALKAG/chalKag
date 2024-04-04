@@ -78,17 +78,16 @@
 								<ul class="details" >
 									<li>${headHuntPostSingle.headHuntPostDate}</li>
 									<li>
-										<a>Film</a>
-									</li>
-									<li>By 
 										<c:if test="${member == null || member != headHuntPostSingle.memberId}">
-											<a href="/memberPage?memberId=${headHuntPostSingle.memberId}">${headHuntPostSingle.memberNickname}</a>
+											<a href="/memberPage?memberId=${headHuntPostSingle.memberId}">${headHuntPostSingle.memberId}</a>
 										</c:if> 
 										
 										<c:if test="${member == headHuntPostSingle.memberId}">
-											<a href="/myPage?memberId=${headHuntPostSingle.memberId}">${headHuntPostSingle.memberNickname}</a>
+											<a href="/myPage?memberId=${headHuntPostSingle.memberId}">${headHuntPostSingle.memberId}</a>
 										</c:if>
-										
+									</li>
+									<li>By 
+											<a>${headHuntPostSingle.memberNickname}</a>
 									</li>	
 								</ul>
 							</header>
