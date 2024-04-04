@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="infinitystone.chalKag.biz.marketPost.IMarketPostDAO">
+	<select id="selectAll" resultMap="marketPostMap">
+		SELECT  
+    MARKETPOST.MARKETPOST_id,  
+    MARKETPOST.MEMBER_id,  
+    (
+        SELECT POSTIMG.POSTIMG_name  
+        FROM POSTIMG  
+        WHERE POSTIMG.POST_id = MARKETPOST.MARKETPOST_id  
+        ORDER BY POSTIMG.POSTIMG_id ASC  
+        LIMIT 1
+    ) AS POSTIMG_name,  
+    MEMBER.MEMBER_nickname,  
+    MARKETPOST.MARKETPOST_title,  
+    MARKETPOST.MARKETPOST_content,  
+    MARKETPOST.MARKETPOST_date,  
+    MARKETPOST.MARKETPOST_viewcnt,  
+    (
+		SELECT
+			COUNT(*) 
+		FROM 
+			RECOMMEND 
+		WHERE 
+			RECOMMEND.POST_id = MARKETPOST.MARKETPOST_id
+	) AS RECOMMEND_cnt
+	FROM  
+	    MARKETPOST 
+	INNER JOIN  
+	    MEMBER ON MARKETPOST.MEMBER_id = MEMBER.MEMBER_id  
+	LEFT JOIN  
+	    RECOMMEND ON MARKETPOST.MARKETPOST_id = RECOMMEND.POST_id  
+	WHERE  
+	    MARKETPOST.MARKETPOST_status = 'sell'
+	AND
+		1=1
+	<if test="marketPostTitle != null">
+		AND MARKETPOST_title LIKE CONCAT('%',#{marketPostTitle},'%')
+	</if>
+	
+	<if test="marketPostContent != null">
+		AND MARKETPOST_content LIKE CONCAT('%',#{marketPostContent},'%')
+	</if>
+	
+	<if test="memberNickname != null">
+		AND MEMBER_nickname LIKE CONCAT('%',#{memberNickname},'%')
+	</if>
+	
+	<if test="titleAndContents != null">
+		AND MARKETPOST_title || MARKETPOST_content LIKE CONCAT('%',#{memberNickname},'%')
+	</if>
+	
+	<if test="marketPostCompany != null">
+		AND MARKETPOST_company LIKE CONCAT('%',#{marketPostCompany},'%')
+	</if>
+	
+	<if test="marketPostCategory != null">
+		AND MARKETPOST_category LIKE CONCAT('%',#{marketPostCategory},'%')
+	</if>
+	
+	<if test="minPrice !=0 and maxPrice !=0">
+		AND MARKETPOST_price BETWEEN #{minPrice} AND #{maxPrice}
+	</if>
+	
+	ORDER BY
+		MARKETPOST.MARKETPOST_date DESC
+	
+	</select>
+
+	<resultMap id="marketPostMap" type="infinitystone.chalKag.biz.marketPost.MarketPostDTO">
+		   <result column="MARKETPOST_id" property="marketPostId" jdbcType="INTEGER" javaType="String"/>
+		   <result column="MEMBER_id" property="memberId" jdbcType="VARCHAR" javaType="String"/>
+		   <result column="MEMBER_nickname" property="memberNickname" jdbcType="VARCHAR" javaType="String"/>
+		   <result column="MARKETPOST_date" property="marketPostDate" jdbcType="TIMESTAMP" javaType="String"/>
+		   <result column="MARKETPOST_title" property="marketPostTitle" jdbcType="VARCHAR" javaType="String"/>
+		   <result column="MARKETPOST_content" property="marketPostContent" jdbcType="VARCHAR" javaType="String"/>
+		   <result column="MARKETPOST_viewcnt" property="marketPostViewcnt" jdbcType="INTEGER" javaType="String"/>
+		   <result column="POSTIMG_name" property="postImgName" jdbcType="VARCHAR" javaType="String"/>
+		   <result column="RECOMMEND_cnt" property="recommendCnt" jdbcType="INTEGER" javaType="int"/>
+		   
+	</resultMap>
+</mapper>

@@ -46,12 +46,12 @@
 	</if>
 	
 	<if test="memberNickname != null">
-		AND member_nickname LIKE CONCAT('%',#{memberNickname},'%')
+		AND MEMBER_nickname LIKE CONCAT('%',#{memberNickname},'%')
 	</if>
 	
 	<!--제목 내용 검색-->
 	<if test="titleAndContents != null">
-		AND JOBHUNTPOST_title LIKE CONCAT('%',#{titleAndContents},'%')
+		AND JOBHUNTPOST_title || JOBHUNTPOST_content LIKE CONCAT('%',#{titleAndContents},'%')
 	</if>
 	
 	<if test="jobHuntPostRole != null">

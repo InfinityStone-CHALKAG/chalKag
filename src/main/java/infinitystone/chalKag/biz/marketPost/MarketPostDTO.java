@@ -19,6 +19,15 @@ public class MarketPostDTO {
 	private String marketPostViewcnt;
 	private String postImgName;			// 프리미엄 회원글 출력 시 이미지 출력
 	
+	private String titleAndContents;
+	
+	private int maxPrice;
+	
+	private int minPrice;
+	
+	private String OrderColumnDirection;
+	
+	
 	private String postCategory;
 	
 	private String recommendCnt;

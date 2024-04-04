@@ -27,6 +27,11 @@ public class JobHuntPostDTO {
 	private int		startWorkDate;
 	private int		endWorkDate;
 	
+	// 정렬
+	private String OrderColumnDirection;
+	
+	
+	private String searchField;
 	
 	private String jobHuntPostWorkDate;
 	private String jobHuntPostConcept;
