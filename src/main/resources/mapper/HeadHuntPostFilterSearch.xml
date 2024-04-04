@@ -88,3 +88,6 @@
 		   <result column="RECOMMEND_cnt" property="recommendCnt" jdbcType="INTEGER" javaType="int"/>   
 	</resultMap>
 </mapper>
+
+
+
