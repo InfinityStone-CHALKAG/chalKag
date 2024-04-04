@@ -94,21 +94,21 @@ div .inner p {
 							<div class="group-title">Date</div>
 							<div class="form-group">
 								<!-- 모든 시간 selectAll -->
-								<label><input type="radio" name="freePostDate" checked>
+								<label><input type="radio" name="freePostDate" id="Anytime" value="Anytime" checked>
 									Anytime</label>
 							</div>
 							<div class="form-group">
 								<!-- 오늘 하루 동안 작성한 글들 selectAll_today -->
-								<label><input type="radio" name="freePostDate"> Today</label>
+								<label><input type="radio" name="freePostDate" id="Today" value="Today"> Today</label>
 							</div>
 							<div class="form-group">
 								<!-- 지난주 동안 작성한 글들 selectAll_today -->
-								<label><input type="radio" name="freePostDate"> Last
+								<label><input type="radio" name="freePostDate" id="LastWeek" value="Last Week"> Last
 									Week</label>
 							</div>
 							<div class="form-group">
 								<!-- 전 달동안 작성한 글들 selectAll_today -->
-								<label><input type="radio" name="freePostDate"> Last
+								<label><input type="radio" name="freePostDate" id="LastMonth" value="Last Month""> Last
 									Month</label>
 							</div>
 						</div>

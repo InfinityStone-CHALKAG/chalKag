@@ -77,18 +77,17 @@
 								<h1>${marketPostSingle.marketPostTitle}</h1>
 								<ul class="details" >
 									<li>${marketPostSingle.marketPostDate}</li>
-									<li>
-										<a>Film</a>
-									</li>
-									<li>By 
+										<li>
 										<c:if test="${member == null || member != marketPostSingle.memberId}">
-											<a href="/memberPage?memberId=${marketPostSingle.memberId}">${marketPostSingle.memberNickname}</a>
+											<a href="/memberPage?memberId=${marketPostSingle.memberId}">${marketPostSingle.memberId}</a>
 										</c:if> 
 										
 										<c:if test="${member == marketPostSingle.memberId}">
-											<a href="/myPage?memberId=${marketPostSingle.memberId}">${marketPostSingle.memberNickname}</a>
+											<a href="/myPage?memberId=${marketPostSingle.memberId}">${marketPostSingle.memberId}</a>
 										</c:if>
-										
+									</li>
+									<li>By 
+											<a>${marketPostSingle.memberNickname}</a>
 									</li>	
 								</ul>
 							</header>

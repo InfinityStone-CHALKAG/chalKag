@@ -106,22 +106,22 @@ div .inner p {
 								style="font-weight: bold; margin-bottom: 2%;">DATE</div>
 							<div class="form-group">
 								<!-- 모든 시간 selectAll -->
-								<label><input type="radio" name="jobHuntPostDate" id="Anytime"
-									checked>&nbsp; Anytime</label>
+								<label><input type="radio" name="jobHuntPostDate" id="Anytime" value="Anytime"
+									checked>Anytime</label>
 							</div>
 							<div class="form-group">
 								<!-- 오늘 하루 동안 작성한 글들 selectAll_today -->
-								<label><input type="radio" name="jobHuntPostDate" id="Today">&nbsp;
+								<label><input type="radio" name="jobHuntPostDate" id="Today" value="Today">
 									Today</label>
 							</div>
 							<div class="form-group">
 								<!-- 지난주 동안 작성한 글들 selectAll_today -->
-								<label><input type="radio" name="jobHuntPostDate" id="LastWeek">&nbsp;
+								<label><input type="radio" name="jobHuntPostDate" id="LastWeek" value="Last Week">
 									Last Week</label>
 							</div>
 							<div class="form-group">
 								<!-- 전 달동안 작성한 글들 selectAll_today -->
-								<label><input type="radio" name="jobHuntPostDate" id="LastMonth">&nbsp;
+								<label><input type="radio" name="jobHuntPostDate" id="LastMonth" value="Last Month">
 									Last Month</label>
 							</div>
 							<br>

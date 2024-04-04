@@ -7,36 +7,35 @@ $(document).ready(function() {
     updateVariables();
     performAjaxRequest();
   });
-});
-
-
-// 날짜 라디오 버튼 이벤트 리스너 추가
-$('input[type=radio][name=date]').change(function() {
-  const today = new Date();
-  const lastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
-  const lastMonth = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
-
-  switch(this.value) {
-      case 'Today':
-          minDate = formatDate(today);
-          maxDate = formatDate(today);
-          break;
-      case 'Last Week':
-          minDate = formatDate(lastWeek);
-          maxDate = formatDate(today);
-          break;
-      case 'Last Month':
-          minDate = formatDate(lastMonth);
-          maxDate = formatDate(today);
-          break;
-      default:
-          // "Anytime"이 선택된 경우, minDate와 maxDate를 초기화합니다.
-          minDate = '';
-          maxDate = '';
-  }
-
-  updateVariables(); // 필터링 및 정렬에 사용되는 변수들 업데이트
-  performAjaxRequest(); // 필터링된 데이터 요청
+  
+  // 날짜 라디오 버튼 이벤트 리스너 추가
+	$('input[type=radio][name=date]').change(function() {
+	  const today = new Date();
+	  const lastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
+	  const lastMonth = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
+	
+	  switch(this.value) {
+	      case 'Today':
+	          minDate = formatDate(today);
+	          maxDate = formatDate(today);
+	          break;
+	      case 'Last Week':
+	          minDate = formatDate(lastWeek);
+	          maxDate = formatDate(today);
+	          break;
+	      case 'Last Month':
+	          minDate = formatDate(lastMonth);
+	          maxDate = formatDate(today);
+	          break;
+	      default:
+	          // "Anytime"이 선택된 경우, minDate와 maxDate를 초기화합니다.
+	          minDate = '';
+	          maxDate = '';
+	  }
+	
+	  updateVariables(); // 필터링 및 정렬에 사용되는 변수들 업데이트
+	  performAjaxRequest(); // 필터링된 데이터 요청
+	});
 });
 
 // 조회수, 추천수로 정렬 할 수 있게 jsp에서 받아온 값을 보내준다.
