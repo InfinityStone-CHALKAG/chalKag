@@ -3,39 +3,39 @@
 <mapper namespace="infinitystone.chalKag.biz.headHuntPost.IHeadHuntPostDAO">
 	<select id="selectAll" resultMap="headHuntPostMap">
 	SELECT 
-	    'HeadHuntPost' AS POST_category, 
-	    HEADHUNTPOST.HEADHUNTPOST_id,
-	    MEMBER.MEMBER_nickname,
-	    HEADHUNTPOST.HEADHUNTPOST_title,
-	    HEADHUNTPOST.HEADHUNTPOST_content,
-	    HEADHUNTPOST.HEADHUNTPOST_date,
-	    HEADHUNTPOST.HEADHUNTPOST_viewcnt,
-	    ( 
-	        SELECT 
-	            COUNT(*) 
-	        FROM 
-	            RECOMMEND 
-	        WHERE 
-	            RECOMMEND.POST_id = HEADHUNTPOST.HEADHUNTPOST_id
-	    ) AS RECOMMEND_cnt, 
-	    ( 
-	        SELECT 
-	            POSTIMG.POSTIMG_name
-	        FROM 
-	            POSTIMG 
-	        WHERE 
-	            POSTIMG.POST_id = HEADHUNTPOST.HEADHUNTPOST_id
-	        ORDER BY 
-	            POSTIMG.POSTIMG_id ASC 
-	        LIMIT 1
-	    ) AS POSTIMG_name 
-	FROM 
-	    HEADHUNTPOST 
-	INNER JOIN 
-	    MEMBER ON HEADHUNTPOST.MEMBER_id = MEMBER.MEMBER_id 
-	LEFT JOIN 
-	    RECOMMEND ON HEADHUNTPOST.HEADHUNTPOST_id = RECOMMEND.POST_id 
-	WHERE 1=1
+		DISTINCT
+		    HEADHUNTPOST.HEADHUNTPOST_id,
+		    MEMBER.MEMBER_nickname,
+		    HEADHUNTPOST.HEADHUNTPOST_title,
+		    HEADHUNTPOST.HEADHUNTPOST_content,
+		    HEADHUNTPOST.HEADHUNTPOST_date,
+		    HEADHUNTPOST.HEADHUNTPOST_viewcnt,
+		    ( 
+		        SELECT 
+		            COUNT(*) 
+		        FROM 
+		            RECOMMEND 
+		        WHERE 
+		            RECOMMEND.POST_id = HEADHUNTPOST.HEADHUNTPOST_id
+		    ) AS RECOMMEND_cnt, 
+		    ( 
+		        SELECT 
+		            POSTIMG.POSTIMG_name
+		        FROM 
+		            POSTIMG 
+		        WHERE 
+		            POSTIMG.POST_id = HEADHUNTPOST.HEADHUNTPOST_id
+		        ORDER BY 
+		            POSTIMG.POSTIMG_id ASC 
+		        LIMIT 1
+		    ) AS POSTIMG_name 
+		FROM 
+		    HEADHUNTPOST 
+		INNER JOIN 
+		    MEMBER ON HEADHUNTPOST.MEMBER_id = MEMBER.MEMBER_id 
+		LEFT JOIN 
+		    RECOMMEND ON HEADHUNTPOST.HEADHUNTPOST_id = RECOMMEND.POST_id 
+		WHERE 1=1
 	
 	<if test = "headHuntPostTitle != null">
 		AND HEADHUNTPOST_title LIKE CONCAT('%',#{headHuntPostTitle},'%')
@@ -48,11 +48,12 @@
 	<if test = "memberNickname !=null">
 		AND member_nickname LIKE CONCAT('%',#{memeberNickname},'%')
 	</if>
-	
-	<!--제목 내용 검색-->
+		
 	<if test="titleAndContents != null">
 		AND HEADHUNTPOST_title LIKE CONCAT('%',#{titleAndContents},'%')
 	</if>
+	
+	
 	
 	<if test="headHuntPostRole != null">
 		AND HEADHUNTPOST_role LIKE CONCAT('%',#{role},'%')
@@ -62,7 +63,7 @@
 		AND HEADHUNTPOST_region LIKE CONCAT('%',#{region},'%')
 	</if>
 	
-	
+
 	<if test="headHuntPostConcept != null">
 		AND HEADHUNTPOST_concept LIKE CONCAT('%',#{headHuntPostConcept},'%')
 	</if>
@@ -70,6 +71,11 @@
 	<if test="minPay != 0 and maxPay != 0">
 		AND HEADHUNTPOST_pay BETWEEN #{minPay} AND #{maxPay}
 	</if>
+	
+	<if test="startWorkDate !=null and endWorkDate !=null">
+		AND HEADHUNTPOST_workDate BETWEEN #{startWorkDate} AND #{endWorkDate}
+	</if>
+	
 	
 	ORDER BY
 		HEADHUNTPOST.HEADHUNTPOST_date DESC
