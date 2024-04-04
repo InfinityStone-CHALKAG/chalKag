@@ -41,7 +41,12 @@ public class MemberDAO {
 
   //(관리자)레벨별 회원 순서 출력.안승준
   private static final String SELECTALL_ADMINLEVELRANK = "SELECT " +
-      "PROFILEIMG_name, " +
+      "(SELECT PROFILEIMG_name " +
+      "FROM PROFILEIMG " +
+      "WHERE PROFILEIMG.MEMBER_id = MEMBER.MEMBER_id " +
+      "ORDER BY " +
+      "PROFILEIMG.PROFILEIMG_id DESC " +
+      "LIMIT 1) AS PROFILEIMG_name, " +
       "MEMBER.MEMBER_id, " +
       "MEMBER.MEMBER_nickname, " +
       "(SELECT MAX(LEVEL_id) " +
