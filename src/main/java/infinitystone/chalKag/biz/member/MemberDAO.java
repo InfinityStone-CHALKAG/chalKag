@@ -56,7 +56,7 @@ public class MemberDAO {
       "MEMBER.MEMBER_signupdate, " +
       "MEMBER.MEMBER_grade " +
       "FROM MEMBER " +
-      "WHERE MEMBER_grade = 'USER' " +
+      "WHERE MEMBER_grade != 'ADMIN' " +
       "ORDER BY MEMBER_exp DESC " +
       "LIMIT 5";
 
