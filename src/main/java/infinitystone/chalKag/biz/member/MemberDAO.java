@@ -436,7 +436,7 @@ class AdminLevelRankRowMapper implements RowMapper<MemberDTO> {
     memberDTO.setMemberNickname(rs.getString("MEMBER.MEMBER_nickname"));
     memberDTO.setCurrentLevel(rs.getString("CURRENT_level"));
     memberDTO.setSignUpDate(rs.getString("MEMBER.MEMBER_signupdate"));
-    memberDTO.setMemberGrade(rs.getString("MEMBER.MEMBER_signupdate"));
+    memberDTO.setMemberGrade(rs.getString("MEMBER.MEMBER_grade"));
     return memberDTO;
   }
 }
