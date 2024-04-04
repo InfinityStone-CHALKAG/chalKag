@@ -54,6 +54,11 @@ public class MainController {
     List<MemberDTO> levelRankResult = memberService.selectAll(memberDTO);
     model.addAttribute("levelRank", levelRankResult);
 
+    // 프리미엄 회원의 구인글
+    headHuntPostDTO.setSearchCondition("headHuntPostPremiumList");
+    List<HeadHuntPostDTO> headHuntPostPremiumList = headHuntPostService.selectAll(headHuntPostDTO);
+    model.addAttribute("headHuntPostPremiumList", headHuntPostPremiumList);
+
     // 메인페이지 최신 구인글
     headHuntPostDTO.setSearchCondition("headHuntPostRecentPostSingle");
     HeadHuntPostDTO latestHeadHuntPost = headHuntPostService.selectOne(headHuntPostDTO);

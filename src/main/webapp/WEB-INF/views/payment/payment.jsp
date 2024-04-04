@@ -8,6 +8,12 @@
 </head>
 <body>
 
+<chalKagTags:webJs/>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+<script src="js/user/payment.js"></script>
+
+
 <chalKagTags:webHeader/>
 
 <div id="dataContainer" memberInfo='${memberInfo}'/>
@@ -83,12 +89,6 @@
 </section>
 
 <chalKagTags:webFooter/>
-
-<!-- JS -->
-<chalKagTags:webJs/>
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
-<script src="js/user/payment.js"></script>
 
 </body>
 </html>
