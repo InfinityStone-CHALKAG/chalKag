@@ -19,18 +19,23 @@ public class HeadHuntPostServiceImpl implements HeadHuntPostService{
 	@Override
 	public List<HeadHuntPostDTO> selectAll(HeadHuntPostDTO headHuntPostDTO) {
 		Map<String, Object> map = new HashMap<String, Object>();
+		System.out.println("22222222222222222222222222222222222");
 		map.put("headHuntPostId", headHuntPostDTO.getHeadHuntPostId());
 		map.put("headHuntPostTitle", headHuntPostDTO.getHeadHuntPostTitle());
 		map.put("headHuntPostContent", headHuntPostDTO.getHeadHuntPostContent());
 		map.put("titleAndContents", headHuntPostDTO.getTitleAndContents());
 		map.put("headHuntPostRole", headHuntPostDTO.getHeadHuntPostRole());
 		map.put("headHuntPostRegion", headHuntPostDTO.getHeadHuntPostRegion());
+		map.put("headHuntPostWorkDate", headHuntPostDTO.getHeadHuntPostWorkDate());
+		map.put("startWorkDate", headHuntPostDTO.getStartWorkDate());
+		map.put("endWorkDate", headHuntPostDTO.getEndWorkDate());
+		map.put("headHuntPostPay", headHuntPostDTO.getHeadHuntPostPay());
 		map.put("minPay", headHuntPostDTO.getMinPay());
 		map.put("maxPay", headHuntPostDTO.getMaxPay());
 		map.put("headHuntPostConcept", headHuntPostDTO.getHeadHuntPostConcept());
-		map.put("startWorkDate", headHuntPostDTO.getStartWorkDate());
-		map.put("endWorkDate", headHuntPostDTO.getEndWorkDate());
-		return iHeadHuntPostDAO.selectAll(map);
+		System.out.println("333333333333333333333333333333333333");
+		System.out.println("SSDSDS"+ map);
+		return iHeadHuntPostDAO.selectAll(map); 
 	}
 
 	@Override

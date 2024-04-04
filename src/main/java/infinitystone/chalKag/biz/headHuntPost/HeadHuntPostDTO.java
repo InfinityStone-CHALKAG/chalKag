@@ -39,7 +39,4 @@ public class HeadHuntPostDTO { // 구인글 게시판 DTO 생성.전미지
 	
 	private String searchCondition;			// 게시글 검색 조건
 
-
-	
-	
 }	
