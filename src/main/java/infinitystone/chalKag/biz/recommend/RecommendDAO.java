@@ -21,7 +21,6 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 	private static final String SELECTALL_RECOMMENDBEST = "SELECT "
 			  // 게시글의 데이터 중 가져올 정보를 선택하는 쿼리끝
 			+ " SELECT "
-			+ "		RECOMMEND.POST_id, " // 게시글 아이디를 선택
 			+ "		CASE " // 게시글에 해당하는 카테고리 선택
 			+ "			WHEN HEADHUNTPOST.HEADHUNTPOST_id IS NOT NULL THEN 'HEADHUNTPOST' "
 			+ "       	WHEN JOBHUNTPOST.JOBHUNTPOST_id IS NOT NULL THEN 'JOBHUNTPOST' "
@@ -29,6 +28,13 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 			+ "        	WHEN MARKETPOST.MARKETPOST_id IS NOT NULL THEN 'MARKETPOST' "
 			+ "        	ELSE 'Unknown' " // 어떤 카테고리에도 해당하지 않는 경우 'Unknown'으로 설정
 			+ "		END AS post_category, "  // 게시글의 카테고리를 선택
+			+ "    	COALESCE ( "
+	        + "			HEADHUNTPOST.HEADHUNTPOST_id, "
+	        + "			JOBHUNTPOST.JOBHUNTPOST_id, "
+	        + "			FREEPOST.FREEPOST_id, "
+	        + "			MARKETPOST.MARKETPOST_id, "
+	        + "			'Unknown' "
+	        + "		) AS post_id, " // 각 게시글의 아이디를 선택
 	        + "    	COALESCE ( "
 	        + "			HEADHUNTPOST.HEADHUNTPOST_title, "
 	        + "			JOBHUNTPOST.JOBHUNTPOST_title, "
@@ -84,6 +90,13 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 			+ "			WHEN MARKETPOST.MARKETPOST_id IS NOT NULL THEN 'MARKETPOST' "
 			+ "			ELSE 'Unknown' "
 			+ "		END, "
+			+ "    	COALESCE ( "
+	        + "			HEADHUNTPOST.HEADHUNTPOST_id, "
+	        + "			JOBHUNTPOST.JOBHUNTPOST_id, "
+	        + "			FREEPOST.FREEPOST_id, "
+	        + "			MARKETPOST.MARKETPOST_id, "
+	        + "			'Unknown' "
+	        + "		) ," 
 			+ "		COALESCE ( "
 			+ "			HEADHUNTPOST.HEADHUNTPOST_title, "
 			+ "			JOBHUNTPOST.JOBHUNTPOST_title, "
@@ -106,7 +119,6 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 	
 	// 특정 회원이 좋아요한 구인글 목록 출력 (구인글만 출력).전미지	
 	private static final String SELECTALL_HEADHUNTPOSTRECOMMEND = "SELECT "
-	        + "    	RECOMMEND.POST_id, " // 게시글 아이디를 선택
 	        + "		'HeadHuntPost' AS POST_category, " // 게시판 카테고리 설정
 	        + "    	COALESCE(HEADHUNTPOST.HEADHUNTPOST_id, 'Unknown') AS post_id, "// 게시글 아이디를 선택
 	        + "    	COALESCE(HEADHUNTPOST.HEADHUNTPOST_title, 'Unknown') AS post_title, " // 게시글 제목을 선택
@@ -144,7 +156,6 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 	
 	// 특정 회원이 좋아요한 구직글 목록 출력 (구직글만 출력).전미지	
 	private static final String SELECTALL_JOBHUNTPOSTRECOMMEND = "SELECT "
-	        + "		RECOMMEND.POST_id, " // 게시글 아이디를 선택
 	        + "		'JOBHUNTPOST' AS post_category, " // 카테고리를 구직글로 지정
 	        + "		COALESCE(JOBHUNTPOST.JOBHUNTPOST_id, 'Unknown') AS post_id, " // 게시글 아이디를 선택
 	        + "		COALESCE(JOBHUNTPOST.JOBHUNTPOST_title, 'Unknown') AS post_title, " // 게시글 제목을 선택
@@ -182,7 +193,6 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 	
 	// 특정 회원이 좋아요한 자유글 목록 출력 (자유글만 출력).전미지	
 	private static final String SELECTALL_FREEPOSTRECOMMEND = "SELECT "
-	        + "		RECOMMEND.POST_id, " // 게시글 아이디를 선택
 	        + "    	'FREEPOST' AS post_category, " // 카테고리를 자유글로 지정
 	        + "    	COALESCE(FREEPOST.FREEPOST_id, 'Unknown') AS post_id, " // 게시글 아이디를 선택
 	        + "    	COALESCE(FREEPOST.FREEPOST_title, 'Unknown') AS post_title, " // 게시글 제목을 선택
@@ -220,7 +230,6 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 	
 	// 특정 회원이 좋아요한 장터글 목록 출력 (장터글만 출력).전미지	
 	private static final String SELECTALL_MARKETPOSTRECOMMEND = "SELECT "
-	        + "		RECOMMEND.POST_id, " // 게시글 아이디를 선택
 	        + "    	'MARKETPOST' AS post_category, " // 카테고리를 장터글로 지정
 	        + "    	COALESCE(MARKETPOST.MARKETPOST_id, 'Unknown') AS post_id, " // 게시글 아이디를 선택
 	        + "    	COALESCE(MARKETPOST.MARKETPOST_title, 'Unknown') AS post_title, " // 게시글 제목을 선택
@@ -262,7 +271,6 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 	private static final String SELECTALL_RECOMMENDTOTALCATEGORY = "SELECT "
 			  // 게시글의 데이터 중 가져올 정보를 선택하는 쿼리끝
 			+ " SELECT "
-			+ "		RECOMMEND.POST_id, " // 게시글 아이디를 선택
 			+ "		CASE " // 게시글에 해당하는 카테고리 선택
 			+ "			WHEN HEADHUNTPOST.HEADHUNTPOST_id IS NOT NULL THEN 'HEADHUNTPOST' "
 			+ "       	WHEN JOBHUNTPOST.JOBHUNTPOST_id IS NOT NULL THEN 'JOBHUNTPOST' "
@@ -270,6 +278,13 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 			+ "        	WHEN MARKETPOST.MARKETPOST_id IS NOT NULL THEN 'MARKETPOST' "
 			+ "        	ELSE 'Unknown' " // 어떤 카테고리에도 해당하지 않는 경우 'Unknown'으로 설정
 			+ "		END AS post_category, "  // 게시글의 카테고리를 선택
+			+ "    	COALESCE ( "
+	        + "			HEADHUNTPOST.HEADHUNTPOST_id, "
+	        + "			JOBHUNTPOST.JOBHUNTPOST_id, "
+	        + "			FREEPOST.FREEPOST_id, "
+	        + "			MARKETPOST.MARKETPOST_id, "
+	        + "			'Unknown' "
+	        + "		) AS post_id, " // 각 게시글의 아이디를 선택
 	        + "    	COALESCE ( "
 	        + "			HEADHUNTPOST.HEADHUNTPOST_title, "
 	        + "			JOBHUNTPOST.JOBHUNTPOST_title, "
@@ -284,13 +299,6 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 	        + "			MARKETPOST.MARKETPOST_content, "
 	        + "			'Unknown' "
 	        + "		) AS post_content, " // 각 게시글의 내용을 선택
-	        + "    	COALESCE ( "
-	        + "			HEADHUNTPOST.HEADHUNTPOST_date, "
-	        + "			JOBHUNTPOST.JOBHUNTPOST_date, "
-	        + "			FREEPOST.FREEPOST_date, "
-	        + "			MARKETPOST.MARKETPOST_date, "
-	        + "			'Unknown' "
-	        + "		) AS post_date, " // 각 게시글의 날짜를 선택
 	        + "    	COALESCE ( "
 	        + "			HEADHUNTPOST.HEADHUNTPOST_date, "
 	        + "			JOBHUNTPOST.JOBHUNTPOST_date, "
@@ -348,6 +356,13 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 			+ "			WHEN MARKETPOST.MARKETPOST_id IS NOT NULL THEN 'MARKETPOST' "
 			+ "			ELSE 'Unknown' "
 			+ "		END, "
+			+ "    	COALESCE ( "
+	        + "			HEADHUNTPOST.HEADHUNTPOST_id, "
+	        + "			JOBHUNTPOST.JOBHUNTPOST_id, "
+	        + "			FREEPOST.FREEPOST_id, "
+	        + "			MARKETPOST.MARKETPOST_id, "
+	        + "			'Unknown' "
+	        + "		), "
 			+ "		COALESCE ( "
 			+ "			HEADHUNTPOST.HEADHUNTPOST_title, "
 			+ "			JOBHUNTPOST.JOBHUNTPOST_title, "
@@ -528,6 +543,7 @@ class RecommendBestRecommendRowMapper implements RowMapper<RecommendDTO>{
 		RecommendDTO recommendDTO = new RecommendDTO(); // 새로운 RecommendDTO 객체 생성	
 		// ResultSet에 저장된 데이터를 RecommendDTO 객체에 저장	
 		recommendDTO.setPostCategory(rs.getString("post_category"));			// 게시글 카테고리
+		recommendDTO.setPostId(rs.getString("post_id"));						// 게시글 아이디
 		recommendDTO.setPostTitle(rs.getString("post_title"));					// 게시글 제목
 		recommendDTO.setPostDate(rs.getString("post_date"));					// 게시글 작성일
 		recommendDTO.setPostRecommendCnt(rs.getString("post_recommendcnt"));	// 게시글의 좋아요 수
@@ -563,13 +579,14 @@ class JobHuntPostRecommendRowMapper implements RowMapper<RecommendDTO>{
 		
 		RecommendDTO recommendDTO = new RecommendDTO(); // 새로운 RecommendDTO 객체 생성	
 		// ResultSet에 저장된 데이터를 RecommendDTO 객체에 저장
-		recommendDTO.setPostId(rs.getString("post_id"));			// 게시글 아이디	
-		recommendDTO.setPostId(rs.getString("post_title"));			// 게시글 제목
-		recommendDTO.setPostContent(rs.getString("post_content"));	// 게시글 내용
-		recommendDTO.setPostId(rs.getString("post_date"));			// 게시글 작성일
-		recommendDTO.setPostId(rs.getString("post_viewcnt"));		// 게시글 조회수
-		recommendDTO.setPostId(rs.getString("post_recommendcnt"));	// 게시글의 좋아요 수
-		recommendDTO.setPostImgName(rs.getString("post_imgname"));	// 게시글 대표 이미지
+		recommendDTO.setPostCategory(rs.getString("post_category"));			// 게시글 카테고리
+		recommendDTO.setPostId(rs.getString("post_id"));						// 게시글 아이디	
+		recommendDTO.setPostTitle(rs.getString("post_title"));					// 게시글 제목
+		recommendDTO.setPostContent(rs.getString("post_content"));				// 게시글 내용
+		recommendDTO.setPostDate(rs.getString("post_date"));					// 게시글 작성일
+		recommendDTO.setPostViewcnt(rs.getString("post_viewcnt"));				// 게시글 조회수
+		recommendDTO.setPostRecommendCnt(rs.getString("post_recommendcnt"));	// 게시글의 좋아요 수
+		recommendDTO.setPostImgName(rs.getString("post_imgname"));				// 게시글 대표 이미지
 		return recommendDTO; // recommendDTO에 저장된 데이터들을 반환
 	}
 }
@@ -582,13 +599,14 @@ class FreePostRecommendRowMapper implements RowMapper<RecommendDTO>{
 		
 		RecommendDTO recommendDTO = new RecommendDTO(); // 새로운 RecommendDTO 객체 생성	
 		// ResultSet에 저장된 데이터를 RecommendDTO 객체에 저장
-		recommendDTO.setPostId(rs.getString("post_id"));			// 게시글 아이디	
-		recommendDTO.setPostId(rs.getString("post_title"));			// 게시글 제목
-		recommendDTO.setPostContent(rs.getString("post_content"));	// 게시글 내용
-		recommendDTO.setPostId(rs.getString("post_date"));			// 게시글 작성일
-		recommendDTO.setPostId(rs.getString("post_viewcnt"));		// 게시글 조회수
-		recommendDTO.setPostId(rs.getString("post_recommendcnt"));	// 게시글의 좋아요 수
-		recommendDTO.setPostImgName(rs.getString("post_imgname"));	// 게시글 대표 이미지
+		recommendDTO.setPostCategory(rs.getString("post_category"));			// 게시글 카테고리
+		recommendDTO.setPostId(rs.getString("post_id"));						// 게시글 아이디	
+		recommendDTO.setPostTitle(rs.getString("post_title"));					// 게시글 제목
+		recommendDTO.setPostContent(rs.getString("post_content"));				// 게시글 내용
+		recommendDTO.setPostDate(rs.getString("post_date"));					// 게시글 작성일
+		recommendDTO.setPostViewcnt(rs.getString("post_viewcnt"));				// 게시글 조회수
+		recommendDTO.setPostRecommendCnt(rs.getString("post_recommendcnt"));	// 게시글의 좋아요 수
+		recommendDTO.setPostImgName(rs.getString("post_imgname"));				// 게시글 대표 이미지
 		return recommendDTO; // recommendDTO에 저장된 데이터들을 반환
 	}
 }
@@ -601,13 +619,14 @@ class MarketPostRecommendRowMapper implements RowMapper<RecommendDTO>{
 		
 		RecommendDTO recommendDTO = new RecommendDTO(); // 새로운 RecommendDTO 객체 생성	
 		// ResultSet에 저장된 데이터를 RecommendDTO 객체에 저장
-		recommendDTO.setPostId(rs.getString("post_id"));			// 게시글 아이디	
-		recommendDTO.setPostId(rs.getString("post_title"));			// 게시글 제목
-		recommendDTO.setPostContent(rs.getString("post_content"));	// 게시글 내용
-		recommendDTO.setPostId(rs.getString("post_date"));			// 게시글 작성일
-		recommendDTO.setPostId(rs.getString("post_viewcnt"));		// 게시글 조회수
-		recommendDTO.setPostId(rs.getString("post_recommendcnt"));	// 게시글의 좋아요 수
-		recommendDTO.setPostImgName(rs.getString("post_imgname"));	// 게시글 대표 이미지
+		recommendDTO.setPostCategory(rs.getString("post_category"));			// 게시글 카테고리
+		recommendDTO.setPostId(rs.getString("post_id"));						// 게시글 아이디	
+		recommendDTO.setPostTitle(rs.getString("post_title"));					// 게시글 제목
+		recommendDTO.setPostContent(rs.getString("post_content"));				// 게시글 내용
+		recommendDTO.setPostDate(rs.getString("post_date"));					// 게시글 작성일
+		recommendDTO.setPostViewcnt(rs.getString("post_viewcnt"));				// 게시글 조회수
+		recommendDTO.setPostRecommendCnt(rs.getString("post_recommendcnt"));	// 게시글의 좋아요 수
+		recommendDTO.setPostImgName(rs.getString("post_imgname"));				// 게시글 대표 이미지
 		return recommendDTO; // recommendDTO에 저장된 데이터들을 반환
 	}
 }
@@ -620,13 +639,14 @@ class  RecommendTotalCategoryRowMapper implements RowMapper<RecommendDTO>{
 		
 		RecommendDTO recommendDTO = new RecommendDTO(); // 새로운 RecommendDTO 객체 생성	
 		// ResultSet에 저장된 데이터를 RecommendDTO 객체에 저장
-		recommendDTO.setPostId(rs.getString("post_id"));			// 게시글 아이디	
-		recommendDTO.setPostId(rs.getString("post_title"));			// 게시글 제목
-		recommendDTO.setPostContent(rs.getString("post_content"));	// 게시글 내용
-		recommendDTO.setPostId(rs.getString("post_date"));			// 게시글 작성일
-		recommendDTO.setPostId(rs.getString("post_viewcnt"));		// 게시글 조회수
-		recommendDTO.setPostId(rs.getString("post_recommendcnt"));	// 게시글의 좋아요 수
-		recommendDTO.setPostImgName(rs.getString("post_imgname"));	// 게시글 대표 이미지
+		recommendDTO.setPostCategory(rs.getString("post_category"));			// 게시글 카테고리
+		recommendDTO.setPostId(rs.getString("post_id"));						// 게시글 아이디	
+		recommendDTO.setPostTitle(rs.getString("post_title"));					// 게시글 제목
+		recommendDTO.setPostContent(rs.getString("post_content"));				// 게시글 내용
+		recommendDTO.setPostDate(rs.getString("post_date"));					// 게시글 작성일
+		recommendDTO.setPostViewcnt(rs.getString("post_viewcnt"));				// 게시글 조회수
+		recommendDTO.setPostRecommendCnt(rs.getString("post_recommendcnt"));	// 게시글의 좋아요 수
+		recommendDTO.setPostImgName(rs.getString("post_imgname"));				// 게시글 대표 이미지
 		return recommendDTO; // recommendDTO에 저장된 데이터들을 반환
 	}
 }

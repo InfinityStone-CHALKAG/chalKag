@@ -20,6 +20,7 @@ public class HeadHuntPostDAO { // 구인 게시판 DAO
  // 프리미엄 회원이 작성한 구인글 출력 (최신글 2개만 출력).전미지
  private static final String SELECTALL_HEADHUNTPOSTPREMIUM = "SELECT "
 		  + "	'HeadHuntPost' AS POST_category, " // 게시판 카테고리 설정
+		  + "	HEADHUNTPOST.HEADHUNTPOST_id, "
 		  + "	MEMBER.MEMBER_nickname, "
 		  + "	HEADHUNTPOST.HEADHUNTPOST_title, "
 		  + "	HEADHUNTPOST.HEADHUNTPOST_content, "
@@ -53,7 +54,7 @@ public class HeadHuntPostDAO { // 구인 게시판 DAO
  // 게시글 이미지는 테이블을 따로 나누었으며 서브 쿼리를 사용해 게시글 이미지 중 대표 이미지로 보여줄 이미지를 설정하고, 그 결과를 "POSTIMG_name"라는 별칭으로 반환
  
  
- // 주간 추천순 구인글 목록 출력(2개만 출력).전미지
+ // 주간 추천순 구인글 목록 출력 (2개만 출력).전미지
  private static final String SELECTALL_HEADHUNTPOSTWEEKLYBEST = "SELECT "
 		  + "	'HeadHuntPost' AS POST_category, " // 게시판 카테고리 설정
 		  + "	HEADHUNTPOST.HEADHUNTPOST_id, "
@@ -160,6 +161,7 @@ public class HeadHuntPostDAO { // 구인 게시판 DAO
  private static final String SELECTALL_HEADHUNTPOSTPREMIUM1MONTH = "SELECT "
 		  + "	'HeadHuntPost' AS POST_category, " // 게시판 카테고리 설정
 		  + "	HEADHUNTPOST.HEADHUNTPOST_id, "
+		  + "	HEADHUNTPOST.MEMBER_id, "
 		  + "	MEMBER.MEMBER_nickname, "
 		  + "	HEADHUNTPOST.HEADHUNTPOST_title, "
 		  + "	HEADHUNTPOST.HEADHUNTPOST_content, "
@@ -201,11 +203,13 @@ public class HeadHuntPostDAO { // 구인 게시판 DAO
  // 쿼리문 설명 :
  // INNER JOIN을 사용해 구인글 테이블과 회원 테이블을 연결하고, 또 다른 LEFT JOIN을 사용해 구인글 테이블과 좋아요 테이블을 연결
  // 게시글 이미지는 테이블을 따로 나누었으며 서브 쿼리를 사용해 게시글 이미지 중 대표 이미지로 보여줄 이미지를 설정하고, 그 결과를 "POSTIMG_name"라는 별칭으로 반환
-  
+
+ 
   // 구인글 목록 출력.전미지
   private static final String SELECTALL_HEADHUNTPOST = "SELECT "
 		  + "	'HeadHuntPost' AS POST_category, " // 게시판 카테고리 설정
 		  + "	HEADHUNTPOST.HEADHUNTPOST_id, "
+		  + "	HEADHUNTPOST.MEMBER_id, "
 		  + "	MEMBER.MEMBER_nickname, "
 		  + "	HEADHUNTPOST.HEADHUNTPOST_title, "
 		  + "	HEADHUNTPOST.HEADHUNTPOST_content, "
@@ -305,6 +309,7 @@ public class HeadHuntPostDAO { // 구인 게시판 DAO
   // 메인 페이지 - 최신 게시글 1개 출력.전미지
   private static final String SELECTONE_HEADHUNTPOSTRECENT= "SELECT "
 		  + "	'HeadHuntPost' AS POST_category, " // 게시판 카테고리 설정
+		  + "	HEADHUNTPOST.HEADHUNTPOST_id, "	
 		  + "	HEADHUNTPOST.HEADHUNTPOST_title, "
 		  + "	HEADHUNTPOST.HEADHUNTPOST_content, "
 		  + "	HEADHUNTPOST.HEADHUNTPOST_date, "
@@ -330,13 +335,13 @@ public class HeadHuntPostDAO { // 구인 게시판 DAO
 		  + "FROM "
 		  + "	HEADHUNTPOST " // 구인글 테이블
 		  + "LEFT JOIN "
-		  + "	RECOMMEND ON HEADHUNTPOST.HEADHUNTPO-ST_id = RECOMMEND.POST_id " // 좋아요 정보와 LEFT JOIN
+		  + "	RECOMMEND ON HEADHUNTPOST.HEADHUNTPOST_id = RECOMMEND.POST_id " // 좋아요 정보와 LEFT JOIN
 		  + "ORDER BY "
 		  + "    HEADHUNTPOST.HEADHUNTPOST_date DESC " // 작성일을 기준으로 내림차순 정렬
 		  + "LIMIT 1 "; // 글을 1개만 가져오도록 설정
   // 사용한 테이블 : 구인글 테이블, 회원 테이블, 좋아요 테이블, 게시글 이미지 테이블
   // 사용한 컬럼 (출력 내용) :
-  // 게시글 카테고리, 구인글 제목, 구인글 내용, 구인글 작성일, 게시글 이미지 테이블(게시글 이미지 테이블), 게시글의 좋아요 수(좋아요 테이블)
+  // 게시글 카테고리, 게시글 아이디, 구인글 제목, 구인글 내용, 구인글 작성일, 게시글의 좋아요 수(좋아요 테이블), 게시글 대표 이미지(게시글 이미지 테이블)
   // 쿼리문 설명 :
   // INNER JOIN을 사용해 구인글 테이블과 회원 테이블을 연결하고, 또 다른 LEFT JOIN을 사용해 구인글 테이블과 좋아요 테이블을 연결
   // 게시글의 좋아요는 테이블을 따로 나누었으며 COUNT() 함수를 사용해 게시글에 대한 좋아요 수를 합산하고, 그 결과를 "RECOMMEND_cnt"라는 별칭으로 반환
@@ -396,6 +401,7 @@ public class HeadHuntPostDAO { // 구인 게시판 DAO
   // 프로필 이미지는 테이블을 따로 나누었으며 서브 쿼리를 사용해 프로필 이미지 중 회원 프로필로 보여줄 이미지를 설정하고, 그 결과를 "PROFILEIMG_name"라는 별칭으로 반환
   // 게시글의 좋아요는 테이블을 따로 나누었으며 COUNT() 함수를 사용해 게시글에 대한 좋아요 수를 합산하고, 그 결과를 "RECOMMEND_cnt"라는 별칭으로 반환
   
+// --------------------------------------------------------------- INSERT, UPDATE, DELETE ---------------------------------------------------------------
   
   // 구인글 작성.전미지
   private static final String INSERT_HEADHUNTPOST = "INSERT INTO HEADHUNTPOST ( "
@@ -407,8 +413,8 @@ public class HeadHuntPostDAO { // 구인 게시판 DAO
 		  + "HEADHUNTPOST_concept, "
 		  + "HEADHUNTPOST_title, "
 		  + "HEADHUNTPOST_content, "
-		  + "HEADHUNTPOST_viewcnt) "
-		  + "VALUES(?,?,?,?,?,?,?,?,0) ";
+		  + "HEADHUNTPOST_viewcnt "
+		  + ")VALUES(?,?,?,?,?,?,?,?,0) ";
   // 사용한 테이블 : 구인글 테이블
   // 사용한 컬럼 (작성 내용) :
   // 회원 아이디(회원 테이블), 구인글 작성 시간, 구인글 직업, 구인글 작업 지역, 구인글 작업 페이,
@@ -487,7 +493,6 @@ public class HeadHuntPostDAO { // 구인 게시판 DAO
 			  System.out.println("HeadHuntPostDAO(selectAll) Out로그 = [" + result + "]");
 			  return result;
 		  }
-
 	  } catch (Exception e) { // 예외 발생 시
 		  e.printStackTrace(); // 예외 내용 출력
 		  return null; // 예외 발생 시 null 반환
@@ -524,7 +529,7 @@ public class HeadHuntPostDAO { // 구인 게시판 DAO
 			  return result;
 		  }
 		 
-	  } catch (Exception e) {
+	  } catch (Exception e) { // 예외 발생 시
 		  e.printStackTrace(); // 예외 내용 출력
 		  return null; // 예외 발생 시 null 반환
 	  }
@@ -598,7 +603,7 @@ public class HeadHuntPostDAO { // 구인 게시판 DAO
 
 }
 
-// ===== SELECTALL =====
+//---------------------------------------------------------------------- SELECTALL ----------------------------------------------------------------------
 
 // 메인 페이지 - 프리미엄 회원이 작성한 구인글 목록 출력 시 필요한 데이터를 저장할 RowMapper 클래스.전미지
 class HeadHuntPostPremiumRowMapper implements RowMapper<HeadHuntPostDTO> {
@@ -609,6 +614,7 @@ class HeadHuntPostPremiumRowMapper implements RowMapper<HeadHuntPostDTO> {
 		HeadHuntPostDTO headHuntPostDTO = new HeadHuntPostDTO(); // 새로운 HeadHuntPostDTO 객체 생성
 		// ResultSet에 저장된 데이터를 HeadHuntPostDTO 객체에 저장
 		headHuntPostDTO.setPostCategory(rs.getString("POST_category"));            		// 게시글 카테고리
+		headHuntPostDTO.setHeadHuntPostId(rs.getString("HEADHUNTPOST_id")); 			// 구인글 아이디
 		headHuntPostDTO.setMemberNickname(rs.getString("MEMBER_nickname"));				// 회원 닉네임
 		headHuntPostDTO.setHeadHuntPostTitle(rs.getString("HEADHUNTPOST_title")); 		// 구인글 제목
 		headHuntPostDTO.setHeadHuntPostContent(rs.getString("HEADHUNTPOST_content")); 	// 구인글 내용
@@ -636,7 +642,7 @@ class HeadHuntPostWeeklyBestRowMapper implements RowMapper<HeadHuntPostDTO> {
 	}
 }
 
-// 메인 페이지 - 주간 추천순 구인글 목록 출력 시 필요한 데이터를 저장할 RowMapper 클래스.전미지
+// 구인글 페이지 - 프리미엄 회원이 작성한지 한 달 이내의 글 필요한 데이터를 저장할 RowMapper 클래스.전미지
 class HeadHuntPostPremium1MonthRowMapper implements RowMapper<HeadHuntPostDTO> {
 	@Override // mapRow 메서드 오버라이드
 	public HeadHuntPostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -701,8 +707,7 @@ class HeadHuntPostMemberRowMapper implements RowMapper<HeadHuntPostDTO> {
 	}
 }
 
-
-// ===== SELECTONE =====
+// ---------------------------------------------------------------------- SELECTONE ----------------------------------------------------------------------
 
 // 게시글 이미지 저장 시 필요한 게시글 아이디의 최대값을 저장할 RowMapper 클래스.전미지
 class SelectOneMaxPostIdRowMapper implements RowMapper<HeadHuntPostDTO> {
@@ -728,6 +733,7 @@ class SelectOneHeadHuntPostRecentRowMapper implements RowMapper<HeadHuntPostDTO>
 		HeadHuntPostDTO headHuntPostDTO = new HeadHuntPostDTO(); // 새로운 HeadHuntPostDTO 객체 생성
 		// ResultSet에 저장된 데이터를 HeadHuntPostDTO 객체에 저장
 		headHuntPostDTO.setPostCategory(rs.getString("POST_category"));            		// 게시글 카테고리
+		headHuntPostDTO.setHeadHuntPostId(rs.getString("HEADHUNTPOST_id")); 			// 구인글 아이디
 		headHuntPostDTO.setHeadHuntPostTitle(rs.getString("HEADHUNTPOST_title")); 		// 구인글 제목
 		headHuntPostDTO.setHeadHuntPostContent(rs.getString("HEADHUNTPOST_content")); 	// 구인글 내용
 		headHuntPostDTO.setHeadHuntPostDate(rs.getString("HEADHUNTPOST_date")); 		// 구인글 작성일
@@ -745,6 +751,7 @@ class SelectOneHeadHuntPostRowMapper implements RowMapper<HeadHuntPostDTO> {
 
 		HeadHuntPostDTO headHuntPostDTO = new HeadHuntPostDTO(); // 새로운 HeadHuntPostDTO 객체 생성
 		// ResultSet에 저장된 데이터를 HeadHuntPostDTO 객체에 저장
+		headHuntPostDTO.setPostCategory(rs.getString("POST_category"));            		// 게시글 카테고리
 		headHuntPostDTO.setHeadHuntPostId(rs.getString("HEADHUNTPOST_id")); 			// 구인글 아이디
 		headHuntPostDTO.setMemberId(rs.getString("MEMBER_id")); 						// 회원 아이디
 		headHuntPostDTO.setMemberNickname(rs.getString("MEMBER_nickname")); 			// 회원 닉네임
