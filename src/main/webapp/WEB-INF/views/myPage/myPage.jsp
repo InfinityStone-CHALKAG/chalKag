@@ -167,20 +167,20 @@
                                             <li class="dropdown magz-dropdown" ">
                             </i><a href=" category.html">My Posts<i class="ion-android-create"></i></a>
                                                 <ul class="dropdown-menu">
-                                                    <li><a href="../marketPost">MarketPost</a></li>
-                                                    <li><a href="HeadHuntPost">HeadHuntPost</a></li>
-                                                    <li><a href="JobHuntPost">JobHuntPost</a></li>
-                                                    <li><a href="FreePost">FreePost</a></li>
+                                                    <li><a href="myMarketPostList">MarketPost</a></li>
+                                                    <li><a href="myHeadHuntPostList">HeadHuntPost</a></li>
+                                                    <li><a href="myJobHuntPostList">JobHuntPost</a></li>
+                                                    <li><a href="myFreePostList">FreePost</a></li>
                                                 </ul>
                                             </li>
                                             <li class="dropdown magz-dropdown">
                                                 <a href="category.html">My Recommend
                                                     Posts<i class="ion-ios-heart"></i></a>
                                                 <ul class="dropdown-menu">
-                                                    <li><a href="../marketPost">MarketPost</a></li>
-                                                    <li><a href="HeadHuntPost">HeadHuntPost</a></li>
-                                                    <li><a href="JobHuntPost">JobHuntPost</a></li>
-                                                    <li><a href="FreePost">FreePost</a></li>
+                                                    <li><a href="recommendMarketPostList">MarketPost</a></li>
+                                                    <li><a href="recommendHeadHuntPostList">HeadHuntPost</a></li>
+                                                    <li><a href="recommendJobHuntPostList">JobHuntPost</a></li>
+                                                    <li><a href="recommendFreePostList">FreePost</a></li>
                                                 </ul>
                                             </li>
                                             <li><a href="myReview">My Review List<i class="ion-ios-star"></i></a></li>
