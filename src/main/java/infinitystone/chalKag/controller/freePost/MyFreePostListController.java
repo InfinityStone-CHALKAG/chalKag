@@ -2,6 +2,7 @@ package infinitystone.chalKag.controller.freePost;
 
 import java.util.List;
 
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,15 +18,15 @@ public class MyFreePostListController {
 	private FreePostService freePostService;
 	
 	@RequestMapping("/myFreePostList")
-	public String myFreePostList(HttpSession session, FreePostDTO freePostDTO, Model model) {
+	public String myFreePostList(HttpSession session, FreePostDTO freePostDTO, Model model, Gson gson) {
 		// 현재 세션에 있는 로그인 정보를 가지고 와서 해당 유저가 쓴 글을 전부 출력
 		freePostDTO.setMemberId((String)session.getAttribute("member"));
-		freePostDTO.setSearchCondition("myFreePostList");
-		List<FreePostDTO> freePostDatas = freePostService.selectAll(freePostDTO);
+		freePostDTO.setSearchCondition("freePostMemberList");
+		String freePostDatas = gson.toJson(freePostService.selectAll(freePostDTO));
 		
-		model.addAttribute("myFreePostList", freePostDatas);
+		model.addAttribute("FreePostList", freePostDatas);
 		
 		
-		return "myFreePostList";
+		return "myPost/myFreePostList";
 	}
 }
