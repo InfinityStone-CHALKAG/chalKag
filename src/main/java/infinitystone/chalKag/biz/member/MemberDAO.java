@@ -44,13 +44,13 @@ public class MemberDAO {
       "PROFILEIMG_name, " +
       "MEMBER.MEMBER_id, " +
       "MEMBER.MEMBER_nickname, " +
-      "(SELECT MAX(LEVER_id) " +
+      "(SELECT MAX(LEVEL_id) " +
       "FROM LEVEL " +
       "WHERE LEVEL_requiredexp <= MEMBER_exp) AS CURRENT_level, " +
       "MEMBER.MEMBER_signupdate, " +
       "MEMBER.MEMBER_grade " +
-      "FROM MEMBER" +
-      "JOIN PROFILEIMG ON PROFILIMG.MEMBER_id = MEMBER.MEMBER_id " +
+      "FROM MEMBER " +
+      "JOIN PROFILEIMG ON PROFILEIMG.MEMBER_id = MEMBER.MEMBER_id " +
       "JOIN SIGNINLOG ON SIGNINLOG.MEMBER_id = MEMBER.MEMBER_id " +
       "ORDER BY CURRENT_level DESC " +
       "LIMIT 5";
