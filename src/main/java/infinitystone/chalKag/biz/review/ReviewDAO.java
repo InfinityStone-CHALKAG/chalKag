@@ -15,17 +15,17 @@ public class ReviewDAO {
   @Autowired
   private JdbcTemplate jdbcTemplate;
 
-  private static final String SELECTALL = "SELECT REVIEW.REVIEW_id" +
-      "REVIEW.MEMBER_id," +
-      "MEMBER1.MEMBER_nickname AS MEMBER_nickname," +
-      "REVIEW.REVIEW_partner," +
-      "MEMBER2.MEMBER_nickname AS REVIEW_partnernickname," +
-      "REVIEW.REVIEW_date," +
-      "REVIEW.REVIEW_score," +
-      "REVIEW.REVIEW_content" +
-      "FROM REVIEW" +
-      "INNER JOIN MEMBER MEMBER1 ON REVIEW.MEMBER_id = MEMBER1.MEMBER_id" +
-      "INNER JOIN MEMBER MEMBER2 ON REVIEW.REVIEW_partner = MEMBER2.MEMBER_id" +
+  private static final String SELECTALL = "SELECT REVIEW.REVIEW_id " +
+      "REVIEW.MEMBER_id, " +
+      "MEMBER1.MEMBER_nickname AS MEMBER_nickname, " +
+      "REVIEW.REVIEW_partner, " +
+      "MEMBER2.MEMBER_nickname AS REVIEW_partnernickname, " +
+      "REVIEW.REVIEW_date, " +
+      "REVIEW.REVIEW_score, " +
+      "REVIEW.REVIEW_content " +
+      "FROM REVIEW " +
+      "INNER JOIN MEMBER MEMBER1 ON REVIEW.MEMBER_id = MEMBER1.MEMBER_id " +
+      "INNER JOIN MEMBER MEMBER2 ON REVIEW.REVIEW_partner = MEMBER2.MEMBER_id " +
       "WHERE REVIEW.REVIEW_partner = ?";
 
   private static final String SELECTONE = "SELECT REVIEW_id " +
@@ -38,10 +38,10 @@ public class ReviewDAO {
       "ORDER BY REVIEW_id DESC " +
       "LIMIT 1";
 
-  private static final String INSERT = "INSERT INTO REVIEW (MEMBER_id," +
-      "REVIEW_partner," +
-      "REVIEW_score" +
-      "REVIEW_content)" +
+  private static final String INSERT = "INSERT INTO REVIEW (MEMBER_id, " +
+      "REVIEW_partner, " +
+      "REVIEW_score " +
+      "REVIEW_content) " +
       "VALUES (?, ?, ?, ?)";
 
   private static final String UPDATE = "";
