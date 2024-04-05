@@ -93,6 +93,6 @@ public class UpdateHeadHuntPostController {
 	
 		
 		
-		return "redirect:headHuntPostSingle";
+		return "redirect:headHuntPost/headHuntPostSingle";
 	}
 }

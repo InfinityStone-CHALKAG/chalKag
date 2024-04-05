@@ -93,6 +93,6 @@ public class UpdateJobHuntPostController {
 
 
 
-		return "redirect:jobHuntPostSingle";
+		return "redirect:jobHuntPost/jobHuntPostSingle";
 	}
 }
