@@ -88,12 +88,12 @@ public class HeadHuntPostDAO { // 구인 게시판 DAO
 		  + "LEFT JOIN "
 		  + "	RECOMMEND ON HEADHUNTPOST.HEADHUNTPOST_id = RECOMMEND.POST_id " // 좋아요 정보와 LEFT JOIN
 		  + "WHERE "
-		  + "	HEADHUNTPOST.HEADHUNTPOST_date >= DATE_SUB(NOW(), INTERVAL1 WEEK), "
+		  + "	HEADHUNTPOST.HEADHUNTPOST_date >= DATE_SUB(NOW(), INTERVAL 1 WEEK) "
 		  + "GROUP BY "
 		  + "	HEADHUNTPOST.HEADHUNTPOST_id "
 		  + "ORDER BY "
 		  + "	COUNT(RECOMMEND.POST_id) DESC, " // (1) 좋아요 수가 많은 순으로 정렬한 뒤
-		  + "	HEADHUNTPOST.HEADHUNTPOST_date DESC, " // (2) 다음 작성일이 최신인 순으로 정렬
+		  + "	HEADHUNTPOST.HEADHUNTPOST_date DESC " // (2) 다음 작성일이 최신인 순으로 정렬
 		  + "LIMIT 2 ";
  // 사용한 테이블 : 구인글 테이블, 회원 테이블, 좋아요 테이블, 게시글 이미지 테이블
  // 사용한 컬럼 (출력 내용) :
