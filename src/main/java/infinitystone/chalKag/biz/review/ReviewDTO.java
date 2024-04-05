@@ -6,6 +6,7 @@ import lombok.Data;
 public class ReviewDTO {
 
   private String reviewId;
+  private String profileImgName;
   private String memberId;
   private String memberNickname;
   private String reviewPartner;
