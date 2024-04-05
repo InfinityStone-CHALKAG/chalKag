@@ -15,7 +15,6 @@ $(document).ready(function() {
 	
 // 페이징을 화면에 표시하는 함수
 function displayPagination(page) {
-    console.log("page : " + page);
 
     var paginationContainer = $("#paginationContainer"); // 페이지네이션 컨테이너 요소 가져오기
     paginationContainer.empty(); // 컨테이너 초기화
@@ -62,12 +61,12 @@ $("#paginationContainer").on("click", "a", function(event) {
 // 데이터를 로드하는 함수 정의
 loadReviewData = function(loadPage) {
     var dataToSend = {
-        'postDatas': JSON.stringify(postDatas),
+        'postDatas': postDatas,
         'page': loadPage,
     };
 
     if (isFiltered) {
-        dataToSend.filterData = JSON.stringify(filterData); // 필터링된 데이터가 있으면 필터링된 데이터 사용
+        dataToSend.filterData = postDatas; // 필터링된 데이터가 있으면 필터링된 데이터 사용
     }
     
     console.log("loadPage : " + loadPage);

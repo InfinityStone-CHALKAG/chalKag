@@ -16,10 +16,10 @@ $(document).ready(function() {
   
 	document.getElementById('minPrice').addEventListener('input', handleFilterChange);
 	document.getElementById('maxPrice').addEventListener('input', handleFilterChange);
-	document.getElementById('productCategory').addEventListener('input', handleFilterChange);
-	document.getElementById('productCompany').addEventListener('input', handleFilterChange);
+	document.getElementById('productCategory').addEventListener('change', handleFilterChange);
+	document.getElementById('productCompany').addEventListener('change', handleFilterChange);
 	
-	document.getElementById('product').addEventListener('change', function() {
+	document.getElementById('filterReset').addEventListener('click', function() {
 	    if(this.checked) {
 	        // 체크박스가 선택되었을 때 실행되는 로직
 	        document.getElementById('searchInput').value = '';
@@ -121,8 +121,8 @@ function updateVariables() {
 function performAjaxRequest() {
     // 서버에 보낼 데이터 준비. 예를 들어, minDate, maxDate
     const requestData = {
-    minDate: minDate,
-    maxDate: maxDate,
+    fromday: minDate,
+    today: maxDate,
     searchField: searchField,
     searchInput: searchInput,
     sortOrder: sortOrder,

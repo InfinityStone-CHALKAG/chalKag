@@ -41,6 +41,7 @@
 									placeholder="Title" />
 							</div>
 							
+							<p>※ Please write down the Job, Concept, and Region you are looking for</p>
 							<div class="form-group" style="display: flex; margin-bottom: 4%;">
 								<select class="selectTags" id="jobHuntPostRole" name="jobHuntPostRole"
 								style="width: 32%; height: 43px; margin-right: 2%;">
@@ -73,7 +74,7 @@
 								</select>
 							</div>
 							
-							
+							<p>※ Please write down the desired date and Pay </p>
 							<div class="form-group" style="display: flex; margin-bottom: 4%;">
 								<input class="selectTags" type="date" 
 								id="jobHuntPostWorkDate" name="jobHuntPostWorkDate" 

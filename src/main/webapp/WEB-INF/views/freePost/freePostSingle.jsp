@@ -68,20 +68,21 @@
 				<div class="col-md-8">
 					<article class="article main-article">
 						<header>
-							<h1>${freePostSingle.freePostTitle}</h1>
+							<h3>${freePostSingle.freePostTitle}</h3>
 							<ul class="details">
 								<li>${freePostSingle.freePostDate}</li>
 									<li>
-										<c:if test="${member == null || member != freePostSingle.memberId}">
-											<a href="/memberPage?memberId=${freePostSingle.memberId}">${freePostSingle.memberId}</a>
+										<a href="/freePostList">Free Post List</a>
+									</li>
+									<li>By 
+											
+													<c:if test="${member == null || member != freePostSingle.memberId}">
+											<a href="/memberPage?memberId=${freePostSingle.memberId}">${freePostSingle.memberNickname}</a>
 										</c:if> 
 										
 										<c:if test="${member == freePostSingle.memberId}">
-											<a href="/myPage?memberId=${freePostSingle.memberId}">${freePostSingle.memberId}</a>
+											<a href="/myPage?memberId=${freePostSingle.memberId}">${freePostSingle.memberNickname}</a>
 										</c:if>
-									</li>
-									<li>By 
-											<a>${freePostSingle.memberNickname}</a>
 									</li>	
 							</ul>
 						</header>

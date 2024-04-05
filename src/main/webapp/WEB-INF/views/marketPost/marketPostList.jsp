@@ -132,7 +132,7 @@ div .inner p {
 								style="font-weight: bold; margin-bottom: 2%;">COMPANY</div>
 							<div class="form-group">
 								<select
-									style="width: 100%; height: 40px;" id="role" name="marketPostCompany">
+									style="width: 100%; height: 40px;" id="productCompany" name="marketPostCompany">
 									<option value="" disabled selected>Select</option>
 									<option value="Canon">Canon</option>
 									<option value="Sony">Sony</option>
@@ -238,6 +238,8 @@ div .inner p {
 	<script src="js/user/marketPostPagination.js"></script>
 	<script src="js/user/marketPostFilterSearch.js"></script>
 	<script src="css/user/js/demo.js"></script>
+	<script src="css/user/js/e-magz.js"></script>
+	<script src="css/user/scripts/icheck/icheck.min.js"></script>
 	<script>
 		$("input").iCheck({
 			checkboxClass : 'icheckbox_square-red',
@@ -245,7 +247,6 @@ div .inner p {
 			cursor : true
 		});
 	</script>
-	<script src="css/user/js/e-magz.js"></script>
 	<script>
 	function message() {
 	    swal({

@@ -74,20 +74,21 @@
 					<div class="col-md-8">
 						<article class="article main-article">
 							<header>
-								<h1>${headHuntPostSingle.headHuntPostTitle}</h1>
+								<h3>${headHuntPostSingle.headHuntPostTitle}</h3>
 								<ul class="details" >
 									<li>${headHuntPostSingle.headHuntPostDate}</li>
 									<li>
+										<a href="/headHuntPostList">Head Hunt Post List</a>
+									</li>
+									<li>By 
+											
 										<c:if test="${member == null || member != headHuntPostSingle.memberId}">
-											<a href="/memberPage?memberId=${headHuntPostSingle.memberId}">${headHuntPostSingle.memberId}</a>
+											<a href="/memberPage?memberId=${headHuntPostSingle.memberId}">${headHuntPostSingle.memberNickname}</a>
 										</c:if> 
 										
 										<c:if test="${member == headHuntPostSingle.memberId}">
-											<a href="/myPage?memberId=${headHuntPostSingle.memberId}">${headHuntPostSingle.memberId}</a>
+											<a href="/myPage?memberId=${headHuntPostSingle.memberId}">${headHuntPostSingle.memberNickname}</a>
 										</c:if>
-									</li>
-									<li>By 
-											<a>${headHuntPostSingle.memberNickname}</a>
 									</li>	
 								</ul>
 							</header>

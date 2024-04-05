@@ -62,6 +62,18 @@ div .inner p {
 				<!-- 열 -->
 				<div class="col-md-3">
 					<aside>
+						<!-- 글 작성 -->
+					<c:if test="${member != null }">
+						<a class="btn btn-primary btn-block" style="margin-top: 5%"
+						 href="/writeFreePost"><i class="ion-android-create"
+						style="font-size: 15px;"></i> Write</a>
+					</c:if>
+					<c:if test="${member == null }">
+							<a class="btn btn-primary btn-block" style="margin-top: 5%"
+								onclick="message()"><i class="ion-android-create"
+								style="font-size: 15px;"></i> Write</a>
+						</c:if>
+						<br>
 						<!-- 검색 창 필터검색과 연동되어 있기에 필터검색을 처리하는 Js파일로 검색 처리 -->
 						<h2 class="aside-title">Search</h2>
 						<div class="aside-body">
@@ -114,19 +126,6 @@ div .inner p {
 						</div>
 					</aside>
 				</div>
-
-				<div class="col-md-9"
-					style="text-align: right; margin-bottom: 10px;">
-					<!-- 글 작성 -->
-					<c:if test="${member != null }">
-						<a class="btn btn-primary btn-sm" href="/writeFreePost">Writing</a>
-					</c:if>
-					<c:if test="${member == null }">
-						<a class="btn btn-primary btn-sm" onclick="message()">Writing</a>
-					</c:if>
-
-				</div>
-
 				<div class="col-md-9">
 					<div class="nav-tabs-group">
 						<ul class="nav-tabs-list">
