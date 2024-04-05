@@ -29,12 +29,19 @@ public class ReviewDAO {
       "WHERE REVIEW.REVIEW_partner = ?";
 
   private static final String SELECTONE = "SELECT REVIEW_id, " +
-      "MEMBER_id, " +
+      "(SELECT PROFILEIMG_name " +
+      "FROM PROFILEIMG " +
+      "WHERE PROFILEIMG.MEMBER_id = REVIEW.MEMBER_id " +
+      "ORDER BY PROFILEIMG_id DESC " +
+      "LIMIT 1) AS PROFILEIMG_name, " +
+      "REVIEW.MEMBER_id, " +
+      "MEMBER.MEMBER_nickname, " +
       "REVIEW_partner, " +
       "REVIEW_date, " +
       "REVIEW_score, " +
       "REVIEW_content " +
       "FROM REVIEW " +
+      "INNER JOIN MEMBER ON REVIEW.MEMBER_id = MEMBER.MEMBER_id " +
       "ORDER BY REVIEW_id DESC " +
       "LIMIT 1";
 
@@ -56,7 +63,7 @@ public class ReviewDAO {
 
   public ReviewDTO selectOne(ReviewDTO reviewDTO) {
     System.out.println("ReivewDAO In로그 = [" + reviewDTO + "]");
-    return jdbcTemplate.queryForObject(SELECTONE, new ReviewRowMapper());
+    return jdbcTemplate.queryForObject(SELECTONE, new ReviewSelectOneRowMapper());
   }
 
   public boolean insert(ReviewDTO reviewDTO) {
@@ -89,6 +96,22 @@ class ReviewRowMapper implements RowMapper<ReviewDTO> {
     reviewDTO.setMemberNickname(rs.getString("MEMBER_nickname"));
     reviewDTO.setReviewPartner(rs.getString("REVIEW_partner"));
     reviewDTO.setReviewPartnerNickname(rs.getString("REVIEW_partnernickname"));
+    reviewDTO.setReviewDate(rs.getString("REVIEW_date"));
+    reviewDTO.setReviewScore(rs.getString("REVIEW_score"));
+    reviewDTO.setReviewContent(rs.getString("REVIEW_content"));
+    return reviewDTO;
+  }
+}
+
+class ReviewSelectOneRowMapper implements RowMapper<ReviewDTO> {
+  @Override
+  public ReviewDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+    ReviewDTO reviewDTO = new ReviewDTO();
+    reviewDTO.setReviewId(rs.getString("REVIEW_id"));
+    reviewDTO.setProfileImgName(rs.getString("PROFILEIMG_name"));
+    reviewDTO.setMemberId(rs.getString("REVIEW.MEMBER_id"));
+    reviewDTO.setMemberNickname(rs.getString("MEMBER.MEMBER_nickname"));
+    reviewDTO.setReviewPartner(rs.getString("REVIEW_partner"));
     reviewDTO.setReviewDate(rs.getString("REVIEW_date"));
     reviewDTO.setReviewScore(rs.getString("REVIEW_score"));
     reviewDTO.setReviewContent(rs.getString("REVIEW_content"));
