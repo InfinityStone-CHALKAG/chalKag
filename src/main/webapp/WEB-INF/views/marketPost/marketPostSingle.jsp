@@ -74,20 +74,21 @@
 					<div class="col-md-8">
 						<article class="article main-article">
 							<header>
-								<h1>${marketPostSingle.marketPostTitle}</h1>
+								<h3>${marketPostSingle.marketPostTitle}</h3>
 								<ul class="details" >
 									<li>${marketPostSingle.marketPostDate}</li>
 										<li>
+											<a href="marketPostList?marketPostStatus=${marketPostSingle.marketPostCategory}">Market Post List</a>
+									</li>
+									<li>By 
+											
 										<c:if test="${member == null || member != marketPostSingle.memberId}">
-											<a href="/memberPage?memberId=${marketPostSingle.memberId}">${marketPostSingle.memberId}</a>
+											<a href="/memberPage?memberId=${marketPostSingle.memberId}">${marketPostSingle.memberNickname}</a>
 										</c:if> 
 										
 										<c:if test="${member == marketPostSingle.memberId}">
-											<a href="/myPage?memberId=${marketPostSingle.memberId}">${marketPostSingle.memberId}</a>
+											<a href="/myPage?memberId=${marketPostSingle.memberId}">${marketPostSingle.memberNickname}</a>
 										</c:if>
-									</li>
-									<li>By 
-											<a>${marketPostSingle.memberNickname}</a>
 									</li>	
 								</ul>
 							</header>

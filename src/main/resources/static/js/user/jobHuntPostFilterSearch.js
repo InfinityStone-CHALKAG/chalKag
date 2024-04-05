@@ -150,6 +150,8 @@ function updateVariables() {
 function performAjaxRequest() {
     // 서버에 보낼 데이터 준비. 예를 들어, minDate, maxDate
     const requestData = {
+	fromday: minDate,
+    today: maxDate,
     searchField: searchField,	// search Condition(제목, 내용, 제목 + 내용)
     searchInput: searchInput,	// search Condition (입력값)
     sortOrder: sortOrder,	// 오름차순 정렬, 내림차순 정렬
@@ -157,8 +159,8 @@ function performAjaxRequest() {
     maxPay : maxPay,
     jobHuntPostRole : role, 
     jobHuntPostRegion : region,
-    startDate : startDate,
-    endDate : endDate,
+    startWorkDate : startDate,
+    endWorkDate : endDate,
     jobHuntPostConcept : concept
     };
 

@@ -76,8 +76,8 @@ function updateVariables() {
 function performAjaxRequest() {
     // 서버에 보낼 데이터 준비. 예를 들어, minDate, maxDate
     const requestData = {
-    minDate: minDate,
-    maxDate: maxDate,
+    fromday: minDate,
+    today: maxDate,
     searchField: searchField,
     searchInput: searchInput,
     sortOrder: sortOrder
