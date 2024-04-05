@@ -7,7 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service("IJobHuntPostService")
+@Service("iJobHuntPostService")
 public class IJobHuntPostServiceImpl implements IJobHuntPostService{
 
 	// .xml과 이어진 DAO 의존 주입
@@ -22,21 +22,32 @@ public class IJobHuntPostServiceImpl implements IJobHuntPostService{
 		map.put("jobHuntPostId", jobHuntPostDTO.getJobHuntPostId());
 		map.put("jobHuntPostTitle", jobHuntPostDTO.getJobHuntPostTitle());
 		map.put("jobHuntPostContent", jobHuntPostDTO.getJobHuntPostContent());
-		map.put("titleAndContents", jobHuntPostDTO.getTitleAndContents());
 		map.put("jobHuntPostRole", jobHuntPostDTO.getJobHuntPostRole());
 		map.put("jobHuntPostRegion", jobHuntPostDTO.getJobHuntPostRegion());
 		map.put("jobHuntPostPay", jobHuntPostDTO.getJobHuntPostPay());
 		map.put("minPay", jobHuntPostDTO.getMinPay());
 		map.put("maxPay", jobHuntPostDTO.getMaxPay());
-		map.put("jobHuntPostConcept", jobHuntPostDTO.getJobHuntPostConcept());
-
+		
 		// 작업일 
 		map.put("jobHuntPostWorkDate", jobHuntPostDTO.getJobHuntPostWorkDate());
-
-
 		map.put("startWorkDate", jobHuntPostDTO.getStartWorkDate());
 		map.put("endWorkDate", jobHuntPostDTO.getEndWorkDate());
+		
+		map.put("titleAndContents", jobHuntPostDTO.getTitleAndContents());
+		
+		
+		map.put("fromday", jobHuntPostDTO.getFromday());
+		map.put("today", jobHuntPostDTO.getToday());
+		
+		map.put("sortOrder", jobHuntPostDTO.getSortOrder());
+		
+		map.put("searchField", jobHuntPostDTO.getSearchField());
+		map.put("searchInput", jobHuntPostDTO.getSearchInput());
+		
+		map.put("jobHuntPostConcept", jobHuntPostDTO.getJobHuntPostConcept());
+
 		return iJobHuntPostDAO.selectAll(map);
+
 	}
 
 	@Override

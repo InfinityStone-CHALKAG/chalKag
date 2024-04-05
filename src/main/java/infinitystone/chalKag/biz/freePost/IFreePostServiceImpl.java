@@ -23,7 +23,17 @@ public class IFreePostServiceImpl implements IFreePostService{
 		map.put("freePostTitle", freePostDTO.getFreePostTitle());
 		map.put("freePostContent", freePostDTO.getFreePostContent());
 		map.put("titleAndContents", freePostDTO.getTitleAndContents());
-
+		
+		// 등록일 출력
+		map.put("fromday", freePostDTO.getFromday());
+		map.put("today", freePostDTO.getToday());
+		
+		// 정렬
+		map.put("sortOrder", freePostDTO.getSortOrder());
+		
+		// 검색어 필터
+		map.put("searchField", freePostDTO.getSearchField());
+		map.put("searchInput", freePostDTO.getSearchInput());
 
 		return iFreePostDAO.selectAll(map);
 	}

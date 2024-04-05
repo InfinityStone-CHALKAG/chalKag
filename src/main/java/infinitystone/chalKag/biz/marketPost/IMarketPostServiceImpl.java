@@ -30,6 +30,15 @@ public class IMarketPostServiceImpl implements IMarketPostService{
 			map.put("marketPostCategory", marketPostDTO.getMarketPostCategory());
 			map.put("minPrice", marketPostDTO.getMinPrice());
 			map.put("maxPrice", marketPostDTO.getMaxPrice());
+			// 작업일 
+			map.put("fromday", marketPostDTO.getFromday());
+			map.put("today", marketPostDTO.getToday());
+			
+			// 검색어 필터
+			map.put("searchField", marketPostDTO.getSearchField());
+			map.put("searchInput", marketPostDTO.getSearchInput());
+
+			
 		}
 		// 삽니다 글만 출력
 		else if(marketPostDTO.getSearchCondition().equals("marketPostBuyList")) {
@@ -42,6 +51,13 @@ public class IMarketPostServiceImpl implements IMarketPostService{
 			map.put("marketPostCategory", marketPostDTO.getMarketPostCategory());
 			map.put("minPrice", marketPostDTO.getMinPrice());
 			map.put("maxPrice", marketPostDTO.getMaxPrice());
+			// 작업일 
+			map.put("fromday", marketPostDTO.getFromday());
+			map.put("today", marketPostDTO.getToday());
+			
+			// 검색어 필터
+			map.put("searchField", marketPostDTO.getSearchField());
+			map.put("searchInput", marketPostDTO.getSearchInput());
 		}
 		
 		// 무료나눔 글 출력
@@ -55,6 +71,13 @@ public class IMarketPostServiceImpl implements IMarketPostService{
 			map.put("marketPostCategory", marketPostDTO.getMarketPostCategory());
 			map.put("minPrice", marketPostDTO.getMinPrice());
 			map.put("maxPrice", marketPostDTO.getMaxPrice());
+			// 작업일 
+			map.put("fromday", marketPostDTO.getFromday());
+			map.put("today", marketPostDTO.getToday());
+			
+			// 검색어 필터
+			map.put("searchField", marketPostDTO.getSearchField());
+			map.put("searchInput", marketPostDTO.getSearchInput());
 		}
 		
 		

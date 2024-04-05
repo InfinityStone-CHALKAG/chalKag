@@ -287,7 +287,7 @@ class MarketPostSelectAllRowMapper implements RowMapper<MarketPostDTO> {
 		data.setMarketPostTitle(rs.getString("MARKETPOST_title"));
 		data.setMarketPostContent(rs.getString("MARKETPOST_content"));
 		data.setMarketPostViewcnt(rs.getString("MARKETPOST_viewcnt"));
-		data.setRecommendCnt(rs.getString("RECOMMEND_cnt"));
+		data.setRecommendCnt(rs.getInt("RECOMMEND_cnt"));
 		data.setPostImgName(rs.getString("POSTIMG_name"));
 
 		return data;
@@ -317,7 +317,7 @@ class MarketPostSelectOneRowMapper implements RowMapper<MarketPostDTO> {
 		data.setMarketPostTitle(rs.getString("MARKETPOST_title"));
 		data.setMarketPostContent(rs.getString("MARKETPOST_content"));
 		data.setMarketPostViewcnt(rs.getString("MARKETPOST_viewcnt"));
-		data.setRecommendCnt(rs.getString("RECOMMEND_cnt"));
+		data.setRecommendCnt(rs.getInt("RECOMMEND_cnt"));
 		
 		return data;
 	}
