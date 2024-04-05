@@ -5,19 +5,30 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="webComments"%>
 
 <div class="comments">
-	<h5>${fn:length(commentList)}Responses</h5>
-	<div style="text-align: center;">
+	<div style="display: flex;">
+		<p>${fn:length(commentList)}&nbsp;Responses</p>
 		<!-- 로그인 했을때 -->
 		<c:if test="${member != null}">
-			<input style="display: inline-block;"
-				class="btn btn-primary btn-rounded" id="toggleWriteBtn1"
-				type="button" value="Write Responses" onclick="toggleWrite(this)">
+
+			<i class="ion-ios-pricetag"
+				onclick="document.getElementById('toggleWriteBtn1').click();"
+				style="cursor: pointer; font-size: 25px; margin-left: 61%; justify-content: flex-end; text-decoration: underline;">Write a comment
+				</i>
+
+			<input style="display: none;" id="toggleWriteBtn1" type="button"
+				value="Write Responses" onclick="toggleWrite(this)">
 		</c:if>
 		<!-- 비 로그인 유저일때 -->
 		<c:if test="${member == null}">
-			<input style="display: inline-block;"
-				class="btn btn-primary btn-rounded" id="toggleWriteBtn2"
-				type="button" value="Write Responses" onclick="message()">
+
+			<i class="ion-ios-pricetag"
+				onclick="document.getElementById('toggleWriteBtn2').click();"
+				style="cursor: pointer; font-size: 25px; margin-left: 61%; justify-content: flex-end; text-decoration: underline;">Write a comment
+				</i>
+
+			<input style="display: none;" class="btn btn-primary btn-rounded"
+				id="toggleWriteBtn2" type="button" value="Write Responses"
+				onclick="message()">
 		</c:if>
 	</div>
 	<br>
@@ -89,51 +100,56 @@
 								id="commentContent_${commentList.commentId}">${commentList.commentContent}</div>
 
 							<!-- 답글 달기 -->
-							<footer style="display: flex; flex-wrap: wrap; justify-content: flex-end;">
+							<footer
+								style="display: flex; flex-wrap: wrap; justify-content: flex-end;">
 								<!-- 미 로그인 시 답글 버튼에 경고 버튼 -->
 								<c:if test="${member == null}">
-								
+
 									<i class="ion-edit" id="nullMemberIcon"
-									onclick="document.getElementById('nullMember').click();" 
-									style="cursor: pointer; font-size: 25px;"></i>
-									
-									<input id="nullMember" type="button"
-										style="display: none;" value="Reply" onclick="message()" />
+										onclick="document.getElementById('nullMember').click();"
+										style="cursor: pointer; font-size: 25px;"></i>
+
+									<input id="nullMember" type="button" style="display: none;"
+										value="Reply" onclick="message()" />
 								</c:if>
 
 								<!-- 작성자가 자기 댓글을 수정 또는 삭제를 할 경우 -->
 								<c:if test="${commentList.memberId == member}">
 									<!-- 수정 버튼 -->
-									<i class="ion-android-refresh btn-icon-like" id="commentUpdateBtnIcon_${commentList.commentId}"
-									onclick="document.getElementById('commentUpdateBtn_${commentList.commentId}').click();" 
-									style="cursor: pointer; font-size: 25px; margin-right: 10px;"></i>
-									
-									<input type="button"
-										style="display: none;" value="Update" id="commentUpdateBtn_${commentList.commentId}"
+									<i class="ion-android-refresh btn-icon-like"
+										id="commentUpdateBtnIcon_${commentList.commentId}"
+										onclick="document.getElementById('commentUpdateBtn_${commentList.commentId}').click();"
+										style="cursor: pointer; font-size: 25px; margin-right: 10px;"></i>
+
+									<input type="button" style="display: none;" value="Update"
+										id="commentUpdateBtn_${commentList.commentId}"
 										onclick="commentUpdate(${commentList.commentId}, '${commentList.commentContent}')">
-										
+
 									<!-- 삭제 버튼 -->
-									<i class="ion-trash-a btn-icon-like" id="commentDeleteBtnIcon_${commentList.commentId}"
-									onclick="document.getElementById('commentDeleteBtn_${commentList.commentId}').click();" 
-									style="cursor: pointer; font-size: 25px; margin-right: 10px;"></i>
-									
-									<input type="button"
-										style="display: none;" value="Delete"
+									<i class="ion-trash-a btn-icon-like"
+										id="commentDeleteBtnIcon_${commentList.commentId}"
+										onclick="document.getElementById('commentDeleteBtn_${commentList.commentId}').click();"
+										style="cursor: pointer; font-size: 25px; margin-right: 10px;"></i>
+
+									<input type="button" style="display: none;" value="Delete"
 										id="commentDeleteBtn_${commentList.commentId}"
 										onclick="commentDelte('${commentList.commentId}')">
 								</c:if>
 
 								<!-- 답글 작성 버튼 클릭 이벤트 -->
 								<c:if test="${member != null}">
-		
-								<i class="ion-edit btn-icon-like" id="commentWriteBtnIcon_${commentList.commentId}"
-									onclick="document.getElementById('commentWriteBtn_${commentList.commentId}').click();" 
-									style="cursor: pointer; font-size: 25px;"></i>
-								
-									<input class="btn btn-primary btn-rounded" type="button" id="commentWriteBtn_${commentList.commentId}"
-										style="display: none;" value="Reply" onclick="toggleReplyWrite(this)"
+
+									<i class="ion-edit btn-icon-like"
+										id="commentWriteBtnIcon_${commentList.commentId}"
+										onclick="document.getElementById('commentWriteBtn_${commentList.commentId}').click();"
+										style="cursor: pointer; font-size: 25px;"></i>
+
+									<input class="btn btn-primary btn-rounded" type="button"
+										id="commentWriteBtn_${commentList.commentId}"
+										style="display: none;" value="Reply"
+										onclick="toggleReplyWrite(this)"
 										data-comment-id="${commentList.commentId}" />
-										
+
 									<!-- 답글 입력 -->
 									<div id="writeReplyForm_${commentList.commentId}"
 										style="display: none; flex-basis: 100%;">
@@ -506,7 +522,7 @@ function toggleReply(commentId) {
         	    	for(var i = 0; i < data.length; i++) {
         	    	  if(member == data[i].memberId) {
         	    	    var itemHtml = 
-        	    	        '<div class="item" id="item_'+ data[i].replyId +'">' +
+        	    	        '<hr><div class="item" id="item_'+ data[i].replyId +'">' +
         	    	        '<div class="user">' +
         	    	        '<figure><img src="profileImg/' + data[i].profileImgName + '"></figure>' +
         	    	        '<div class="details">' +
@@ -522,7 +538,7 @@ function toggleReply(commentId) {
 							'</div></div></div></div>';
         	    	        } else {
         	    	        	 var itemHtml = 
-        	        	    	        '<div class="item" id="item_'+ data[i].replyId +'">' +
+        	        	    	        '<hr><div class="item" id="item_'+ data[i].replyId +'">' +
         	        	    	        '<div class="user">' +
         	        	    	        '<figure><img src="profileImg/' + data[i].profileImgName + '"></figure>' +
         	        	    	        '<div class="details">' +
