@@ -18,6 +18,9 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('month').value = currentMonth; // 월 초기값 설정
 });
 
+//year 사이드 그래프 
+
+
 // 그래프 시작
 (function($) {
     "use strict";
@@ -102,6 +105,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 });
             }
+
             document.getElementById('year').addEventListener('change', handleSelectChange);
             document.getElementById('month').addEventListener('change', handleSelectChange);
 
@@ -110,19 +114,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
             var year = []; 
             var signUpCount = [];
-
             for (var i = 0; i < signUpCountByYear.length; i++) {
                 year.push(signUpCountByYear[i].year);
                 signUpCount.push(signUpCountByYear[i].signUpCount);
             }
-
             // 추가 데이터 생성
             var lastYear = parseInt(year[year.length - 1]); // 마지막 년도를 숫자로 변환
             for (var i = 1; i <= 2; i++) { // 2개의 추가 데이터 생성
                 year.push((lastYear + i).toString()); // 년도를 문자열로 변환하여 추가
                 signUpCount.push("0"); // 가입 수는 "0"으로 설정
             }
-
 
             // 최대값 찾기
             var maxSignUpCount = Math.max(...signUpCount);
@@ -136,8 +137,16 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log(year);
 
             drawLineChart(chartId, year, signUpCount, max, "YEAR", "SIGNUPCOUNT");
-
-
+           
+            
+            var appendTab = $("#signUpCountByYearLineContainer");
+    
+        var title = signUpCountByYear[signUpCountByYear.length-1].year;
+        var yValue = signUpCountByYear[signUpCountByYear.length-1].signUpCount;
+       // 모든 signInCount 값을 더하여 총 합 구함
+         var avgValue = avgSignUpCount;
+          var percent = Math.round((yValue / totalYvalue) * 100);
+        	addDataToHTML(appendTab, title, yValue, percent, avgValue);
         }
 
         //나이별 회원 수

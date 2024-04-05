@@ -154,7 +154,13 @@
                         margin-top: 0;
                         margin-bottom: 0rem;
                     }
-                </style>
+                    .table th,
+    .table td {
+        text-align: left; /* 가운데 정렬 */
+    }
+              
+   
+</style>                
             </head>
 
             <body>
@@ -417,8 +423,7 @@
                                             <li class="tab__item">
                                                 <a href="#tab5">NM by Gender</a>
                                             </li>
-                                        </ul>
-                                        <!-- 탭 내용 영역 -->
+                                        </ul><!-- 탭 내용 영역 -->
                                         <div class="tab__content-wrapper">
                                             <div id="tab1" class="tab__content active">
                                                 <div class="row">
@@ -428,81 +433,13 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-4">
-                                                        <div class="card-body">
-                                                            <div class="progress-box progress-1">
-                                                                <h4 class="por-title">03/17</h4>
-                                                                <div class="por-txt">55 Users (40%)</div>
-                                                                <div class="progress mb-2" style="height: 5px;">
-                                                                    <div class="progress-bar bg-flat-color-1"
-                                                                        role="progressbar" style="width: 40%;"
-                                                                        aria-valuenow="25" aria-valuemin="0"
-                                                                        aria-valuemax="100"></div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="progress-box progress-2">
-                                                                <h4 class="por-title">03/18</h4>
-                                                                <div class="por-txt">50 Users (24%)</div>
-                                                                <div class="progress mb-2" style="height: 5px;">
-                                                                    <div class="progress-bar bg-flat-color-2"
-                                                                        role="progressbar" style="width: 24%;"
-                                                                        aria-valuenow="25" aria-valuemin="0"
-                                                                        aria-valuemax="100"></div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="progress-box progress-2">
-                                                                <h4 class="por-title">03/19s</h4>
-                                                                <div class="por-txt">75 Users (60%)</div>
-                                                                <div class="progress mb-2" style="height: 5px;">
-                                                                    <div class="progress-bar bg-flat-color-3"
-                                                                        role="progressbar" style="width: 60%;"
-                                                                        aria-valuenow="60" aria-valuemin="0"
-                                                                        aria-valuemax="100"></div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="progress-box progress-2">
-                                                                <h4 class="por-title">03/20</h4>
-                                                                <div class="por-txt">80 Users (90%)</div>
-                                                                <div class="progress mb-2" style="height: 5px;">
-                                                                    <div class="progress-bar bg-flat-color-4"
-                                                                        role="progressbar" style="width: 90%;"
-                                                                        aria-valuenow="90" aria-valuemin="0"
-                                                                        aria-valuemax="100"></div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="progress-box progress-2">
-                                                                <h4 class="por-title">03/21</h4>
-                                                                <div class="por-txt">56 Users (90%)</div>
-                                                                <div class="progress mb-2" style="height: 5px;">
-                                                                    <div class="progress-bar bg-flat-color-4"
-                                                                        role="progressbar" style="width: 90%;"
-                                                                        aria-valuenow="90" aria-valuemin="0"
-                                                                        aria-valuemax="100"></div>
-                                                                </div>
-                                                            </div>
+                                                        <div class="card-body" id="signInCountByDayOfWeekBarContainer">
+                                                           
 
-                                                            <div class="progress-box progress-2">
-                                                                <h4 class="por-title">03/22</h4>
-                                                                <div class="por-txt">55 Users (90%)</div>
-                                                                <div class="progress mb-2" style="height: 5px;">
-                                                                    <div class="progress-bar bg-flat-color-4"
-                                                                        role="progressbar" style="width: 90%;"
-                                                                        aria-valuenow="90" aria-valuemin="0"
-                                                                        aria-valuemax="100"></div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="progress-box progress-2">
-                                                                <h4 class="por-title">03/23</h4>
-                                                                <div class="por-txt">60 Users (90%)</div>
-                                                                <div class="progress mb-2" style="height: 5px;">
-                                                                    <div class="progress-bar bg-flat-color-4"
-                                                                        role="progressbar" style="width: 90%;"
-                                                                        aria-valuenow="90" aria-valuemin="0"
-                                                                        aria-valuemax="100"></div>
-                                                                </div>
-                                                            </div>
+                                                            <!-- 서브테이블 동적생성 -->
+
                                                         </div>
                                                     </div>
-
                                                 </div>
                                             </div>
 
@@ -535,48 +472,11 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-4">
-                                                        <div class="card-body">
-                                                            <div class="progress-box progress-1">
-                                                                <h4 class="por-title">First</h4>
-                                                                <div class="por-txt">96,930 Users (40%)</div>
-                                                                <div class="progress mb-2" style="height: 5px;">
-                                                                    <div class="progress-bar bg-flat-color-1"
-                                                                        role="progressbar" style="width: 40%;"
-                                                                        aria-valuenow="25" aria-valuemin="0"
-                                                                        aria-valuemax="100"></div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="progress-box progress-2">
-                                                                <h4 class="por-title">Second</h4>
-                                                                <div class="por-txt">3,220 Users (24%)</div>
-                                                                <div class="progress mb-2" style="height: 5px;">
-                                                                    <div class="progress-bar bg-flat-color-2"
-                                                                        role="progressbar" style="width: 24%;"
-                                                                        aria-valuenow="25" aria-valuemin="0"
-                                                                        aria-valuemax="100"></div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="progress-box progress-2">
-                                                                <h4 class="por-title">Third</h4>
-                                                                <div class="por-txt">29,658 Users (60%)</div>
-                                                                <div class="progress mb-2" style="height: 5px;">
-                                                                    <div class="progress-bar bg-flat-color-3"
-                                                                        role="progressbar" style="width: 60%;"
-                                                                        aria-valuenow="60" aria-valuemin="0"
-                                                                        aria-valuemax="100"></div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="progress-box progress-2">
-                                                                <h4 class="por-title">Fourth</h4>
-                                                                <div class="por-txt">99,658 Users (90%)</div>
-                                                                <div class="progress mb-2" style="height: 5px;">
-                                                                    <div class="progress-bar bg-flat-color-4"
-                                                                        role="progressbar" style="width: 90%;"
-                                                                        aria-valuenow="90" aria-valuemin="0"
-                                                                        aria-valuemax="100"></div>
-                                                                </div>
-                                                            </div>
-                                                        </div> <!-- /.card-body -->
+                                                        <div class="card-body" id="signInCountByYearMonthDateLineContainer">
+
+                                                            <!-- 서브테이블 동적생성 -->
+
+                                                        </div>
                                                     </div>
                                                 </div> <!-- /.row -->
                                             </div>
@@ -589,48 +489,12 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-4">
-                                                        <div class="card-body">
-                                                            <div class="progress-box progress-1">
-                                                                <h4 class="por-title">First</h4>
-                                                                <div class="por-txt">96,930 Users (40%)</div>
-                                                                <div class="progress mb-2" style="height: 5px;">
-                                                                    <div class="progress-bar bg-flat-color-1"
-                                                                        role="progressbar" style="width: 40%;"
-                                                                        aria-valuenow="25" aria-valuemin="0"
-                                                                        aria-valuemax="100"></div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="progress-box progress-2">
-                                                                <h4 class="por-title">Second</h4>
-                                                                <div class="por-txt">3,220 Users (24%)</div>
-                                                                <div class="progress mb-2" style="height: 5px;">
-                                                                    <div class="progress-bar bg-flat-color-2"
-                                                                        role="progressbar" style="width: 24%;"
-                                                                        aria-valuenow="25" aria-valuemin="0"
-                                                                        aria-valuemax="100"></div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="progress-box progress-2">
-                                                                <h4 class="por-title">Third</h4>
-                                                                <div class="por-txt">29,658 Users (60%)</div>
-                                                                <div class="progress mb-2" style="height: 5px;">
-                                                                    <div class="progress-bar bg-flat-color-3"
-                                                                        role="progressbar" style="width: 60%;"
-                                                                        aria-valuenow="60" aria-valuemin="0"
-                                                                        aria-valuemax="100"></div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="progress-box progress-2">
-                                                                <h4 class="por-title">Fourth</h4>
-                                                                <div class="por-txt">99,658 Users (90%)</div>
-                                                                <div class="progress mb-2" style="height: 5px;">
-                                                                    <div class="progress-bar bg-flat-color-4"
-                                                                        role="progressbar" style="width: 90%;"
-                                                                        aria-valuenow="90" aria-valuemin="0"
-                                                                        aria-valuemax="100"></div>
-                                                                </div>
-                                                            </div>
-                                                        </div> <!-- /.card-body -->
+                                                        <div class="card-body" id="signUpCountByYearLineContainer">
+                                                            <label>평균 가입자수 대비 올해 가입자수</label>
+
+                                                            <!-- 서브테이블 동적생성 -->
+
+                                                        </div>
                                                     </div>
                                                 </div> <!-- /.row -->
                                             </div>
@@ -644,48 +508,11 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-4">
-                                                        <div class="card-body">
-                                                            <div class="progress-box progress-1">
-                                                                <h4 class="por-title">Visits</h4>
-                                                                <div class="por-txt">96,930 Users (40%)</div>
-                                                                <div class="progress mb-2" style="height: 5px;">
-                                                                    <div class="progress-bar bg-flat-color-1"
-                                                                        role="progressbar" style="width: 40%;"
-                                                                        aria-valuenow="25" aria-valuemin="0"
-                                                                        aria-valuemax="100"></div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="progress-box progress-2">
-                                                                <h4 class="por-title">Bounce Rate</h4>
-                                                                <div class="por-txt">3,220 Users (24%)</div>
-                                                                <div class="progress mb-2" style="height: 5px;">
-                                                                    <div class="progress-bar bg-flat-color-2"
-                                                                        role="progressbar" style="width: 24%;"
-                                                                        aria-valuenow="25" aria-valuemin="0"
-                                                                        aria-valuemax="100"></div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="progress-box progress-2">
-                                                                <h4 class="por-title">Unique Visitors</h4>
-                                                                <div class="por-txt">29,658 Users (60%)</div>
-                                                                <div class="progress mb-2" style="height: 5px;">
-                                                                    <div class="progress-bar bg-flat-color-3"
-                                                                        role="progressbar" style="width: 60%;"
-                                                                        aria-valuenow="60" aria-valuemin="0"
-                                                                        aria-valuemax="100"></div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="progress-box progress-2">
-                                                                <h4 class="por-title">Targeted Visitors</h4>
-                                                                <div class="por-txt">99,658 Users (90%)</div>
-                                                                <div class="progress mb-2" style="height: 5px;">
-                                                                    <div class="progress-bar bg-flat-color-4"
-                                                                        role="progressbar" style="width: 90%;"
-                                                                        aria-valuenow="90" aria-valuemin="0"
-                                                                        aria-valuemax="100"></div>
-                                                                </div>
-                                                            </div>
-                                                        </div> <!-- /.card-body -->
+                                                        <div class="card-body" id="signUpCountByAgeGroupBarContainer">
+
+                                                            <!-- 서브테이블 동적생성 -->
+
+                                                        </div>
                                                     </div>
                                                 </div> <!-- /.row -->
                                             </div>
@@ -697,48 +524,11 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-4">
-                                                        <div class="card-body">
-                                                            <div class="progress-box progress-1">
-                                                                <h4 class="por-title">Visits</h4>
-                                                                <div class="por-txt">96,930 Users (40%)</div>
-                                                                <div class="progress mb-2" style="height: 5px;">
-                                                                    <div class="progress-bar bg-flat-color-1"
-                                                                        role="progressbar" style="width: 40%;"
-                                                                        aria-valuenow="25" aria-valuemin="0"
-                                                                        aria-valuemax="100"></div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="progress-box progress-2">
-                                                                <h4 class="por-title">Bounce Rate</h4>
-                                                                <div class="por-txt">3,220 Users (24%)</div>
-                                                                <div class="progress mb-2" style="height: 5px;">
-                                                                    <div class="progress-bar bg-flat-color-2"
-                                                                        role="progressbar" style="width: 24%;"
-                                                                        aria-valuenow="25" aria-valuemin="0"
-                                                                        aria-valuemax="100"></div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="progress-box progress-2">
-                                                                <h4 class="por-title">Unique Visitors</h4>
-                                                                <div class="por-txt">29,658 Users (60%)</div>
-                                                                <div class="progress mb-2" style="height: 5px;">
-                                                                    <div class="progress-bar bg-flat-color-3"
-                                                                        role="progressbar" style="width: 60%;"
-                                                                        aria-valuenow="60" aria-valuemin="0"
-                                                                        aria-valuemax="100"></div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="progress-box progress-2">
-                                                                <h4 class="por-title">Targeted Visitors</h4>
-                                                                <div class="por-txt">99,658 Users (90%)</div>
-                                                                <div class="progress mb-2" style="height: 5px;">
-                                                                    <div class="progress-bar bg-flat-color-4"
-                                                                        role="progressbar" style="width: 90%;"
-                                                                        aria-valuenow="90" aria-valuemin="0"
-                                                                        aria-valuemax="100"></div>
-                                                                </div>
-                                                            </div>
-                                                        </div> <!-- /.card-body -->
+                                                        <div class="card-body" id="signUpCountByGenderGroupBarContainer">
+
+                                                            <!-- 서브테이블 동적생성 -->
+
+                                                        </div>
                                                     </div>
                                                 </div> <!-- /.row -->
                                             </div>
@@ -765,19 +555,19 @@
                                                     <table class="table ">
                                                         <thead>
                                                             <tr>
-                                                                <th class="serial">#</th>
-                                                                <th class="avatar">Profile</th>
-                                                                <th>Lv</th>
-                                                                <th>EMAIL</th>
-                                                                <th>NICNAME</th>
-                                                                <th>Register Date</th>
-                                                                <th>GRADE</th>
+                                                                <th style="width:12%;">Rank</th>
+                                                                <th style="width:12%;">profile</th>
+                                                                <th style="width:12%;">Lv</th>
+                                                                <th style="width:20%;">EMAIL</th>
+                                                                <th style="width:20%;">NICNAME</th>
+                                                                <th style="width:12%;">Register Date</th>
+                                                                <th style="width:12%;">GRADE</th>
                                                             </tr>
                                                         </thead>
                                                         <c:set var="counter" value="1" />
                                                         <!-- 반복문을 통해 데이터를 삽입 -->
                                                         <c:forEach items="${adminLevelRank}" var="adminLevelRankData">
-                                                            <c:if test="${counter <=5}">
+                                                        
                                                                 <tr>
                                                                     <td>${counter}</td>
                                                                     <td class="avatar">
@@ -786,20 +576,20 @@
                                                                         </div>
                                                                     </td>
                                                                     <td>${adminLevelRankData.currentLevel}</td>
-                                                                    <td>${adminLevelRankData.memberId}</td>
-                                                                    <td>${adminLevelRankData.memberNickname}</td>
+                                                                    <td style="text-transform:none;">${adminLevelRankData.memberId}</td>
+                                                                    <td style="text-transform:none;">${adminLevelRankData.memberNickname}</td>
                                                                     <td>${fn:substring(adminLevelRankData.signUpDate, 0, 10)}</td>
                                                                     <c:if test="${adminLevelRankData.memberGrade eq 'PREMIUM'}">
                                                                     <td><span class="badge badge-primary">${adminLevelRankData.memberGrade}</span></td>
                                                                     </c:if>
-                                                                    <c:if test="${adminLevelRankData.memberGrade eq 'USER'}">
-                                                                    <td><span class="badge badge-light">${adminLevelRankData.memberGrade}</span></td>
+                                                                    <c:if test="${adminLevelRankData.memberGrade ne 'PREMIUM'}">
+                                                                    <td><span class="badge badge-secondary">${adminLevelRankData.memberGrade}</span></td>
                                                                     </c:if>
 
                                                                     
                                                                 </tr>
                                                             <c:set var="counter" value="${counter + 1}" />
-                                                        </c:if>
+                                                        
                                                         </c:forEach>
                                                     </table>
                                                 </div> <!-- /.table-stats -->
@@ -918,7 +708,12 @@
                             </div>
                         </div>
                         <h4>${signInCountByDayOfWeek}</h4>
+                        <br>
                         <h4>${adminLevelRank}</h4>
+                        <br>
+                        <h4>${signInCountByYearMonthDate}</h4>
+                        <h4>${signUpCountByYear}</h4>
+
                     </footer>
                     <!-- /.site-footer -->
                 </div>
@@ -961,6 +756,86 @@
 
 
                 <script>
+
+
+drawSideGraph();
+drawSideGraph2();
+
+
+
+
+
+           
+function drawSideGraph() {
+    // 받아온 데이터를 반복하면서 HTML에 추가
+    signInCountByDayOfWeek.forEach(function(data) {
+        var appendTab = $("#signInCountByDayOfWeekBarContainer");
+        var title = data.dayOfWeek;
+        var yValue = data.signInCount;
+       // 모든 signInCount 값을 더하여 총 합 구함
+         var totalYvalue = signInCountByDayOfWeek.reduce(function(acc, cur) {
+        return acc + parseInt(cur.signInCount);
+          }, 0);
+          var percent = Math.round((yValue / totalYvalue) * 100);
+        addDataToHTML(appendTab, title, yValue, percent, totalYvalue);
+    });
+}
+
+        // var appendTab = $("#signInCountByYearMonthDateLineContainer");
+        // addDataToHTML(appendTab, data.dayOfWeek, data.signInCount);
+
+        // var appendTab = $("#signUpCountByAgeGroupBarContainer");
+        // addDataToHTML(appendTab, data.dayOfWeek, data.signInCount);
+
+
+        // var appendTab = $("#signUpCountByGenderGroupBarContainer");
+        // addDataToHTML(appendTab, data.dayOfWeek, data.signInCount);
+       
+        function drawSideGraph2() {
+         
+        var avgValue = 0;
+        var totalYvalue = 0;
+        for (var i = 0; i < signUpCountByYear.length-1; i++) {
+            totalYvalue += signUpCountByYear[i].signUpCount;
+            }
+            avgValue=Math.round(totalYvalue/(signUpCountByYear.length-1));
+
+        var appendTab = $("#signUpCountByYearLineContainer");
+        var title = signUpCountByYear[signUpCountByYear.length-1].year;
+        var yValue = signUpCountByYear[signUpCountByYear.length-1].signUpCount;
+    // 모든 signInCount 값을 더하여 총 합 구함
+    var percent = Math.round((yValue / avgValue) * 100);
+
+    console.log("왜아난와");
+    console.log(appendTab);
+    console.log(title);
+    console.log(yValue);
+    console.log(avgValue);
+    console.log(percent);
+    addDataToHTML(appendTab, title, yValue, percent, avgValue);
+}
+
+        
+
+              // 요일과 카운트 데이터를 이용하여 HTML을 동적으로 생성하여 추가하는 함수
+              function addDataToHTML(appendTab, title, yValue, percent, totalYvalue) {
+    var html = '<div class="progress-box progress-2">' +
+                        '<h4 class="por-title">' + title + '</h4>' +
+                        '<div class="por-txt">' + yValue + ' Users (' +percent + '%)</div>' +
+                        '<div class="progress mb-2" style="height: 5px;">' +
+                            '<div class="progress-bar bg-flat-color-4" role="progressbar" style="width: ' + percent + '%;" aria-valuenow="' + yValue + '" aria-valuemin="0" aria-valuemax="' + totalYvalue + '"></div>' +
+                        '</div>' +
+                    '</div>';
+        appendTab.append(html);
+    }
+
+
+        
+     
+
+
+
+
 
 
                 </script>
