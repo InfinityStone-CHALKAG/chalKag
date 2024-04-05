@@ -29,6 +29,8 @@
 
 <body class="skin-orange">
 
+<chalKagTags:webJs/>
+
 <chalKagTags:webHeader/>
 
 <section class="home">
@@ -128,7 +130,7 @@
                                 <div class="inner">
                                     <figure>
                                         <a href="headHuntPostSingle?headHuntPostId=${latestHeadHuntPost.headHuntPostId}">
-                                            <img src="postImg/${latestHeadHuntPost.postImgName}">
+                                            <img class="latestPostImg" src="postImg/${latestHeadHuntPost.postImgName}">
                                         </a>
                                     </figure>
                                     <div class="padding">
@@ -140,7 +142,7 @@
                                         <h2>
                                             <a href="headHuntPostSingle?headHuntPostId=${latestHeadHuntPost.headHuntPostId}">${latestHeadHuntPost.headHuntPostTitle}</a>
                                         </h2>
-                                        <p>${latestHeadHuntPost.headHuntPostContent}</p>
+                                        <pre class="latestPostContent">${latestHeadHuntPost.headHuntPostContent}</pre>
                                         <footer>
                                             <a href="#" class="love"><i
                                                     class="ion-android-favorite-outline"></i>
@@ -159,7 +161,7 @@
                                 <div class="inner">
                                     <figure>
                                         <a href="marketPostSingle?marketPostId=${latestMarketPost.marketPostId}">
-                                            <img src="postImg/${latestMarketPost.postImgName}"
+                                            <img class="latestPostImg" src="postImg/${latestMarketPost.postImgName}"
                                                  alt="Sample Article">
                                         </a>
                                     </figure>
@@ -172,7 +174,7 @@
                                         <h2>
                                             <a href="marketPostSingle?marketPostId=${latestMarketPost.marketPostId}">${latestMarketPost.marketPostTitle}</a>
                                         </h2>
-                                        <p>${latestMarketPost.marketPostContent}
+                                        <p class="latestPostContent">${latestMarketPost.marketPostContent}
                                         </p>
                                         <footer>
                                             <a href="#" class="love"><i
@@ -196,7 +198,7 @@
                                 <div class="inner">
                                     <figure>
                                         <a href="jobHuntPostSingle?jobHuntPostId=${latestJobHuntPostId.jobHuntPostId}">
-                                            <img src="postImg/${latestJobHuntPost.postImgName}">
+                                            <img class="latestPostImg" src="postImg/${latestJobHuntPost.postImgName}">
                                         </a>
                                     </figure>
                                     <div class="padding">
@@ -208,7 +210,7 @@
                                         <h2>
                                             <a href="jobHuntPostSingle?jobHuntPostId=${latestJobHuntPostId.jobHuntPostId}">${latestJobHuntPost.jobHuntPostTitle}</a>
                                         </h2>
-                                        <p>${latestJobHuntPost.jobHuntPostContent}
+                                        <p class="latestPostContent">${latestJobHuntPost.jobHuntPostContent}
                                         </p>
                                         <footer>
                                             <a href="#" class="love"><i
@@ -228,7 +230,7 @@
                                 <div class="inner">
                                     <figure>
                                         <a href="freePostSingle?freePostId=${latestFreePost.freePostId}">
-                                            <img src="postImg/${latestFreePost.postImgName}"
+                                            <img class="latestPostImg" src="postImg/${latestFreePost.postImgName}"
                                                  alt="Sample Article">
                                         </a>
                                     </figure>
@@ -241,7 +243,7 @@
                                         <h2>
                                             <a href="freePostSingle?freePostId=${latestFreePost.freePostId}">${latestFreePost.freePostTitle}</a>
                                         </h2>
-                                        <p>${latestFreePost.freePostContent}
+                                        <p class="latestPostContent">${latestFreePost.freePostContent}
                                         </p>
                                         <footer>
                                             <a href="#" class="love"><i
@@ -415,152 +417,6 @@
                             </article>
                         </div>
                     </div>
-                </div>
-                <div class="line top">
-                    <div>Just Another News</div>
-                </div>
-                <div class="row">
-                    <article class="col-md-12 article-list">
-                        <div class="inner">
-                            <figure>
-                                <a href="single.html">
-                                    <img src="images/news/img11.jpg" alt="Sample Article">
-                                </a>
-                            </figure>
-                            <div class="details">
-                                <div class="detail">
-                                    <div class="category">
-                                        <a href="#">Film</a>
-                                    </div>
-                                    <div class="time">December 19, 2016</div>
-                                </div>
-                                <h1><a href="single.html">Donec consequat arcu at ultrices sodales quam
-                                    erat aliquet
-                                    diam</a></h1>
-                                <p>
-                                    Donec consequat, arcu at ultrices sodales, quam erat aliquet diam,
-                                    sit amet interdum
-                                    libero nunc accumsan nisi.
-                                </p>
-                                <footer>
-                                    <a href="#" class="love"><i
-                                            class="ion-android-favorite-outline"></i>
-                                        <div>273</div>
-                                    </a>
-                                    <a class="btn btn-primary more" href="single.html">
-                                        <div>More</div>
-                                        <div><i class="ion-ios-arrow-thin-right"></i></div>
-                                    </a>
-                                </footer>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="col-md-12 article-list">
-                        <div class="inner">
-                            <div class="badge">
-                                Sponsored
-                            </div>
-                            <figure>
-                                <a href="single.html">
-                                    <img src="images/news/img02.jpg" alt="Sample Article">
-                                </a>
-                            </figure>
-                            <div class="details">
-                                <div class="detail">
-                                    <div class="category">
-                                        <a href="#">Travel</a>
-                                    </div>
-                                    <div class="time">December 18, 2016</div>
-                                </div>
-                                <h1><a href="single.html">Maecenas accumsan tortor ut velit pharetra
-                                    mollis</a></h1>
-                                <p>
-                                    Maecenas accumsan tortor ut velit pharetra mollis. Proin eu nisl et
-                                    arcu iaculis
-                                    placerat sollicitudin ut est. In fringilla dui.
-                                </p>
-                                <footer>
-                                    <a href="#" class="love"><i
-                                            class="ion-android-favorite-outline"></i>
-                                        <div>4209</div>
-                                    </a>
-                                    <a class="btn btn-primary more" href="single.html">
-                                        <div>More</div>
-                                        <div><i class="ion-ios-arrow-thin-right"></i></div>
-                                    </a>
-                                </footer>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="col-md-12 article-list">
-                        <div class="inner">
-                            <figure>
-                                <a href="single.html">
-                                    <img src="images/news/img03.jpg" alt="Sample Article">
-                                </a>
-                            </figure>
-                            <div class="details">
-                                <div class="detail">
-                                    <div class="category">
-                                        <a href="#">Travel</a>
-                                    </div>
-                                    <div class="time">December 16, 2016</div>
-                                </div>
-                                <h1><a href="single.html">Nulla facilisis odio quis gravida vestibulum
-                                    Proin venenatis
-                                    pellentesque arcu</a></h1>
-                                <p>
-                                    Nulla facilisis odio quis gravida vestibulum. Proin venenatis
-                                    pellentesque arcu, ut
-                                    mattis nulla placerat et.
-                                </p>
-                                <footer>
-                                    <a href="#" class="love active"><i class="ion-android-favorite"></i>
-                                        <div>302</div>
-                                    </a>
-                                    <a class="btn btn-primary more" href="single.html">
-                                        <div>More</div>
-                                        <div><i class="ion-ios-arrow-thin-right"></i></div>
-                                    </a>
-                                </footer>
-                            </div>
-                        </div>
-                    </article>
-                    <article class="col-md-12 article-list">
-                        <div class="inner">
-                            <figure>
-                                <a href="single.html">
-                                    <img src="images/news/img09.jpg" alt="Sample Article">
-                                </a>
-                            </figure>
-                            <div class="details">
-                                <div class="detail">
-                                    <div class="category">
-                                        <a href="#">Healthy</a>
-                                    </div>
-                                    <div class="time">December 16, 2016</div>
-                                </div>
-                                <h1><a href="single.html">Maecenas blandit ultricies lorem id tempor
-                                    enim pulvinar
-                                    at</a></h1>
-                                <p>
-                                    Maecenas blandit ultricies lorem, id tempor enim pulvinar at.
-                                    Curabitur sit amet
-                                    tortor eu ipsum lacinia malesuada.
-                                </p>
-                                <footer>
-                                    <a href="#" class="love"><i
-                                            class="ion-android-favorite-outline"></i>
-                                        <div>783</div>
-                                    </a>
-                                    <a class="btn btn-primary more" href="single.html">
-                                        <div>More</div>
-                                        <div><i class="ion-ios-arrow-thin-right"></i></div>
-                                    </a>
-                                </footer>
-                            </div>
-                        </div>
-                    </article>
                 </div>
             </div>
             <div class="col-xs-6 col-md-4 sidebar" id="sidebar">
@@ -806,123 +662,140 @@
                 </div>
             </div>
         </h1>
-        <div class="owl-carousel owl-theme carousel-1">
-            <article class="article">
-                <div class="inner">
-                    <figure>
-                        <a href="single.html">
-                            <img src="css/user/images/news/img03.jpg" alt="Sample Article">
-                        </a>
-                    </figure>
-                    <div class="padding">
-                        <div class="detail">
-                            <div class="time">December 11, 2016</div>
-                            <div class="category"><a href="category.html">Travel</a></div>
-                        </div>
-                        <h2><a href="single.html">tempor interdum Praesent tincidunt</a></h2>
-                        <p>Praesent tincidunt, leo vitae congue molestie.</p>
-                    </div>
+        <div class="owl-carousel owl-theme carousel-1 owl-loaded owl-drag">
+
+
+            <div class="owl-stage-outer">
+                <div class="owl-stage"
+                     style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 1740px;">
+                    <article class="owl-item active" style="width: 270px; margin-right: 20px;">
+                        <article class="article">
+                            <div class="inner">
+                                <figure>
+                                    <a href="single.html">
+                                        <img src="images/news/img03.jpg" alt="Sample Article">
+                                    </a>
+                                </figure>
+                                <div class="padding">
+                                    <div class="detail">
+                                        <div class="time">December 11, 2016</div>
+                                        <div class="category"><a href="category.html">Travel</a></div>
+                                    </div>
+                                    <h2><a href="single.html">tempor interdum Praesent tincidunt</a></h2>
+                                    <p>Praesent tincidunt, leo vitae congue molestie.</p>
+                                </div>
+                            </div>
+                        </article>
+                    </article>
+                    <article class="owl-item active" style="width: 270px; margin-right: 20px;">
+                        <article class="article">
+                            <div class="inner">
+                                <figure>
+                                    <a href="single.html">
+                                        <img src="images/news/img16.jpg" alt="Sample Article">
+                                    </a>
+                                </figure>
+                                <div class="padding">
+                                    <div class="detail">
+                                        <div class="time">December 09, 2016</div>
+                                        <div class="category"><a href="category.html">Sport</a></div>
+                                    </div>
+                                    <h2><a href="single.html">Maecenas porttitor sit amet turpis a semper</a></h2>
+                                    <p> Proin vulputate, urna id porttitor luctus, dui augue facilisis lacus.</p>
+                                </div>
+                            </div>
+                        </article>
+                    </article>
+                    <article class="owl-item active" style="width: 270px; margin-right: 20px;">
+                        <article class="article">
+                            <div class="inner">
+                                <figure>
+                                    <a href="single.html">
+                                        <img src="images/news/img15.jpg" alt="Sample Article">
+                                    </a>
+                                </figure>
+                                <div class="padding">
+                                    <div class="detail">
+                                        <div class="time">December 26, 2016</div>
+                                        <div class="category"><a href="category.html">Lifestyle</a></div>
+                                    </div>
+                                    <h2><a href="single.html">Fusce ac odio eu ex volutpat pellentesque</a></h2>
+                                    <p>Vestibulum ante ipsum primis in faucibus orci luctus</p>
+                                </div>
+                            </div>
+                        </article>
+                    </article>
+                    <article class="owl-item active" style="width: 270px; margin-right: 20px;">
+                        <article class="article">
+                            <div class="inner">
+                                <figure>
+                                    <a href="single.html">
+                                        <img src="images/news/img14.jpg" alt="Sample Article">
+                                    </a>
+                                </figure>
+                                <div class="padding">
+                                    <div class="detail">
+                                        <div class="time">December 26, 2016</div>
+                                        <div class="category"><a href="category.html">Travel</a></div>
+                                    </div>
+                                    <h2><a href="single.html">Nulla facilisis odio quis gravida vestibulum</a></h2>
+                                    <p>Proin venenatis pellentesque arcu, ut mattis nulla placerat et.</p>
+                                </div>
+                            </div>
+                        </article>
+                    </article>
+                    <article class="owl-item" style="width: 270px; margin-right: 20px;">
+                        <article class="article">
+                            <div class="inner">
+                                <figure>
+                                    <a href="single.html">
+                                        <img src="images/news/img01.jpg" alt="Sample Article">
+                                    </a>
+                                </figure>
+                                <div class="padding">
+                                    <div class="detail">
+                                        <div class="time">December 26, 2016</div>
+                                        <div class="category"><a href="category.html">Travel</a></div>
+                                    </div>
+                                    <h2><a href="single.html">Fusce Ullamcorper Elit At Felis Cursus Suscipit</a></h2>
+                                    <p>Proin venenatis pellentesque arcu, ut mattis nulla placerat et.</p>
+                                </div>
+                            </div>
+                        </article>
+                    </article>
+                    <article class="owl-item" style="width: 270px; margin-right: 20px;">
+                        <article class="article">
+                            <div class="inner">
+                                <figure>
+                                    <a href="single.html">
+                                        <img src="images/news/img11.jpg" alt="Sample Article">
+                                    </a>
+                                </figure>
+                                <div class="padding">
+                                    <div class="detail">
+                                        <div class="time">December 26, 2016</div>
+                                        <div class="category"><a href="category.html">Travel</a></div>
+                                    </div>
+                                    <h2><a href="single.html">Donec consequat arcu at ultrices sodales</a></h2>
+                                    <p>Proin venenatis pellentesque arcu, ut mattis nulla placerat et.</p>
+                                </div>
+                            </div>
+                        </article>
+                    </article>
                 </div>
-            </article>
-            <article class="article">
-                <div class="inner">
-                    <figure>
-                        <a href="single.html">
-                            <img src="css/user/images/news/img16.jpg" alt="Sample Article">
-                        </a>
-                    </figure>
-                    <div class="padding">
-                        <div class="detail">
-                            <div class="time">December 09, 2016</div>
-                            <div class="category"><a href="category.html">Sport</a></div>
-                        </div>
-                        <h2><a href="single.html">Maecenas porttitor sit amet turpis a semper</a></h2>
-                        <p> Proin vulputate, urna id porttitor luctus, dui augue facilisis lacus.</p>
-                    </div>
-                </div>
-            </article>
-            <article class="article">
-                <div class="inner">
-                    <figure>
-                        <a href="single.html">
-                            <img src="css/user/images/news/img15.jpg" alt="Sample Article">
-                        </a>
-                    </figure>
-                    <div class="padding">
-                        <div class="detail">
-                            <div class="time">December 26, 2016</div>
-                            <div class="category"><a href="category.html">Lifestyle</a></div>
-                        </div>
-                        <h2><a href="single.html">Fusce ac odio eu ex volutpat pellentesque</a></h2>
-                        <p>Vestibulum ante ipsum primis in faucibus orci luctus</p>
-                    </div>
-                </div>
-            </article>
-            <article class="article">
-                <div class="inner">
-                    <figure>
-                        <a href="single.html">
-                            <img src="css/user/images/news/img14.jpg" alt="Sample Article">
-                        </a>
-                    </figure>
-                    <div class="padding">
-                        <div class="detail">
-                            <div class="time">December 26, 2016</div>
-                            <div class="category"><a href="category.html">Travel</a></div>
-                        </div>
-                        <h2><a href="single.html">Nulla facilisis odio quis gravida vestibulum</a></h2>
-                        <p>Proin venenatis pellentesque arcu, ut mattis nulla placerat et.</p>
-                    </div>
-                </div>
-            </article>
-            <article class="article">
-                <div class="inner">
-                    <figure>
-                        <a href="single.html">
-                            <img src="css/user/images/news/img01.jpg" alt="Sample Article">
-                        </a>
-                    </figure>
-                    <div class="padding">
-                        <div class="detail">
-                            <div class="time">December 26, 2016</div>
-                            <div class="category"><a href="category.html">Travel</a></div>
-                        </div>
-                        <h2><a href="single.html">Fusce Ullamcorper Elit At Felis Cursus Suscipit</a>
-                        </h2>
-                        <p>Proin venenatis pellentesque arcu, ut mattis nulla placerat et.</p>
-                    </div>
-                </div>
-            </article>
-            <article class="article">
-                <div class="inner">
-                    <figure>
-                        <a href="single.html">
-                            <img src="css/user/images/news/img11.jpg" alt="Sample Article">
-                        </a>
-                    </figure>
-                    <div class="padding">
-                        <div class="detail">
-                            <div class="time">December 26, 2016</div>
-                            <div class="category"><a href="category.html">Travel</a></div>
-                        </div>
-                        <h2><a href="single.html">Donec consequat arcu at ultrices sodales</a></h2>
-                        <p>Proin venenatis pellentesque arcu, ut mattis nulla placerat et.</p>
-                    </div>
-                </div>
-            </article>
+            </div>
+            <div class="owl-nav disabled">
+                <div class="owl-prev">prev</div>
+                <div class="owl-next">next</div>
+            </div>
+            <div class="owl-dots disabled"></div>
         </div>
     </div>
-
-    <h>${latestHeadHuntPost}</h>
-
 </section>
 
 <chalKagTags:webFooter/>
 
-<!-- JS -->
-<chalKagTags:webJs/>
 <!-- owl 사용시 필요-->
-<script src="css/user/js/demo.js"></script>
 
 <script>
     $(document).ready(function () {

@@ -25,6 +25,7 @@ public class HeadHuntPostDAO { // 구인 게시판 DAO
 		  + "	MEMBER.MEMBER_nickname, "
 		  + "	HEADHUNTPOST.HEADHUNTPOST_title, "
 		  + "	HEADHUNTPOST.HEADHUNTPOST_content, "
+		  + "	HEADHUNTPOST.HEADHUNTPOST_date, "
 		  + "	( " // 대표 이미지 설정
 		  + "		SELECT "
 		  + "			POSTIMG.POSTIMG_name " // 게시글 이미지를 선택
@@ -49,7 +50,7 @@ public class HeadHuntPostDAO { // 구인 게시판 DAO
 		  + "LIMIT 2 "; // 글을 2개만 가져오도록 설정
  // 사용한 테이블 : 구인글 테이블, 회원 테이블, 좋아요 테이블, 게시글 이미지 테이블
  // 사용한 컬럼 (출력 내용) :
- // 게시글 카테고리, 회원 닉네임(회원 테이블), 구인글 제목, 구인글 내용, 게시글 이미지 테이블(게시글 이미지 테이블)
+ // 게시글 카테고리, 구인글 아이디,회원 닉네임(회원 테이블), 구인글 제목, 구인글 내용, 게시글 이미지 (게시글 이미지 테이블)
  // 쿼리문 설명 :
  // INNER JOIN을 사용해 구인글 테이블과 회원 테이블을 연결하고, 또 다른 LEFT JOIN을 사용해 구인글 테이블과 좋아요 테이블을 연결
  // 게시글 이미지는 테이블을 따로 나누었으며 서브 쿼리를 사용해 게시글 이미지 중 대표 이미지로 보여줄 이미지를 설정하고, 그 결과를 "POSTIMG_name"라는 별칭으로 반환
@@ -189,7 +190,7 @@ public class HeadHuntPostDAO { // 구인 게시판 DAO
 		  + "            RECOMMEND " // 좋아요 테이블에서 가져옴
 		  + "		WHERE "
 		  + "            RECOMMEND.POST_id = HEADHUNTPOST.HEADHUNTPOST_id " // 게시글 아이디와 좋아요 테이블의 게시글 아이디가 동일한 것을 선택
-		  + "	) AS RECOMMEND_cnt, " // 좋아요 수
+		  + "	) AS RECOMMEND_cnt " // 좋아요 수
 		  + "FROM "
 		  + "	HEADHUNTPOST " // 구인글 테이블
 		  + "INNER JOIN "
@@ -626,6 +627,7 @@ class HeadHuntPostPremiumRowMapper implements RowMapper<HeadHuntPostDTO> {
 		headHuntPostDTO.setMemberNickname(rs.getString("MEMBER_nickname"));				// 회원 닉네임
 		headHuntPostDTO.setHeadHuntPostTitle(rs.getString("HEADHUNTPOST_title")); 		// 구인글 제목
 		headHuntPostDTO.setHeadHuntPostContent(rs.getString("HEADHUNTPOST_content")); 	// 구인글 내용
+		headHuntPostDTO.setHeadHuntPostDate(rs.getString("HEADHUNTPOST_date")); 		// 구인글 작성일
 		headHuntPostDTO.setPostImgName(rs.getString("POSTIMG_name"));					// 게시글 대표 이미지
 		return headHuntPostDTO; // headHuntPostDTO에 저장된 데이터들을 반환
 	}
@@ -644,7 +646,7 @@ class HeadHuntPostWeeklyBestRowMapper implements RowMapper<HeadHuntPostDTO> {
 		headHuntPostDTO.setHeadHuntPostTitle(rs.getString("HEADHUNTPOST_title")); 		// 구인글 제목
 		headHuntPostDTO.setHeadHuntPostContent(rs.getString("HEADHUNTPOST_content")); 	// 구인글 내용
 		headHuntPostDTO.setHeadHuntPostDate(rs.getString("HEADHUNTPOST_date")); 		// 구인글 작성일
-		headHuntPostDTO.setRecommendCnt(rs.getInt("RECOMMEND_cnt")); 				// 게시글의 좋아요 수
+		headHuntPostDTO.setRecommendCnt(rs.getInt("RECOMMEND_cnt")); 					// 게시글의 좋아요 수
 		headHuntPostDTO.setPostImgName(rs.getString("POSTIMG_name"));					// 게시글 대표 이미지
 		return headHuntPostDTO; // headHuntPostDTO에 저장된 데이터들을 반환
 	}
@@ -666,7 +668,7 @@ class HeadHuntPostPremium1MonthRowMapper implements RowMapper<HeadHuntPostDTO> {
 		headHuntPostDTO.setHeadHuntPostContent(rs.getString("HEADHUNTPOST_content")); 	// 구인글 내용
 		headHuntPostDTO.setHeadHuntPostDate(rs.getString("HEADHUNTPOST_date")); 		// 구인글 작성일
 		headHuntPostDTO.setHeadHuntPostViewcnt(rs.getString("HEADHUNTPOST_viewcnt")); 	// 구인글 조회수
-		headHuntPostDTO.setRecommendCnt(rs.getInt("RECOMMEND_cnt")); 				// 게시글의 좋아요 수
+		headHuntPostDTO.setRecommendCnt(rs.getInt("RECOMMEND_cnt")); 					// 게시글의 좋아요 수
 		headHuntPostDTO.setPostImgName(rs.getString("POSTIMG_name"));					// 게시글 대표 이미지
 		return headHuntPostDTO; // headHuntPostDTO에 저장된 데이터들을 반환
 	}
@@ -688,7 +690,7 @@ class HeadHuntPostRowMapper implements RowMapper<HeadHuntPostDTO> {
 		headHuntPostDTO.setHeadHuntPostContent(rs.getString("HEADHUNTPOST_content")); 	// 구인글 내용
 		headHuntPostDTO.setHeadHuntPostDate(rs.getString("HEADHUNTPOST_date")); 		// 구인글 작성일
 		headHuntPostDTO.setHeadHuntPostViewcnt(rs.getString("HEADHUNTPOST_viewcnt")); 	// 구인글 조회수
-		headHuntPostDTO.setRecommendCnt(rs.getInt("RECOMMEND_cnt")); 				// 게시글의 좋아요 수
+		headHuntPostDTO.setRecommendCnt(rs.getInt("RECOMMEND_cnt")); 					// 게시글의 좋아요 수
 		headHuntPostDTO.setPostImgName(rs.getString("POSTIMG_name"));					// 게시글 대표 이미지
 		return headHuntPostDTO; // headHuntPostDTO에 저장된 데이터들을 반환
 	}
@@ -709,7 +711,7 @@ class HeadHuntPostMemberRowMapper implements RowMapper<HeadHuntPostDTO> {
 		headHuntPostDTO.setHeadHuntPostContent(rs.getString("HEADHUNTPOST_content")); 	// 구인글 내용
 		headHuntPostDTO.setHeadHuntPostDate(rs.getString("HEADHUNTPOST_date")); 		// 구인글 작성일
 		headHuntPostDTO.setHeadHuntPostViewcnt(rs.getString("HEADHUNTPOST_viewcnt")); 	// 구인글 조회수
-		headHuntPostDTO.setRecommendCnt(rs.getInt("RECOMMEND_cnt")); 				// 게시글의 좋아요 수
+		headHuntPostDTO.setRecommendCnt(rs.getInt("RECOMMEND_cnt")); 					// 게시글의 좋아요 수
 		headHuntPostDTO.setPostImgName(rs.getString("POSTIMG_name"));					// 게시글 대표 이미지
 		return headHuntPostDTO; // headHuntPostDTO에 저장된 데이터들을 반환
 	}
@@ -745,7 +747,7 @@ class SelectOneHeadHuntPostRecentRowMapper implements RowMapper<HeadHuntPostDTO>
 		headHuntPostDTO.setHeadHuntPostTitle(rs.getString("HEADHUNTPOST_title")); 		// 구인글 제목
 		headHuntPostDTO.setHeadHuntPostContent(rs.getString("HEADHUNTPOST_content")); 	// 구인글 내용
 		headHuntPostDTO.setHeadHuntPostDate(rs.getString("HEADHUNTPOST_date")); 		// 구인글 작성일
-		headHuntPostDTO.setRecommendCnt(rs.getInt("RECOMMEND_cnt")); 				// 게시글의 좋아요 수
+		headHuntPostDTO.setRecommendCnt(rs.getInt("RECOMMEND_cnt")); 					// 게시글의 좋아요 수
 		headHuntPostDTO.setPostImgName(rs.getString("POSTIMG_name"));					// 게시글 대표 이미지
 		return headHuntPostDTO; // headHuntPostDTO에 저장된 데이터들을 반환
 	}
@@ -774,7 +776,7 @@ class SelectOneHeadHuntPostRowMapper implements RowMapper<HeadHuntPostDTO> {
 		headHuntPostDTO.setHeadHuntPostConcept(rs.getString("HEADHUNTPOST_concept")); 	// 구인글 촬영 컨셉
 		headHuntPostDTO.setHeadHuntPostDate(rs.getString("HEADHUNTPOST_date")); 		// 구인글 작성일
 		headHuntPostDTO.setHeadHuntPostViewcnt(rs.getString("HEADHUNTPOST_viewcnt")); 	// 구인글 조회수
-		headHuntPostDTO.setRecommendCnt(rs.getInt("RECOMMEND_cnt")); 				// 게시글의 좋아요 수
+		headHuntPostDTO.setRecommendCnt(rs.getInt("RECOMMEND_cnt")); 					// 게시글의 좋아요 수
 		return headHuntPostDTO; // headHuntPostDTO에 저장된 데이터들을 반환
 	}
 }

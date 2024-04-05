@@ -6,27 +6,6 @@ var productCategory;
 var productCompany;
 var productStatus;
 
-document.getElementById('minPrice').addEventListener('input', handleFilterChange);
-document.getElementById('maxPrice').addEventListener('input', handleFilterChange);
-document.getElementById('productCategory').addEventListener('input', handleFilterChange);
-document.getElementById('productCompany').addEventListener('input', handleFilterChange);
-
-document.getElementById('product').addEventListener('change', function() {
-    if(this.checked) {
-        // 체크박스가 선택되었을 때 실행되는 로직
-        document.getElementById('searchInput').value = '';
-        ddocument.getElementById('searchField').selectedIndex = 0;
-        document.getElementById('Anytime').checked = true; 
-        document.getElementById('minPrice').value = 1; 
-        document.getElementById('maxPrice').value = 1; 
-		document.getElementById('productCategory').selectedIndex = 0;
-		document.getElementById('productCompany').selectedIndex = 0;
-        
-        // 필요하다면, 변수 업데이트 및 데이터 요청 로직도 여기서 호출
-        updateVariables(); // 필터링 및 정렬에 사용되는 변수들 업데이트
-        performAjaxRequest(); // 필터링된 데이터 요청
-    }
-});
 
 $(document).ready(function() {
   // 검색 필드와 입력값, 정렬 순서 업데이트 이벤트 리스너 추가
@@ -34,35 +13,60 @@ $(document).ready(function() {
     updateVariables();
     performAjaxRequest();
   });
-});
+  
+	document.getElementById('minPrice').addEventListener('input', handleFilterChange);
+	document.getElementById('maxPrice').addEventListener('input', handleFilterChange);
+	document.getElementById('productCategory').addEventListener('input', handleFilterChange);
+	document.getElementById('productCompany').addEventListener('input', handleFilterChange);
+	
+	document.getElementById('product').addEventListener('change', function() {
+	    if(this.checked) {
+	        // 체크박스가 선택되었을 때 실행되는 로직
+	        document.getElementById('searchInput').value = '';
+	        ddocument.getElementById('searchField').selectedIndex = 0;
+	        document.getElementById('Anytime').checked = true; 
+	        document.getElementById('minPrice').value = 1; 
+	        document.getElementById('maxPrice').value = 1; 
+			document.getElementById('productCategory').selectedIndex = 0;
+			document.getElementById('productCompany').selectedIndex = 0;
+	        
+	        // 필요하다면, 변수 업데이트 및 데이터 요청 로직도 여기서 호출
+	        updateVariables(); // 필터링 및 정렬에 사용되는 변수들 업데이트
+	        performAjaxRequest(); // 필터링된 데이터 요청
+	    }
+	});
+	
+	
+	// 날짜 라디오 버튼 이벤트 리스너 추가
+	$('input[type=radio][name=date]').change(function() {
+	  const today = new Date();
+	  const lastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
+	  const lastMonth = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
+	
+	  switch(this.value) {
+	      case 'Today':
+	          minDate = formatDate(today);
+	          maxDate = formatDate(today);
+	          break;
+	      case 'Last Week':
+	          minDate = formatDate(lastWeek);
+	          maxDate = formatDate(today);
+	          break;
+	      case 'Last Month':
+	          minDate = formatDate(lastMonth);
+	          maxDate = formatDate(today);
+	          break;
+	      default:
+	          // "Anytime"이 선택된 경우, minDate와 maxDate를 초기화합니다.
+	          minDate = '';
+	          maxDate = '';
+	  }
+	
+	  updateVariables(); // 필터링 및 정렬에 사용되는 변수들 업데이트
+	  performAjaxRequest(); // 필터링된 데이터 요청
+	});
 
-// 날짜 라디오 버튼 이벤트 리스너 추가
-$('input[type=radio][name=date]').change(function() {
-  const today = new Date();
-  const lastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
-  const lastMonth = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
 
-  switch(this.value) {
-      case 'Today':
-          minDate = formatDate(today);
-          maxDate = formatDate(today);
-          break;
-      case 'Last Week':
-          minDate = formatDate(lastWeek);
-          maxDate = formatDate(today);
-          break;
-      case 'Last Month':
-          minDate = formatDate(lastMonth);
-          maxDate = formatDate(today);
-          break;
-      default:
-          // "Anytime"이 선택된 경우, minDate와 maxDate를 초기화합니다.
-          minDate = '';
-          maxDate = '';
-  }
-
-  updateVariables(); // 필터링 및 정렬에 사용되는 변수들 업데이트
-  performAjaxRequest(); // 필터링된 데이터 요청
 });
 
 
@@ -104,8 +108,8 @@ function updateVariables() {
   	// 상품 필터
 	minPrice = $('minPrice').val();
 	maxPrice = $('maxPrice').val();
-	productCategory = $('productCategory').val();
-	productCompany = $('productCompany').val();
+	productCategory = $('#productCategory').val();
+	productCompany = $('#productCompany').val();
 	
    // 정렬 순서
   sortOrder = $('#sortOrder').val();
@@ -124,8 +128,8 @@ function performAjaxRequest() {
     sortOrder: sortOrder,
     minPrice : minPrice,
     maxPrice : maxPrice,
-    productCategory : productCategory, 
-    productCompany : productCompany
+    marketPostCategory : productCategory, 
+    marketPostCompany : productCompany
     };
 
     // jQuery를 사용한 AJAX 요청

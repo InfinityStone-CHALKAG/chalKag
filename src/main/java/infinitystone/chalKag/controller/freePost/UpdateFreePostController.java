@@ -93,6 +93,6 @@ public class UpdateFreePostController {
 
 
 
-		return "redirect:freePostSingle";
+		return "redirect:freePost/freePostSingle";
 	}
 }

@@ -71,14 +71,18 @@
 							<h1>${freePostSingle.freePostTitle}</h1>
 							<ul class="details">
 								<li>${freePostSingle.freePostDate}</li>
-								<li><a>Film</a></li>
-								<li>By <c:if
-										test="${member == null || member != freePostSingle.memberId}">
-										<a href="/memberPage?memberId=${freePostSingle.memberId}">${freePostSingle.memberNickname}</a>
-									</c:if> <c:if test="${member == freePostSingle.memberId}">
-										<a href="/myPage?memberId=${freePostSingle.memberId}">${freePostSingle.memberNickname}</a>
-									</c:if>
-								</li>
+									<li>
+										<c:if test="${member == null || member != freePostSingle.memberId}">
+											<a href="/memberPage?memberId=${freePostSingle.memberId}">${freePostSingle.memberId}</a>
+										</c:if> 
+										
+										<c:if test="${member == freePostSingle.memberId}">
+											<a href="/myPage?memberId=${freePostSingle.memberId}">${freePostSingle.memberId}</a>
+										</c:if>
+									</li>
+									<li>By 
+											<a>${freePostSingle.memberNickname}</a>
+									</li>	
 							</ul>
 						</header>
 						<div class="main">

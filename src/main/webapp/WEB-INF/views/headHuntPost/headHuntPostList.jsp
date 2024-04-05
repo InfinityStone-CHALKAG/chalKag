@@ -76,22 +76,22 @@
 										</div>
 										<div class="form-group">
 											<!-- 모든 시간 selectAll -->
-											<label><input type="radio" name="headHuntPostDate" id="Anytime" checked>&nbsp;
+											<label><input type="radio" name="headHuntPostDate" id="Anytime" value="Anytime" checked>
 												Anytime</label>
 										</div>
 										<div class="form-group">
 											<!-- 오늘 하루 동안 작성한 글들 selectAll_today -->
-											<label><input type="radio" name="headHuntPostDate" id="Today">&nbsp;
+											<label><input type="radio" name="headHuntPostDate" id="Today" value="Today">
 												Today</label>
 										</div>
 										<div class="form-group">
 											<!-- 지난주 동안 작성한 글들 selectAll_today -->
-											<label><input type="radio" name="headHuntPostDate" id="LastWeek">&nbsp;
+											<label><input type="radio" name="headHuntPostDate" id="LastWeek" value="Last Week">
 												Last Week</label>
 										</div>
 										<div class="form-group">
 											<!-- 전 달동안 작성한 글들 selectAll_today -->
-											<label><input type="radio" name="headHuntPostDate" id="LastMonth">&nbsp;
+											<label><input type="radio" name="headHuntPostDate" id="LastMonth" value="Last Month">
 												Last Month</label>
 										</div>
 										<br>

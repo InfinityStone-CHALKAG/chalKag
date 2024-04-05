@@ -93,6 +93,6 @@ public class UpdateMarketPostController {
 
 
 
-		return "redirect:marketPostSingle";
+		return "redirect:marketPost/marketPostSingle";
 	}
 }

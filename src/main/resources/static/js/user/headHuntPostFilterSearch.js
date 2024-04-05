@@ -1,24 +1,32 @@
 
 var isFiltered = false; // 필터링된 게시글 데이터를 저장할 변수
-var minPay;		// 최소 페이
-var maxPay;		// 최소 페이
-var role;		// 직업
-var region;		// 지역
-var startDate;	// 작업 시작일 
-var endDate;	// 작업 종료일
-var concept;	// 촬영컨셉
-var minDate;
-var maxDate;
+var minPay = 0;		// 최소 페이
+var maxPay = 0;		// 최소 페이
+var role ="";		// 직업
+var region="";		// 지역
+var startDate="";	// 작업 시작일 
+var endDate="";	// 작업 종료일
+var concept="";	// 촬영컨셉
+var minDate="";
+var maxDate="";
 
-document.getElementById('minPay').addEventListener('input', handleFilterChange);
-document.getElementById('maxPay').addEventListener('input', handleFilterChange);
-document.getElementById('role').addEventListener('input', handleFilterChange);
-document.getElementById('region').addEventListener('input', handleFilterChange);
-document.getElementById('startDate').addEventListener('input', handleFilterChange);
-document.getElementById('endDate').addEventListener('input', handleFilterChange);
-document.getElementById('concept').addEventListener('input', handleFilterChange);
 
-document.getElementById('filterReset').addEventListener('click', function() {
+$(document).ready(function() {
+  // 검색 필드와 입력값, 정렬 순서 업데이트 이벤트 리스너 추가
+  $('#searchField, #searchInput, #sortOrder').change(function() {
+    updateVariables();
+    performAjaxRequest();
+  });
+  
+	document.getElementById('minPay').addEventListener('input', handleFilterChange);
+	document.getElementById('maxPay').addEventListener('input', handleFilterChange);
+	document.getElementById('role').addEventListener('input', handleFilterChange);
+	document.getElementById('region').addEventListener('input', handleFilterChange);
+	document.getElementById('startDate').addEventListener('input', handleFilterChange);
+	document.getElementById('endDate').addEventListener('input', handleFilterChange);
+	document.getElementById('concept').addEventListener('input', handleFilterChange);
+
+	document.getElementById('filterReset').addEventListener('click', function() {
 			// 검색어 초기화
 							document.getElementById('searchInput').value = '';
 					
@@ -51,44 +59,39 @@ document.getElementById('filterReset').addEventListener('click', function() {
         updateVariables(); // 필터링 및 정렬에 사용되는 변수들 업데이트
         performAjaxRequest(); // 필터링된 데이터 요청
     
-});
-
-$(document).ready(function() {
-  // 검색 필드와 입력값, 정렬 순서 업데이트 이벤트 리스너 추가
-  $('#searchField, #searchInput, #sortOrder').change(function() {
-    updateVariables();
-    performAjaxRequest();
-  });
-});
-
-// 날짜 라디오 버튼 이벤트 리스너 추가
-$('input[type=radio][name=date]').change(function() {
-  const today = new Date();
-  const lastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
-  const lastMonth = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
-
-
-  switch(this.value) {
-      case 'Today':
-          minDate = formatDate(today);
-          maxDate = formatDate(today);
-          break;
-      case 'Last Week':
-          minDate = formatDate(lastWeek);
-          maxDate = formatDate(today);
-          break;
-      case 'Last Month':
-          minDate = formatDate(lastMonth);
-          maxDate = formatDate(today);
-          break;
-      default:
-          // "Anytime"이 선택된 경우, minDate와 maxDate를 초기화합니다.
-          minDate = '';
-          maxDate = '';
-  }
-
-  updateVariables(); // 필터링 및 정렬에 사용되는 변수들 업데이트
-  performAjaxRequest(); // 필터링된 데이터 요청
+	});
+	
+	// 날짜 라디오 버튼 이벤트 리스너 추가
+	$('input[type=radio][name=date]').change(function() {
+	  const today = new Date();
+	  const lastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
+	  const lastMonth = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
+	
+	
+	  switch(this.value) {
+	      case 'Today':
+	          minDate = formatDate(today);
+	          maxDate = formatDate(today);
+	          break;
+	      case 'Last Week':
+	          minDate = formatDate(lastWeek);
+	          maxDate = formatDate(today);
+	          break;
+	      case 'Last Month':
+	          minDate = formatDate(lastMonth);
+	          maxDate = formatDate(today);
+	          break;
+	      default:
+	          // "Anytime"이 선택된 경우, minDate와 maxDate를 초기화합니다.
+	          minDate = '';
+	          maxDate = '';
+	  }
+	  
+	  console.log("minDate : " + minDate);
+	
+	  updateVariables(); // 필터링 및 정렬에 사용되는 변수들 업데이트
+	  performAjaxRequest(); // 필터링된 데이터 요청
+	});
 });
 
 
@@ -126,15 +129,17 @@ function updateVariables() {
 	
   	// 검색 카테고리와 입력값
   	searchField = $('#searchField').val();
+  	console.log(searchField);
   	searchInput = $('#searchInput').val();
   	// 상품 필터
-	minPay = $('minPay').val();
-	maxPay = $('maxPay').val();
-	role = $('role').val();
-	region = $('region').val();
-	startDate = $('startDate').val(); 
-	endDate = $('enddate').val(); 
-	concept = $('concept').val(); 
+	minPay = $('#minPay').val();
+	maxPay = $('#maxPay').val();
+	role = $('#role').val();
+	console.log(role);
+	region = $('#region').val();
+	startDate = $('#startDate').val(); 
+	endDate = $('#enddate').val(); 
+	concept = $('#concept').val(); 
 	
    // 정렬 순서
   sortOrder = $('#sortOrder').val();
@@ -153,16 +158,16 @@ function performAjaxRequest() {
     sortOrder: sortOrder,
     minPay : minPay,
     maxPay : maxPay,
-    role : role, 
-    region : region,
+    headHuntPostRole : role, 
+    headHuntPostRegion : region,
     startDate : startDate,
     endDate : endDate,
-    concept : concept
+    headHuntPostConcept : concept
     };
 
     // jQuery를 사용한 AJAX 요청
     $.ajax({
-        url: '/headHuntPostSearchList', // 서버의 엔드포인트 URL
+        url: '/headHuntPostFilterSearch', // 서버의 엔드포인트 URL
         type: 'GET', // 또는 'POST', 서버의 요구 사항에 따라
         data: requestData, // 서버에 보낼 데이터
         success: function(filterData) {
