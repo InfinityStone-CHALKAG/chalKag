@@ -248,6 +248,28 @@ public class MemberDAO {
       "SET MEMBER_grade = 'USER' " +
       "WHERE MEMBER_id = ?";
 
+  ///////////////////////// 경험치 부여 쿼리 //////////////////////////////
+
+  // 글 작성 시 경험치 100 부여
+  private static final String UPDATE_WRITEPOSTEXP = "UPDATE MEMBER " +
+      "SET MEMBER_exp += 100 " +
+      "WHERE MEMBER_id = ?";
+
+  // 댓글 작성 시 경험치 20 부여
+  private static final String UPDATE_WRITECOMMENTEXP = "UPDATE MEMBER " +
+      "SET MEMBER_exp += 20 " +
+      "WHERE MEMBER_id = ?";
+
+  // 후기 5점 받으면 경험치 50 부여
+  private static final String UPDATE_GET5STAREXP = "UPDATE MEMBER " +
+      "SET MEMBER_exp += 50 " +
+      "WHERE MEMBER_id = ?";
+
+  // 후기 4점 받으면 경험치 40 부여
+  private static final String UPDATE_WRITE4STAREXP = "UPDATE MEMBER " +
+      "SET MEMBER_exp += 40 " +
+      "WHERE MEMBER_id = ?";
+
   // 사용 안 할 예정.안승준
   private static final String DELETE = "";
 
