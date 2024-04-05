@@ -290,9 +290,13 @@
                                                
 
 
-                                             
+                                                <c:if test="${sessionScope.member == null}">
+                                                    <textarea class="form-control" name="reviewContent" placeholder="please SignIn to write review" onclick="checkSignIn()"></textarea>
+                                                </c:if>
+                                                <c:if test="${sessionScope.member != null}">
                                                     <textarea class="form-control" name="reviewContent" placeholder="please <a href='signin.jsp'>SignIn</a> to write review"></textarea>
-                                               
+                                                </c:if>
+
                                             </div>
                                             <div class="form-group col-md-12" style="text-align: right;">
                                                 <button class="btn btn-primary btn-rounded" id="writeReview">Write</button>
@@ -303,6 +307,10 @@
                             </div>
                         </div>
                         </div>
+
+                        <c:set var="review" value="${review}" />
+                        <h2>Reviewer: ${review.reviewerName}</h2>
+<p>Review: ${review.reviewContent}</p>
 
                     </div>
                 </section>
@@ -364,19 +372,13 @@
         }
     });
 
-
-   // 기존에 설정된 스크립트를 제거합니다.
-   $(".iCheck-helper").remove();
-   $(".iradio_square-red").remove();
-   // 라디오 버튼 요소 가져오기
-   $(document).ready(function() {
    document.getElementById("writeReview").addEventListener("click", function (event) {
                             console.log("review");
                             event.preventDefault();
                             console.log($('#writeReviewForm').serialize());
                             writeReview(); 
                         });
-                    });
+         
 
 
 
@@ -408,7 +410,10 @@
                             data: $('#writeReviewForm').serialize(), // 폼 데이터 전송
                             success: function (result) {
                                 if (result == 1) {
-                                    console.log("AJAX SUCCESS")
+                                    swal("WARNING", "작성실패", "error", {
+                                        button: "OK",
+                                    });
+                                    console.log("AJAX SUCCESS");
                                 } else {
                                     swal("WARNING", "작성실패", "error", {
                                         button: "OK",

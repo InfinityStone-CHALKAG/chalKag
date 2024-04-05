@@ -542,7 +542,6 @@
                             event.preventDefault(); // 이벤트 전파 중지
                             reportStateCheck(); // reportStateCheck() 함수 호출
                         });
-
                     }
                     if (document.getElementById("reportStateUnHold")) {
                         // User UnHold 버튼을 클릭했을 때의 이벤트 처리
