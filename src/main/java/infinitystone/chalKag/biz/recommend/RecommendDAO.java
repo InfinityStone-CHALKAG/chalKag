@@ -17,7 +17,7 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 
 //----------------------------------------------------------------- 메인 페이지 SELECTALL -----------------------------------------------------------------
 
-	// 좋아요 수가 높은 게시글 목록 출력 (출력 게시판 통합. 8개 출력).전미지  
+	// 추천순 게시글 목록 출력 (게시판 통합. 8개 출력).전미지  
 	private static final String SELECTALL_RECOMMENDBEST = "SELECT "
 			  // 게시글의 데이터 중 가져올 정보를 선택하는 쿼리끝
 			+ " SELECT "
@@ -312,7 +312,7 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 	        + "			FREEPOST.FREEPOST_viewcnt, "
 	        + "			MARKETPOST.MARKETPOST_viewcnt, "
 	        + "			'Unknown' "
-	        + "		) AS post_viewcnt, " // 각 게시글의 날짜를 선택
+	        + "		) AS post_viewcnt, " // 각 게시글의 조회수를 선택
 	        + "		COUNT (RECOMMEND.POST_id) AS post_recommendcnt, " // 각 게시글의 좋아요 수를 합산
 	        + "		COALESCE( " // 대표 이미지 설정 쿼리
 	        + "			( " // 게시글의 대표 이미지 지정
