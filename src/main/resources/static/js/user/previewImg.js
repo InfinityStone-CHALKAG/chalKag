@@ -43,8 +43,8 @@ document.getElementById("fileInput").addEventListener('change', function(e) {
     const files = e.target.files;
     for (const file of selectedFiles) {
         // 파일 크기 제한 확인
-    if (file.size > 30 * 1024 * 1024) {
-		swal("fail", "파일 크기는 30MB를 초과할 수 없습니다.", "error", {
+    if (file.size > 1024 * 1024 * 1024) {
+		swal("fail", "파일 크기는 1GB를 초과할 수 없습니다.", "error", {
          button: "OK",
       	});
             continue; // 현재 파일 처리를 건너뛰고 다음 파일로 넘어감

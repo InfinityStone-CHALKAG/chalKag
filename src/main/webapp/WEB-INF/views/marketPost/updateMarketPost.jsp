@@ -48,16 +48,17 @@
 									id="marketPostCompany" name="marketPostCompany"
 									style="width: 23.5%; margin-right: 2%;">
 									<option value="" disabled selected>Company</option>
-									<option value="캐논" ${'캐논' == updateMarketPost.marketPostCompany ? 'selected' : ''}>캐논</option>
-									<option value="소니" ${'소니' == updateMarketPost.marketPostCompany ? 'selected' : ''}>소니</option>
-									<option value="니콘" ${'니콘' == updateMarketPost.marketPostCompany ? 'selected' : ''}>니콘</option>
+									<option value="Canon" ${'Canon' == updateMarketPost.marketPostCompany ? 'selected' : ''}>Canon</option>
+									<option value="Sony" ${'Sony' == updateMarketPost.marketPostCompany ? 'selected' : ''}>Sony</option>
+									<option value="Nikon" ${'Nikon' == updateMarketPost.marketPostCompany ? 'selected' : ''}>Nikon</option>
 								</select> 
 								<select class="selectTags" 
 									id="marketPostCategory" name="marketPostCategory" 
 									style="width: 23.5%;  margin-right: 2%;">
 									<option value="" disabled selected>Category</option>
 									<option value="DSLR" ${'DSLR' == updateMarketPost.marketPostCategory ? 'selected' : ''}>DSLR</option>
-									<option value="미러리스" ${'미러리스' == updateMarketPost.marketPostCategory ? 'selected' : ''}>미러리스</option>
+									<option value="MirrorLess" ${'MirrorLess' == updateMarketPost.marketPostCategory ? 'selected' : ''}>MirrorLess</option>
+									<option value="FilmCamera" ${'FilmCamera' == updateMarketPost.marketPostCategory ? 'selected' : ''}>FilmCamera</option>
 								</select>
 								<select class="selectTags" id="marketPostStatus"
 									name="marketPostStatus" style="width: 23.5%;">
@@ -67,7 +68,7 @@
 									<option value="Freecycle" ${'Freecycle' == updateMarketPost.marketPostStatus ? 'selected' : ''}>Freecycle</option>
 								</select>
 							</div>
-							<p>※ 이미지 사이즈는 30MB 이하만 올릴 수 있습니다.</p>
+							<p>※ The size. There is a maximum file size of '1GB' for all images.</p>
 							<div class="form-group" style="margin-bottom: 4%;">
 								<input type="file" name="file" id="fileInput" accept="image/*"
 									style="display: none;" multiple> <input type="button"

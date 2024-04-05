@@ -45,24 +45,24 @@
 								<select class="selectTags" id="jobHuntPostRole" name="jobHuntPostRole"
 								style="width: 32%; height: 43px; margin-right: 2%;">
 									<option value="" disabled>Role</option>
-									<option value="모델" ${'모델' == updateJobHuntPost.jobHuntPostRole ? 'selected' : ''}>모델</option>
-									<option value="사진작가 "${'사진작가' == updateJobHuntPost.jobHuntPostRole ? 'selected' : ''}>사진작가</option>
+									<option value="Model" ${'Model' == updateJobHuntPost.jobHuntPostRole ? 'selected' : ''}>Model</option>
+									<option value="Photographer "${'Photographer' == updateJobHuntPost.jobHuntPostRole ? 'selected' : ''}>Photographer</option>
 								</select>
 
 								<select class="selectTags" id="jobHuntPostConcept" 
 								style="width: 32%; height: 43px; margin-right: 2%;"
 								name="jobHuntPostConcept" >
 									<option value="" disabled>WorkConcept</option>
-									<option value="snap" ${'snap' == updateJobHuntPost.jobHuntPostConcept ? 'selected' : ''}>스냅사진</option>
-	   								<option value="pictorial" ${'pictorial' == updateJobHuntPost.jobHuntPostConcept ? 'selected' : ''} >화보</option>
-								    <option value="studio" ${'studio' == updateJobHuntPost.jobHuntPostConcept ? 'selected' : ''}>내부</option>
- 									<option value="updatejobHuntPost"${'outdoor' == updatejobHuntPost.jobHuntPostConcept ? 'selected' : ''}>외부</option>
-  									<option value="etc" ${'etc' == updateJobHuntPost.jobHuntPostConcept ? 'selected' : ''}>기타</option>
+									<option value="snap" ${'snap' == updateJobHuntPost.jobHuntPostConcept ? 'selected' : ''}>Snap</option>
+	   								<option value="pictorial" ${'pictorial' == updateJobHuntPost.jobHuntPostConcept ? 'selected' : ''} >Pictorial</option>
+								    <option value="studio" ${'studio' == updateJobHuntPost.jobHuntPostConcept ? 'selected' : ''}>Studio</option>
+ 									<option value="updatejobHuntPost"${'outdoor' == updatejobHuntPost.jobHuntPostConcept ? 'selected' : ''}>Outdoor</option>
+  									<option value="Etc" ${'Etc' == updateJobHuntPost.jobHuntPostConcept ? 'selected' : ''}>Etc</option>
 								</select> 
 								
 								<select class="selectTags" id="jobHuntPostRegion" style="width: 32%; 
 								height: 43px;" name="jobHuntPostRegion">
-									<option value="" disabled>선택</option>
+									<option value="" disabled>Region</option>
 									<option value="SEOUL" ${'SEOUL' == updateJobHuntPost.jobHuntPostRegion ? 'selected' : ''}>SEOUL</option>
 									<option value="GYEONGGI" ${'GYEONGGI' == updateJobHuntPost.jobHuntPostRegion ? 'selected' : ''}>GYEONGGI</option>
 									<option value="GANGWON" ${'GANGWON' == updateJobHuntPost.jobHuntPostRegion ? 'selected' : ''}>GANGWON</option>
@@ -84,7 +84,7 @@
 									oninput="trimInput(this); validatePay(this);" placeholder="Pay" value="${updateJobHuntPost.jobHuntPostPay}"/>
 							</div>
 							
-							<p>※ 이미지 사이즈는 30MB 이하만 올릴 수 있습니다.</p>
+							<p>※ The size. There is a maximum file size of '1GB' for all images.</p>
 							<div class="form-group" style="margin-bottom: 4%;">
 								<input type="file" name="file" id="fileInput" accept="image/*"
 									style="display: none;" multiple> <input type="button"
