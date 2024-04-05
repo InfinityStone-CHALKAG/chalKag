@@ -64,7 +64,7 @@
 									<option value="Freecycle">Freecycle</option>
 								</select>
 							</div>
-							<p>※ The size. There is a maximum file size of '30MB' for all images.</p>
+							<p>※ The size. There is a maximum file size of '1GB' for all images.</p>
 							<div class="form-group" style="margin-bottom: 4%;">
 								<input type="file" name="file" id="fileInput" accept="image/*"
 									style="display: none;" multiple> <input type="button"

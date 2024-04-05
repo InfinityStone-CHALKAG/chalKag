@@ -42,7 +42,7 @@
 								<div class="form-group" style="display: flex; justify-content: center;">
 									<input type="text" id="freePostTitle" name="freePostTitle" class="form-control rounded" placeholder="Title" />
 								</div>
-										<p>※ The size. There is a maximum file size of '30MB' for all images.</p>
+										<p>※ The size. There is a maximum file size of '1GB' for all images.</p>
 									<textarea id="freePostContent" name="freePostContent" class="form-control rounded" ></textarea>
 								<button class="btn btn-primary btn-block">Composite</button>
 							</form>	
@@ -98,7 +98,7 @@
 					upload: () => {
 						return loader.file.then(file => {
 								// 이미지 크기 및 형식 검사 로직
-								const maxSize = 1024 * 1024 * 30; // 30MB
+								const maxSize = 1024 * 1024 * 1024; // 30MB
 								const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
 									
 								if (file.size > maxSize) {

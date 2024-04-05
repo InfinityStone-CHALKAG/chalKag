@@ -46,24 +46,24 @@
 								<select class="selectTags" id="headHuntPostRole" name="headHuntPostRole" 
 								style="width: 32%; height: 43px; margin-right: 2%;">
 									<option value="" >Role</option>
-									<option value="모델" ${'모델' == updateHeadHuntPost.headHuntPostRole ? 'selected' : ''}>모델</option>
-									<option value="사진작가 "${'사진작가' == updateHeadHuntPost.headHuntPostRole ? 'selected' : ''}>사진작가</option>
+									<option value="Model" ${'Model' == updateHeadHuntPost.headHuntPostRole ? 'selected' : ''}>Model</option>
+									<option value="Photographer "${'Photographer' == updateHeadHuntPost.headHuntPostRole ? 'selected' : ''}>Photographer</option>
 								</select>	
 							
 								<select class="selectTags" id="headHuntPostConcept" 
 								style="width: 32%; height: 43px; margin-right: 2%;"
 								name="headHuntPostConcept">
 									<option value="" disabled>WorkConcept</option>
-									<option value="snap" ${'snap' == updateHeadHuntPost.headHuntPostConcept ? 'selected' : ''}>스냅사진</option>
-	   								<option value="pictorial" ${'pictorial' == updateHeadHuntPost.headHuntPostConcept ? 'selected' : ''} >화보</option>
-								    <option value="studio" ${'studio' == updateHeadHuntPost.headHuntPostConcept ? 'selected' : ''}>내부</option>
- 									<option value="updateHeadHuntPost"${'outdoor' == updateHeadHuntPost.headHuntPostConcept ? 'selected' : ''}>외부</option>
-  									<option value="etc" ${'etc' == updateHeadHuntPost.headHuntPostConcept ? 'selected' : ''}>기타</option>
+									<option value="snap" ${'snap' == updateHeadHuntPost.headHuntPostConcept ? 'selected' : ''}>Snap</option>
+	   								<option value="pictorial" ${'pictorial' == updateHeadHuntPost.headHuntPostConcept ? 'selected' : ''} >Pictorial</option>
+								    <option value="studio" ${'studio' == updateHeadHuntPost.headHuntPostConcept ? 'selected' : ''}>Studio</option>
+ 									<option value="updateHeadHuntPost"${'outdoor' == updateHeadHuntPost.headHuntPostConcept ? 'selected' : ''}>Outdoor</option>
+  									<option value="etc" ${'etc' == updateHeadHuntPost.headHuntPostConcept ? 'selected' : ''}>Etc</option>
 								</select> 
 								
 								<select class="selectTags" id="headHuntPostRegion" style="width: 32%;
 									height: 43px;" name="headHuntPostRegion"> 
-									<option value="" disabled>선택</option>
+									<option value="" disabled>Region</option>
 									<option value="SEOUL" ${'SEOUL' == updateHeadHuntPost.headHuntPostRegion ? 'selected' : ''}>SEOUL</option>
 									<option value="GYEONGGI" ${'GYEONGGI' == updateHeadHuntPost.headHuntPostRegion ? 'selected' : ''}>GYEONGGI</option>
 									<option value="GANGWON" ${'GANGWON' == updateHeadHuntPost.headHuntPostRegion ? 'selected' : ''}>GANGWON</option>
@@ -83,8 +83,8 @@
 								oninput="trimInput(this); validatePay(this);" placeholder="Pay" />
 							</div>	
 
-							<p>※ 이미지 사이즈는 30MB 이하만 올릴 수 있습니다.</p>
-							<div id="imageData" data-images='${postImgList.postImgName}'></div>
+							<p>※ The size. There is a maximum file size of '1GB' for all images.</p>
+							<div id="imageData"></div>
 							<div class="form-group" style="margin-bottom: 4%;">
 								<input type="file" name="file" id="fileInput" accept="image/*"
 									style="display: none;" multiple> <input type="button"
