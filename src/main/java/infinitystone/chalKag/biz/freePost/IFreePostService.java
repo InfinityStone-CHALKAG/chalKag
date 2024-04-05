@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
-
+//필터검색 시 컨트롤러에서 사용할 서비스 
 public interface IFreePostService {
 	
 	public List<FreePostDTO> selectAll(FreePostDTO freePostDTO);
