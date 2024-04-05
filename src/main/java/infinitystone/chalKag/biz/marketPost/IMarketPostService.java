@@ -2,6 +2,7 @@ package infinitystone.chalKag.biz.marketPost;
 
 import java.util.List;
 
+// 필터검색 시 컨트롤러에서 사용할 서비스
 public interface IMarketPostService {
 	
 public List<MarketPostDTO> selectAll(MarketPostDTO marketPostDTO);

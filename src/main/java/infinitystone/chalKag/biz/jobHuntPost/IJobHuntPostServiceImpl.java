@@ -10,9 +10,11 @@ import org.springframework.stereotype.Service;
 @Service("IJobHuntPostService")
 public class IJobHuntPostServiceImpl implements IJobHuntPostService{
 
+	// .xml과 이어진 DAO 의존 주입
 	@Autowired
 	private IJobHuntPostDAO iJobHuntPostDAO;
 	
+	// 필터검색 시 뷰에서 받은 값을 넣어서 출력
 	@Override
 	public List<JobHuntPostDTO> selectAll(JobHuntPostDTO jobHuntPostDTO) {
 		Map<String, Object> map = new HashMap<String,Object>();
