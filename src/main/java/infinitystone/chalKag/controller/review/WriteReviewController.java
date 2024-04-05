@@ -16,19 +16,15 @@ public class WriteReviewController {
   private ReviewService reviewService;
 
   @RequestMapping(value = "writeReview")
-  public @ResponseBody int writeReview(ReviewDTO reviewDTO, HttpSession session, Model model) {
+  public @ResponseBody ReviewDTO writeReview(ReviewDTO reviewDTO, HttpSession session) {
 
     System.out.println("WriteController In로그 = [" + reviewDTO + "]");
 
     reviewDTO.setMemberId((String) session.getAttribute("member"));
 
-    if (!reviewService.insert(reviewDTO)) {
-      return 0;
-    }
+    reviewService.insert(reviewDTO);
 
-    model.addAttribute("review", reviewService.selectOne(reviewDTO));
-
-    return 1;
+    return reviewService.selectOne(reviewDTO);
   }
 
 }
