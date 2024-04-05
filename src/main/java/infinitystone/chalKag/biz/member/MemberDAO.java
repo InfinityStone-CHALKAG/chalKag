@@ -25,7 +25,7 @@ public class MemberDAO {
       "FROM LEVEL " +
       "WHERE LEVEL_requiredexp <= MEMBER_exp) AS CURRENT_level " +
       "FROM MEMBER " +
-      "WHERE MEMBER_grade = 'USER' " +
+      "WHERE MEMBER_grade != 'ADMIN' " +
       "ORDER BY MEMBER_exp DESC " +
       "LIMIT 10";
 

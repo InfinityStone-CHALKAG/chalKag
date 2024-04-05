@@ -135,9 +135,9 @@
                                     </figure>
                                     <div class="padding">
                                         <div class="detail">
-                                            <div class="time">${latestHeadHuntPost.headHuntPostDate}</div>
                                             <div class="category"><a href="headHuntPostList">HEADHUNTPOST</a>
                                             </div>
+                                            <div class="time">${latestHeadHuntPost.memberNickname}</div>
                                         </div>
                                         <h2>
                                             <a href="headHuntPostSingle?headHuntPostId=${latestHeadHuntPost.headHuntPostId}">${latestHeadHuntPost.headHuntPostTitle}</a>
@@ -167,9 +167,9 @@
                                     </figure>
                                     <div class="padding">
                                         <div class="detail">
-                                            <div class="time">${latestMarketPost.marketPostDate}</div>
                                             <div class="category"><a href="marketPostList">MARKETPOST</a>
                                             </div>
+                                            <div class="time">${latestMarketPost.memberNickname}</div>
                                         </div>
                                         <h2>
                                             <a href="marketPostSingle?marketPostId=${latestMarketPost.marketPostId}">${latestMarketPost.marketPostTitle}</a>
@@ -203,9 +203,9 @@
                                     </figure>
                                     <div class="padding">
                                         <div class="detail">
-                                            <div class="time">${latestJobHuntPost.jobHuntPostDate}</div>
                                             <div class="category"><a href="jobHuntPostList">JOBHUNTPOST</a>
                                             </div>
+                                            <div class="time">${latestJobHuntPost.memberNickname}</div>
                                         </div>
                                         <h2>
                                             <a href="jobHuntPostSingle?jobHuntPostId=${latestJobHuntPostId.jobHuntPostId}">${latestJobHuntPost.jobHuntPostTitle}</a>
@@ -236,9 +236,9 @@
                                     </figure>
                                     <div class="padding">
                                         <div class="detail">
-                                            <div class="time">${latestFreePost.freePostDate}</div>
                                             <div class="category"><a href="freePostList">FREEPOST</a>
                                             </div>
+                                            <div class="time">${latestFreePost.memberNickname}</div>
                                         </div>
                                         <h2>
                                             <a href="freePostSingle?freePostId=${latestFreePost.freePostId}">${latestFreePost.freePostTitle}</a>
@@ -529,21 +529,35 @@
                     </div>
                 </aside>
                 <aside>
-                    <h1 class="aside-title">PREMIUM POST</h1>
-                    <div class="aside-body">
-                        <article class="article-mini">
-                            <div class="inner">
-                                <figure>
-                                    <a href="single.html">
-                                        <img src="css/user/images/news/img07.jpg" alt="Sample Article">
-                                    </a>
-                                </figure>
-                                <div class="padding">
-                                    <h1><a href="single.html">Fusce ullamcorper elit at felis cursus
-                                        suscipit</a></h1>
+                    <div class="box box-border">
+                        <div class="box-body">
+                            <h1 class="aside-title">PREMIUM POST</h1>
+                            <c:forEach items="${headHuntPostPremiumList}" var="headHuntPostPremiumList">
+                                <div class="aside-body">
+                                    <article class="article-mini">
+                                        <div class="inner">
+                                            <div class="detail">
+                                                <div class="category"><a href="headHuntPostList">HEADHUNTPOST</a>
+                                                </div>
+                                                <div class="time">${headHuntPostPremiumList.memberNickname}</div>
+                                            </div>
+                                            <figure>
+                                                <a href="headHuntPostSingle?headHuntPostId=${headHuntPostPremiumList.headHuntPostId}">
+                                                    <img class="latestPostImg"
+                                                         src="postImg/${headHuntPostPremiumList.postImgName}"
+                                                         alt="Sample Article">
+                                                </a>
+                                            </figure>
+                                            <div class="padding">
+                                                <h1>
+                                                    <a href="headHuntPostSingle?headHuntPostId=${headHuntPostPremiumList.headHuntPostId}">${headHuntPostPremiumList.headHuntPostTitle}</a>
+                                                </h1>
+                                            </div>
+                                        </div>
+                                    </article>
                                 </div>
-                            </div>
-                        </article>
+                            </c:forEach>
+                        </div>
                     </div>
                 </aside>
 
@@ -592,188 +606,38 @@
                 </div>
             </div>
         </h1>
-        <div class="owl-carousel owl-theme carousel-1 owl-loaded owl-drag">
-
-
-            <div class="owl-stage-outer">
-                <div class="owl-stage"
-                     style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 1740px;">
-                    <article class="owl-item active" style="width: 270px; margin-right: 20px;">
-                        <article class="article">
-                            <div class="inner">
-                                <figure>
-                                    <a href="single.html">
-                                        <img src="images/news/img03.jpg" alt="Sample Article">
-                                    </a>
-                                </figure>
-                                <div class="padding">
-                                    <div class="detail">
-                                        <div class="time">December 11, 2016</div>
-                                        <div class="category"><a href="category.html">Travel</a></div>
-                                    </div>
-                                    <h2><a href="single.html">tempor interdum Praesent tincidunt</a></h2>
-                                    <p>Praesent tincidunt, leo vitae congue molestie.</p>
+        <div class="owl-carousel owl-theme carousel-1">
+            <c:forEach items="${headHuntPostWeeklyBestList}" var="headHuntPostWeeklyBestList">
+                <article class="article">
+                    <div class="inner">
+                        <figure>
+                            <a href="headHuntPostSingle?headHuntPostId=${headHuntPostWeeklyBestList.headHuntPostId}">
+                                <img class="latestPostImg"
+                                     src="postImg/${headHuntPostWeeklyBestList.postImgName}"
+                                     alt="Sample Article">
+                            </a>
+                        </figure>
+                        <div class="padding">
+                            <div class="detail">
+                                <div class="category"><a
+                                        href="headHuntPostSingle?headHuntPostId=${headHuntPostWeeklyBestList.headHuntPostId}">HEADHUNTPOST</a>
                                 </div>
+                                <div class="time">${headHuntPostWeeklyBestList.memberNickname}</div>
                             </div>
-                        </article>
-                    </article>
-                    <article class="owl-item active" style="width: 270px; margin-right: 20px;">
-                        <article class="article">
-                            <div class="inner">
-                                <figure>
-                                    <a href="single.html">
-                                        <img src="images/news/img16.jpg" alt="Sample Article">
-                                    </a>
-                                </figure>
-                                <div class="padding">
-                                    <div class="detail">
-                                        <div class="time">December 09, 2016</div>
-                                        <div class="category"><a href="category.html">Sport</a></div>
-                                    </div>
-                                    <h2><a href="single.html">Maecenas porttitor sit amet turpis a semper</a></h2>
-                                    <p> Proin vulputate, urna id porttitor luctus, dui augue facilisis lacus.</p>
-                                </div>
-                            </div>
-                        </article>
-                    </article>
-                    <article class="owl-item active" style="width: 270px; margin-right: 20px;">
-                        <article class="article">
-                            <div class="inner">
-                                <figure>
-                                    <a href="single.html">
-                                        <img src="images/news/img15.jpg" alt="Sample Article">
-                                    </a>
-                                </figure>
-                                <div class="padding">
-                                    <div class="detail">
-                                        <div class="time">December 26, 2016</div>
-                                        <div class="category"><a href="category.html">Lifestyle</a></div>
-                                    </div>
-                                    <h2><a href="single.html">Fusce ac odio eu ex volutpat pellentesque</a></h2>
-                                    <p>Vestibulum ante ipsum primis in faucibus orci luctus</p>
-                                </div>
-                            </div>
-                        </article>
-                    </article>
-                    <article class="owl-item active" style="width: 270px; margin-right: 20px;">
-                        <article class="article">
-                            <div class="inner">
-                                <figure>
-                                    <a href="single.html">
-                                        <img src="images/news/img14.jpg" alt="Sample Article">
-                                    </a>
-                                </figure>
-                                <div class="padding">
-                                    <div class="detail">
-                                        <div class="time">December 26, 2016</div>
-                                        <div class="category"><a href="category.html">Travel</a></div>
-                                    </div>
-                                    <h2><a href="single.html">Nulla facilisis odio quis gravida vestibulum</a></h2>
-                                    <p>Proin venenatis pellentesque arcu, ut mattis nulla placerat et.</p>
-                                </div>
-                            </div>
-                        </article>
-                    </article>
-                    <article class="owl-item" style="width: 270px; margin-right: 20px;">
-                        <article class="article">
-                            <div class="inner">
-                                <figure>
-                                    <a href="single.html">
-                                        <img src="images/news/img01.jpg" alt="Sample Article">
-                                    </a>
-                                </figure>
-                                <div class="padding">
-                                    <div class="detail">
-                                        <div class="time">December 26, 2016</div>
-                                        <div class="category"><a href="category.html">Travel</a></div>
-                                    </div>
-                                    <h2><a href="single.html">Fusce Ullamcorper Elit At Felis Cursus Suscipit</a></h2>
-                                    <p>Proin venenatis pellentesque arcu, ut mattis nulla placerat et.</p>
-                                </div>
-                            </div>
-                        </article>
-                    </article>
-                    <article class="owl-item" style="width: 270px; margin-right: 20px;">
-                        <article class="article">
-                            <div class="inner">
-                                <figure>
-                                    <a href="single.html">
-                                        <img src="images/news/img11.jpg" alt="Sample Article">
-                                    </a>
-                                </figure>
-                                <div class="padding">
-                                    <div class="detail">
-                                        <div class="time">December 26, 2016</div>
-                                        <div class="category"><a href="category.html">Travel</a></div>
-                                    </div>
-                                    <h2><a href="single.html">Donec consequat arcu at ultrices sodales</a></h2>
-                                    <p>Proin venenatis pellentesque arcu, ut mattis nulla placerat et.</p>
-                                </div>
-                            </div>
-                        </article>
-                    </article>
-                </div>
-            </div>
-            <div class="owl-nav disabled">
-                <div class="owl-prev">prev</div>
-                <div class="owl-next">next</div>
-            </div>
-            <div class="owl-dots disabled"></div>
+                            <h2>
+                                <a href="headHuntPostSingle?headHuntPostId=${headHuntPostWeeklyBestList.headHuntPostId}">${headHuntPostWeeklyBestList.headHuntPostTitle}</a>
+                            </h2>
+                            <p class="latestPostContent">${headHuntPostWeeklyBestList.headHuntPostContent}</p>
+                        </div>
+                    </div>
+                </article>
+            </c:forEach>
         </div>
     </div>
 </section>
 
-<h4>${latestHeadHuntPost}</h4>
-
 <chalKagTags:webFooter/>
 
-<!-- owl 사용시 필요-->
-
-<script>
-    $(document).ready(function () {
-        $(".owl-carousel").trigger('destroy.owl.carousel').removeClass('owl-loaded');
-        // Headline Carousel
-        // Headline Carousel
-        var headlineCarousel = $("#headline").owlCarousel({
-            items: 1,
-            loop: true,
-            autoplay: true,
-            autoplayTimeout: 10000,
-            autoplayHoverPause: true,
-            margin: 10
-        });
-
-        // 마우스 hover 시에만 autoplay를 일시 정지하고 hover를 벗어나면 다시 autoplay를 시작합니다.
-        $("#headline").hover(
-            function () {
-                headlineCarousel.trigger('stop.owl.autoplay');
-            },
-            function () {
-                headlineCarousel.trigger('play.owl.autoplay');
-            }
-        );
-
-        // Featured Carousel
-        var featuredCarousel = $("#featured").owlCarousel({
-            items: 1,
-            loop: true,
-            autoplay: true,
-            autoplayTimeout: 3000,
-            autoplayHoverPause: true,
-            margin: 10
-        });
-
-        // 마우스 hover 시에만 autoplay를 일시 정지하고 hover를 벗어나면 다시 autoplay를 시작합니다.
-        $("#featured").hover(
-            function () {
-                featuredCarousel.trigger('stop.owl.autoplay');
-            },
-            function () {
-                featuredCarousel.trigger('play.owl.autoplay');
-            }
-        );
-    });
-</script>
 </body>
 
 </html>
