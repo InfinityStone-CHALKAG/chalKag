@@ -87,6 +87,8 @@ public class HeadHuntPostDAO { // 구인 게시판 DAO
 		  + "	 ) AS POSTIMG_name " // 대표 이미지의 이름
 		  + "FROM "
 		  + "	HEADHUNTPOST " // 구인글 테이블
+		  + "INNER JOIN  "
+		  + "	MEMBER ON HEADHUNTPOST.MEMBER_id = MEMBER.MEMBER_id " // 회원 정보와 INNER JOIN
 		  + "LEFT JOIN "
 		  + "	RECOMMEND ON HEADHUNTPOST.HEADHUNTPOST_id = RECOMMEND.POST_id " // 좋아요 정보와 LEFT JOIN
 		  + "WHERE "
@@ -247,9 +249,7 @@ public class HeadHuntPostDAO { // 구인 게시판 DAO
 		  + "ORDER BY "
 		  + "	HEADHUNTPOST.HEADHUNTPOST_id DESC"; // 게시글 아이디를 기준으로 내림차순 정렬
   // 사용한 테이블 : 구인글 테이블, 회원 테이블, 좋아요 테이블, 게시글 이미지 테이블
-  // 사용한 컬럼 (출력 내용) :
-  // 게시글 카테고리, 구인글 아이디, 회원 닉네임(회원 테이블), 구인글 제목, 구인글 내용,
-  // 구인글 작성일, 구인글 조회수, 게시글의 좋아요 수(좋아요 테이블), 게시글 이미지 테이블(게시글 이미지 테이블)
+  // 사용한 컬럼 (출력 내용) : 카테고리, 구인글 아이디, 회원 아아디, 회원 닉네임(회원 테이블), 제목, 내용, 작성일, 조회수, 좋아요 수(좋아요 테이블), 대표 이미지(게시글 이미지 테이블)
   // 쿼리문 설명 :
   // INNER JOIN을 사용해 구인글 테이블과 회원 테이블을 연결하고, 또 다른 LEFT JOIN을 사용해 구인글 테이블과 좋아요 테이블을 연결
   // 게시글의 좋아요는 테이블을 따로 나누었으며 COUNT() 함수를 사용해 게시글에 대한 좋아요 수를 합산하고, 그 결과를 "RECOMMEND_cnt"라는 별칭으로 반환
@@ -342,6 +342,8 @@ public class HeadHuntPostDAO { // 구인 게시판 DAO
 		  + "	 ) AS POSTIMG_name " // 대표 이미지의 이름
 		  + "FROM "
 		  + "	HEADHUNTPOST " // 구인글 테이블
+		  + "INNER JOIN  "
+		  + "	MEMBER ON HEADHUNTPOST.MEMBER_id = MEMBER.MEMBER_id " // 회원 정보와 INNER JOIN
 		  + "LEFT JOIN "
 		  + "	RECOMMEND ON HEADHUNTPOST.HEADHUNTPOST_id = RECOMMEND.POST_id " // 좋아요 정보와 LEFT JOIN
 		  + "ORDER BY "

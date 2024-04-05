@@ -7,7 +7,7 @@ public class HeadHuntPostDTO { // 구인글 게시판 DTO 생성.전미지
 	private String headHuntPostId;			// 구인글 아이디
 	private String memberId;				// 회원 아이디
 	private String memberNickname;			// 회원 닉네임
-	private String memberIntroduction;		// 회원 닉네임 		  
+	private String memberIntroduction;		// 회원 소개글	  
 	private String profileImgName;			// 프로필 이미지 이름
 	private String headHuntPostDate;		// 구인글 작성 시간
 	private String headHuntPostRole;		// 구인글 직업 (모델/사진작가)
