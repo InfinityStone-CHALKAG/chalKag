@@ -555,6 +555,7 @@
 
                     function reportStateCheck() {
                         console.log("진입");
+                        console.log($('#reportStateHoldForm').serialize());
 
                         var radioButtons = document.querySelectorAll('input[type="radio"][name="timeOutDuration"]');
                         var checked = false;
