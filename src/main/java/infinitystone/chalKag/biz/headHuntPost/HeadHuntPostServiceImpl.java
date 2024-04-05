@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service("headHuntPostService")
-public class HeadHuntPostServiceImpl implements HeadHuntPostService{
+public class HeadHuntPostServiceImpl implements HeadHuntPostService{ // 구인 게시판 ServiceImpl
 
 	@Autowired
 	private HeadHuntPostDAO headHuntPostDAO;

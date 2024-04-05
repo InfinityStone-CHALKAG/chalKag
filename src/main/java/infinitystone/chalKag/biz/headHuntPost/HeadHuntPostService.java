@@ -2,7 +2,7 @@ package infinitystone.chalKag.biz.headHuntPost;
 
 import java.util.List;
 
-public interface HeadHuntPostService {
+public interface HeadHuntPostService { // 구인 게시판 Service
 	
 	List<HeadHuntPostDTO> selectAll(HeadHuntPostDTO headHuntPostDTO);
 	
