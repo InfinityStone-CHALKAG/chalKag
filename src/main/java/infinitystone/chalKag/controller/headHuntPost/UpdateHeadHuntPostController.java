@@ -30,19 +30,11 @@ public class UpdateHeadHuntPostController {
 	
 	
 	@RequestMapping(value = "/updateHeadHuntPost", method = RequestMethod.GET)
-	public String updateHeadHuntPostPage(HeadHuntPostDTO headHuntPostDTO, Model model, PostImgDTO postImgDTO) {
+	public String updateHeadHuntPostPage(HeadHuntPostDTO headHuntPostDTO, Model model) {
 
 		headHuntPostDTO.setSearchCondition("headHuntPostSingle");
 		headHuntPostDTO = headHuntPostService.selectOne(headHuntPostDTO);
-		postImgDTO.setSearchCondition("headHuntPostSingleImg");
-		postImgDTO.setPostId(headHuntPostDTO.getHeadHuntPostId());
-
-		List<PostImgDTO> postImgList = postImgService.selectAll(postImgDTO);
-		System.out.println("postImgList : " + postImgList);
 		model.addAttribute("headHuntPostSingle",headHuntPostDTO);
-		model.addAttribute("postImgList", postImgList);
-		
-		
 		return "headHuntPost/updateHeadHuntPost";
 	}
 	
@@ -66,8 +58,8 @@ public class UpdateHeadHuntPostController {
 		}
 		postImgDTO.setPostId(headHuntPostDTO.getHeadHuntPostId());
 
-		if(!postImgService.update(postImgDTO)){
-			System.out.println("UpdateHeadHuntPostController Update of post images failed");
+		if(!postImgService.delete(postImgDTO)){
+			System.out.println("UpdateHeadHuntPostController Delete of post images failed");
 		}
 
 		for (MultipartFile file : files) {

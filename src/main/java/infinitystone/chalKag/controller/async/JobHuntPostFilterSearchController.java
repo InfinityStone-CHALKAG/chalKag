@@ -1,6 +1,8 @@
 package infinitystone.chalKag.controller.async;
 
 import com.google.gson.Gson;
+import infinitystone.chalKag.biz.jobHuntPost.IJobHuntPostDAO;
+import infinitystone.chalKag.biz.jobHuntPost.IJobHuntPostService;
 import infinitystone.chalKag.biz.jobHuntPost.JobHuntPostDTO;
 import infinitystone.chalKag.biz.jobHuntPost.JobHuntPostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +18,11 @@ public class JobHuntPostFilterSearchController {
 	private Gson gson;
 
 	@Autowired
-	private JobHuntPostService jobHuntPostService;
+	private IJobHuntPostService iJobHuntPostService;
 	
 	@RequestMapping("/jobHuntPostFilterSearch")
 	public @ResponseBody String filterSearchController(JobHuntPostDTO jobHuntPostDTO) {
 		// 필터링된 데이터를 가져오는 서비스 호출
-    return gson.toJson(jobHuntPostService.selectAll(jobHuntPostDTO));
+    return gson.toJson(iJobHuntPostService.selectAll(jobHuntPostDTO));
 	}
 }
