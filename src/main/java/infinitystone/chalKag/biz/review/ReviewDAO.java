@@ -28,14 +28,21 @@ public class ReviewDAO {
       "INNER JOIN MEMBER MEMBER2 ON REVIEW.REVIEW_partner = MEMBER2.MEMBER_id" +
       "WHERE REVIEW.REVIEW_partner = ?";
 
-  private static final String SELECTONE = "";
+  private static final String SELECTONE = "SELECT REVIEW_id " +
+      "MEMBER_id " +
+      "REVIEW_partner " +
+      "REVIEW_date " +
+      "REVIEW_score " +
+      "REVIEW_content " +
+      "FROM REVIEW " +
+      "ORDER BY REVIEW_id DESC " +
+      "LIMIT 1";
 
   private static final String INSERT = "INSERT INTO REVIEW (MEMBER_id," +
       "REVIEW_partner," +
-      "REVIEW_date" +
       "REVIEW_score" +
       "REVIEW_content)" +
-      "VALUES (?, ?, ?, ?, ?)";
+      "VALUES (?, ?, ?, ?)";
 
   private static final String UPDATE = "";
 
@@ -48,11 +55,13 @@ public class ReviewDAO {
   }
 
   public ReviewDTO selectOne(ReviewDTO reviewDTO) {
-    return null;
+    System.out.println("ReivewDAO In로그 = [" + reviewDTO + "]");
+    return jdbcTemplate.queryForObject(SELECTONE, new ReviewRowMapper());
   }
 
   public boolean insert(ReviewDTO reviewDTO) {
-    if (jdbcTemplate.update(INSERT) <= 0) {
+    System.out.println("ReviewDAO(insert) In로그 = [" + reviewDTO + "]");
+    if (jdbcTemplate.update(INSERT, reviewDTO.getMemberId(), reviewDTO.getReviewPartner(), reviewDTO.getReviewScore(), reviewDTO.getReviewContent()) <= 0) {
       return false;
     }
     return true;
