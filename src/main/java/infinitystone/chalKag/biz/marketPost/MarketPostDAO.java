@@ -279,11 +279,11 @@ class MarketPostSelectAllRowMapper implements RowMapper<MarketPostDTO> {
 
 		MarketPostDTO data = new MarketPostDTO();
 
-		data.setPostCategory(rs.getString("POST_category"));
+//		data.setPostCategory(rs.getString("POST_category"));
 		data.setMarketPostId(rs.getString("MARKETPOST_id"));
 		data.setMemberId(rs.getString("MEMBER_id"));
 		data.setMemberNickname(rs.getString("MEMBER_nickname"));
-		data.setMarketPostDate(rs.getString("FREEPOST_date"));
+		data.setMarketPostDate(rs.getString("MARKETPOST_date"));
 		data.setMarketPostTitle(rs.getString("MARKETPOST_title"));
 		data.setMarketPostContent(rs.getString("MARKETPOST_content"));
 		data.setMarketPostViewcnt(rs.getString("MARKETPOST_viewcnt"));
