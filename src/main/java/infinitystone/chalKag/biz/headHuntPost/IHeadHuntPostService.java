@@ -2,11 +2,11 @@ package infinitystone.chalKag.biz.headHuntPost;
 
 import java.util.List;
 
-public interface IHeadHuntPostService {
+public interface IHeadHuntPostService { // 구인 게시판 필터 검색 시 사용할 Service
 	
 	public List<HeadHuntPostDTO> selectAll(HeadHuntPostDTO headHuntPostDTO) ;
 	
-	public HeadHuntPostDTO selectIbe(HeadHuntPostDTO headHuntPostDTO);
+	public HeadHuntPostDTO selectOne(HeadHuntPostDTO headHuntPostDTO);
 	
 	public boolean insert(HeadHuntPostDTO headHuntPostDTO);
 	
