@@ -15,18 +15,15 @@ public class ReviewDAO {
   @Autowired
   private JdbcTemplate jdbcTemplate;
 
-  private static final String SELECTALL = "SELECT REVIEW.REVIEW_id " +
-      "REVIEW.MEMBER_id, " +
-      "MEMBER1.MEMBER_nickname AS MEMBER_nickname, " +
-      "REVIEW.REVIEW_partner, " +
-      "MEMBER2.MEMBER_nickname AS REVIEW_partnernickname, " +
-      "REVIEW.REVIEW_date, " +
-      "REVIEW.REVIEW_score, " +
-      "REVIEW.REVIEW_content " +
+  private static final String SELECTALL = "SELECT REVIEW_score, " +
+      "PROFILEIMG_name, " +
+      "REVIEW_partner, " +
+      "MEMBER_nickname, " +
+      "REVIEW_content," +
+      "REVIEW_date " +
       "FROM REVIEW " +
-      "INNER JOIN MEMBER MEMBER1 ON REVIEW.MEMBER_id = MEMBER1.MEMBER_id " +
-      "INNER JOIN MEMBER MEMBER2 ON REVIEW.REVIEW_partner = MEMBER2.MEMBER_id " +
-      "WHERE REVIEW.REVIEW_partner = ?";
+      "INNER JOIN MEMBER ON REVIEW_partner = MEMBER.MEMBER_id" +
+      "WHERE REVIEW_partner = ?";
 
   private static final String SELECTONE = "SELECT REVIEW_id, " +
       "(SELECT PROFILEIMG_name " +
@@ -58,7 +55,8 @@ public class ReviewDAO {
       "WHERE REVIEW_id = ?";
 
   public List<ReviewDTO> selectAll(ReviewDTO reviewDTO) {
-    return (List<ReviewDTO>) jdbcTemplate.queryForObject(SELECTALL, new ReviewRowMapper());
+    Object[] args = {reviewDTO.getReviewPartner()};
+    return (List<ReviewDTO>) jdbcTemplate.queryForObject(SELECTALL, args, new ReviewRowMapper());
   }
 
   public ReviewDTO selectOne(ReviewDTO reviewDTO) {

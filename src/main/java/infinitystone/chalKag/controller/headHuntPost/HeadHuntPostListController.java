@@ -27,7 +27,6 @@ public class HeadHuntPostListController {
 
     String PremiumHeadHuntPostList = gson.toJson(headHuntPostService.selectAll(headHuntPostDTO));
 
-
     model.addAttribute("headHuntPostList", headHuntPostListResult);
     model.addAttribute("PremiumHeadHuntPostList", PremiumHeadHuntPostList);
 
