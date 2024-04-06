@@ -39,11 +39,16 @@ function requestPay() {
             }).done(function (data) {
                 // [2] 서버에서 REST API로 결제정보 확인 및 서비스루틴이 정상적인 경우
                 if (data) {
-                    swal("success", "결제가 완료되었습니다.", "success", {
-                        button: "OK",
-                    }), function (isConfirmed) {
-                        window.location.href = 'main';
-                    };
+				  swal({
+				      title: 'success',
+				      text: '결제가 완료되었습니다.',
+				      type: 'success',
+				      confirmButtonText: 'OK'
+				    }, function(isConfirmed) {
+				      if (isConfirmed) {
+				        window.location.href = 'main';
+				      }
+				    });
                 } else {
                     swal("fail", "결제를 취소했습니다", "error", {
                         button: "OK",
