@@ -493,10 +493,11 @@ public class HeadHuntPostDAO { // 구인 게시판 DAO
 		System.out.println("HeadHuntPostDAO(insert) In로그 = [" + headHuntPostDTO + "]");
 		// INSERT_HEADHUNTPOST 쿼리를 실행해 데이터베이스에 구인글 데이터를 저장
 		result = jdbcTemplate.update(INSERT_HEADHUNTPOST, headHuntPostDTO.getMemberId(),
+				headHuntPostDTO.getHeadHuntPostTitle(),
+				headHuntPostDTO.getHeadHuntPostContent(),
 				headHuntPostDTO.getHeadHuntPostRole(), headHuntPostDTO.getHeadHuntPostRegion(),
 				headHuntPostDTO.getHeadHuntPostPay(), headHuntPostDTO.getHeadHuntPostWorkDate(),
-				headHuntPostDTO.getHeadHuntPostConcept(), headHuntPostDTO.getHeadHuntPostTitle(),
-				headHuntPostDTO.getHeadHuntPostContent());
+				headHuntPostDTO.getHeadHuntPostConcept());
 		if (result <= 0) {
 			System.out.println("HeadHuntPostDAO(insert) Out로그 = [" + result + "]");
 			return false; // 글 작성 실패 시 false 반환
