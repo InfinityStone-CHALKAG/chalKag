@@ -18,6 +18,7 @@ public class IHeadHuntPostServiceImpl implements IHeadHuntPostService {
 	@Override
 	public List<HeadHuntPostDTO> selectAll(HeadHuntPostDTO headHuntPostDTO) {
 		Map<String, Object> map = new HashMap<String,Object>();
+		System.out.println("IMPL " + headHuntPostDTO);
 		
 		map.put("headHuntPostId", headHuntPostDTO.getHeadHuntPostId());				// 구인글 아이디
 		map.put("headHuntPostTitle", headHuntPostDTO.getHeadHuntPostTitle());		// 제목
@@ -41,7 +42,9 @@ public class IHeadHuntPostServiceImpl implements IHeadHuntPostService {
 		map.put("sortOrder", headHuntPostDTO.getSortOrder());						// 정렬
 		
 		map.put("searchField", headHuntPostDTO.getSearchField());					// 검색 키워드
-		map.put("searchInput", headHuntPostDTO.getSearchInput());					// 검색 조건
+		map.put("searchInput", headHuntPostDTO.getSearchInput());	
+		System.out.println("MAP" + map);
+		System.out.println("iHeadHuntPostDAO.selectAll(map) :" + iHeadHuntPostDAO.selectAll(map));// 검색 조건
 		return iHeadHuntPostDAO.selectAll(map);
 	}
 	

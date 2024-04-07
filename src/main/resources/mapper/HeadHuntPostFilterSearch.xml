@@ -2,98 +2,92 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="infinitystone.chalKag.biz.headHuntPost.IHeadHuntPostDAO">
 	<select id="selectAll" resultMap="headHuntPostMap">
-	SELECT 
-		DISTINCT
-		    HEADHUNTPOST.HEADHUNTPOST_id,
-		    MEMBER.MEMBER_nickname,
-		    HEADHUNTPOST.HEADHUNTPOST_title,
-		    HEADHUNTPOST.HEADHUNTPOST_content,
-		    HEADHUNTPOST.HEADHUNTPOST_date,
-		    HEADHUNTPOST.HEADHUNTPOST_viewcnt,
-		    ( 
-		        SELECT 
-		            COUNT(*) 
-		        FROM 
-		            RECOMMEND 
-		        WHERE 
-		            RECOMMEND.POST_id = HEADHUNTPOST.HEADHUNTPOST_id
-		    ) AS RECOMMEND_cnt, 
-		    ( 
-		        SELECT 
-		            POSTIMG.POSTIMG_name
-		        FROM 
-		            POSTIMG 
-		        WHERE 
-		            POSTIMG.POST_id = HEADHUNTPOST.HEADHUNTPOST_id
-		        ORDER BY 
-		            POSTIMG.POSTIMG_id ASC 
-		        LIMIT 1
-		    ) AS POSTIMG_name 
-		FROM 
-		    HEADHUNTPOST 
-		INNER JOIN 
-		    MEMBER ON HEADHUNTPOST.MEMBER_id = MEMBER.MEMBER_id 
-		LEFT JOIN 
-		    RECOMMEND ON HEADHUNTPOST.HEADHUNTPOST_id = RECOMMEND.POST_id 
-		WHERE 1=1
-	
-	<if test = "headHuntPostTitle != null">
-		AND HEADHUNTPOST_title LIKE CONCAT('%',#{headHuntPostTitle},'%')
-	</if>
-	
-	<if test = "headHuntPsotContent != null">
-		AND HEADHUNTPOST_content LIKE CONCAT('%',#{headHuntPostContent},'%')
-	</if>
-	
-	<if test = "memberNickname !=null">
-		AND member_nickname LIKE CONCAT('%',#{memeberNickname},'%')
-	</if>
-		
-	<if test="titleAndContents != null">
-		AND HEADHUNTPOST_title LIKE CONCAT('%',#{titleAndContents},'%')
-	</if>
-	
-	
-	
-	<if test="headHuntPostRole != null">
-		AND HEADHUNTPOST_role LIKE CONCAT('%',#{role},'%')
-	</if>
-	
-	<if test="headHuntPostRegion != null">
-		AND HEADHUNTPOST_region LIKE CONCAT('%',#{region},'%')
-	</if>
-	
+		   SELECT 
+      DISTINCT
+          HEADHUNTPOST.HEADHUNTPOST_id,
+          MEMBER.MEMBER_nickname,
+          HEADHUNTPOST.HEADHUNTPOST_title,
+          HEADHUNTPOST.HEADHUNTPOST_content,
+          HEADHUNTPOST.HEADHUNTPOST_date,
+          HEADHUNTPOST.HEADHUNTPOST_viewcnt,
+          ( 
+              SELECT 
+                  COUNT(*) 
+              FROM 
+                  RECOMMEND 
+              WHERE 
+                  RECOMMEND.POST_id = HEADHUNTPOST.HEADHUNTPOST_id
+          ) AS RECOMMEND_cnt, 
+          ( 
+              SELECT 
+                  POSTIMG.POSTIMG_name
+              FROM 
+                  POSTIMG 
+              WHERE 
+                  POSTIMG.POST_id = HEADHUNTPOST.HEADHUNTPOST_id
+              ORDER BY 
+                  POSTIMG.POSTIMG_id ASC 
+              LIMIT 1
+          ) AS POSTIMG_name 
+      FROM 
+          HEADHUNTPOST 
+      INNER JOIN 
+          MEMBER ON HEADHUNTPOST.MEMBER_id = MEMBER.MEMBER_id 
+      LEFT JOIN 
+          RECOMMEND ON HEADHUNTPOST.HEADHUNTPOST_id = RECOMMEND.POST_id 
+      WHERE 1=1
+        <if test="searchField.equals('headHuntPostTitle')">
+      	 AND HEADHUNTPOST.HEADHUNTPOST_title LIKE CONCAT('%', #{searchInput}, '%')
+	    </if>
+	    <if test="searchField.equals('headHuntPostContent')">
+			AND HEADHUNTPOST.HEADHUNTPOST_content LIKE CONCAT('%', #{searchInput}, '%')
+		</if>
+		<if test="searchField.equals('memberNickname')">
+			AND MEMBER.MEMBER_nickname LIKE CONCAT('%', #{searchInput}, '%')
+		</if>
+		<if test="searchField.equals('titleAndContents')">
+			AND (HEADHUNTPOST.HEADHUNTPOST_title LIKE CONCAT('%', #{searchInput}, '%')
+OR HEADHUNTPOST.HEADHUNTPOST_content LIKE CONCAT('%', #{searchInput}, '%'))
+		</if>
+		<if test="headHuntPostRole != null and headHuntPostRole != ''">
+		    AND HEADHUNTPOST_role LIKE CONCAT('%',#{headHuntPostRole},'%')
+		</if>
+				<if test="headHuntPostRegion != null and headHuntPostRegion != ''">
+		    AND HEADHUNTPOST_region LIKE CONCAT('%',#{headHuntPostRegion},'%')
+		</if>
+		<if test="headHuntPostConcept != null and headHuntPostConcept != ''">
+		    AND HEADHUNTPOST_concept LIKE CONCAT('%',#{headHuntPostConcept},'%')
+		</if>
+		<if test="minPay != null and maxPay != null and minPay != 0 and maxPay != 0">
+		    AND HEADHUNTPOST_pay BETWEEN #{minPay} AND #{maxPay}
+		</if>
+		<if test="startWorkDate != null and endWorkDate != null and startWorkDate != '' and endWorkDate != ''">
+		    AND HEADHUNTPOST_workDate BETWEEN #{startWorkDate} AND #{endWorkDate}
+		</if>
+		<if test="fromday != null and fromday != '' ">
+			AND DATE(HEADHUNTPOST_date) BETWEEN #{fromday} AND #{today}
+		</if>
 
-	<if test="headHuntPostConcept != null">
-		AND HEADHUNTPOST_concept LIKE CONCAT('%',#{headHuntPostConcept},'%')
-	</if>
-	
-	<if test="minPay != 0 and maxPay != 0">
-		AND HEADHUNTPOST_pay BETWEEN #{minPay} AND #{maxPay}
-	</if>
-	
-	<if test="startWorkDate !=null and endWorkDate !=null">
-		AND HEADHUNTPOST_workDate BETWEEN #{startWorkDate} AND #{endWorkDate}
-	</if>
-	
-	
-	ORDER BY
-		HEADHUNTPOST.HEADHUNTPOST_date DESC
-		
+   		
+		  ORDER BY HEADHUNTPOST.HEADHUNTPOST_date DESC
+
+	    
+	    
+	    
+	    
+	    
+	    
+
 	</select>
-	
 	<resultMap id="headHuntPostMap" type="infinitystone.chalKag.biz.headHuntPost.HeadHuntPostDTO">
-		   <result column="HEADHUNTPOST_id" property="headHuntPostId" jdbcType="INTEGER" javaType="String"/>
-		   <result column="MEMBER_id" property="memberId" jdbcType="VARCHAR" javaType="String"/>
-		   <result column="MEMBER_nickname" property="memberNickname" jdbcType="VARCHAR" javaType="String"/>
-		   <result column="HEADHUNTPOST_date" property="headHuntPostDate" jdbcType="TIMESTAMP" javaType="String"/>
-		   <result column="HEADHUNTPOST_title" property="headHuntPostTitle" jdbcType="VARCHAR" javaType="String"/>
-		   <result column="HEADHUNTPOST_content" property="headHuntPostContent" jdbcType="VARCHAR" javaType="String"/>
-		   <result column="HEADHUNTPOST_viewcnt" property="headHuntPostViewcnt" jdbcType="INTEGER" javaType="String"/>
-		   <result column="POSTIMG_name" property="postImgName" jdbcType="VARCHAR" javaType="String"/>
-		   <result column="RECOMMEND_cnt" property="recommendCnt" jdbcType="INTEGER" javaType="int"/>   
+		<result column="HEADHUNTPOST_id" property="headHuntPostId" jdbcType="INTEGER" javaType="String"/>
+		<result column="MEMBER_nickname" property="memberNickname" jdbcType="VARCHAR" javaType="String"/>
+		<result column="HEADHUNTPOST_title" property="headHuntPostTitle" jdbcType="VARCHAR" javaType="String"/>
+		<result column="HEADHUNTPOST_content" property="headHuntPostContent" jdbcType="VARCHAR" javaType="String"/>
+		<result column="HEADHUNTPOST_date" property="headHuntPostDate" jdbcType="TIMESTAMP" javaType="String"/>
+		<result column="HEADHUNTPOST_viewcnt" property="headHuntPostViewcnt" jdbcType="INTEGER" javaType="String"/>
+		<result column="POSTIMG_name" property="postImgName" jdbcType="VARCHAR" javaType="String"/>
+		<result column="RECOMMEND_cnt" property="recommendCnt" jdbcType="INTEGER" javaType="int"/>
+		<!-- Add mappings for other properties -->
 	</resultMap>
 </mapper>
-
-
-

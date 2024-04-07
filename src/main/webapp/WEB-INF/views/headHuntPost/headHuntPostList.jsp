@@ -131,14 +131,16 @@ input[type="range"] {
 							<br>
 
 							<!-- Pay 필터 -->
-							<div class="group-title"
-								style="font-weight: bold; margin-bottom: 2%;">PAY</div>
-							<div class="form-group">
-								<label for="minPrice">Min</label> <input type="range"
-									id="minPay" name="minPay" min="0" max="1000000" value="1">
-								<label for="maxPrice">Max</label> <input type="range"
-									id="maxPay" name="maxPay" min="0" max="1000000" value="1">
-							</div>
+							<div class="group-title" style="font-weight: bold; margin-bottom: 2%;">PAY</div>
+<div class="form-group">
+    <label for="minPrice">Min</label>
+    <input type="range" id="minPay" name="minPay" min="0" max="1000000" value="0" oninput="updateTextInput('minPay', 'minPayText')">
+    <input type="text" id="minPayText" readonly style="border:0; color:#f6931f; font-weight:bold;">
+	<br>
+    <label for="maxPrice">Max</label>
+    <input type="range" id="maxPay" name="maxPay" min="0" max="1000000" value="0" oninput="updateTextInput('maxPay', 'maxPayText')">
+    <input type="text" id="maxPayText" readonly style="border:0; color:#f6931f; font-weight:bold;">
+</div>
 							<br>
 
 							<!--  작업 날짜 필터 -->
@@ -240,6 +242,8 @@ input[type="range"] {
 	<script src="css/user/scripts/toast/jquery.toast.min.js"></script>
 	<script src="js/user/headHuntPostPagination.js"></script>
 	<script src="js/user/headHuntPostFilterSearch.js"></script>
+	
+	
 	<script src="css/user/js/e-magz.js"></script>
 	<script src="css/user/js/demo.js"></script>
 	<script src="css/user/scripts/icheck/icheck.min.js"></script>
@@ -266,6 +270,70 @@ input[type="range"] {
 			});
 		}
 	</script>
+
+<script>
+    function updateTextInput(rangeId, inputId) {
+        var range = document.getElementById(rangeId);
+        var input = document.getElementById(inputId);
+        var step = 1000; // 1000 단위로 움직이도록 설정
+        var newValue = Math.floor(range.value / step) * step;
+        range.value = newValue;
+        input.value = newValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); // 콤마 추가
+
+        // MIN 값이 MAX값을 넘어가지 않도록 확인
+        var minPay = document.getElementById("minPay").value;
+        var maxPay = document.getElementById("maxPay").value;
+        if (parseInt(minPay) > parseInt(maxPay)) {
+            document.getElementById(rangeId).value = maxPay;
+            document.getElementById(inputId).value = maxPay.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        // MAX 값이 MIN 값보다 작지 않도록 확인
+        if (parseInt(maxPay) < parseInt(minPay)) {
+            document.getElementById("maxPay").value = minPay;
+            document.getElementById("maxPayText").value = minPay.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+    }
+</script>
+
+
+<script>
+    // Get references to the input fields
+    var startDateInput = document.getElementById('startDate');
+    var endDateInput = document.getElementById('endDate');
+
+    // Add event listener to the endDate input field
+    endDateInput.addEventListener('change', function() {
+        // Parse the dates
+        var startDate = new Date(startDateInput.value);
+        var endDate = new Date(endDateInput.value);
+
+        // If endDate is before startDate, reset the value of endDate
+        if (endDate < startDate) {
+            endDateInput.value = '';
+        }
+    });
+
+    // Add event listener to the startDate input field
+    startDateInput.addEventListener('change', function() {
+        // Parse the dates
+        var startDate = new Date(startDateInput.value);
+        var endDate = new Date(endDateInput.value);
+
+        // If startDate is after endDate, reset the value of startDate
+        if (startDate > endDate) {
+            startDateInput.value = '';
+        }
+    });
+</script>
+
+
+<script>
+	$('input[type=radio][name=headHuntPostDate]').change(function() {
+		console.log("aaaaaaaaaaaaaaaaaaa")
+	});
+
+</script>
 </body>
 
 </html>

@@ -54,24 +54,24 @@ function displayPagination(page) {
 $("#paginationContainer").on("click", "a", function(event) {
     event.preventDefault(); // 기본 동작 방지
     var page = $(this).data("page"); // 클릭된 페이지 번호를 가져와 currentPage에 저장
-    loadReviewData(page); // 해당 페이지 데이터 로드
+    window.scrollTo(0, 0);
+    loadReviewData(page, postDatas); // 해당 페이지 데이터 로드
+     if (isFiltered) {
+    console.log("필터진입");
+     loadReviewData(page, filterData); // 필터링된 데이터가 있으면 필터링된 데이터 사용
+    console.log(postDatas);
+}
 });
 
 
 // 데이터를 로드하는 함수 정의
-loadReviewData = function(loadPage) {
-    var dataToSend = {
-        'postDatas': postDatas,
-        'page': loadPage,
-    };
-
-    if (isFiltered) {
-        dataToSend.filterData = postDatas; // 필터링된 데이터가 있으면 필터링된 데이터 사용
-    }
-    
+loadReviewData = function(loadPage, dataList) {
+  
+ 
+  
     console.log("loadPage : " + loadPage);
     
-    var displayDatas = postDatas || []; // 출력할 데이터를 일반 데이터로 초기화
+    var displayDatas = dataList || []; // 출력할 데이터를 일반 데이터로 초기화
     
     var pageDataSize = 10; // 페이지당 데이터 크기
     var totalSize = displayDatas.length; // 전체 데이터 크기
@@ -166,7 +166,7 @@ loadReviewData = function(loadPage) {
 
    
     // 초기 페이지 로드
-    loadReviewData(1);
+    loadReviewData(1, postDatas);
     
 
 });

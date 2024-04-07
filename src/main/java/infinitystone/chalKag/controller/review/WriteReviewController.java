@@ -23,7 +23,7 @@ public class WriteReviewController {
     reviewDTO.setMemberId((String) session.getAttribute("member"));
 
     reviewService.insert(reviewDTO);
-
+    
     return reviewService.selectOne(reviewDTO);
   }
 
