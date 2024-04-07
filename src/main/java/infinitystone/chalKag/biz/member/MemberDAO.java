@@ -252,22 +252,22 @@ public class MemberDAO {
 
   // 글 작성 시 경험치 100 부여
   private static final String UPDATE_WRITEPOSTEXP = "UPDATE MEMBER " +
-      "SET MEMBER_exp += 100 " +
+      "SET MEMBER_exp = MEMBER_exp + 100 " +
       "WHERE MEMBER_id = ?";
 
   // 댓글 작성 시 경험치 20 부여
   private static final String UPDATE_WRITECOMMENTEXP = "UPDATE MEMBER " +
-      "SET MEMBER_exp += 20 " +
+      "SET MEMBER_exp = MEMBER_exp + 20 " +
       "WHERE MEMBER_id = ?";
 
   // 후기 5점 받으면 경험치 50 부여
   private static final String UPDATE_GET5STAREXP = "UPDATE MEMBER " +
-      "SET MEMBER_exp += 50 " +
+      "SET MEMBER_exp = MEMBER_exp + 50 " +
       "WHERE MEMBER_id = ?";
 
   // 후기 4점 받으면 경험치 40 부여
-  private static final String UPDATE_WRITE4STAREXP = "UPDATE MEMBER " +
-      "SET MEMBER_exp += 40 " +
+  private static final String UPDATE_GET4STAREXP = "UPDATE MEMBER " +
+      "SET MEMBER_exp = MEMBER_exp + 40 " +
       "WHERE MEMBER_id = ?";
 
   // 사용 안 할 예정.안승준
@@ -411,6 +411,22 @@ public class MemberDAO {
       }
     } else if (memberDTO.getSearchCondition().equals("unHold")) {
       if (jdbcTemplate.update(UPDATE_UNHOLD, memberDTO.getMemberId()) <= 0) {
+        return false;
+      }
+    } else if (memberDTO.getSearchCondition().equals("writePostExp")) {
+      if (jdbcTemplate.update(UPDATE_WRITEPOSTEXP, memberDTO.getMemberId()) <= 0) {
+        return false;
+      }
+    } else if (memberDTO.getSearchCondition().equals("writeCommentExp")) {
+      if (jdbcTemplate.update(UPDATE_WRITECOMMENTEXP, memberDTO.getMemberId()) <= 0) {
+        return false;
+      }
+    } else if (memberDTO.getSearchCondition().equals("get5starExp")) {
+      if (jdbcTemplate.update(UPDATE_GET5STAREXP, memberDTO.getMemberId()) <= 0) {
+        return false;
+      }
+    } else if (memberDTO.getSearchCondition().equals("get4starExp")) {
+      if (jdbcTemplate.update(UPDATE_GET4STAREXP, memberDTO.getMemberId()) <= 0) {
         return false;
       }
     }
