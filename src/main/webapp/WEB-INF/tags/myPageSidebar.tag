@@ -1,5 +1,6 @@
 <%@ tag pageEncoding="UTF-8" %>
  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <aside>
     <div class="aside-body">
         <div class="featured-author">
@@ -35,7 +36,7 @@
                             <a href="#">
                                 <div class="name">Score</div>
                                 <c:if test="${memberInfo.currentScore != null}">
-                                    <div class="value">${memberInfo.currentScore}</div>
+                                 <div class="value"><fmt:formatNumber value="${memberInfo.currentScore}" pattern="#,##0.0"/></div>
                                 </c:if>
                                 <c:if test="${memberInfo.currentScore == null}">
                                     <div class="value">0.0</div>

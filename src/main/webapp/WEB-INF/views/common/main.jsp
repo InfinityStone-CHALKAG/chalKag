@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib tagdir="/WEB-INF/tags" prefix="chalKagTags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 
@@ -480,8 +481,7 @@
                                                 <a href="../myPage">
                                                     <div class="name">Score</div>
                                                     <c:if test="${memberInfo.currentScore != null}">
-                                                        <div class="value">${memberInfo.currentScore}
-                                                        </div>
+                                                    <div class="value"><fmt:formatNumber value="${memberInfo.currentScore}" pattern="#,##0.0"/></div>
                                                     </c:if>
                                                     <c:if test="${memberInfo.currentScore == null}">
                                                         <div class="value">0.0</div>

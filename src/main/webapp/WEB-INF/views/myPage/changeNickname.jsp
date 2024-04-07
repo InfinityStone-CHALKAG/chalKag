@@ -177,6 +177,7 @@
                 }
 
             </script>
+            
             <script src="js/user/checkNickname.js"></script>
 
             </html>

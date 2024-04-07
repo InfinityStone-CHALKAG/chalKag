@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
     <%@ taglib tagdir="/WEB-INF/tags" prefix="chalKagTags" %>
         <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+        <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
             <!DOCTYPE html>
             <html>
             <style>
@@ -20,9 +21,9 @@
 
                 .featured-author .featured-author-body .featured-author-quote {
                     padding: 4px !important;
-                }z
+                }
 
-                #scroll-container {
+                z #scroll-container {
                     max-height: 200px;
                     /* 원하는 최대 높이 설정 */
                     overflow-y: auto;
@@ -84,27 +85,57 @@
                     border-bottom: 3px solid #F73F52;
                     /* 밑줄 스타일: 두께와 색상 */
                 }
+
                 .review textarea.form-control {
-    height: 90px;
-    resize: none;
-}
+                    height: 90px;
+                    resize: none;
+                }
 
 
                 /* 별점 */
 
 
-.rate { display: inline-block;border: 0;margin-right: 15px;}
-.rate > input {display: none;}
-.rate > label {float: right;color: #ddd}
-.rate > label:before {display: inline-block;font-size: 2rem;padding: .3rem .2rem;margin: 0;cursor: pointer;font-family: FontAwesome;content: "\f005 ";}
-.rate .half:before {content: "\f089 "; position: absolute;padding-right: 0;}
-.rate input:checked ~ label { color: #f73c32 !important;  } 
-.rate input:checked + .rate label:hover,
-.rate input input:checked ~ label:hover,
-.rate input:checked ~ .rate label:hover ~ label,  
-.rate label:hover ~ input:checked ~ label { color: #f73c32 !important;  }
+                .rate {
+                    display: inline-block;
+                    border: 0;
+                    margin-right: 15px;
+                }
 
+                .rate>input {
+                    display: none;
+                }
 
+                .rate>label {
+                    float: right;
+                    color: #ddd
+                }
+
+                .rate>label:before {
+                    display: inline-block;
+                    font-size: 2rem;
+                    padding: .3rem .2rem;
+                    margin: 0;
+                    cursor: pointer;
+                    font-family: FontAwesome;
+                    content: "\f005 ";
+                }
+
+                .rate .half:before {
+                    content: "\f089 ";
+                    position: absolute;
+                    padding-right: 0;
+                }
+
+                .rate input:checked~label {
+                    color: #f73c32 !important;
+                }
+
+                .rate input:checked+.rate label:hover,
+                .rate input input:checked~label:hover,
+                .rate input:checked~.rate label:hover~label,
+                .rate label:hover~input:checked~label {
+                    color: #f73c32 !important;
+                }
             </style>
 
             <head>
@@ -154,7 +185,7 @@
                                                     <a href="#">
                                                         <div class="name">Score</div>
                                                         <c:if test="${memberInfo.currentScore != null}">
-                                                            <div class="value">${memberInfo.currentScore}</div>
+                                                            <div class="value"><fmt:formatNumber value="${memberInfo.currentScore}" pattern="#,##0.0"/></div>
                                                         </c:if>
                                                         <c:if test="${memberInfo.currentScore == null}">
                                                             <div class="value">0.0</div>
@@ -168,8 +199,8 @@
                                             </div>
                                             <div style="display: flex; justify-content: center;">
                                                 <input type="range" id="Exp" name="Exp" min="0"
-                                                    max="${memberInfo.currentNextExp}"
-                                                    value="${memberInfo.currentExp}" style="width: 250px;">
+                                                    max="${memberInfo.currentNextExp}" value="${memberInfo.currentExp}"
+                                                    style="width: 250px;">
                                             </div>
                                             <div class="featured-author-quote"
                                                 style="font-weight: bold; font-family: 'inherit'; margin-top: 10px;">
@@ -193,20 +224,21 @@
                                     </div>
                                 </div>
                             </div>
-                        </aside>
+                            </aside>
                         </div>
 
                         <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="box box-border">
                                 <div class="box-body">
                                     <div style="display: flex; align-items: center;">
-                                    <div>Basic Information <i class="ion-ios-information-outline"
-                                            style="font-size: 16px; margin-bottom:15px"></i></div>
-                                            <c:if test="${sessionScope.member != null}">
-                                            <a href="writeReport?reportSuspector=${memberInfo.memberId}" class="btn btn-primary btn-sm" style="margin-left:61%">Report</a>
-                                            </c:if>
-                                            <c:if test="${sessionScope.member == null}">
-                                            </c:if>
+                                        <div>Basic Information <i class="ion-ios-information-outline"
+                                                style="font-size: 16px; margin-bottom:15px"></i></div>
+                                        <c:if test="${sessionScope.member != null}">
+                                            <a href="writeReport?reportSuspector=${memberInfo.memberId}"
+                                                class="btn btn-primary btn-sm" style="margin-left:61%">Report</a>
+                                        </c:if>
+                                        <c:if test="${sessionScope.member == null}">
+                                        </c:if>
 
                                     </div>
                                     <div style="display: flex; align-items: center;">
@@ -262,56 +294,70 @@
                         </div>
                         <br>
                         <div class="review">
-                        <div class="col-md-6 col-sm-12 col-xs-12">
-                            <div class="box box-border" style="margin-top:3%;">
-                                <div class="box-body">
-                                    <div id="writeReviewForm">
-                                        <form id="writeReviewForm" action="/writeReview" method="post"
-                                            class="row">
-                                            <input type="hidden" id="reviewPartner" name="reviewPartner" value="${memberInfo.memberId}">
+                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                <div class="box box-border" style="margin-top:3%;">
+                                    <div class="box-body">
+
+                                        <form id="writeReviewForm" action="/writeReview" method="post" class="row">
+                                            <input type="hidden" id="reviewPartner" name="reviewPartner"
+                                                value="${memberInfo.memberId}">
                                             <div class="form-group col-md-12" style="text-align: left;">
                                                 <div class="line">
                                                     <div style="left:31px">Review</div>
                                                 </div>
 
                                                 <fieldset class="rate">
-                                                    <input type="radio" id="rating10" name="reviewScore" value="5"><label for="rating10" title="5점"></label>
-                                                    <input type="radio" id="rating9" name="reviewScore" value="4.5"><label class="half" for="rating9" title="4.5점"></label>
-                                                    <input type="radio" id="rating8" name="reviewScore" value="4"><label for="rating8" title="4점"></label>
-                                                    <input type="radio" id="rating7" name="reviewScore" value="3.5"><label class="half" for="rating7" title="3.5점"></label>
-                                                    <input type="radio" id="rating6" name="reviewScore" value="3"><label for="rating6" title="3점"></label>
-                                                    <input type="radio" id="rating5" name="reviewScore" value="2.5"><label class="half" for="rating5" title="2.5점"></label>
-                                                    <input type="radio" id="rating4" name="reviewScore" value="2"><label for="rating4" title="2점"></label>
-                                                    <input type="radio" id="rating3" name="reviewScore" value="1.5"><label class="half" for="rating3" title="1.5점"></label>
-                                                    <input type="radio" id="rating2" name="reviewScore" value="1"><label for="rating2" title="1점"></label>
-                                                    <input type="radio" id="rating1" name="reviewScore" value="0.5"><label class="half" for="rating1" title="0.5점"></label>
-                    
+                                                    <input type="radio" id="rating10" name="reviewScore"
+                                                        value="5"><label for="rating10" title="5점"></label>
+                                                    <input type="radio" id="rating9" name="reviewScore"
+                                                        value="4.5"><label class="half" for="rating9"
+                                                        title="4.5점"></label>
+                                                    <input type="radio" id="rating8" name="reviewScore" value="4"><label
+                                                        for="rating8" title="4점"></label>
+                                                    <input type="radio" id="rating7" name="reviewScore"
+                                                        value="3.5"><label class="half" for="rating7"
+                                                        title="3.5점"></label>
+                                                    <input type="radio" id="rating6" name="reviewScore" value="3"><label
+                                                        for="rating6" title="3점"></label>
+                                                    <input type="radio" id="rating5" name="reviewScore"
+                                                        value="2.5"><label class="half" for="rating5"
+                                                        title="2.5점"></label>
+                                                    <input type="radio" id="rating4" name="reviewScore" value="2"><label
+                                                        for="rating4" title="2점"></label>
+                                                    <input type="radio" id="rating3" name="reviewScore"
+                                                        value="1.5"><label class="half" for="rating3"
+                                                        title="1.5점"></label>
+                                                    <input type="radio" id="rating2" name="reviewScore" value="1"><label
+                                                        for="rating2" title="1점"></label>
+                                                    <input type="radio" id="rating1" name="reviewScore"
+                                                        value="0.5"><label class="half" for="rating1"
+                                                        title="0.5점"></label>
+
                                                 </fieldset>
-                                               
+
 
 
                                                 <c:if test="${sessionScope.member == null}">
-                                                    <textarea class="form-control" name="reviewContent" placeholder="please SignIn to write review" onclick="checkSignIn()"></textarea>
+                                                    <textarea class="form-control" name="reviewContent"
+                                                        placeholder="please SignIn to write review"
+                                                        onclick="checkSignIn()"></textarea>
                                                 </c:if>
                                                 <c:if test="${sessionScope.member != null}">
-                                                    <textarea class="form-control" name="reviewContent" placeholder="please <a href='signin.jsp'>SignIn</a> to write review"></textarea>
+                                                    <textarea class="form-control" name="reviewContent"
+                                                        placeholder="please <a href='signin.jsp'>SignIn</a> to write review"></textarea>
                                                 </c:if>
 
                                             </div>
                                             <div class="form-group col-md-12" style="text-align: right;">
-                                                <button class="btn btn-primary btn-rounded" id="writeReview">Write</button>
+                                                <button class="btn btn-primary btn-rounded"
+                                                    id="writeReview">Write</button>
                                             </div>
+                                            <div class="reviewContainer"></div>
                                         </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        </div>
-
-                        <c:set var="review" value="${review}" />
-                        <h2>Reviewer: ${review.reviewerName}</h2>
-<p>Review: ${review.reviewContent}</p>
-
                     </div>
                 </section>
 
@@ -319,12 +365,12 @@
 
                 <!-- JS -->
                 <script src="css/user/js/jquery.js"></script>
-<script src="css/user/js/jquery.migrate.js"></script>
-<script src="css/user/scripts/bootstrap/bootstrap.min.js"></script>
-<script src="css/user/scripts/jquery-number/jquery.number.min.js"></script>
-<script src="css/user/scripts/sweetalert/dist/sweetalert.min.js"></script>
-<script src="css/user/js/e-magz.js"></script>
-<script src="css/user/js/demo.js"></script>
+                <script src="css/user/js/jquery.migrate.js"></script>
+                <script src="css/user/scripts/bootstrap/bootstrap.min.js"></script>
+                <script src="css/user/scripts/jquery-number/jquery.number.min.js"></script>
+                <script src="css/user/scripts/sweetalert/dist/sweetalert.min.js"></script>
+                <script src="css/user/js/e-magz.js"></script>
+                <script src="css/user/js/demo.js"></script>
 
                 <!-- XEIcons-->
                 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
@@ -353,78 +399,81 @@
 
                 //이메일 마스킹
                 document.addEventListener("DOMContentLoaded", function () {
-        var memberIdElement = document.getElementById('memberId');
-        var memberId = memberIdElement.innerText.trim();
-        var atIndex = memberId.indexOf('@');
-        if (atIndex !== -1) {
-            var maskedId = memberId.substring(0, atIndex).replace(/./g, '*') + memberId.substring(atIndex);
-            memberIdElement.innerText = maskedId;
-        }
-    });
-
-    //전화번호 마스킹
-    document.addEventListener("DOMContentLoaded", function () {
-        var memberPhElement = document.getElementById('memberPh');
-        var memberPh = memberPhElement.innerText.trim();
-        if (memberPh.length === 11) {
-            var maskedPh = memberPh.substring(0, 3) + '-****-' + memberPh.substring(7);
-            memberPhElement.innerText = maskedPh;
-        }
-    });
-
-   document.getElementById("writeReview").addEventListener("click", function (event) {
-                            console.log("review");
-                            event.preventDefault();
-                            console.log($('#writeReviewForm').serialize());
-                            writeReview(); 
-                        });
-         
-
-
-
-
-                        function writeReview() {
-                        console.log("진입");
-
-                        // var radioButtons = document.querySelectorAll('input[type="radio"][name="timeOutDuration"]');
-                        // var checked = false;
-
-                        // radioButtons.forEach(function (radio) {
-                        //     if (radio.checked) {
-                        //         checked = true;
-                        //         console.log(checked);
-                        //     }
-                        // });
-
-                        // if (!checked) {
-                        //     swal("WARNING", "정지 기간을 선택해 주세요.", "error", {
-                        //         button: "OK",
-                        //     });
-                        //     return false;
-                        // }
-
-                        // 1. 신고를 당해 정지된 사용자가 있는지 확인 
-                        $.ajax({
-                            type: 'POST',
-                            url: '/writeReview',
-                            data: $('#writeReviewForm').serialize(), // 폼 데이터 전송
-                            success: function (result) {
-                                if (result == 1) {
-                                    swal("WARNING", "작성실패", "error", {
-                                        button: "OK",
-                                    });
-                                    console.log("AJAX SUCCESS");
-                                } else {
-                                    swal("WARNING", "작성실패", "error", {
-                                        button: "OK",
-                                    });
-                                }
-                            },
-                            error: function () {
-                                alert('서버 오류가 발생했습니다.');
-                            }
-                        });
+                    var memberIdElement = document.getElementById('memberId');
+                    var memberId = memberIdElement.innerText.trim();
+                    var atIndex = memberId.indexOf('@');
+                    if (atIndex !== -1) {
+                        var maskedId = memberId.substring(0, atIndex).replace(/./g, '*') + memberId.substring(atIndex);
+                        memberIdElement.innerText = maskedId;
                     }
+                });
+
+                //전화번호 마스킹
+                document.addEventListener("DOMContentLoaded", function () {
+                    var memberPhElement = document.getElementById('memberPh');
+                    var memberPh = memberPhElement.innerText.trim();
+                    if (memberPh.length === 11) {
+                        var maskedPh = memberPh.substring(0, 3) + '-****-' + memberPh.substring(7);
+                        memberPhElement.innerText = maskedPh;
+                    }
+                });
+
+                document.getElementById("writeReview").addEventListener("click", function (event) {
+                    console.log("review");
+                    event.preventDefault();
+                    console.log($('#writeReviewForm').serialize());
+                    writeReview();
+                });
+
+
+
+
+
+                function writeReview() {
+                    console.log("진입");
+
+                    // var radioButtons = document.querySelectorAll('input[type="radio"][name="timeOutDuration"]');
+                    // var checked = false;
+
+                    // radioButtons.forEach(function (radio) {
+                    //     if (radio.checked) {
+                    //         checked = true;
+                    //         console.log(checked);
+                    //     }
+                    // });
+
+                    // if (!checked) {
+                    //     swal("WARNING", "정지 기간을 선택해 주세요.", "error", {
+                    //         button: "OK",
+                    //     });
+                    //     return false;
+                    // }
+
+                    // 1. 신고를 당해 정지된 사용자가 있는지 확인 
+                    $.ajax({
+                        type: 'POST',
+                        url: '/writeReview',
+                        data: $('#writeReviewForm').serialize(), // 폼 데이터 전송
+                        success: function (data) {
+                            if (data) {
+                                 // 성공시 리뷰 컨테이너에 동적으로 데이터를 추가합니다.
+            $('.reviewContainer').append('<div class="review">' + data.reviewContent + '</div>');
+            // 성공 메시지를 사용자에게 표시합니다.
+                                swal("SUCCESS", "작성성공~", "success", {
+                                    button: "OK",
+                                });
+                                console.log("AJAX SUCCESS");
+                            } else {
+                                swal("WARNING", "작성실패", "error", {
+                                    button: "OK",
+                                });
+                            }
+                        },
+                        error: function () {
+                            alert('서버 오류가 발생했습니다.');
+                        }
+                    });
+                }
 
 
 

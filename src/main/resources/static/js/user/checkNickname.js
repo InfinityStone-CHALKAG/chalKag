@@ -1,5 +1,9 @@
 var checkNicknameFlag = false;
-var memberGrade = document.getElementById("memberGrade").getAttribute("value");
+var memberGradeElement = document.getElementById("memberGrade");
+if (memberGradeElement) {
+	 var memberGrade = memberGradeElement.getAttribute("value");
+}
+
 console.log(memberGrade);
 function checkNickname() {
 	console.log("[로그] checkNickname 진입")
