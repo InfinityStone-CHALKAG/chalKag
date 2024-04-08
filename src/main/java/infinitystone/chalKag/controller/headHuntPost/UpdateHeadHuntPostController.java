@@ -16,75 +16,86 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.UUID;
 
 @Controller
 public class UpdateHeadHuntPostController {
-	
-	@Autowired
-	private HeadHuntPostService headHuntPostService;
-	
-	@Autowired
-	private PostImgService postImgService;
-	
-	
-	@RequestMapping(value = "/updateHeadHuntPost", method = RequestMethod.GET)
-	public String updateHeadHuntPostPage(HeadHuntPostDTO headHuntPostDTO, Model model) {
 
-		headHuntPostDTO.setSearchCondition("headHuntPostSingle");
-		headHuntPostDTO = headHuntPostService.selectOne(headHuntPostDTO);
-		model.addAttribute("headHuntPostSingle",headHuntPostDTO);
-		return "headHuntPost/updateHeadHuntPost";
-	}
-	
-	@RequestMapping(value = "/updateHeadHuntPost", method = RequestMethod.POST)
-	public String updateHeadHuntPost(HeadHuntPostDTO headHuntPostDTO, PostImgDTO postImgDTO, HttpSession session,  @RequestParam(value = "file", required = false) MultipartFile[] files) {
-		// 사용자의 글을 수정
-		headHuntPostDTO.setMemberId((String) session.getAttribute("member"));
+  @Autowired
+  private HeadHuntPostService headHuntPostService;
 
-		System.out.println("UpdateHeadHuntPostController In Log = [" + headHuntPostDTO + "]");
-		System.out.println("UpdateHeadHuntPostController In Log = [" + postImgDTO + "]");
+  @Autowired
+  private PostImgService postImgService;
 
-		String uploadDir = this.getClass().getResource("").getPath();
-		System.out.println("UpdateHeadHuntPostController Log01 = [" + uploadDir + "]");
 
-		uploadDir = uploadDir.substring(1, uploadDir.indexOf("chalKag")) + "chalKag/src/main/resources/static/postImg";
-		System.out.println("UpdateHeadHuntPostController Log02 = [" + uploadDir + "]");
+  @RequestMapping(value = "/updateHeadHuntPost", method = RequestMethod.GET)
+  public String updateHeadHuntPostPage(HeadHuntPostDTO headHuntPostDTO, Model model) {
 
-		// Update the user-written post
-		if (!headHuntPostService.update(headHuntPostDTO)) {
-			System.out.println("UpdateHeadHuntPostController Update of post failed");
-		}
-		postImgDTO.setPostId(headHuntPostDTO.getHeadHuntPostId());
+    headHuntPostDTO.setSearchCondition("headHuntPostSingle");
+    headHuntPostDTO = headHuntPostService.selectOne(headHuntPostDTO);
+    System.out.println(headHuntPostDTO.getHeadHuntPostId());
+    model.addAttribute("updateHeadHuntPost", headHuntPostDTO);
+    return "headHuntPost/updateHeadHuntPost";
+  }
 
-		if(!postImgService.delete(postImgDTO)){
-			System.out.println("UpdateHeadHuntPostController Delete of post images failed");
-		}
+  @RequestMapping(value = "/updateHeadHuntPost", method = RequestMethod.POST)
+  public String updateHeadHuntPost(HeadHuntPostDTO headHuntPostDTO, PostImgDTO postImgDTO, HttpSession session, @RequestParam(value = "file", required = false) MultipartFile[] files) {
+    // 사용자의 글을 수정
+    headHuntPostDTO.setMemberId((String) session.getAttribute("member"));
 
-		for (MultipartFile file : files) {
-			if (file != null && !file.isEmpty()) {
-				String originalFilename = file.getOriginalFilename();
-				String extension = FilenameUtils.getExtension(originalFilename);
-				String newFilename = UUID.randomUUID().toString() + "." + extension;
-				String filePath = uploadDir + File.separator + newFilename;
-				File newFile = new File(filePath);
-				postImgDTO.setPostImgName(newFilename);
-				if (!postImgService.insert(postImgDTO)) {
-					System.out.println("UpdateHeadHuntPostController insertion of image failed");
-				}
-				try {
-					file.transferTo(newFile);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
+    System.out.println("UpdateHeadHuntPostController In Log = [" + headHuntPostDTO + "]");
+    System.out.println("UpdateHeadHuntPostController In Log = [" + postImgDTO + "]");
 
-		System.out.println("UpdateHeadHuntPostController Out Log");
-	
-		
-		
-		return "redirect:headHuntPost/headHuntPostSingle";
-	}
+    String uploadDir = this.getClass().getResource("").getPath();
+    System.out.println("UpdateHeadHuntPostController Log01 = [" + uploadDir + "]");
+
+    uploadDir = uploadDir.substring(1, uploadDir.indexOf("chalKag")) + "chalKag/src/main/resources/static/postImg";
+    System.out.println("UpdateHeadHuntPostController Log02 = [" + uploadDir + "]");
+
+    headHuntPostDTO.setSearchCondition("headHuntPostUpdate");
+
+    // Update the user-written post
+    if (!headHuntPostService.update(headHuntPostDTO)) {
+      System.out.println("UpdateHeadHuntPostController Update of post failed");
+    }
+    postImgDTO.setPostId(headHuntPostDTO.getHeadHuntPostId());
+
+    if (!postImgService.delete(postImgDTO)) {
+      System.out.println("UpdateHeadHuntPostController Delete of post images failed");
+    }
+
+    for (MultipartFile file : files) {
+      if (file != null && !file.isEmpty()) {
+        String originalFilename = file.getOriginalFilename();
+        String extension = FilenameUtils.getExtension(originalFilename);
+        String newFilename = UUID.randomUUID().toString() + "." + extension;
+        String filePath = uploadDir + File.separator + newFilename;
+        File newFile = new File(filePath);
+        postImgDTO.setPostImgName(newFilename);
+        if (!postImgService.insert(postImgDTO)) {
+          System.out.println("UpdateHeadHuntPostController insertion of image failed");
+        }
+        try {
+          file.transferTo(newFile);
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+    }
+
+    System.out.println("UpdateHeadHuntPostController Out Log");
+
+
+    try {
+      Thread.sleep(1500);
+    } catch (InterruptedException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+      return "redirect:headHuntPostList";
+    }
+
+    return "redirect:headHuntPostList";
+
+
+  }
 }

@@ -33,6 +33,9 @@
 					<div class="box box-border">
 						<div class="box-body">
 							<form action="/updateFreePost" method="post" onsubmit="return validateForm()">
+
+								<input type="hidden" name="headHuntPostId" value="${updateFreePost.freePostId}" />
+
 								<div class="form-group" style="display: flex; justify-content: center;">
 									<input type="text" id="freePostTitle" name="freePostTitle" class="form-control rounded" placeholder="Title" value="${updateFreePost.freePostTitle}" />
 								</div>

@@ -32,6 +32,9 @@
 						<form action="/updateMarketPost" method="post"
 							onsubmit="return validateForm(event)"
 							enctype="multipart/form-data">
+
+							<input type="hidden" name="headHuntPostId" value="${updateMarketPost.marketPostId}" />
+
 							<div class="form-group"
 								style="display: flex; justify-content: center; margin-bottom: 4%;">
 								<input type="text" class="form-control rounded"

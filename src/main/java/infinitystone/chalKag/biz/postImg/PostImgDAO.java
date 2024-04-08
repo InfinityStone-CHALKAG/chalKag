@@ -103,7 +103,7 @@ public class PostImgDAO {
 										+ " POSTIMG_state "
 										+ " WHERE "
 										+ " POSTIMG_state BETWEEN 1 AND 10";
-	private static final String DELETE = "DELETE FROM POSTIMG WHERE POST_id = ? AND POSTIMG_name = ? ";
+	private static final String DELETE = "DELETE FROM POSTIMG WHERE POST_id = ?";
 
 	public List<PostImgDTO> selectAll(PostImgDTO postImgDTO) {
 		List<PostImgDTO> result = null;
@@ -177,7 +177,7 @@ public class PostImgDAO {
 	}
 
 	public boolean delete(PostImgDTO postImgDTO) {
-		int result = jdbcTemplate.update(DELETE, postImgDTO.getPostImgId(),postImgDTO.getPostImgName());
+		int result = jdbcTemplate.update(DELETE, postImgDTO.getPostId());
 		if (result <= 0) {
 			return false;
 		}
