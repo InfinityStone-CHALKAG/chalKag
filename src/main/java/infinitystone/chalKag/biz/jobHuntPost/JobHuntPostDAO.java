@@ -386,12 +386,12 @@ public class JobHuntPostDAO { // 구인 게시판 DAO
   private static final String UPDATE_JOBHUNTPOST = "UPDATE JOBHUNTPOST "
 		  + "SET "
 		  + "	JOBHUNTPOST_title = ?, "
-		  + "	JOBHUNTPOST_content = ? "
+		  + "	JOBHUNTPOST_content = ?, "
 		  + "	JOBHUNTPOST_role = ?, "
 		  + "	JOBHUNTPOST_region = ?, "
 		  + "	JOBHUNTPOST_pay = ?, "
 		  + "	JOBHUNTPOST_workDate = ?, "
-		  + "	JOBHUNTPOST_concept = ?, "
+		  + "	JOBHUNTPOST_concept = ? "
 		  + "WHERE "
 		  + "	JOBHUNTPOST_id = ? ";
   // 사용한 테이블 : 구직글 테이블
@@ -522,10 +522,10 @@ public class JobHuntPostDAO { // 구인 게시판 DAO
 		// 구직글 수정
 		else if (jobHuntPostDTO.getSearchCondition().equals("jobHuntPostUpdate")) {
 			// UPDATE_JOBHUNTPOST 쿼리를 실행해 데이터베이스에서 구직글 정보를 수정
-			result = jdbcTemplate.update(UPDATE_JOBHUNTPOST, jobHuntPostDTO.getJobHuntPostRole(),
+			result = jdbcTemplate.update(UPDATE_JOBHUNTPOST, jobHuntPostDTO.getJobHuntPostTitle(),
+					jobHuntPostDTO.getJobHuntPostContent(), jobHuntPostDTO.getJobHuntPostRole(),
 					jobHuntPostDTO.getJobHuntPostRegion(), jobHuntPostDTO.getJobHuntPostPay(),
-					jobHuntPostDTO.getJobHuntPostWorkDate(), jobHuntPostDTO.getJobHuntPostConcept(),
-					jobHuntPostDTO.getJobHuntPostTitle(), jobHuntPostDTO.getJobHuntPostContent());
+					jobHuntPostDTO.getJobHuntPostWorkDate(), jobHuntPostDTO.getJobHuntPostConcept(),jobHuntPostDTO.getJobHuntPostId());
 			if (result <= 0) {
 				System.out.println("JobHuntPostDAO(update) Out로그 = [" + result + "]");
 				return false; // 구직글 수정 실패 시 false 반환

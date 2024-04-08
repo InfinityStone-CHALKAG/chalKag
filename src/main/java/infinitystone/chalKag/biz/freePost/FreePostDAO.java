@@ -206,7 +206,7 @@ public class FreePostDAO {
 		if (freePostDTO.getSearchCondition().equals("freePostViewcntUpdate")) {
 			result = jdbcTemplate.update(UPDATE_VIEWCNT,freePostDTO.getFreePostId());
 		} else if(freePostDTO.getSearchCondition().equals("freePostUpdate")) {
-			result = jdbcTemplate.update(UPDATE,freePostDTO.getFreePostTitle(),freePostDTO.getFreePostContent());
+			result = jdbcTemplate.update(UPDATE,freePostDTO.getFreePostTitle(),freePostDTO.getFreePostContent(),freePostDTO.getFreePostId());
 		}
 		if (result <= 0) {
 			return false;

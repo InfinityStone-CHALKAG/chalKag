@@ -386,12 +386,12 @@ public class HeadHuntPostDAO { // 구인 게시판 DAO
   private static final String UPDATE_HEADHUNTPOST = "UPDATE HEADHUNTPOST "
 		  + "SET "
 		  + "	HEADHUNTPOST_title = ?, "
-		  + "	HEADHUNTPOST_content = ? "
+		  + "	HEADHUNTPOST_content = ?, "
 		  + "	HEADHUNTPOST_role = ?, "
 		  + "	HEADHUNTPOST_region = ?, "
 		  + "	HEADHUNTPOST_pay = ?, "
 		  + "	HEADHUNTPOST_workDate = ?, "
-		  + "	HEADHUNTPOST_concept = ?, "
+		  + "	HEADHUNTPOST_concept = ? "
 		  + "WHERE "
 		  + "	HEADHUNTPOST_id = ? ";
   // 사용한 테이블 : 구인글 테이블
@@ -523,10 +523,10 @@ public class HeadHuntPostDAO { // 구인 게시판 DAO
 		// 구인글 수정
 		else if (headHuntPostDTO.getSearchCondition().equals("headHuntPostUpdate")) {
 			// UPDATE_HEADHUNTPOST 쿼리를 실행해 데이터베이스에서 구인글 정보를 수정
-			result = jdbcTemplate.update(UPDATE_HEADHUNTPOST, headHuntPostDTO.getHeadHuntPostRole(),
+			result = jdbcTemplate.update(UPDATE_HEADHUNTPOST, headHuntPostDTO.getHeadHuntPostTitle(),
+					headHuntPostDTO.getHeadHuntPostContent(), headHuntPostDTO.getHeadHuntPostRole(),
 					headHuntPostDTO.getHeadHuntPostRegion(), headHuntPostDTO.getHeadHuntPostPay(),
-					headHuntPostDTO.getHeadHuntPostWorkDate(), headHuntPostDTO.getHeadHuntPostConcept(),
-					headHuntPostDTO.getHeadHuntPostTitle(), headHuntPostDTO.getHeadHuntPostContent());
+					headHuntPostDTO.getHeadHuntPostWorkDate(), headHuntPostDTO.getHeadHuntPostConcept(),headHuntPostDTO.getHeadHuntPostId());
 			if (result <= 0) {
 				System.out.println("HeadHuntPostDAO(update) Out로그 = [" + result + "]");
 				return false; // 구인글 수정 실패 시 false 반환
