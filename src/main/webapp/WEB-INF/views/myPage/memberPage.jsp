@@ -351,24 +351,36 @@
                                                     </c:if>
                                                     <c:if test="${sessionScope.member != null}">
                                                         <textarea class="form-control" name="reviewContent"
-                                                            placeholder="please <a href='signin.jsp'>SignIn</a> to write review"></textarea>
+                                                            placeholder="write review"></textarea>
                                                     </c:if>
 
                                                 </div>
-                                                <div class="form-group col-md-12" style="text-align: right;">
-                                                    <button class="btn btn-primary btn-rounded"
-                                                        id="writeReview">Write</button>
-                                                </div>
-                                                <h4>${reviewList}</h4>
+                                                <c:if test="${sessionScope.member == null}">
+                                                    <div class="form-group col-md-12" style="text-align: right;">
+                                                        <button class="btn btn-primary btn-rounded"
+                                                            id="writeReview" onclick="checkSignIn()">Write</button>
+                                                    </div>
+                                                </c:if>
 
-
+                                                <c:if test="${sessionScope.member != null}">
+                                                    <div class="form-group col-md-12" style="text-align: right;">
+                                                        <button class="btn btn-primary btn-rounded"
+                                                            id="writeReview">Write</button>
+                                                    </div>
+                                                </c:if>
+                                               
                                             </form>
                                             <h5 class="title">${reviewList[0].reviewTotalCnt} REVIEWS</h5>
+                                            
 
                                             <div class="comments">
                                                 <div class="comment-list">
                                                     <div class="item"
                                                         style="border:0px; padding:0px; margin-bottom:0%;">
+                                                        <c:if test="${empty reviewList}">
+                                                            <div>Write first Reviw !</div>
+                                                        </c:if>
+                                                        <c:if test="${not empty reviewList}">
                                                         <c:forEach items="${reviewList}" var="reviewData"
                                                             varStatus="loop">
                                                             <!-- 두 번째 목록부터는 위쪽에 <div class="line thin"></div> 추가 -->
@@ -377,12 +389,12 @@
                                                             </c:if>
                                                             <div class="rate">
                                                                 <!-- 별점을 표시하기 위한 fieldset -->
-                                                                <fieldset class="rate" style="pointer-events: none;>
+                                                                <fieldset class="rate" style="pointer-events: none;">
                                                                     <!-- 별점에 따라 해당하는 input 태그를 체크 -->
-                                                                    <input type="radio" id="rating10_${loop.index}"
-                                                                        name="reviewScore_${loop.index}" value="5"
-                                                                        ${reviewData.reviewScore=='5' ? 'checked' : ''
-                                                                        }><label for="rating10_${loop.index}"
+                                                                    <input type=" radio" id="rating10_${loop.index}"
+                                                                    name="reviewScore_${loop.index}" value="5"
+                                                                    ${reviewData.reviewScore=='5' ? 'checked' : '' }>
+                                                                    <label for="rating10_${loop.index}"
                                                                         title="5점"></label>
                                                                     <input type="radio" id="rating9_${loop.index}"
                                                                         name="reviewScore_${loop.index}" value="4.5"
@@ -462,7 +474,9 @@
                                             <c:if test="${reviewList[0].reviewTotalCnt > 10}">
                                                 <button class="btn btn-magz btn-sm" id="moreReview">더보기</button>
                                             </c:if>
-                                        
+                                                  
+                                        </c:if>
+
 
 
 
@@ -574,9 +588,7 @@
                                     // 성공시 리뷰 컨테이너에 동적으로 데이터를 추가합니다.
                                     $('.reviewContainer').append('<div class="review">' + data.reviewContent + '</div>');
                                     // 성공 메시지를 사용자에게 표시합니다.
-                                    swal("SUCCESS", "작성성공~", "success", {
-                                        button: "OK",
-                                    });
+                                  
                                     console.log("AJAX SUCCESS");
                                 } else {
                                     swal("WARNING", "작성실패", "error", {
@@ -589,90 +601,90 @@
                             }
                         });
                     }
-                        
+
 
 
                     var reviewStart = 10; // 초기값 설정
                     // 이전에 선택된 radio 버튼의 상태를 저장할 배열
-var selectedRadios = [];
+                    var selectedRadios = [];
 
 
                     if (document.getElementById("moreReview")) {
-                        // User Hold 버튼을 클릭했을 때의 이벤트 처리
-                        document.getElementById("moreReview").addEventListener("click", function (event) {
-                            console.log("REVIEW");
-                            var moreReviewButton = document.getElementById("moreReview");
-                            moreReviewButton.style.display = "none";
+    // User Hold 버튼을 클릭했을 때의 이벤트 처리
+    document.getElementById("moreReview").addEventListener("click", function (event) {
+        console.log("REVIEW");
+        var moreReviewButton = document.getElementById("moreReview");
+        moreReviewButton.style.display = "none";
+        
 
-                            // 1. 신고를 당해 정지된 사용자가 있는지 확인 
-                            $.ajax({
-                                type: 'GET',
-                                url: '/moreReview',
-                                dataType: 'json',
-                                data: {
-                                    reviewPartner: $('#reviewPartner').val(), // reviewPartner의 값을 가져와 전송
-                                    reviewStart: reviewStart // reviewStart 변수의 값을 전송
-                                }, // 폼 데이터 전송
-                                success: function (data) {
-                                    if (data) {
-                                        $('input[type="radio"]').each(function () {
-                    if ($(this).prop('checked')) {
-                        selectedRadios.push($(this).attr('id'));
-                        console.log(selectedRadios);
+        // 1. 신고를 당해 정지된 사용자가 있는지 확인 
+        $.ajax({
+            type: 'GET',
+            url: '/moreReview',
+            dataType: 'json',
+            data: {
+                reviewPartner: $('#reviewPartner').val(), // reviewPartner의 값을 가져와 전송
+                reviewStart: reviewStart // reviewStart 변수의 값을 전송
+            }, // 폼 데이터 전송
+            success: function (data) {
+                if (data) {
+                    // 받아온 데이터를 반복하여 HTML을 생성하고 추가
+                    data.forEach(function (reviewData, index) {
+                        var html = '<div class="rate">' +
+                            '<fieldset class="rate" style="pointer-events: none;>' +
+                            '<input type="radio" id="rating10_' + index + '" name="reviewScore_' + index + '" value="5"' + (reviewData.reviewScore == '5' ? 'checked' : '') + '><label for="rating10_' + index + '" title="5점"></label>' +
+                            '<input type="radio" id="rating9_' + index + '" name="reviewScore_' + index + '" value="4.5"' + (reviewData.reviewScore == '4.5' ? 'checked' : '') + '><label class="half" for="rating9_' + index + '" title="4.5점"></label>' +
+                            '<input type="radio" id="rating8_' + index + '" name="reviewScore_' + index + '" value="4"' + (reviewData.reviewScore == '4.0' ? 'checked' : '') + '><label for="rating8_' + index + '" title="4점"></label>' +
+                            '<input type="radio" id="rating7_' + index + '" name="reviewScore_' + index + '" value="3.5"' + (reviewData.reviewScore == '3.5' ? 'checked' : '') + '><label class="half" for="rating7_' + index + '" title="3.5점"></label>' +
+                            '<input type="radio" id="rating6_' + index + '" name="reviewScore_' + index + '" value="3"' + (reviewData.reviewScore == '3.0' ? 'checked' : '') + '><label for="rating6_' + index + '" title="3점"></label>' +
+                            '<input type="radio" id="rating5_' + index + '" name="reviewScore_' + index + '" value="2.5"' + (reviewData.reviewScore == '2.5' ? 'checked' : '') + '><label class="half" for="rating5_' + index + '" title="2.5점"></label>' +
+                            '<input type="radio" id="rating4_' + index + '" name="reviewScore_' + index + '" value="2"' + (reviewData.reviewScore == '2.0' ? 'checked' : '') + '><label for="rating4_' + index + '" title="2점"></label>' +
+                            '<input type="radio" id="rating3_' + index + '" name="reviewScore_' + index + '" value="1.5"' + (reviewData.reviewScore == '1.5' ? 'checked' : '') + '><label class="half" for="rating3_' + index + '" title="1.5점"></label>' +
+                            '<input type="radio" id="rating2_' + index + '" name="reviewScore_' + index + '" value="1"' + (reviewData.reviewScore == '1.0' ? 'checked' : '') + '><label for="rating2_' + index + '" title="1점"></label>' +
+                            '<input type="radio" id="rating1_' + index + '" name="reviewScore_' + index + '" value="0.5"' + (reviewData.reviewScore == '0.5' ? 'checked' : '') + '><label class="half" for="rating1_' + index + '" title="0.5점"></label>' +
+                            '</fieldset>' +
+                            '</div>' +
+                            '<div class="user">' +
+                            '<figure>' +
+                            '<img src="profileImg/' + reviewData.profileImgName + '" style="width:100%; height:100%; object-fit:cover">' +
+                            '</figure>' +
+                            '<div class="details">' +
+                            '<h5 class="name">' + reviewData.memberNickname + '<a href="/memberPage?memberId=' + reviewData.memberId + '">' + reviewData.memberId + '</a></h5>' +
+                            '<div class="time">' + reviewData.reviewDate + '</div>' +
+                            '<div class="description">' + reviewData.reviewContent + '</div>' +
+                            '</div>' +
+                            '</div>';
+
+                        $('.moreReviewContainer').append(html);
+                    });
+                   
+
+                    reviewStart += 10;
+                    var reviewTotalCnt = data[0].reviewTotalCnt;
+                    // reviewTotalCnt를 사용하여 추가적인 작업을 수행
+                    if (reviewTotalCnt > 10) {
+                        moreReviewButton.style.display = "block";
                     }
-                });
-                                        // 받아온 데이터를 반복하여 HTML을 생성하고 추가
-                                        data.forEach(function (reviewData, index) {
-                                            var html = '<div class="rate">' +
-                                                '<fieldset class="rate" style="pointer-events: none; >' +
-                                                '<input type="radio" id="rating10_' + index + '" name="reviewScore_' + index + '" value="5"' + (reviewData.reviewScore == '5' ? 'checked' : '') + '><label for="rating10_' + index + '" title="5점"></label>' +
-                                                '<input type="radio" id="rating9_' + index + '" name="reviewScore_' + index + '" value="4.5"' + (reviewData.reviewScore == '4.5' ? 'checked' : '') + '><label class="half" for="rating9_' + index + '" title="4.5점"></label>' +
-                                                '<input type="radio" id="rating8_' + index + '" name="reviewScore_' + index + '" value="4"' + (reviewData.reviewScore == '4.0' ? 'checked' : '') + '><label for="rating8_' + index + '" title="4점"></label>' +
-                                                '<input type="radio" id="rating7_' + index + '" name="reviewScore_' + index + '" value="3.5"' + (reviewData.reviewScore == '3.5' ? 'checked' : '') + '><label class="half" for="rating7_' + index + '" title="3.5점"></label>' +
-                                                '<input type="radio" id="rating6_' + index + '" name="reviewScore_' + index + '" value="3"' + (reviewData.reviewScore == '3.0' ? 'checked' : '') + '><label for="rating6_' + index + '" title="3점"></label>' +
-                                                '<input type="radio" id="rating5_' + index + '" name="reviewScore_' + index + '" value="2.5"' + (reviewData.reviewScore == '2.5' ? 'checked' : '') + '><label class="half" for="rating5_' + index + '" title="2.5점"></label>' +
-                                                '<input type="radio" id="rating4_' + index + '" name="reviewScore_' + index + '" value="2"' + (reviewData.reviewScore == '2.0' ? 'checked' : '') + '><label for="rating4_' + index + '" title="2점"></label>' +
-                                                '<input type="radio" id="rating3_' + index + '" name="reviewScore_' + index + '" value="1.5"' + (reviewData.reviewScore == '1.5' ? 'checked' : '') + '><label class="half" for="rating3_' + index + '" title="1.5점"></label>' +
-                                                '<input type="radio" id="rating2_' + index + '" name="reviewScore_' + index + '" value="1"' + (reviewData.reviewScore == '1.0' ? 'checked' : '') + '><label for="rating2_' + index + '" title="1점"></label>' +
-                                                '<input type="radio" id="rating1_' + index + '" name="reviewScore_' + index + '" value="0.5"' + (reviewData.reviewScore == '0.5' ? 'checked' : '') + '><label class="half" for="rating1_' + index + '" title="0.5점"></label>' +
-                                                '</fieldset>' +
-                                                '</div>' +
-                                                '<div class="user">' +
-                                                '<figure>' +
-                                                '<img src="profileImg/' + reviewData.profileImgName + '" style="width:100%; height:100%; object-fit:cover">' +
-                                                '</figure>' +
-                                                '<div class="details">' +
-                                                '<h5 class="name">' + reviewData.memberNickname + '<a href="/memberPage?memberId=' + reviewData.memberId + '">' + reviewData.memberId + '</a></h5>' +
-                                                '<div class="time">' + reviewData.reviewDate + '</div>' +
-                                                '<div class="description">' + reviewData.reviewContent + '</div>' +
-                                                '</div>' +
-                                                '</div>';
+                }
+            }
+        });
+    });
+}
 
-                                            $('.moreReviewContainer').append(html);
-                                        });
-                                        reviewStart += 10;
-                                        var reviewTotalCnt = data[0].reviewTotalCnt;
-                                    // reviewTotalCnt를 사용하여 추가적인 작업을 수행
-                                    if (reviewTotalCnt > 10) {
-                                         moreReviewButton.style.display = "block";
-                                    }
-                                     
-                        
-                                    } else {
-
-                                    }
-                                },
-                                error: function () {
-                                    alert('서버 오류가 발생했습니다.');
-                                }
-                            });
-                        });
-                        // 이전에 선택된 radio 버튼 상태를 복원
-                selectedRadios.forEach(function (radioId) {
-                    $('#' + radioId).prop('checked', true);
-                });
-                    }
-
+function checkSignIn() {
+	    swal({
+	        title: "fail",
+	        text: "로그인 후 이용해주세요.",
+	        type: "error",
+	        showCancelButton: false,
+	        confirmButtonColor: "#DD6B55",
+	        confirmButtonText: "OK",
+	        closeOnConfirm: true
+	    }, function() {
+	        // "OK" 버튼 누르면 실행될 코드
+	        window.location.href = "/signIn"; // 로그인 페이지로 이동
+	    });
+	}
 
 
 
