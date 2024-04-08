@@ -45,11 +45,7 @@ $(document).ready(function() {
 					
 							// 검색 필드 초기화
 							document.getElementById('searchField').selectedIndex = 0;
-					
-							// 날짜 필터 초기화
-
-							document.getElementById('Anytime').checked = true; 
-					
+										
 							// 직업 필터 초기화
 							document.getElementById('role').selectedIndex = 0;
 					
@@ -57,8 +53,8 @@ $(document).ready(function() {
 							document.getElementById('region').selectedIndex = 0;
 					
 							// Pay 필터 초기화
-							document.getElementById('minPay').value = 1;
-							document.getElementById('maxPay').value = 1;
+							document.getElementById('minPay').value = 0;
+							document.getElementById('maxPay').value = 0;
 					
 							// 작업 날짜 필터 초기화
 							document.getElementById('startDate').value = '';
@@ -66,11 +62,35 @@ $(document).ready(function() {
 					
 							// 촬영 컨셉 필터 초기화
 							document.getElementById('concept').selectedIndex = 0;
+							
+							    // 모든 라디오 버튼을 가져옴
+    var radioButtons = document.querySelectorAll('input[type="radio"][name="headHuntPostDate"]');
+    
+    // 각 라디오 버튼에 대해 루프를 돌며 Anytime 라디오 버튼을 체크하고 나머지는 체크 해제
+    radioButtons.forEach(function(radioButton) {
+        // icheck 플러그인의 체크 상태 확인
+        var isChecked = radioButton.parentNode.classList.contains('checked');
+        // Anytime 라디오 버튼만 체크하고 나머지는 체크 해제
+        if (radioButton.value === 'Anytime') {
+            // 이미 체크되어 있는 경우에는 변경하지 않음
+            if (!isChecked) {
+                radioButton.parentNode.classList.add('checked');
+            }
+        } else {
+            // 이미 체크되어 있는 경우에는 해제함
+            if (isChecked) {
+                radioButton.parentNode.classList.remove('checked');
+            }
+        }
+    });
+    	minDate = '';
+        maxDate = '';
     
         
         // 필요하다면, 변수 업데이트 및 데이터 요청 로직도 여기서 호출
         updateVariables(); // 필터링 및 정렬에 사용되는 변수들 업데이트
         performAjaxRequest(); // 필터링된 데이터 요청
+         window.scrollTo(0, 0);
     
 	});
 	
