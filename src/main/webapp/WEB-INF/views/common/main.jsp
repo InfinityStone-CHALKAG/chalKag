@@ -481,9 +481,7 @@
                                                 <a href="../myPage">
                                                     <div class="name">Score</div>
                                                     <c:if test="${memberInfo.currentScore != null}">
-                                                        <div class="value"><fmt:formatNumber
-                                                                value="${memberInfo.currentScore}"
-                                                                pattern="#,##0.0"/></div>
+                                                    <div class="value"><fmt:formatNumber value="${memberInfo.currentScore}" pattern="#,##0.0"/></div>
                                                     </c:if>
                                                     <c:if test="${memberInfo.currentScore == null}">
                                                         <div class="value">0.0</div>

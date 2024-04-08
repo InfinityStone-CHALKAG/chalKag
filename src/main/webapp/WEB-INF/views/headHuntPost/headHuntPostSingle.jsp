@@ -6,7 +6,7 @@
 <html>
 <head>
     <chalKagTags:webCss/>
-
+    
     <style type="text/css">
 	 .postInfo {
 	 	display: flex;
@@ -15,8 +15,8 @@
 		font-size:20px;
 		margin-left: 26%;
 	 }
-    	.postInfoTitle {
-    	margin-right: 100px;
+    	.postInfoTitle { 	
+    	margin-right: 100px; 
     	width: 100px;
 		margin-left: 4%;
     	}
@@ -32,7 +32,7 @@
             height: 575px; /* 이미지의 높이를 575px로 강제 설정 */
             object-fit: cover; /* 이미지의 비율을 유지하면서 요소에 맞게 잘리지 않도록 설정 */
         }
-
+    	
 		#fullScreenImageContainer {
 		    position: fixed;
 		    top: 0;
@@ -45,19 +45,19 @@
 		    align-items: center;
 		    z-index: 1000; /* 확실히 다른 요소 위에 표시되도록 z-index 지정 */
 		}
-
+		
 		/* 이미지 스타일 */
 		#fullScreenImageContainer img {
 		    max-width: 90%; /* 화면 너비의 90%를 넘지 않도록 */
 		    max-height: 90%; /* 화면 높이의 90%를 넘지 않도록 */
-		}
-
+		}    	
+    	
     	.main pre {
     white-space: pre-wrap; /* CSS3의 white-space 속성을 사용해 텍스트가 영역을 벗어나지 않도록 함 */
     word-wrap: break-word; /* 긴 단어도 줄바꿈될 수 있도록 함 */
     overflow-x: hidden; /* 가로 스크롤바를 숨김 */
 }
-
+    	
     </style>
 </head>
 	<body>
@@ -78,18 +78,18 @@
 								<ul class="details" >
 									<li>${headHuntPostSingle.headHuntPostDate}</li>
 									<li>
-										<a href="/headHuntPostList">HEADHUNTPOST</a>
+										<a href="/headHuntPostList">Head Hunt Post List</a>
 									</li>
-									<li>By
-
+									<li>By 
+											
 										<c:if test="${member == null || member != headHuntPostSingle.memberId}">
 											<a href="/memberPage?memberId=${headHuntPostSingle.memberId}">${headHuntPostSingle.memberNickname}</a>
-										</c:if>
-
+										</c:if> 
+										
 										<c:if test="${member == headHuntPostSingle.memberId}">
 											<a href="/myPage?memberId=${headHuntPostSingle.memberId}">${headHuntPostSingle.memberNickname}</a>
 										</c:if>
-									</li>
+									</li>	
 								</ul>
 							</header>
 						<div class="main">
@@ -102,12 +102,12 @@
 								</c:forEach>
 								</div>
 							</div>
-
+							
 							<!-- 클릭한 이미지를 보여줄 컨테이너 -->
 							<div id="fullScreenImageContainer" style="display:none;">
 							    <img id="fullScreenImage">
 							</div>
-
+							
 								<div class="featured" style="margin-bottom: 3%; margin-top: 2%; display: block; justify-content: center;">
 										<div>
 											<div class="postInfo">
@@ -192,8 +192,8 @@
 	<script src="css/user/js/demo.js"></script>
 	<script src="css/user/js/e-magz.js"></script>
 	<script>
-
-
+		
+		  
 	document.addEventListener('DOMContentLoaded', function() {
     // div 요소를 가져옵니다.
     const postPayElement = document.getElementById('headHuntPostPay');

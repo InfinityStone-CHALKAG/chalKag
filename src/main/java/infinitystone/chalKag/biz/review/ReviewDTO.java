@@ -15,4 +15,7 @@ public class ReviewDTO {
   private String reviewScore;
   private String reviewContent;
 
+  private int reviewStart;
+  private int reviewCnt;
+  private String reviewTotalCnt;
 }

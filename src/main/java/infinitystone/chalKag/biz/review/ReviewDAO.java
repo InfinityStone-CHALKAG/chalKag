@@ -5,6 +5,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import infinitystone.chalKag.biz.member.MemberDTO;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -16,14 +18,24 @@ public class ReviewDAO {
   private JdbcTemplate jdbcTemplate;
 
   private static final String SELECTALL = "SELECT REVIEW_score, " +
-      "PROFILEIMG_name, " +
-      "REVIEW_partner, " +
+	  "(SELECT PROFILEIMG_name " +
+	  "FROM PROFILEIMG " +
+	  "WHERE PROFILEIMG.MEMBER_id = REVIEW.MEMBER_id " +
+	  "ORDER BY PROFILEIMG_id DESC " +
+	  "LIMIT 1) AS PROFILEIMG_name, " +
+	  "(SELECT COUNT(*) " +
+	  "FROM REVIEW " +
+	  "WHERE REVIEW_partner = ?) AS REVIEW_totalCnt, " +
+	  "REVIEW.MEMBER_id, " +
       "MEMBER_nickname, " +
-      "REVIEW_content," +
+      "REVIEW_partner, " +
+      "REVIEW_content, " +
       "REVIEW_date " +
       "FROM REVIEW " +
-      "INNER JOIN MEMBER ON REVIEW_partner = MEMBER.MEMBER_id" +
-      "WHERE REVIEW_partner = ?";
+      "INNER JOIN MEMBER ON REVIEW.MEMBER_id = MEMBER.MEMBER_id " +
+      "WHERE REVIEW_partner = ? " +
+      "ORDER BY REVIEW_id DESC " +
+  	  "limit ?, ? ";
 
   private static final String SELECTONE = "SELECT REVIEW_id, " +
       "(SELECT PROFILEIMG_name " +
@@ -55,8 +67,8 @@ public class ReviewDAO {
       "WHERE REVIEW_id = ?";
 
   public List<ReviewDTO> selectAll(ReviewDTO reviewDTO) {
-    Object[] args = {reviewDTO.getReviewPartner()};
-    return (List<ReviewDTO>) jdbcTemplate.queryForObject(SELECTALL, args, new ReviewRowMapper());
+    Object[] args = {reviewDTO.getReviewPartner(), reviewDTO.getReviewPartner(), reviewDTO.getReviewStart(), reviewDTO.getReviewCnt()};
+    return (List<ReviewDTO>) jdbcTemplate.query(SELECTALL, args, new ReviewRowMapper());
   }
 
   public ReviewDTO selectOne(ReviewDTO reviewDTO) {
@@ -89,14 +101,14 @@ class ReviewRowMapper implements RowMapper<ReviewDTO> {
   @Override
   public ReviewDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
     ReviewDTO reviewDTO = new ReviewDTO();
-    reviewDTO.setReviewId(rs.getString("REVIEW_id"));
-    reviewDTO.setMemberId(rs.getString("MEMBER_id"));
+    reviewDTO.setProfileImgName(rs.getString("PROFILEIMG_name"));
+    reviewDTO.setMemberId(rs.getString("REVIEW.MEMBER_id"));
     reviewDTO.setMemberNickname(rs.getString("MEMBER_nickname"));
-    reviewDTO.setReviewPartner(rs.getString("REVIEW_partner"));
-    reviewDTO.setReviewPartnerNickname(rs.getString("REVIEW_partnernickname"));
+    reviewDTO.setReviewPartner("REVIEW_partner");
     reviewDTO.setReviewDate(rs.getString("REVIEW_date"));
     reviewDTO.setReviewScore(rs.getString("REVIEW_score"));
     reviewDTO.setReviewContent(rs.getString("REVIEW_content"));
+    reviewDTO.setReviewTotalCnt(rs.getString("REVIEW_totalCnt"));
     return reviewDTO;
   }
 }
@@ -109,7 +121,7 @@ class ReviewSelectOneRowMapper implements RowMapper<ReviewDTO> {
     reviewDTO.setProfileImgName(rs.getString("PROFILEIMG_name"));
     reviewDTO.setMemberId(rs.getString("REVIEW.MEMBER_id"));
     reviewDTO.setMemberNickname(rs.getString("MEMBER.MEMBER_nickname"));
-    reviewDTO.setReviewPartner(rs.getString("REVIEW_partner"));
+    reviewDTO.setReviewPartner("REVIEW_partner");
     reviewDTO.setReviewDate(rs.getString("REVIEW_date"));
     reviewDTO.setReviewScore(rs.getString("REVIEW_score"));
     reviewDTO.setReviewContent(rs.getString("REVIEW_content"));

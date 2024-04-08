@@ -12,12 +12,11 @@ var searchField = "";
 var searchInput="";
 var startDate =	today;// 작업 시작일
 var endDate = today;// 작업 종료일
-var minDate = today;// 검색 시작일 설정
-var maxDate = today;// 오늘날짜
+var minDate = "";// 검색 시작일 설정
+var maxDate = "";// 오늘날짜
 console.log('초기화 : ' + startDate.toDateString());
 console.log('초기화 : ' + endDate.toDateString());
-console.log('초기화 : ' + minDate.toDateString());
-console.log('초기화 : ' + maxDate.toDateString());
+
 console.log(document.getElementById('startDate'));
 $(document).ready(function() {
   // 검색 필드와 입력값, 정렬 순서 업데이트 이벤트 리스너 추가
@@ -26,9 +25,9 @@ $(document).ready(function() {
     performAjaxRequest();
   });
   
-	document.getElementById('minPay').addEventListener('input', handleFilterChange);
+	document.getElementById('minPay').addEventListener('mouseup', handleFilterChange);
 	
-	document.getElementById('maxPay').addEventListener('input', handleFilterChange);
+	document.getElementById('maxPay').addEventListener('mouseup', handleFilterChange);
 	
 	document.getElementById('role').addEventListener('change', handleFilterChange);
 	
@@ -76,35 +75,37 @@ $(document).ready(function() {
 	});
 	
 	// 날짜 라디오 버튼 이벤트 리스너 추가
-	$('input[type=radio][name=date]').change(function() {
+	 $("input[type='radio'][name='headHuntPostDate']").on('ifChanged', function() {
+		  if ($(this).prop('checked')) {
 	  const lastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
 	  const lastMonth = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
+	  console.log("이건뭘까~" + $(this).val());
 	
 	
-	  switch(this.value) {
-	      case 'Today':
-	          minDate = formatDate(today);
-	          maxDate = formatDate(today);
-	          break;
-	      case 'Last Week':
-	          minDate = formatDate(lastWeek);
-	          maxDate = formatDate(today);
-	          break;
-	      case 'Last Month':
-	          minDate = formatDate(lastMonth);
-	          maxDate = formatDate(today);
-	          break;
-	      default:
-	          // "Anytime"이 선택된 경우, minDate와 maxDate를 초기화합니다.
-	          minDate = '';
-	          maxDate = '';
-	  }
+	   switch($(this).val()) {
+            case 'Today':
+                minDate = formatDate(today);
+                maxDate = formatDate(today);
+                break;
+            case 'Last Week':
+                minDate = formatDate(lastWeek);
+                maxDate = formatDate(today);
+                break;
+            case 'Last Month':
+                minDate = formatDate(lastMonth);
+                maxDate = formatDate(today);
+                break;
+            default:
+                // "Anytime"이 선택된 경우, minDate와 maxDate를 초기화합니다.
+                minDate = '';
+                maxDate = '';
+        }
 	  
 	  console.log("minDate : " + minDate);
-	  console.log("minDate : " + maxDate);
-	
-	  updateVariables(); // 필터링 및 정렬에 사용되는 변수들 업데이트
+	  console.log("manDate : " + maxDate);
+	   updateVariables();
 	  performAjaxRequest(); // 필터링된 데이터 요청
+	  }
 	});
 });
 
@@ -198,6 +199,7 @@ function performAjaxRequest() {
     endWorkDate : endDate,
     headHuntPostConcept : concept
     };
+    console.log("requestData!!!!!!!!!!!!!!!!!!" + JSON.stringify(requestData));
 
     // jQuery를 사용한 AJAX 요청
     $.ajax({
@@ -206,12 +208,14 @@ function performAjaxRequest() {
         data: requestData, // 서버에 보낼 데이터
         dataType: 'json',
         success: function(filterData) {
-			console.log(filterData);
+			console.log("필터 AJAX 콘솔진입!!!!!!!!!" + JSON.stringify(filterData));
+			
             // 성공 시, 응답 처리.  검색 결과를 화면에 표시
             if (filterData != null) { // filterDatas가 존재하는 경우
-                window.filteredData = filterData; // 서버에서 받은 데이터를 변수에 할당
+            	console.log("filterData!!!!!!!!!!:" + filterData);
+                window.filterData = filterData; // 서버에서 받은 데이터를 변수에 할당
                 isFiltered = true; // 데이터가 존재하므로 isFiltered를 true로 설정
-                loadReviewData(1);
+                loadReviewData(1, filterData);
             }
         },
         error: function(xhr, status, error) {

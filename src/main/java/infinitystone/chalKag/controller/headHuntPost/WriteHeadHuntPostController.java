@@ -2,8 +2,6 @@ package infinitystone.chalKag.controller.headHuntPost;
 
 import infinitystone.chalKag.biz.headHuntPost.HeadHuntPostDTO;
 import infinitystone.chalKag.biz.headHuntPost.HeadHuntPostService;
-import infinitystone.chalKag.biz.member.MemberDTO;
-import infinitystone.chalKag.biz.member.MemberService;
 import infinitystone.chalKag.biz.postImg.PostImgDTO;
 import infinitystone.chalKag.biz.postImg.PostImgService;
 import jakarta.servlet.http.HttpSession;
@@ -17,14 +15,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Member;
 import java.util.UUID;
 
 @Controller
 public class WriteHeadHuntPostController {
-
-  @Autowired
-  private MemberService memberService;
 
   @Autowired
   private HeadHuntPostService headHuntPostService;
@@ -38,11 +32,9 @@ public class WriteHeadHuntPostController {
   }
 
   @RequestMapping(value = "/writeHeadHuntPost", method = RequestMethod.POST)
-  public String writeHeadHuntPost(HeadHuntPostDTO headHuntPostDTO, MemberDTO memberDTO, PostImgDTO postImgDTO, HttpSession session, @RequestParam("file") MultipartFile[] files) {
+  public String writeHeadHuntPost(HeadHuntPostDTO headHuntPostDTO, PostImgDTO postImgDTO, HttpSession session, @RequestParam("file") MultipartFile[] files) {
 
     headHuntPostDTO.setMemberId((String) session.getAttribute("member"));
-    memberDTO.setMemberId((String) session.getAttribute("member"));
-    memberDTO.setSearchCondition("writePostExp");
 
     System.out.println("WriteHeadHuntPostController In Log = [" + headHuntPostDTO + "]");
     System.out.println("WriteHeadHuntPostController In Log = [" + postImgDTO + "]");
@@ -84,8 +76,6 @@ public class WriteHeadHuntPostController {
         }
       }
     }
-
-    memberService.update(memberDTO);
 
     System.out.println("WriteHeadHuntPostController Out Log");
 
