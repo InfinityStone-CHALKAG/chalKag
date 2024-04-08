@@ -1,7 +1,5 @@
 package infinitystone.chalKag.controller.common;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -48,10 +46,8 @@ public class MemberPageController {
     reviewDTO.setReviewPartner(memberDTO.getMemberId());
     reviewDTO.setReviewStart(0);
     reviewDTO.setReviewCnt(10);
-    System.out.println(reviewService.selectAll(reviewDTO));
     
     model.addAttribute("reviewList", reviewService.selectAll(reviewDTO));
-
 
     System.out.println("MemberPageController Out로그");
 
@@ -68,13 +64,8 @@ public class MemberPageController {
 	    reviewDTO.setReviewPartner(reviewDTO.getReviewPartner());
 	    reviewDTO.setReviewStart(reviewDTO.getReviewStart());
 	    reviewDTO.setReviewCnt(10);
-	    System.out.println(reviewDTO);
-	    System.out.println(reviewService.selectAll(reviewDTO).size());
-	   
-
-	    System.out.println("MemberPageController Out로그");
-	    System.out.println("@@@" +reviewService.selectAll(reviewDTO));
-	    return gson.toJson(reviewService.selectAll(reviewDTO));      
+	    
+ 	    return gson.toJson(reviewService.selectAll(reviewDTO));      
 	  }
 
 }
