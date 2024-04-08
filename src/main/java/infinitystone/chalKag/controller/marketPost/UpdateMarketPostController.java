@@ -16,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -30,24 +29,17 @@ public class UpdateMarketPostController {
 
 
 	@RequestMapping(value = "/updateMarketPost", method = RequestMethod.GET)
-	public String updateMarketPostPage(MarketPostDTO marketPostDTO, Model model, PostImgDTO postImgDTO) {
+	public String updateMarketPostPage(MarketPostDTO marketPostDTO, Model model) {
 
 		marketPostDTO.setSearchCondition("marketPostSingle");
 		marketPostDTO = marketPostService.selectOne(marketPostDTO);
-		postImgDTO.setSearchCondition("marketPostSingleImg");
-		postImgDTO.setPostId(marketPostDTO.getMarketPostId());
-
-		List<PostImgDTO> postImgList = postImgService.selectAll(postImgDTO);
-		System.out.println("postImgList : " + postImgList);
-		model.addAttribute("marketPostSingle",marketPostDTO);
-		model.addAttribute("postImgList", postImgList);
-
-
+		System.out.println(marketPostDTO.getMarketPostId());
+		model.addAttribute("updateMarketPost", marketPostDTO);
 		return "marketPost/updateMarketPost";
 	}
 
 	@RequestMapping(value = "/updateMarketPost", method = RequestMethod.POST)
-	public String updateMarketPost(MarketPostDTO marketPostDTO, PostImgDTO postImgDTO, HttpSession session,  @RequestParam(value = "file", required = false) MultipartFile[] files) {
+	public String updateMarketPost(MarketPostDTO marketPostDTO, PostImgDTO postImgDTO, HttpSession session, @RequestParam(value = "file", required = false) MultipartFile[] files) {
 		// 사용자의 글을 수정
 		marketPostDTO.setMemberId((String) session.getAttribute("member"));
 
@@ -60,14 +52,16 @@ public class UpdateMarketPostController {
 		uploadDir = uploadDir.substring(1, uploadDir.indexOf("chalKag")) + "chalKag/src/main/resources/static/postImg";
 		System.out.println("UpdateMarketPostController Log02 = [" + uploadDir + "]");
 
+		marketPostDTO.setSearchCondition("marketPostUpdate");
+
 		// Update the user-written post
 		if (!marketPostService.update(marketPostDTO)) {
 			System.out.println("UpdateMarketPostController Update of post failed");
 		}
 		postImgDTO.setPostId(marketPostDTO.getMarketPostId());
 
-		if(!postImgService.update(postImgDTO)){
-			System.out.println("UpdateMarketPostController Update of post images failed");
+		if (!postImgService.delete(postImgDTO)) {
+			System.out.println("UpdateMarketPostController Delete of post images failed");
 		}
 
 		for (MultipartFile file : files) {
@@ -92,7 +86,16 @@ public class UpdateMarketPostController {
 		System.out.println("UpdateMarketPostController Out Log");
 
 
+		try {
+			Thread.sleep(1500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "redirect:marketPostList";
+		}
 
-		return "redirect:marketPost/marketPostSingle";
+		return "redirect:marketPostList";
+
+
 	}
 }

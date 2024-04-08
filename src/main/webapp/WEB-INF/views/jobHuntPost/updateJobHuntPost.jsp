@@ -33,6 +33,8 @@
 						<form action="/updateJobHuntPost" method="post"
 							onsubmit="return validateForm(event)"
 							enctype="multipart/form-data">
+
+							<input type="hidden" name="headHuntPostId" value="${updateJobHuntPost.jobHuntPostId}" />
 							
 							<div class="form-group"
 								style="display: flex; justify-content: center; margin-bottom: 4%;">

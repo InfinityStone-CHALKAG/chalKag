@@ -35,13 +35,16 @@
 							onsubmit="return validateForm(event)"
 							enctype="multipart/form-data">
 
+							<input type="hidden" name="headHuntPostId" value="${updateHeadHuntPost.headHuntPostId}" />
+
 							<div class="form-group"
 								style="display: flex; justify-content: center; margin-bottom: 4%;">
 								<input type="text" class="form-control rounded"
 									id="headHuntPostTitle" name="headHuntPostTitle"
-									placeholder="Title" value="${updateHeadHuntPost.headHuntPostTitle}" />
+								placeholder="Title" value="${updateHeadHuntPost.headHuntPostTitle}" />
+
 							</div>
-							
+
 							<div class="form-group" style="display: flex; margin-bottom: 4%;">
 								<select class="selectTags" id="headHuntPostRole" name="headHuntPostRole" 
 								style="width: 32%; height: 43px; margin-right: 2%;">

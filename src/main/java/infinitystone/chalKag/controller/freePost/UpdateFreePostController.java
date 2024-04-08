@@ -16,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -30,24 +29,17 @@ public class UpdateFreePostController {
 
 
 	@RequestMapping(value = "/updateFreePost", method = RequestMethod.GET)
-	public String updateFreePostPage(FreePostDTO freePostDTO, Model model, PostImgDTO postImgDTO) {
+	public String updateFreePostPage(FreePostDTO freePostDTO, Model model) {
 
 		freePostDTO.setSearchCondition("freePostSingle");
 		freePostDTO = freePostService.selectOne(freePostDTO);
-		postImgDTO.setSearchCondition("freePostSingleImg");
-		postImgDTO.setPostId(freePostDTO.getFreePostId());
-
-		List<PostImgDTO> postImgList = postImgService.selectAll(postImgDTO);
-		System.out.println("postImgList : " + postImgList);
-		model.addAttribute("freePostSingle",freePostDTO);
-		model.addAttribute("postImgList", postImgList);
-
-
+		System.out.println(freePostDTO.getFreePostId());
+		model.addAttribute("updateFreePost", freePostDTO);
 		return "freePost/updateFreePost";
 	}
 
 	@RequestMapping(value = "/updateFreePost", method = RequestMethod.POST)
-	public String updateFreePost(FreePostDTO freePostDTO, PostImgDTO postImgDTO, HttpSession session,  @RequestParam(value = "file", required = false) MultipartFile[] files) {
+	public String updateFreePost(FreePostDTO freePostDTO, PostImgDTO postImgDTO, HttpSession session, @RequestParam(value = "file", required = false) MultipartFile[] files) {
 		// 사용자의 글을 수정
 		freePostDTO.setMemberId((String) session.getAttribute("member"));
 
@@ -60,14 +52,16 @@ public class UpdateFreePostController {
 		uploadDir = uploadDir.substring(1, uploadDir.indexOf("chalKag")) + "chalKag/src/main/resources/static/postImg";
 		System.out.println("UpdateFreePostController Log02 = [" + uploadDir + "]");
 
+		freePostDTO.setSearchCondition("freePostUpdate");
+
 		// Update the user-written post
 		if (!freePostService.update(freePostDTO)) {
 			System.out.println("UpdateFreePostController Update of post failed");
 		}
 		postImgDTO.setPostId(freePostDTO.getFreePostId());
 
-		if(!postImgService.update(postImgDTO)){
-			System.out.println("UpdateFreePostController Update of post images failed");
+		if (!postImgService.delete(postImgDTO)) {
+			System.out.println("UpdateFreePostController Delete of post images failed");
 		}
 
 		for (MultipartFile file : files) {
@@ -92,7 +86,16 @@ public class UpdateFreePostController {
 		System.out.println("UpdateFreePostController Out Log");
 
 
+		try {
+			Thread.sleep(1500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "redirect:freePostList";
+		}
 
-		return "redirect:freePost/freePostSingle";
+		return "redirect:freePostList";
+
+
 	}
 }
