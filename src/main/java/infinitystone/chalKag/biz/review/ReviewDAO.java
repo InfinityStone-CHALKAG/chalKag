@@ -30,7 +30,8 @@ public class ReviewDAO {
       "MEMBER_nickname, " +
       "REVIEW_partner, " +
       "REVIEW_content, " +
-      "REVIEW_date " +
+      "REVIEW_date, " +
+      "REVIEW_id " +
       "FROM REVIEW " +
       "INNER JOIN MEMBER ON REVIEW.MEMBER_id = MEMBER.MEMBER_id " +
       "WHERE REVIEW_partner = ? " +
@@ -101,10 +102,11 @@ class ReviewRowMapper implements RowMapper<ReviewDTO> {
   @Override
   public ReviewDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
     ReviewDTO reviewDTO = new ReviewDTO();
+    reviewDTO.setReviewId(rs.getString("REVIEW_id"));
     reviewDTO.setProfileImgName(rs.getString("PROFILEIMG_name"));
     reviewDTO.setMemberId(rs.getString("REVIEW.MEMBER_id"));
     reviewDTO.setMemberNickname(rs.getString("MEMBER_nickname"));
-    reviewDTO.setReviewPartner("REVIEW_partner");
+    reviewDTO.setReviewPartner(rs.getString("REVIEW_partner"));
     reviewDTO.setReviewDate(rs.getString("REVIEW_date"));
     reviewDTO.setReviewScore(rs.getString("REVIEW_score"));
     reviewDTO.setReviewContent(rs.getString("REVIEW_content"));
