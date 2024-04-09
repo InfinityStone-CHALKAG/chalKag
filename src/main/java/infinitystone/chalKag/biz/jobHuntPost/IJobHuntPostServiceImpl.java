@@ -24,6 +24,8 @@ public class IJobHuntPostServiceImpl implements IJobHuntPostService{
 		map.put("jobHuntPostContent", jobHuntPostDTO.getJobHuntPostContent());
 		map.put("jobHuntPostRole", jobHuntPostDTO.getJobHuntPostRole());
 		map.put("jobHuntPostRegion", jobHuntPostDTO.getJobHuntPostRegion());
+		map.put("jobHuntPostConcept", jobHuntPostDTO.getJobHuntPostConcept());
+		
 		map.put("jobHuntPostPay", jobHuntPostDTO.getJobHuntPostPay());
 		map.put("minPay", jobHuntPostDTO.getMinPay());
 		map.put("maxPay", jobHuntPostDTO.getMaxPay());
@@ -32,7 +34,6 @@ public class IJobHuntPostServiceImpl implements IJobHuntPostService{
 		map.put("jobHuntPostWorkDate", jobHuntPostDTO.getJobHuntPostWorkDate());
 		map.put("startWorkDate", jobHuntPostDTO.getStartWorkDate());
 		map.put("endWorkDate", jobHuntPostDTO.getEndWorkDate());
-		
 		map.put("titleAndContents", jobHuntPostDTO.getTitleAndContents());
 		
 		
@@ -44,7 +45,8 @@ public class IJobHuntPostServiceImpl implements IJobHuntPostService{
 		map.put("searchField", jobHuntPostDTO.getSearchField());
 		map.put("searchInput", jobHuntPostDTO.getSearchInput());
 		
-		map.put("jobHuntPostConcept", jobHuntPostDTO.getJobHuntPostConcept());
+		System.out.println("MAP" + map);
+		System.out.println("iJobHuntPostDAO.selectAll(map) :" + iJobHuntPostDAO.selectAll(map));// 검색 조건
 
 		return iJobHuntPostDAO.selectAll(map);
 

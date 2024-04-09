@@ -23,7 +23,7 @@ public class RecommendHeadHuntPostListController {
 		recommendDTO.setSearchCondition("headHuntPostRecommendList");
 		String headHuntPostDatas = gson.toJson(recommendService.selectAll(recommendDTO));
 
-		model.addAttribute("HeadHuntPostList", headHuntPostDatas);
+		model.addAttribute("headHuntPostList", headHuntPostDatas);
 
 
 		return "recommendPost/recommendHeadHuntPostList";

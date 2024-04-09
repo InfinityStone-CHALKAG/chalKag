@@ -1,13 +1,13 @@
 package infinitystone.chalKag.biz.headHuntPost;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
 
 @Repository("headHuntPostDAO")
 public class HeadHuntPostDAO { // 구인 게시판 DAO
@@ -408,6 +408,7 @@ public class HeadHuntPostDAO { // 구인 게시판 DAO
    
   // 구인글 목록 출력
   public List<HeadHuntPostDTO> selectAll(HeadHuntPostDTO headHuntPostDTO) {
+	  Object[] args = { headHuntPostDTO.getMemberId() };
 	  List<HeadHuntPostDTO> result = null;
 	  // 검색 조건에 해당될 경우 jdbcTemplate을 사용하여 SELECTALL 쿼리 실행 후 결과를 RowMapper로 매핑하여 반환
 	  System.out.println("HeadHuntPostDAO(selectAll) In로그 = [" + headHuntPostDTO + "]");
@@ -437,8 +438,8 @@ public class HeadHuntPostDAO { // 구인 게시판 DAO
 			  return result;
 		  }
 		  // 회원 페이지 - 특정 회원이 작성한 구인글 전체 출력
-		  else if (headHuntPostDTO.getSearchCondition().equals("headHuntPostMembertList")) {
-			  result = jdbcTemplate.query(SELECTALL_HEADHUNTPOSTMEMBER, new HeadHuntPostMemberRowMapper());
+		  else if (headHuntPostDTO.getSearchCondition().equals("headHuntPostMemberList")) {
+			  result = jdbcTemplate.query(SELECTALL_HEADHUNTPOSTMEMBER, args,new HeadHuntPostMemberRowMapper());
 			  System.out.println("HeadHuntPostDAO(selectAll) Out로그 = [" + result + "]");
 			  return result;
 		  }

@@ -28,20 +28,21 @@ LEFT JOIN
 WHERE
 	1=1
 	
-	<if test="freePostTitle != null">
-		AND FREEPOST_title LIKE CONCAT('%',#{freePostTitle},'%')
+	<if test="searchField.equals('FREEPostTitle')">
+		AND FREEPOST.FREEPOST_title LIKE CONCAT('%',#{searchInput},'%')
 	</if>
 	
-	<if test="freePostContent != null">
-		AND FREEPOST_content LIKE CONCAT('%',#{freePostContent},'%')
+	<if test="searchField.equals('FREEPostContent')">
+		AND FREEPOST.FREEPOST_title LIKE CONCAT('%',#{searchInput},'%')
 	</if>
 	
-	<if test="memberNickname != null">
-		AND MEMBER_nickname LIKE CONCAT('%',#{memberNickname},'%')
+	<if test="searchField.equals('memberNickname')">
+		AND MEMBER.MEMBER_nickname LIKE CONCAT('%',#{searchInput},'%')
 	</if>
 	
-	<if test="titleAndContents != null">
-		AND FREEPOST_title || FREEPOST_content LIKE CONCAT('%',#{titleAndContents},'%')
+	<if test="searchField.equals('titleAndContents')">
+		AND MEMBER_nickname LIKE CONCAT('%',#{searchInput},'%')
+		OR FREEPOST.FREEPOST_content LIKE CONCAT('%',#{searchInput},'%')
 	</if>
 	
 	ORDER BY
@@ -55,7 +56,7 @@ WHERE
 		<result column="MEMBER_id" property="memberId" jdbcType="VARCHAR" javaType="String"/>
 		<result column="MEMBER_nickname" property="memberNickname" jdbcType="VARCHAR" javaType="String"/>
 		<result column="FREEPOST_date" property="freePostDate" jdbcType="TIMESTAMP" javaType="String"/>
-		<result column="JOBHUNTPOST_title" property="jobHuntPostTitle" jdbcType="VARCHAR" javaType="String"/>
+		<result column="FREEPOST_title" property="freePostTitle" jdbcType="VARCHAR" javaType="String"/>
 	   	<result column="FREEPOST_content" property="freePostContent" jdbcType="VARCHAR" javaType="String"/>
 	   	<result column="FREEPOST_viewcnt" property="freePostViewcnt" jdbcType="INTEGER" javaType="String"/>
 	   	<result column="POSTIMG_name" property="postImgName" jdbcType="VARCHAR" javaType="String"/>
