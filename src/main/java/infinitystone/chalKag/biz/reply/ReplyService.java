@@ -2,7 +2,7 @@ package infinitystone.chalKag.biz.reply;
 
 import java.util.List;
 
-public interface ReplyService {
+public interface ReplyService { // 답글 관련 컨트롤러에서 사용할 서비스 (답글과 관련된 비즈니스 로직을 정의하는 인터페이스)
 
   public List<ReplyDTO> selectAll(ReplyDTO replyDTO);
 

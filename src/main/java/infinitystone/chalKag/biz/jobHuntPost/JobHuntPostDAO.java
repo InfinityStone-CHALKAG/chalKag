@@ -408,6 +408,7 @@ public class JobHuntPostDAO { // 구인 게시판 DAO
    
   // 구직글 목록 출력
   public List<JobHuntPostDTO> selectAll(JobHuntPostDTO jobHuntPostDTO) {
+	  Object[] args = { jobHuntPostDTO.getMemberId()};
 	  List<JobHuntPostDTO> result = null;
 	  // 검색 조건에 해당될 경우 jdbcTemplate을 사용하여 SELECTALL 쿼리 실행 후 결과를 RowMapper로 매핑하여 반환
 	  System.out.println("JobHuntPostDAO(selectAll) In로그 = [" + jobHuntPostDTO + "]");
@@ -438,7 +439,7 @@ public class JobHuntPostDAO { // 구인 게시판 DAO
 		  }
 		  // 회원 페이지 - 특정 회원이 작성한 구직글 전체 출력
 		  else if (jobHuntPostDTO.getSearchCondition().equals("jobHuntPostMembertList")) {
-			  result = jdbcTemplate.query(SELECTALL_JOBHUNTPOSTMEMBER, new JobHuntPostMemberRowMapper());
+			  result = jdbcTemplate.query(SELECTALL_JOBHUNTPOSTMEMBER, args, new JobHuntPostMemberRowMapper());
 			  System.out.println("JobHuntPostDAO(selectAll) Out로그 = [" + result + "]");
 			  return result;
 		  }

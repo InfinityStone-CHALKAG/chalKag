@@ -40,11 +40,11 @@
 	</if>
 	
 	<if test="searchField.equals('marketPostContent')">
-		AND MARKETPOST.MARKETPOST_content LIKE CONCAT('%',#{marketPostContent},'%')
+		AND MARKETPOST.MARKETPOST_content LIKE CONCAT('%',#{searchInput},'%')
 	</if>
 	
 	<if test="searchField.equals('memberNickname')">
-		AND MEMBER.MEMBER_nickname LIKE CONCAT('%',#{memberNickname},'%')
+		AND MEMBER.MEMBER_nickname LIKE CONCAT('%',#{searchInput},'%')
 	</if>
 	
 	<if test="searchField.equals('titleAndContents')">

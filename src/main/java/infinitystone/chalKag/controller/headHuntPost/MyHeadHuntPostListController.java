@@ -14,6 +14,10 @@ import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class MyHeadHuntPostListController {
+	// "/myHeadHuntPostList" 요청이 들어오면 해당 요청을 처리하기 위해 myHeadHuntPostList 메서드가 호출되며,
+	// 호출된 메서드로 서치 조건에 따라 글 목록을 조회한 후 JSON 형식으로 변환하여 모델에 저장
+	// 저장한 데이터는 "myPost/myHeadHuntPostList" 뷰로 반환
+	
 	@Autowired
 	private HeadHuntPostService headHuntPostService;
 
@@ -22,6 +26,7 @@ public class MyHeadHuntPostListController {
 		// 현재 세션에 있는 로그인 정보를 가지고 와서 해당 유저가 쓴 글을 전부 출력
 		headHuntPostDTO.setMemberId((String)session.getAttribute("member"));
 		headHuntPostDTO.setSearchCondition("headHuntPostMemberList");
+		
 		String headHuntPostDatas = gson.toJson(headHuntPostService.selectAll(headHuntPostDTO));
 
 		model.addAttribute("HeadHuntPostList", headHuntPostDatas);

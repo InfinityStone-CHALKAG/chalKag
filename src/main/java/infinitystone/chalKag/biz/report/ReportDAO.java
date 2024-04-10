@@ -108,8 +108,6 @@ public class ReportDAO { // 신고 DAO
   private static final String DELETE = " ";
   
 
-
-
   // 신고글 전체 출력
   public List<ReportDTO> selectAll(ReportDTO reportDTO) {
     List<ReportDTO> result = null;
