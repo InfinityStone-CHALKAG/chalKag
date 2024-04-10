@@ -21,8 +21,7 @@ public class MemberPageController {
   private MemberService memberService;
   @Autowired
   private ReviewService reviewService;
-  @Autowired
-  private Gson gson;
+
 
   @RequestMapping(value = "memberPage")
   public String memberPage(MemberDTO memberDTO, ReviewDTO reviewDTO, Model model, HttpSession session) {
@@ -54,18 +53,5 @@ public class MemberPageController {
     return "myPage/memberPage";
   }
   
-  @RequestMapping(value = "moreReview")
-  public @ResponseBody String moreReview(MemberDTO memberDTO, ReviewDTO reviewDTO) {
-
-	    System.out.println("MemberPageController In로그 + [" + memberDTO + "]");
-	  
-	    // 멤버페이지 이동시 출력 할 리뷰 
-
-	    reviewDTO.setReviewPartner(reviewDTO.getReviewPartner());
-	    reviewDTO.setReviewStart(reviewDTO.getReviewStart());
-	    reviewDTO.setReviewCnt(10);
-	    
- 	    return gson.toJson(reviewService.selectAll(reviewDTO));      
-	  }
 
 }
