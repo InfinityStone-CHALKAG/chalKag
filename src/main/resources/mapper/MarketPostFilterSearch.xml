@@ -35,32 +35,37 @@
 	    MARKETPOST.MARKETPOST_status = 'sell'
 	AND
 		1=1
-	<if test="marketPostTitle != null">
-		AND MARKETPOST_title LIKE CONCAT('%',#{marketPostTitle},'%')
+	<if test="searchField.equals('marketPostTitle')">
+		AND MARKETPOST.MARKETPOST_title LIKE CONCAT('%',#{searchInput},'%')
 	</if>
 	
-	<if test="marketPostContent != null">
-		AND MARKETPOST_content LIKE CONCAT('%',#{marketPostContent},'%')
+	<if test="searchField.equals('marketPostContent')">
+		AND MARKETPOST.MARKETPOST_content LIKE CONCAT('%',#{marketPostContent},'%')
 	</if>
 	
-	<if test="memberNickname != null">
-		AND MEMBER_nickname LIKE CONCAT('%',#{memberNickname},'%')
+	<if test="searchField.equals('memberNickname')">
+		AND MEMBER.MEMBER_nickname LIKE CONCAT('%',#{memberNickname},'%')
 	</if>
 	
-	<if test="titleAndContents != null">
-		AND MARKETPOST_title || MARKETPOST_content LIKE CONCAT('%',#{memberNickname},'%')
+	<if test="searchField.equals('titleAndContents')">
+		AND (MARKETPOST.MARKETPOST_title LIKE CONCAT('%', #{searchInput}, '%')
+		OR MARKETPOST.MARKETPOST_content LIKE CONCAT('%', #{searchInput}, '%'))
 	</if>
 	
-	<if test="marketPostCompany != null">
-		AND MARKETPOST_company LIKE CONCAT('%',#{marketPostCompany},'%')
+	<if test="marketPostCompany != null and marketPostComany !='' ">
+		AND MARKETPOST.MARKETPOST_company LIKE CONCAT('%',#{marketPostCompany},'%')
 	</if>
 	
-	<if test="marketPostCategory != null">
-		AND MARKETPOST_category LIKE CONCAT('%',#{marketPostCategory},'%')
+	<if test="marketPostCategory != null and marketPostCategory != ''">
+		AND MARKETPOST.MARKETPOST_category LIKE CONCAT('%',#{marketPostCategory},'%')
 	</if>
 	
-	<if test="minPrice !=0 and maxPrice !=0">
-		AND MARKETPOST_price BETWEEN #{minPrice} AND #{maxPrice}
+	<if test="minPrice !=0 and maxPrice !=0 and minPrice !=null and maxPrice !=0">
+		AND MARKETPOST.MARKETPOST_price BETWEEN #{minPrice} AND #{maxPrice}
+	</if>
+	
+	<if test="fromday != null and fromday != '' ">
+			AND DATE(MARKETOST_date) BETWEEN #{fromday} AND #{today}
 	</if>
 	
 	ORDER BY

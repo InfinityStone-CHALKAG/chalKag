@@ -151,7 +151,7 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 	        + "WHERE " // 회원이 좋아요한 게시글 선택 (조회할 멤버 아이디 입력)
 	        + "    	RECOMMEND.MEMBER_id = ? " 
 			+ "ORDER BY "
-			+ "		POST_id DESC "; // 게시글 아이디를 기준으로 내림차순 정렬
+			+ "		POST_id DESC"; // 게시글 아이디를 기준으로 내림차순 정렬
 	
 	
 	// 특정 회원이 좋아요한 구직글 목록 출력 (구직글만 출력).전미지	
@@ -432,6 +432,7 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 	
 	// 좋아요한 게시글 전체 출력
 	public List<RecommendDTO> selectAll(RecommendDTO recommendDTO) {
+		Object[] args = { recommendDTO.getMemberId() };
 		List<RecommendDTO> result = null;
 		System.out.println("RecommendDAO(selectAll) In로그 = [" + recommendDTO + "]");
 		// 검색 조건에 해당될 경우 jdbcTemplate을 사용하여 SELECTALL 쿼리 실행 후 결과를 RowMapper로 매핑하여 반환
@@ -444,31 +445,31 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 			}
 			// 회원 페이지 - 특정 회원이 좋아요한 구인글 목록 출력
 			else if (recommendDTO.getSearchCondition().equals("headHuntPostRecommendList")) {
-				result = (List<RecommendDTO>) jdbcTemplate.query(SELECTALL_HEADHUNTPOSTRECOMMEND, new HeadHuntPostRecommendRowMapper());
+				result = (List<RecommendDTO>) jdbcTemplate.query(SELECTALL_HEADHUNTPOSTRECOMMEND,args, new HeadHuntPostRecommendRowMapper());
 				System.out.println("RecommendDAO(selectAll) Out로그 = [" + result + "]");
 				return result;
 			}
 			// 회원 페이지 - 특정 회원이 좋아요한 구직글 목록 출력
 			else if (recommendDTO.getSearchCondition().equals("jobHuntPostListRecommendList")) {
-				result = (List<RecommendDTO>) jdbcTemplate.query(SELECTALL_JOBHUNTPOSTRECOMMEND, new JobHuntPostRecommendRowMapper());
+				result = (List<RecommendDTO>) jdbcTemplate.query(SELECTALL_JOBHUNTPOSTRECOMMEND,args, new JobHuntPostRecommendRowMapper());
 				System.out.println("RecommendDAO(selectAll) Out로그 = [" + result + "]");
 				return result;
 			}
 			// 회원 페이지 - 특정 회원이 좋아요한 자유글 목록 출력
 			else if (recommendDTO.getSearchCondition().equals("freePostListRecommenList")) {
-				result = (List<RecommendDTO>) jdbcTemplate.query(SELECTALL_FREEPOSTRECOMMEND, new FreePostRecommendRowMapper());
+				result = (List<RecommendDTO>) jdbcTemplate.query(SELECTALL_FREEPOSTRECOMMEND,args, new FreePostRecommendRowMapper());
 				System.out.println("RecommendDAO(selectAll) Out로그 = [" + result + "]");
 				return result;
 			}
 			// 회원 페이지 - 특정 회원이 좋아요한 장터글 목록 출력
 			else if (recommendDTO.getSearchCondition().equals("marketPostListRecommendList")) {
-				result = (List<RecommendDTO>) jdbcTemplate.query(SELECTALL_MARKETPOSTRECOMMEND, new MarketPostRecommendRowMapper());
+				result = (List<RecommendDTO>) jdbcTemplate.query(SELECTALL_MARKETPOSTRECOMMEND, args,new MarketPostRecommendRowMapper());
 				System.out.println("RecommendDAO(selectAll) Out로그 = [" + result + "]");
 				return result;
 			}
 			// 회원 페이지 - 특정 회원이 좋아요한 게시글 목록 출력 (카테고리 모두 출력)
 			else if (recommendDTO.getSearchCondition().equals("marketPostListRecommend")) {
-				result = (List<RecommendDTO>) jdbcTemplate.query(SELECTALL_RECOMMENDTOTALCATEGORY, new RecommendTotalCategoryRowMapper());
+				result = (List<RecommendDTO>) jdbcTemplate.query(SELECTALL_RECOMMENDTOTALCATEGORY, args,new RecommendTotalCategoryRowMapper());
 				System.out.println("RecommendDAO(selectAll) Out로그 = [" + result + "]");
 				return result;
 			}
@@ -553,23 +554,40 @@ class RecommendBestRecommendRowMapper implements RowMapper<RecommendDTO>{
 }
 
 // 회원 페이지 - 특정 회원이 좋아요한 구인글 목록 출력 시 필요한 데이터를 저장할 RowMapper 클래스.전미지
-class HeadHuntPostRecommendRowMapper implements RowMapper<RecommendDTO>{
-	@Override // mapRow 메서드 오버라이드
-	public RecommendDTO mapRow(ResultSet rs,int rowNum) throws SQLException{
-		// ResultSet에 저장된 데이터를 RecommendDTO 객체에 매핑(저장)하는 메서드
-		
-		RecommendDTO recommendDTO = new RecommendDTO(); // 새로운 RecommendDTO 객체 생성	
-		// ResultSet에 저장된 데이터를 RecommendDTO 객체에 저장
-		recommendDTO.setPostId(rs.getString("post_id"));			// 게시글 아이디	
-		recommendDTO.setPostId(rs.getString("post_title"));			// 게시글 제목
-		recommendDTO.setPostContent(rs.getString("post_content"));	// 게시글 내용
-		recommendDTO.setPostId(rs.getString("post_date"));			// 게시글 작성일
-		recommendDTO.setPostId(rs.getString("post_viewcnt"));		// 게시글 조회수
-		recommendDTO.setPostId(rs.getString("post_recommendcnt"));	// 게시글의 좋아요 수
-		recommendDTO.setPostImgName(rs.getString("post_imgname"));	// 게시글 대표 이미지
-		return recommendDTO; // recommendDTO에 저장된 데이터들을 반환	
-	}
+//class HeadHuntPostRecommendRowMapper implements RowMapper<RecommendDTO>{
+//	@Override // mapRow 메서드 오버라이드
+//	public RecommendDTO mapRow(ResultSet rs,int rowNum) throws SQLException{
+//		// ResultSet에 저장된 데이터를 RecommendDTO 객체에 매핑(저장)하는 메서드
+//		
+//		RecommendDTO recommendDTO = new RecommendDTO(); // 새로운 RecommendDTO 객체 생성	
+//		// ResultSet에 저장된 데이터를 RecommendDTO 객체에 저장
+//		recommendDTO.setPostId(rs.getString("post_id"));			// 게시글 아이디	
+//		recommendDTO.setPostTitle(rs.getString("post_title"));			// 게시글 제목
+//		recommendDTO.setPostContent(rs.getString("post_content"));	// 게시글 내용
+//		recommendDTO.setPostDate(rs.getString("post_date"));			// 게시글 작성일
+//		recommendDTO.setPostViewcnt(rs.getString("post_viewcnt"));		// 게시글 조회수
+//		recommendDTO.setPostRecommendCnt(rs.getString("RECOMMEND_cnt"));	// 게시글의 좋아요 수
+//		recommendDTO.setPostImgName(rs.getString("POSTIMG_name"));	// 게시글 대표 이미지
+//		return recommendDTO; // recommendDTO에 저장된 데이터들을 반환	
+//	}
+//}
+
+// 수정버전
+class HeadHuntPostRecommendRowMapper implements RowMapper<RecommendDTO> {
+    @Override
+    public RecommendDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+        RecommendDTO recommendDTO = new RecommendDTO();
+        recommendDTO.setPostId(rs.getString("post_id")); // 게시글 아이디
+        recommendDTO.setPostTitle(rs.getString("post_title")); // 게시글 제목
+        recommendDTO.setPostContent(rs.getString("post_content")); // 게시글 내용
+        recommendDTO.setPostDate(rs.getString("post_date")); // 게시글 작성일
+        recommendDTO.setPostViewcnt(rs.getString("post_viewcnt")); // 게시글 조회수
+        recommendDTO.setPostRecommendCnt(rs.getString("RECOMMEND_cnt")); // 게시글의 좋아요 수
+        recommendDTO.setPostImgName(rs.getString("POSTIMG_name")); // 게시글 대표 이미지
+        return recommendDTO;
+    }
 }
+
 
 // 회원 페이지 - 특정 회원이 좋아요한 구직글 목록 출력 시 필요한 데이터를 저장할 RowMapper 클래스.전미지
 class JobHuntPostRecommendRowMapper implements RowMapper<RecommendDTO>{
