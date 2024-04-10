@@ -7,7 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service("IMarketPostService")
+@Service("iMarketPostService")
 public class IMarketPostServiceImpl implements IMarketPostService{
 
 	// .xml과 이어진 DAO 의존 주입

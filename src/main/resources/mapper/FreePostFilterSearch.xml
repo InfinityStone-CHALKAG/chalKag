@@ -3,7 +3,7 @@
 <mapper namespace="infinitystone.chalKag.biz.freePost.IFreePostDAO">
 	<select id="selectAll" resultMap="freePostMap">
 		SELECT  
-    'FreePost' AS POST_category,  
+	DISTINCT
     FREEPOST.FREEPOST_id,  
     FREEPOST.MEMBER_id,  
     (
@@ -41,9 +41,13 @@ WHERE
 	</if>
 	
 	<if test="searchField.equals('titleAndContents')">
-		AND MEMBER_nickname LIKE CONCAT('%',#{searchInput},'%')
-		OR FREEPOST.FREEPOST_content LIKE CONCAT('%',#{searchInput},'%')
+		AND (FREEPOST.FREEPOST_title LIKE CONCAT('%',#{searchInput},'%')
+		OR FREEPOST.FREEPOST_content LIKE CONCAT('%',#{searchInput},'%'))
 	</if>
+	
+	<if test="fromday != null and fromday != '' ">
+			AND DATE(FREEPOST_date) BETWEEN #{fromday} AND #{today}
+		</if>
 	
 	ORDER BY
 		FREEPOST.FREEPOST_date DESC

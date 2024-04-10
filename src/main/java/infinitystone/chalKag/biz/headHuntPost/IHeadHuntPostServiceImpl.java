@@ -7,19 +7,20 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service("iHeadHuntPostService")
-public class IHeadHuntPostServiceImpl implements IHeadHuntPostService { 
+@Service("iHeadHuntPostService") // @Service : 구인 게시판의 필터검색 비즈니스 로직을 담당하는 서비스 클래스임을 명시(코드의 모듈화와 유지보수성↑)
+public class IHeadHuntPostServiceImpl implements IHeadHuntPostService { // 구인 게시판의 필터검색 비즈니스 로직을 수행할 ServiceImpl 클래스
 
-	// 구인 게시판 필터 검색.xml과 이어진 DAO 의존 주입
-	@Autowired
+	@Autowired // @Autowired : 구인 게시판의 필터검색 .xml과 이어진 IHeadHuntPostDAO를 의존 주입
 	private IHeadHuntPostDAO iHeadHuntPostDAO;
 	
 	// 필터 검색 시 뷰에서 받은 값을 넣어서 출력
 	@Override
 	public List<HeadHuntPostDTO> selectAll(HeadHuntPostDTO headHuntPostDTO) {
+		// 필터링을 위한 매개변수를 Map으로 생성
 		Map<String, Object> map = new HashMap<String,Object>();
 		System.out.println("IMPL " + headHuntPostDTO);
 		
+		// DTO 객체에서 필터링에 필요한 정보들을 추출하여 Map에 담음
 		map.put("headHuntPostId", headHuntPostDTO.getHeadHuntPostId());				// 구인글 아이디
 		map.put("headHuntPostTitle", headHuntPostDTO.getHeadHuntPostTitle());		// 제목
 		map.put("headHuntPostContent", headHuntPostDTO.getHeadHuntPostContent());	// 내용
@@ -42,10 +43,12 @@ public class IHeadHuntPostServiceImpl implements IHeadHuntPostService {
 		map.put("sortOrder", headHuntPostDTO.getSortOrder());						// 정렬
 		
 		map.put("searchField", headHuntPostDTO.getSearchField());					// 검색 키워드
-		map.put("searchInput", headHuntPostDTO.getSearchInput());	
+		map.put("searchInput", headHuntPostDTO.getSearchInput());					// 검색어
+		
 		System.out.println("MAP" + map);
 		System.out.println("iHeadHuntPostDAO.selectAll(map) :" + iHeadHuntPostDAO.selectAll(map));// 검색 조건
-		return iHeadHuntPostDAO.selectAll(map);
+		
+		return iHeadHuntPostDAO.selectAll(map); // 조회된 구인 게시글 리스트를 반환
 	}
 	
 	@Override

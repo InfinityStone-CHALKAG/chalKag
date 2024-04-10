@@ -7,7 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service("IFreePostService")
+@Service("iFreePostService")
 public class IFreePostServiceImpl implements IFreePostService{
 	
 	// .xml과 이어진 DAO 의존 주입

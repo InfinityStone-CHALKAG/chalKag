@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class HeadHuntPostListController {
+// "/headHuntPostList" 요청이 들어오면 해당 요청을 처리하기 위해 headHuntPostList 메서드가 호출되며,
+// 호출된 메서드로 서치 조건에 따라 글 목록을 조회한 후 JSON 형식으로 변환하여 모델에 저장
+// 저장한 데이터는 "headHuntPost/headHuntPostList" 뷰로 반환
 
   @Autowired
   private HeadHuntPostService headHuntPostService;
@@ -20,11 +23,9 @@ public class HeadHuntPostListController {
     System.out.println("HeadHuntPostListController In로그");
 
     headHuntPostDTO.setSearchCondition("headHuntPostList");
-
     String headHuntPostListResult = gson.toJson(headHuntPostService.selectAll(headHuntPostDTO));
 
     headHuntPostDTO.setSearchCondition("headHuntPostPremium1MonthList");
-
     String PremiumHeadHuntPostList = gson.toJson(headHuntPostService.selectAll(headHuntPostDTO));
 
     model.addAttribute("headHuntPostList", headHuntPostListResult);

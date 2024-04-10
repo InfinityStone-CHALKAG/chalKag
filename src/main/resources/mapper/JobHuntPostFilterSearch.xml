@@ -42,7 +42,7 @@
 	</if>
 	
 	<if test="searchField.equals('jobHuntPostContent')">
-		AND JOBHUNTPOST.JOBHUNTPOST_title LIKE CONCAT('%',#{searchInput},'%')
+		AND JOBHUNTPOST.JOBHUNTPOST_content LIKE CONCAT('%',#{searchInput},'%')
 	</if>
 	
 	<if test="searchField.equals('memberNickname')">
@@ -50,8 +50,8 @@
 	</if>
 	
 	<if test="searchField.equals('titleAndContents')">
-		AND MEMBER_nickname LIKE CONCAT('%',#{searchInput},'%')
-		OR JOBHUNTPOST.JOBHUNTPOST_content LIKE CONCAT('%',#{searchInput},'%')
+		AND (JOBHUNTPOST.JOBHUNTPOST_title LIKE CONCAT('%', #{searchInput}, '%')
+OR JOBHUNTPOST.JOBHUNTPOST_content LIKE CONCAT('%', #{searchInput}, '%'))
 	</if>
 	
 	<if test="jobHuntPostRole != null and jobHuntPostRole !=''">

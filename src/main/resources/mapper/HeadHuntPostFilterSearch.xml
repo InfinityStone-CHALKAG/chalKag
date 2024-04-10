@@ -70,13 +70,7 @@ OR HEADHUNTPOST.HEADHUNTPOST_content LIKE CONCAT('%', #{searchInput}, '%'))
 
    		
 		  ORDER BY HEADHUNTPOST.HEADHUNTPOST_date DESC
-
-	    
-	    
-	    
-	    
-	    
-	    
+  
 
 	</select>
 	<resultMap id="headHuntPostMap" type="infinitystone.chalKag.biz.headHuntPost.HeadHuntPostDTO">

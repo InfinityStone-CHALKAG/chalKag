@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository("profileImgDAO")
-public class ProfileImgDAO {
+public class ProfileImgDAO { // 프로필 이미지 DAO
 
   @Autowired
   private JdbcTemplate jdbcTemplate;
@@ -22,6 +22,7 @@ public class ProfileImgDAO {
       "ORDER BY PROFILEIMG_id DESC" +
       "LIMIT 1";
 
+  // 프로필 사진 등록
   private static String INSERT = "INSERT INTO PROFILEIMG (MEMBER_id, PROFILEIMG_name)" +
       "VALUES (?, ?)";
 
@@ -29,6 +30,7 @@ public class ProfileImgDAO {
     return null;
   }
 
+  // 프로필 사진 출력
   public ProfileImgDTO selectOne(ProfileImgDTO profileImgDTO) {
     try {
       Object[] args = {profileImgDTO.getMemberId()};
@@ -41,6 +43,7 @@ public class ProfileImgDAO {
     }
   }
 
+  // 프로필 사진 등록
   public boolean insert(ProfileImgDTO profileImgDTO) {
     System.out.println("ProfileImgDAO(insert) In로그 = [" + profileImgDTO + "]");
     if (jdbcTemplate.update(INSERT, profileImgDTO.getMemberId(), profileImgDTO.getProfileImgName()) <= 0) {
@@ -59,6 +62,7 @@ public class ProfileImgDAO {
 
 }
 
+// 프로필 출력 시 필요한 데이터를 저장할 RowMapper 클래스
 class ProfileImgRowMapper implements RowMapper<ProfileImgDTO> {
   @Override
   public ProfileImgDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
