@@ -339,7 +339,7 @@
                                                                         <a href="/memberPage?memberId=${reviewData.memberId}" style="font-size:14px;">${reviewData.memberId}</a>
                                                                     </h5>
                                                                     <div class="time">${reviewData.reviewDate}</div>
-                                                                    <div class="description">
+                                                                    <div class="description" style="word-break: break-all;">
                                                                         ${reviewData.reviewContent}
                                                                     </div>
                                                                 </div>
@@ -477,7 +477,7 @@
                                             '<div class="details">' +
                                             '<h5 class="name">' + reviewData.memberNickname + ' <a href="/memberPage?memberId=' + reviewData.memberId + '"style="font-size:14px;">' + reviewData.memberId + '</a></h5>' +
                                             '<div class="time">' + reviewData.reviewDate + '</div>' +
-                                            '<div class="description">' + reviewData.reviewContent + '</div>' +
+                                            '<div class="description" style="word-break: break-all;">' + reviewData.reviewContent + '</div>' +
                                             '</div>' +
                                             '</div>';
 

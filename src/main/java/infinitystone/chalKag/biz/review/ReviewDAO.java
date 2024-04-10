@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import infinitystone.chalKag.biz.comment.CommentDTO;
 import infinitystone.chalKag.biz.member.MemberDTO;
 
 import java.sql.ResultSet;
@@ -61,10 +62,13 @@ public class ReviewDAO {
       "REVIEW_content) " +
       "VALUES (?, ?, ?, ?)";
 
-  private static final String UPDATE = "";
+  private static final String UPDATE = "UPDATE REVIEW " +
+		  "SET " +
+		  "REVIEW_score = ?, " +
+		  "REVIEW_content = ? " +
+		  "WHERE REVIEW_id = ?";
 
-  private static final String DELETE = "DELETE REVIEW" +
-      "FROM REVIEW" +
+  private static final String DELETE = "DELETE FROM REVIEW " +
       "WHERE REVIEW_id = ?";
 
   public List<ReviewDTO> selectAll(ReviewDTO reviewDTO) {
@@ -86,11 +90,16 @@ public class ReviewDAO {
   }
 
   public boolean update(ReviewDTO reviewDTO) {
-    return false;
-  }
+		System.out.println("ReviewDAO(update) 로그 =" + "[" + reviewDTO + "]");
+		int result = jdbcTemplate.update(UPDATE, reviewDTO.getReviewScore(), reviewDTO.getReviewContent(), reviewDTO.getReviewId());
+		if (result <= 0) {
+			return false;
+		}
+		return true;
+	}
 
   public boolean delete(ReviewDTO reviewDTO) {
-    if (jdbcTemplate.update(DELETE) <= 0) {
+    if (jdbcTemplate.update(DELETE, reviewDTO.getReviewId()) <= 0) {
       return false;
     }
     return true;
