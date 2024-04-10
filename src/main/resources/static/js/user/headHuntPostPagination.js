@@ -54,24 +54,24 @@ function displayPagination(page) {
 $("#paginationContainer").on("click", "a", function(event) {
     event.preventDefault(); // 기본 동작 방지
     var page = $(this).data("page"); // 클릭된 페이지 번호를 가져와 currentPage에 저장
-    loadReviewData(page); // 해당 페이지 데이터 로드
+    window.scrollTo(0, 0);
+    loadReviewData(page, postDatas); // 해당 페이지 데이터 로드
+     if (isFiltered) {
+    console.log("필터진입");
+     loadReviewData(page, filterData); // 필터링된 데이터가 있으면 필터링된 데이터 사용
+    console.log(postDatas);
+}
 });
 
 
 // 데이터를 로드하는 함수 정의
-loadReviewData = function(loadPage) {
-    var dataToSend = {
-        'postDatas': postDatas,
-        'page': loadPage,
-    };
-
-    if (isFiltered) {
-        dataToSend.filterData = postDatas; // 필터링된 데이터가 있으면 필터링된 데이터 사용
-    }
-    
+loadReviewData = function(loadPage, dataList) {
+  
+ 
+  
     console.log("loadPage : " + loadPage);
     
-    var displayDatas = postDatas || []; // 출력할 데이터를 일반 데이터로 초기화
+    var displayDatas = dataList || []; // 출력할 데이터를 일반 데이터로 초기화
     
     var pageDataSize = 10; // 페이지당 데이터 크기
     var totalSize = displayDatas.length; // 전체 데이터 크기
@@ -109,23 +109,23 @@ loadReviewData = function(loadPage) {
 			
 			 // 글 작성 시간을 Date 객체로 변환합니다.
 		    const postDate = new Date(headHuntPostList.headHuntPostDate);
-		    // 현재 시간과 글 작성 시간의 차이를 밀리초 단위로 계산합니다.
+		    // 현재 시간과 글 작성 시간의 차이를 밀리초 단위로 계산
 		    const diff = now - postDate;
 		
-		    // 계산된 시간 차이를 분, 시간, 일 단위로 변환합니다.
+		    // 계산된 시간 차이를 분, 시간, 일 단위로 변환
 		    const mins = Math.floor(diff / 60000);
 		    const hours = Math.floor(diff / 3600000);
 		    const days = Math.floor(diff / 86400000);
 		
 		    let timeString = '';
 		    if (days >= 1) {
-		        // 1일 이상 차이날 경우, 날짜를 표시합니다.
+		        // 1일 이상 차이날 경우, 날짜를 표시
 		        timeString = postDate.toLocaleDateString();
 		    } else if (hours >= 1) {
-		        // 1~24시간 사이일 경우, 시간으로 표시합니다.
+		        // 1~24시간 사이일 경우, 시간으로 표시
 		        timeString = `${hours}시간 전`;
 		    } else {
-		        // 1시간 미만일 경우, 분으로 표시합니다.
+		        // 1시간 미만일 경우, 분으로 표시
 		        timeString = `${mins}분 전`;
 		    }
 			
@@ -160,13 +160,13 @@ loadReviewData = function(loadPage) {
                 ;
             });
         }
-        
+         // div에 설정한 태그를 삽입
         div.innerHTML = innerHTML;
     }
 
    
     // 초기 페이지 로드
-    loadReviewData(1);
+    loadReviewData(1, postDatas);
     
 
 });

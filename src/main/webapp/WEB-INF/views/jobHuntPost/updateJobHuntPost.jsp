@@ -8,11 +8,12 @@
 <chalKagTags:webCss />
 
 <style>
+	/* 작업일 작성 css */
 #jobHuntPostWorkDate {
 	border-radius: 5px;
 	border: solid 1px rgb(179, 179, 179);
 }
-
+/* 내용 입력칸 css */
 #jobHuntPostContent {
 	height: 300px;
 }
@@ -33,14 +34,17 @@
 						<form action="/updateJobHuntPost" method="post"
 							onsubmit="return validateForm(event)"
 							enctype="multipart/form-data">
+							<!-- 글 번호 -->
+							<input type="hidden" name="headHuntPostId" value="${updateJobHuntPost.jobHuntPostId}" />
 							
 							<div class="form-group"
 								style="display: flex; justify-content: center; margin-bottom: 4%;">
+								<!-- 글 제목 -->
 								<input type="text" class="form-control rounded"
 									id="jobHuntPostTitle" name="jobHuntPostTitle"
 									placeholder="Title" value="${updateJobHuntPost.jobHuntPostTitle}"/>
 							</div>
-							
+							<!-- 가격 입력 -->
 							<div class="form-group" style="display: flex; margin-bottom: 4%;">
 								<select class="selectTags" id="jobHuntPostRole" name="jobHuntPostRole"
 								style="width: 32%; height: 43px; margin-right: 2%;">
@@ -48,7 +52,7 @@
 									<option value="Model" ${'Model' == updateJobHuntPost.jobHuntPostRole ? 'selected' : ''}>Model</option>
 									<option value="Photographer "${'Photographer' == updateJobHuntPost.jobHuntPostRole ? 'selected' : ''}>Photographer</option>
 								</select>
-
+								<!-- 작업 컨셉 선택 -->
 								<select class="selectTags" id="jobHuntPostConcept" 
 								style="width: 32%; height: 43px; margin-right: 2%;"
 								name="jobHuntPostConcept" >
@@ -59,7 +63,7 @@
  									<option value="updatejobHuntPost"${'outdoor' == updatejobHuntPost.jobHuntPostConcept ? 'selected' : ''}>Outdoor</option>
   									<option value="Etc" ${'Etc' == updateJobHuntPost.jobHuntPostConcept ? 'selected' : ''}>Etc</option>
 								</select> 
-								
+								<!-- 지역 선택 -->
 								<select class="selectTags" id="jobHuntPostRegion" style="width: 32%; 
 								height: 43px;" name="jobHuntPostRegion">
 									<option value="" disabled>Region</option>
@@ -73,40 +77,45 @@
 								</select>
 							</div>
 							
-							
 							<div class="form-group" style="display: flex; margin-bottom: 4%;">
+								<!-- 작업일 입력 -->
 								<input class="selectTags" type="date" 
 								id="jobHuntPostWorkDate" name="jobHuntPostWorkDate" 
 								style="width:49%; height:43px; padding-left: 8px; margin-right: 2%" value="${updateJobHuntPost.jobHuntPostWorkDate}">
-							
+								<!-- 가격 입력 -->
 								<input type="text" id="jobHuntPostPay" name="jobHuntPostPay" class="form-control rounded"
 									style="width: 49%; height:43px; padding-left: 8px;"
 									oninput="trimInput(this); validatePay(this);" placeholder="Pay" value="${updateJobHuntPost.jobHuntPostPay}"/>
 							</div>
-							
+							<!-- 이미지 업로드 안내 문구 -->
 							<p>※ The size. There is a maximum file size of '1GB' for all images.</p>
 							<div class="form-group" style="margin-bottom: 4%;">
 								<input type="file" name="file" id="fileInput" accept="image/*"
 									style="display: none;" multiple> <input type="button"
 									id="customButton" value="Upload">
 							</div>
+							<!-- 이미지 미리보기 -->
 							<div id="preview" style="display: flex; justify-content: center;">
+								<!-- 이미지 슬라이드 버튼 -->
 								<button class="imgSlidebtn" id="slideLeft">◀</button>
+								<!-- 이미지 미리보기 출력 -->
 								<div style="overflow: hidden; flex-grow: 1;">
 									<div class="image-container"></div>
 								</div>
+								<!-- 이미지 슬라이드 버튼 -->
 								<button class="imgSlidebtn" id="slideRight">▶</button>
 							</div>
-						
+							<!-- 이미지 큰 화면으로 보는 태그 -->
 							<div class="big-image-container">
 							    <img id="big-image" src="" alt="큰 이미지 미리보기" />
 							</div>
-
+							<!-- 내용 작성 -->
 							<div class="form-group"
 								style="display: flex; justify-content: center; margin-bottom: 4%;">
 								<textarea class="form-control rounded" id="jobHuntPostContent"
 									name="jobHuntPostContent">${updateJobHuntPost.jobHuntPostContent}</textarea>
 							</div>
+							<!-- 글 수정 완료 버튼 -->
 							<button class="btn btn-primary btn-rounded btn-block">Composite</button>
 						</form>
 					</div>

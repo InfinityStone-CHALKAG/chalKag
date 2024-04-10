@@ -22,7 +22,7 @@ public class AdminMainController {
 
   @Autowired
   private MemberService memberService;
-
+// 관리자 메인 페이지
   @RequestMapping("/adminMain")
   public String adminMain(AdminDTO adminDTO, MemberDTO memberDTO, Gson gson, Model model) {
     System.out.println("AdminMainController In로그");

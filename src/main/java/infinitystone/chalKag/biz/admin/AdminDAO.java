@@ -70,6 +70,7 @@ public class AdminDAO {
       + "FROM MEMBER "
       + "WHERE MEMBER_grade = 'USER'";
 
+// 관리자 메인 페이지 상단 정보 출력 쿼리
   private static final String SELECTONE_ADMINHEADER = "SELECT COALESCE((SELECT SUM(AMOUNT) " +
       "FROM PAYMENT),0) AS REVENUE, " +
       "(SELECT SUM(POST_count) AS TOTAL_posts " +
@@ -96,25 +97,30 @@ public class AdminDAO {
   private static final String UPDATE = "";
   private static final String DELETE = "";
 
+// 목록 출력
   public List<AdminDTO> selectAll(AdminDTO adminDTO) {
     List<AdminDTO> result = null;
     System.out.println("AdminDAO(selectAll) In로그 = [" + adminDTO + "]");
     try {
+	// 나이별 회원가입 수
       if (adminDTO.getSearchCondition().equals("signUpCountByAgeGroup")) {
         result = (List<AdminDTO>) jdbcTemplate.query(SELECTALL_SIGNUPCOUNTBYAGEGROUP,
             new SignUpCountByAgeGroupRowMapper());
         System.out.println("AdminDAO(selectAll) Out로그 = [" + result + "]");
         return result;
+	// 년월일 별 로그인 수
       } else if (adminDTO.getSearchCondition().equals("signInCountByYearMonthDate")) {
         Object[] args = {adminDTO.getYear(), adminDTO.getMonth()};
         result = (List<AdminDTO>) jdbcTemplate.query(SELECTALL_SIGNINCOUNTBYYEARMONTHDATE, args,
             new SignInCountByYearMonthDateRowMapper());
         System.out.println("AdminDAO(selectAll) Out로그 = [" + result + "]");
         return result;
+	// 년월일 별 로그인 수
       } else if (adminDTO.getSearchCondition().equals("signInCountByDayOfWeek")) {
         result = (List<AdminDTO>) jdbcTemplate.query(SELECTALL_SIGNINCOUNTBYDAYOFWEEK, new SignInCountByDayOfWeekRowMapper());
         System.out.println("AdminDAO(selectAll) Out로그 = [" + result + "]");
         return result;
+	// 년 별 로그인 수
       } else if (adminDTO.getSearchCondition().equals("signUpCountByYear")) {
         result = (List<AdminDTO>) jdbcTemplate.query(SELECTALL_SIGNUPCOUNTBYYEAR, new SignUpCountByYearRowMapper());
         System.out.println("AdminDAO(selectAll) Out로그 = [" + result + "]");
@@ -132,11 +138,13 @@ public class AdminDAO {
     AdminDTO result = null;
     System.out.println("AdminDAO(selectOne) In로그 = [" + adminDTO + "]");
     try {
+// 성별별 회원가입 수 
       if (adminDTO.getSearchCondition().equals("signUpCountByGenderGroup")) {
         result = jdbcTemplate.queryForObject(SELECTONE_SIGNUPCOUNTBYGENDERGROUP,
             new SignUpCountByGenderGroupRowMapper());
         System.out.println("AdminDAO(selectOne) Out로그 = [" + result + "]");
         return result;
+// 관리자 메인 페이지 상단 정보 출력
       } else if (adminDTO.getSearchCondition().equals("adminHeader")) {
         result = jdbcTemplate.queryForObject(SELECTONE_ADMINHEADER, new AdminHeaderRowMapper());
         System.out.println("AdminDAO(selectOne) Out로그 = [" + result + "]");
@@ -185,7 +193,7 @@ class SignUpCountByGenderGroupRowMapper implements RowMapper<AdminDTO> {
     return adminDTO;
   }
 }
-
+// 년월일 별 로그인 수 RowMapper
 class SignInCountByYearMonthDateRowMapper implements RowMapper<AdminDTO> {
   @Override
   public AdminDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -195,7 +203,7 @@ class SignInCountByYearMonthDateRowMapper implements RowMapper<AdminDTO> {
     return adminDTO;
   }
 }
-
+// 일주일 별 로그인 수 RowMapper
 class SignInCountByDayOfWeekRowMapper implements RowMapper<AdminDTO> {
   @Override
   public AdminDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -205,7 +213,7 @@ class SignInCountByDayOfWeekRowMapper implements RowMapper<AdminDTO> {
     return adminDTO;
   }
 }
-
+// 년 별 회원가입 수 RowMapper
 class SignUpCountByYearRowMapper implements RowMapper<AdminDTO> {
   @Override
   public AdminDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -215,7 +223,7 @@ class SignUpCountByYearRowMapper implements RowMapper<AdminDTO> {
     return adminDTO;
   }
 }
-
+// 관리자 메인 페이지 상단 출력부분 RowMapper
 class AdminHeaderRowMapper implements RowMapper<AdminDTO> {
   @Override
   public AdminDTO mapRow(ResultSet rs, int rowNum) throws SQLException {

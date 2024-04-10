@@ -6,14 +6,15 @@
 <head>
     <chalKagTags:webCss/>
 <style>
+	/* 글 작성 폼 css */
 			#writerForm {
 				width: 70%;
 			}
-
+/* 글 제목 css */
 			#freePostTitle {
 				margin-bottom: 1%;
 			}
-
+/* CKEditor 설정 */
     .ck-editor .ck-rounded-corners {
 			width: 100%;
       height: 500px; /* 원하는 높이 설정 */
@@ -33,12 +34,17 @@
 					<div class="box box-border">
 						<div class="box-body">
 							<form action="/updateFreePost" method="post" onsubmit="return validateForm()">
+								<!-- 글 번호  -->
+								<input type="hidden" name="headHuntPostId" value="${updateFreePost.freePostId}" />
+								<!-- 글 제목 -->
 								<div class="form-group" style="display: flex; justify-content: center;">
 									<input type="text" id="freePostTitle" name="freePostTitle" class="form-control rounded" placeholder="Title" value="${updateFreePost.freePostTitle}" />
 								</div>
+								<!-- 이미지 업로드 시 안내 문구 -->
 										<p>※ The size. There is a maximum file size of '1GB' for all images.</p>
-							
+							<!-- CKEditor 적용할 textarea -->
 									<textarea id="freePostContent" name="freePostContent" class="form-control rounded" >${updateFreePost.freePostContent}</textarea>
+									<!-- 글 수정 완료 버튼 -->
 								<button class="btn btn-primary btn-block">Composite</button>
 							</form>	
 						</div>
