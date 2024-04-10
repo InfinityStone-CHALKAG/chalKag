@@ -456,7 +456,9 @@
                                     console.log(data);
                                     // 받아온 데이터를 반복하여 HTML을 생성하고 추가
                                     data.forEach(function (reviewData, index) {
-                                        var html = '<div class="rate">' +
+                                        var html =
+                                        '<div class="line thin" style="margin:0%;" id="line_thin_' + reviewData.reviewId + '"></div>' + 
+                                        '<div class="rate">' +
                                             '<fieldset class="rate" style="pointer-events: none;">' +
                                             '<input type="radio" id="rating10_' + index + '" name="reviewScoreShow_' + reviewData.reviewId + '" value="5"' + (reviewData.reviewScore === '5.0' ? ' checked' : '') + '><label for="rating10_' + index + '" title="5점"></label>' +
                                             '<input type="radio" id="rating9_' + index + '" name="reviewScoreShow_' + reviewData.reviewId + '" value="4.5"' + (reviewData.reviewScore === '4.5' ? ' checked' : '') + '><label class="half" for="rating9_' + index + '" title="4.5점"></label>' +

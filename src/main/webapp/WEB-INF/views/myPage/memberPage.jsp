@@ -652,6 +652,9 @@
                                     //h4 문구 지우기
                                     $('.writeReviewContainer').prev('h4').remove();
 
+                                    var currentReviewTotalCnt = parseInt($('.title').text().match(/\d+/)[0]); // 현재 리뷰 총 개수 가져오기
+                                    $('.title').text(currentReviewTotalCnt + 1 + ' REVIEWS'); // 업데이트된 리뷰 총 개수 반영
+
 
                                     var html = '<div class="item" style="border:0px; padding:0px; margin-bottom:0%;" id="item_' + reviewData.reviewId + '">' +
                                     '<div class="rate">' +
@@ -685,19 +688,18 @@
                                         html += '<i id="updateIcon_' + reviewData.reviewId + '" class="ion-android-refresh btn-icon-like" style="cursor: pointer; font-size: 25px; margin-right: 10px;" onclick="reviewUpdate(\'' + reviewData.reviewId + '\', \'' + reviewData.reviewContent + '\')"></i>' +
                                             '<i id="deleteIcon_' + reviewData.reviewId + '" class="ion-trash-a btn-icon-like" style="cursor: pointer; font-size: 25px; margin-right: 10px;" onclick="reviewDelete(\'' + reviewData.reviewId + '\')"></i>';
                                     }
+                                    if (currentReviewTotalCnt >= 1) {
+                                        linethin = '<div class="line thin" style="margin:0%;" id="line_thin_' + reviewData.reviewId + '"></div>';
+                                    }
 
                                     html += '</footer>' +
+                                        linethin +
                                         '</div>';
-
-                                    if (currentReviewTotalCnt >= 1) {
-                                        html += '<div class="line thin" style="margin:0%;"></div>';
-                                    }
+                                   
 
                                     $('.writeReviewContainer').prepend(html);
 
-                                    var currentReviewTotalCnt = parseInt($('.title').text().match(/\d+/)[0]); // 현재 리뷰 총 개수 가져오기
-                                    $('.title').text(currentReviewTotalCnt + 1 + ' REVIEWS'); // 업데이트된 리뷰 총 개수 반영
-
+                                   
 
                                     // 저장된 ID를 가진 라디오 버튼을 찾아서 checked: true로 설정
                                     checkedRadioIds.forEach(function (id) {
@@ -760,6 +762,7 @@
                                         // 받아온 데이터를 반복하여 HTML을 생성하고 추가
                                         data.forEach(function (reviewData) {
                                             var html = '<div class="item" style="border:0px; padding:0px; margin-bottom:0%;" id="item_' + reviewData.reviewId + '">' +
+                                                '<div class="line thin" style="margin:0%;" id="line_thin_' + reviewData.reviewId + '"></div>' +
                                     '<div class="rate">' +
                                         '<fieldset class="rate" id="reviewScore_' + reviewData.reviewId + '" style="pointer-events: none;">' +
                                         '<input type="radio" id="rating10_' + reviewData.reviewId + '" name="reviewScoreShow_' + reviewData.reviewId + '" value="5" ' + (reviewData.reviewScore == '5.0' ? 'checked' : '') + '><label for="rating10_' +  + reviewData.reviewId +'" title="5점"></label>' +
