@@ -191,9 +191,9 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="copyright">
-							COPYRIGHT &copy; MAGZ 2017. ALL RIGHT RESERVED.
+							COPYRIGHT &copy; 2023 - 2024 INFINITY STONE . ALL RIGHT RESERVED.
 							<div>
-								Made with <i class="ion-heart"></i> by <a href="http://kodinger.com">Kodinger</a>
+								Made with <i class="ion-heart"></i> by INFINITYSTONE
 							</div>
 						</div>
 					</div>
