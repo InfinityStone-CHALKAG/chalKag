@@ -10,11 +10,12 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository("replyDAO")
-public class ReplyDAO {
+public class ReplyDAO { // 답글 DAO
 
   @Autowired
   private JdbcTemplate jdbcTemplate;
 
+  // 답글 목록 출력
   private static final String SELECTALL = "SELECT  "
   		+ "    REPLY.REPLY_id, "
   		+ "    REPLY.MEMBER_id,  "
@@ -42,15 +43,18 @@ public class ReplyDAO {
 
   private static final String SELECTONE = "";
 
+  // 답글 추가
   private static final String INSERT = "INSERT INTO REPLY (COMMENT_id, " +
       "MEMBER_id, " +
       "REPLY_content) " +
       "VALUES (?,?,?)";
 
+  // 답글 수정
   private static final String UPDATE = "UPDATE REPLY " +
       "SET REPLY_content = ? " +
       "WHERE REPLY_id = ?";
 
+  // 답글 삭제
   private static final String DELETE = "DELETE " +
       "FROM REPLY " +
       "WHERE REPLY_id = ?";
@@ -95,6 +99,7 @@ public class ReplyDAO {
 
 }
 
+// 답글 목록 출력 시 필요한 데이터를 저장할 RowMapper 클래스
 class ReplyRowMapper implements RowMapper<ReplyDTO> {
   @Override
   public ReplyDTO mapRow(ResultSet rs, int rowNum) throws SQLException {

@@ -16,6 +16,9 @@ import infinitystone.chalKag.biz.postImg.PostImgService;
 
 @Controller
 public class HeadHuntPostSingleController {
+	// "/headHuntPostSingle" 요청이 들어오면 해당 요청을 처리하기 위해 headHuntPostList 메서드가 호출되며,
+	// 호출된 메서드로 서치 조건에 따라 글 목록을 조회한 후 JSON 형식으로 변환하여 모델에 저장
+	// 저장한 데이터는 "headHuntPost/headHuntPostSingle" 뷰로 반환	
 	
 	@Autowired
 	private HeadHuntPostService headHuntPostService;
@@ -30,7 +33,6 @@ public class HeadHuntPostSingleController {
 	public String headHuntPostList(Model model, HeadHuntPostDTO headHuntPostDTO, CommentDTO commentDTO, PostImgDTO postImgDTO) {
 
 		// headHuntPostDTO에 있는 정보로 게시글 내용 불러오기
-
 		headHuntPostDTO.setSearchCondition("headHuntPostSingle");
 		headHuntPostDTO = headHuntPostService.selectOne(headHuntPostDTO);
 		commentDTO.setPostId(headHuntPostDTO.getHeadHuntPostId());

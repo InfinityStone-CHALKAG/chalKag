@@ -13,7 +13,7 @@ import java.util.List;
 
 
 @Repository("memberDAO")
-public class MemberDAO {
+public class MemberDAO { // 회원 정보 DAO
 
   @Autowired
   private JdbcTemplate jdbcTemplate;
@@ -29,6 +29,7 @@ public class MemberDAO {
       "ORDER BY MEMBER_exp DESC " +
       "LIMIT 10";
 
+  // 회원 등급이 'TIMEOUT'인 회원의 아이디, 닉네임, 정지 시작 일자를 목록 출력
   private static final String SELECTALL_TIMEOUTLIST = "SELECT MEMBER_id, " +
       "MEMBER_nickname, " +
       "(SELECT TIMEOUT_startdate " +
@@ -65,7 +66,7 @@ public class MemberDAO {
       "FROM MEMBER " +
       "WHERE MEMBER_id = ?";
 
-  // 전화번호 중복검사 .안승준
+  // 전화번호 중복검사.안승준
   private static final String SELECTONE_CHECKPH = "SELECT MEMBER_ph " +
       "FROM MEMBER " +
       "WHERE MEMBER_PH = ?";
@@ -194,6 +195,7 @@ public class MemberDAO {
       "WHERE MEMBER_id = ? " +
       "AND MEMBER_pw = ?";
 
+  // 회원 등급 조회
   private static final String SELECTONE_OAUTH2SIGNIN = "SELECT MEMBER_id, " +
       "MEMBER_grade " +
       "FROM MEMBER " +
@@ -220,6 +222,7 @@ public class MemberDAO {
       "SET MEMBER_nickname = ? " +
       "WHERE MEMBER_id = ?";
 
+  // 전화번호 변경
   private static final String UPDATE_CHANGEPH = "UPDATE MEMBER " +
       "SET MEMBER_ph = ? " +
       "WHERE MEMBER_id = ? ";
@@ -229,6 +232,7 @@ public class MemberDAO {
       "SET MEMBER_introduction = ? " +
       "WHERE MEMBER_id = ?";
 
+  // 회원 등급 변
   private static final String UPDATE_CHANGEGRADE = "UPDATE MEMBER " +
       "SET MEMBER_grade = 'PREMIUM' " +
       "WHERE MEMBER_id = ?";
@@ -244,6 +248,7 @@ public class MemberDAO {
       "MEMBER_exp = '0' " +
       "WHERE MEMBER_id = ?";
 
+  // 특정 회원의 등급을 'USER'로 변경
   private static final String UPDATE_UNHOLD = "UPDATE MEMBER " +
       "SET MEMBER_grade = 'USER' " +
       "WHERE MEMBER_id = ?";
@@ -277,15 +282,15 @@ public class MemberDAO {
     List<MemberDTO> result = null;
     System.out.println("MemberDAO(selectAll) In로그 = [" + memberDTO + "]");
     try {
-      if (memberDTO.getSearchCondition().equals("levelRank")) {
+      if (memberDTO.getSearchCondition().equals("levelRank")) { // 메인페이지 - 레벨순위 맴버 출력
         result = (List<MemberDTO>) jdbcTemplate.query(SELECTALL_LEVELRANK, new LevelRankRowMapper());
         System.out.println("MemberDAO(selectAll) Out로그 = [" + result + "]");
         return result;
-      } else if (memberDTO.getSearchCondition().equals("timeOutList")) {
+      } else if (memberDTO.getSearchCondition().equals("timeOutList")) { // 회원 등급이 'TIMEOUT'인 회원의 아이디, 닉네임, 정지 시작 일자를 목록 출력
         result = (List<MemberDTO>) jdbcTemplate.query(SELECTALL_TIMEOUTLIST, new TimeOutListRowMapper());
         System.out.println("MemberDAO(selectAll) Out로그 = [" + result + "]");
         return result;
-      } else if (memberDTO.getSearchCondition().equals("adminLevelRank")) {
+      } else if (memberDTO.getSearchCondition().equals("adminLevelRank")) { // 관리자 페이지 - 레벨별 회원 순서 출력
         result = (List<MemberDTO>) jdbcTemplate.query(SELECTALL_ADMINLEVELRANK, new AdminLevelRankRowMapper());
         System.out.println("MemberDAO(selectAll) Out로그 = [" + result + "]");
         return result;
@@ -302,52 +307,52 @@ public class MemberDAO {
     MemberDTO result = null;
     System.out.println("MemberDAO(selectOne) In로그 = [" + memberDTO + "]");
     try {
-      if (memberDTO.getSearchCondition().equals("checkId")) {
+      if (memberDTO.getSearchCondition().equals("checkId")) { // 아이디 중복검사
         Object[] args = {memberDTO.getMemberId()};
         result = jdbcTemplate.queryForObject(SELECTONE_CHECKID, args, new CheckIdRowMapper());
         System.out.println("MemberDAO(selectOne) Out로그 = [" + result + "]");
         return result;
-      } else if (memberDTO.getSearchCondition().equals("checkPh")) {
+      } else if (memberDTO.getSearchCondition().equals("checkPh")) { // 전화번호 중복검사
         Object[] args = {memberDTO.getMemberPh()};
         result = jdbcTemplate.queryForObject(SELECTONE_CHECKPH, args, new CheckPhRowMapper());
         System.out.println("MemberDAO(selectOne) Out로그 = [" + result + "]");
         return result;
-      } else if (memberDTO.getSearchCondition().equals("checkNickname")) {
+      } else if (memberDTO.getSearchCondition().equals("checkNickname")) { // 닉네임 중복 검사
         Object[] args = {memberDTO.getMemberNickname()};
         result = jdbcTemplate.queryForObject(SELECTONE_CHECKNICKNAME, args, new CheckNicknameRowMapper());
         System.out.println("MemberDAO(selectOne) Out로그 = [" + result + "]");
         return result;
-      } else if (memberDTO.getSearchCondition().equals("signIn")) {
+      } else if (memberDTO.getSearchCondition().equals("signIn")) { // 로그인
         Object[] args = {memberDTO.getMemberId(), memberDTO.getMemberPw()};
         result = jdbcTemplate.queryForObject(SELECTONE_SIGNIN, args, new SignInRowMapper());
         System.out.println("MemberDAO(selectOne) Out로그 = [" + result + "]");
         return result;
-      } else if (memberDTO.getSearchCondition().equals("findId")) {
+      } else if (memberDTO.getSearchCondition().equals("findId")) { // 아이디 찾기
         Object[] args = {memberDTO.getMemberName(), memberDTO.getMemberPh()};
         result = jdbcTemplate.queryForObject(SELECTONE_FINDID, args, new FindIdRowMapper());
         System.out.println("MemberDAO(selectOne) Out로그 = [" + result + "]");
         return result;
-      } else if (memberDTO.getSearchCondition().equals("findPw")) {
+      } else if (memberDTO.getSearchCondition().equals("findPw")) { // 비밀번호 찾기
         Object[] args = {memberDTO.getMemberId(), memberDTO.getMemberPh()};
         result = jdbcTemplate.queryForObject(SELECTONE_FINDPW, args, new FindPwRowMapper());
         System.out.println("MemberDAO(selectOne) Out로그 = [" + result + "]");
         return result;
-      } else if (memberDTO.getSearchCondition().equals("myPageSimple")) {
+      } else if (memberDTO.getSearchCondition().equals("myPageSimple")) { // 메인페이지 - 내 정보 출력
         Object[] args = {memberDTO.getMemberId()};
         result = jdbcTemplate.queryForObject(SELECTONE_MYPAGESIMPLE, args, new MyPageSimpleRowMapper());
         System.out.println("MemberDAO(selectOne) Out로그 = [" + result + "]");
         return result;
-      } else if (memberDTO.getSearchCondition().equals("myPage")) {
+      } else if (memberDTO.getSearchCondition().equals("myPage")) { // 마이페이지(유저페이지) 출력
         Object[] args = {memberDTO.getMemberId()};
         result = jdbcTemplate.queryForObject(SELECTONE_MYPAGE, args, new MyPageRowMapper());
         System.out.println("MemberDAO(selectOne) Out로그 = [" + result + "]");
         return result;
-      } else if (memberDTO.getSearchCondition().equals("checkPw")) {
+      } else if (memberDTO.getSearchCondition().equals("checkPw")) { // 회원 비밀번호 확인
         Object[] args = {memberDTO.getMemberId(), memberDTO.getMemberPw()};
         result = jdbcTemplate.queryForObject(SELECTONE_CHECKPW, args, new CheckPwRowMapper());
         System.out.println("MemberDAO(selectOne) Out로그 = [" + result + "]");
         return result;
-      } else if (memberDTO.getSearchCondition().equals("OAuth2SignIn")) {
+      } else if (memberDTO.getSearchCondition().equals("OAuth2SignIn")) { // 회원 등급 조회
         Object[] args = {memberDTO.getMemberId()};
         result = jdbcTemplate.queryForObject(SELECTONE_OAUTH2SIGNIN, args, new OAuth2SignInRowMapper());
         System.out.println("MemberDAO(selectOne) Out로그 = [" + result + "]");
@@ -363,7 +368,7 @@ public class MemberDAO {
 
   public boolean insert(MemberDTO memberDTO) {
     System.out.println("MemberDAO(insert) In로그 = [" + memberDTO + "]");
-    if (memberDTO.getSearchCondition().equals("signUp")) {
+    if (memberDTO.getSearchCondition().equals("signUp")) { //회원가입
       if (jdbcTemplate.update(INSERT_SINGUP, memberDTO.getMemberId(), memberDTO.getMemberPw(), memberDTO.getMemberName(), memberDTO.getMemberNickname(), memberDTO.getMemberPh(), memberDTO.getMemberBirth(), memberDTO.getMemberGender(), memberDTO.getMemberIntroduction()) <= 0) {
         return false;
       }
@@ -375,41 +380,41 @@ public class MemberDAO {
 
   public boolean update(MemberDTO memberDTO) {
     System.out.println("MemberDAO(update) In로그 = [" + memberDTO + "]");
-    if (memberDTO.getSearchCondition().equals("changePw")) {
+    if (memberDTO.getSearchCondition().equals("changePw")) { // 비밀번호 변경
       if (jdbcTemplate.update(UPDATE_CHANGEPW, memberDTO.getMemberPw(), memberDTO.getMemberId()) <= 0) {
         return false;
       }
       return true;
-    } else if (memberDTO.getSearchCondition().equals("changeNickname")) {
+    } else if (memberDTO.getSearchCondition().equals("changeNickname")) { // 닉네임 변경
       if (jdbcTemplate.update(UPDATE_CHANGENICKNAME, memberDTO.getMemberNickname(), memberDTO.getMemberId()) <= 0) {
         return false;
       }
       return true;
-    } else if (memberDTO.getSearchCondition().equals("changePh")) {
+    } else if (memberDTO.getSearchCondition().equals("changePh")) { // 전화번호 변경
       if (jdbcTemplate.update(UPDATE_CHANGEPH, memberDTO.getMemberPh(), memberDTO.getMemberId()) <= 0) {
         return false;
       }
       return true;
-    } else if (memberDTO.getSearchCondition().equals("changeIntroduction")) {
+    } else if (memberDTO.getSearchCondition().equals("changeIntroduction")) { // 자기 소개 변경
       if (jdbcTemplate.update(UPDATE_CHANGEINTRODUCTION, memberDTO.getMemberIntroduction(), memberDTO.getMemberId()) <= 0) {
         return false;
       }
       return true;
-    } else if (memberDTO.getSearchCondition().equals("changeGrade")) {
+    } else if (memberDTO.getSearchCondition().equals("changeGrade")) { // 회원 등급 변경
       if (jdbcTemplate.update(UPDATE_CHANGEGRADE, memberDTO.getMemberId()) <= 0) {
         return false;
       }
       return true;
-    } else if (memberDTO.getSearchCondition().equals("deleteAccount")) {
+    } else if (memberDTO.getSearchCondition().equals("deleteAccount")) { // 회원 탈퇴
       if (jdbcTemplate.update(UPDATE_DELETEACCOUNT, memberDTO.getMemberId()) <= 0) {
         return false;
       }
       return true;
-    } else if (memberDTO.getSearchCondition().equals("timeOut")) {
+    } else if (memberDTO.getSearchCondition().equals("timeOut")) { // 회원 정지
       if (jdbcTemplate.update(UPDATE_TIMEOUT, memberDTO.getMemberId()) <= 0) {
         return false;
       }
-    } else if (memberDTO.getSearchCondition().equals("unHold")) {
+    } else if (memberDTO.getSearchCondition().equals("unHold")) { // // 특정 회원의 등급을 'USER'로 변경
       if (jdbcTemplate.update(UPDATE_UNHOLD, memberDTO.getMemberId()) <= 0) {
         return false;
       }
@@ -438,6 +443,7 @@ class LevelRankRowMapper implements RowMapper<MemberDTO> {
   }
 }
 
+// 회원 등급이 'TIMEOUT'인 회원의 아이디, 닉네임, 정지 시작 일자를 목록 출력
 class TimeOutListRowMapper implements RowMapper<MemberDTO> {
   @Override
   public MemberDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -449,6 +455,7 @@ class TimeOutListRowMapper implements RowMapper<MemberDTO> {
   }
 }
 
+//  레벨별 회원 순서 출력
 class AdminLevelRankRowMapper implements RowMapper<MemberDTO> {
   @Override
   public MemberDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -581,6 +588,7 @@ class CheckPwRowMapper implements RowMapper<MemberDTO> {
   }
 }
 
+// 회원 등급 조회
 class OAuth2SignInRowMapper implements RowMapper<MemberDTO> {
   @Override
   public MemberDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
