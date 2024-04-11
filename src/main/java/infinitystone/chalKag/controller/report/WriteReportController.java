@@ -42,6 +42,7 @@ public class WriteReportController {
 
 		memberDTO.setSearchCondition("myPage");
 		memberDTO.setMemberId(reportDTO.getReportSuspector());
+		String memberId = memberDTO.getMemberId();
 
 		MemberDTO result = memberService.selectOne(memberDTO);
 
@@ -49,6 +50,6 @@ public class WriteReportController {
 
 		System.out.println("writeReportController Out로그 = [" + reportDTO + "]");
 
-		return "myPage/memberPage";
+		return "redirect:memberPage?searchCondition=myPage&memberId=" + memberId;
 	}
 }
