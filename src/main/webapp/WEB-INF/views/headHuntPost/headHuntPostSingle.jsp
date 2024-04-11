@@ -149,7 +149,18 @@
 							</div>
 							<footer>
 								<div class="col" style="width:54.4%;">
-									<a href="#" class="love" style="margin-top:0%"><i class="ion-android-favorite-outline"></i><div>${headHuntPostList.recommendCnt}</div></a>
+									<c:if test="${member == null}">
+										<a id="recommendBtnMessage" onclick="message()" class="love" style="margin-top:0%">
+								        	<i class="ion-android-favorite-outline"></i><div id="recommendCnt">${headHuntPostSingle.recommendCnt}</div>
+								   	 	</a>
+									</c:if>
+									<c:if test="${member != null}">
+										<c:if test="${}">
+											<a id="recommendBtn" class="love" style="margin-top:0%" data-postid="${headHuntPostSingle.headHuntPostId}" data-memberid="${member}">
+								        	<i class="ion-android-favorite-outline"></i><div id="recommendCnt">${headHuntPostSingle.recommendCnt}</div>
+								   	 		</a>
+										</c:if>
+									</c:if>
 								</div>
 							</footer>
 						</article>
@@ -168,8 +179,14 @@
 							</figure>
 							<div class="details">
 								<!-- 작성자 정보 출력 -->
-								<h3 class="name">${headHuntPostSingle.memberNickname}</h3>
-								<%-- <p>${headHuntPostSingle.memberIntroduction}</p> --%>
+									<!-- 작성자 본인일 경우 myPage 아닐경우 작성자의 memberPage 로 이동 -->
+									<c:if test="${member == null || member != headHuntPostSingle.memberId}">
+										<h3 class="name"><a href="/memberPage?memberId=${headHuntPostSingle.memberId}">${headHuntPostSingle.memberNickname}</a></h3>
+									</c:if> 
+									<c:if test="${member == headHuntPostSingle.memberId}">
+										<h3 class="name"><a href="/myPage?memberId=${headHuntPostSingle.memberId}">${headHuntPostSingle.memberNickname}</a></h3>
+									</c:if>
+								<p>${headHuntPostSingle.memberIntroduction}</p>
 							</div>
 						</div>
 						<div class="line thin"></div>
@@ -197,6 +214,7 @@
 	<script src="css/user/scripts/magnific-popup/dist/jquery.magnific-popup.min.js"></script>
 	<script src="css/user/scripts/sweetalert/dist/sweetalert.min.js"></script>
 	<script src="css/user/scripts/toast/jquery.toast.min.js"></script>
+	<script src="js/user/recommendUpDown.js"></script>
 	<script src="css/user/js/demo.js"></script>
 	<script src="css/user/js/e-magz.js"></script>
 	<script>
