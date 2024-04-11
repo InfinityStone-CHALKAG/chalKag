@@ -13,6 +13,9 @@ import infinitystone.chalKag.biz.headHuntPost.HeadHuntPostDTO;
 import infinitystone.chalKag.biz.headHuntPost.HeadHuntPostService;
 import infinitystone.chalKag.biz.postImg.PostImgDTO;
 import infinitystone.chalKag.biz.postImg.PostImgService;
+import infinitystone.chalKag.biz.recommend.RecommendDTO;
+import infinitystone.chalKag.biz.recommend.RecommendService;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class HeadHuntPostSingleController {
@@ -29,8 +32,11 @@ public class HeadHuntPostSingleController {
 	@Autowired
 	private PostImgService postImgService;
 	
+	@Autowired
+	private RecommendService recommendService;
+	
 	@RequestMapping("/headHuntPostSingle")
-	public String headHuntPostList(Model model, HeadHuntPostDTO headHuntPostDTO, CommentDTO commentDTO, PostImgDTO postImgDTO) {
+	public String headHuntPostList(HttpSession session, Model model, HeadHuntPostDTO headHuntPostDTO, CommentDTO commentDTO, PostImgDTO postImgDTO, RecommendDTO recommendDTO) {
 
 		// headHuntPostDTO에 있는 정보로 게시글 내용 불러오기
 		headHuntPostDTO.setSearchCondition("headHuntPostSingle");
@@ -39,12 +45,22 @@ public class HeadHuntPostSingleController {
 		postImgDTO.setSearchCondition("headHuntPostSingleImg");
 		postImgDTO.setPostId(headHuntPostDTO.getHeadHuntPostId());
 		
+		recommendDTO.setPostId(headHuntPostDTO.getHeadHuntPostId());
+		
+		recommendDTO.setMemberId((String)session.getAttribute("member"));
+	
+		
+		recommendDTO = recommendService.selectOne(recommendDTO);
+		
+		
+		
 		List<PostImgDTO> postImgList = postImgService.selectAll(postImgDTO);
 		List<CommentDTO> commentList = commentService.selectAll(commentDTO);
 		System.out.println("postImgList : " + postImgList);
 		model.addAttribute("headHuntPostSingle",headHuntPostDTO);
 		model.addAttribute("commentList", commentList);
 		model.addAttribute("postImgList", postImgList);
+		model.addAttribute("recommendInfo", recommendDTO);
 
 		return "headHuntPost/headHuntPostSingle";
 	}

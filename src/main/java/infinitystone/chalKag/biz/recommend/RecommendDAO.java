@@ -28,28 +28,24 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 			+ "       	WHEN JOBHUNTPOST.JOBHUNTPOST_id IS NOT NULL THEN 'JOBHUNTPOST' "
 			+ "       	WHEN FREEPOST.FREEPOST_id IS NOT NULL THEN 'FREEPOST' "
 			+ "        	WHEN MARKETPOST.MARKETPOST_id IS NOT NULL THEN 'MARKETPOST' "
-			+ "        	ELSE 'Unknown' " // 어떤 카테고리에도 해당하지 않는 경우 'Unknown'으로 설정
 			+ "		END AS post_category, "  // 게시글의 카테고리를 선택
 			+ "    	COALESCE ( "
 	        + "			HEADHUNTPOST.HEADHUNTPOST_id, "
 	        + "			JOBHUNTPOST.JOBHUNTPOST_id, "
 	        + "			FREEPOST.FREEPOST_id, "
-	        + "			MARKETPOST.MARKETPOST_id, "
-	        + "			'Unknown' "
+	        + "			MARKETPOST.MARKETPOST_id "
 	        + "		) AS post_id, " // 각 게시글의 아이디를 선택
 	        + "    	COALESCE ( "
 	        + "			HEADHUNTPOST.HEADHUNTPOST_title, "
 	        + "			JOBHUNTPOST.JOBHUNTPOST_title, "
 	        + "			FREEPOST.FREEPOST_title, "
-	        + "			MARKETPOST.MARKETPOST_title, "
-	        + "			'Unknown' "
+	        + "			MARKETPOST.MARKETPOST_title "
 	        + "		) AS post_title, " // 각 게시글의 제목을 선택
 	        + "    	COALESCE ( "
 	        + "			HEADHUNTPOST.HEADHUNTPOST_date, "
 	        + "			JOBHUNTPOST.JOBHUNTPOST_date, "
 	        + "			FREEPOST.FREEPOST_date, "
-	        + "			MARKETPOST.MARKETPOST_date, "
-	        + "			'Unknown' "
+	        + "			MARKETPOST.MARKETPOST_date "
 	        + "		) AS post_date, " // 각 게시글의 날짜를 선택
 	        + "		COUNT (RECOMMEND.POST_id) AS post_recommendcnt, " // 각 게시글의 좋아요 수를 합산
 	        + "		COALESCE( " // 대표 이미지 설정 쿼리
@@ -67,8 +63,7 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 	        + "				ORDER BY "
 	        + "					POSTIMG.POSTIMG_id ASC " // 이미지 아이디를 기준으로 오름차순 정렬
 	        + "				LIMIT 1 " // 이미지를 1개만 가져오도록 설정
-	        + "        ), "
-	        + "        'Unknown' " // 대표 이마지가 없을 경우 'Unknown'으로 설정
+	        + "        )"
 	        + "    ) AS POSTIMG_name " // 대표 이미지의 이름
 	          // 게시글의 데이터 중 가져올 정보를 선택하는 쿼리 끝
 	          // 게시글과 좋아요 정보를 JOIN하는 쿼리 시작
@@ -90,31 +85,27 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 			+ "			WHEN JOBHUNTPOST.JOBHUNTPOST_id IS NOT NULL THEN 'JOBHUNTPOST' "
 			+ "			WHEN FREEPOST.FREEPOST_id IS NOT NULL THEN 'FREEPOST' "
 			+ "			WHEN MARKETPOST.MARKETPOST_id IS NOT NULL THEN 'MARKETPOST' "
-			+ "			ELSE 'Unknown' "
 			+ "		END, "
 			+ "    	COALESCE ( "
 	        + "			HEADHUNTPOST.HEADHUNTPOST_id, "
 	        + "			JOBHUNTPOST.JOBHUNTPOST_id, "
 	        + "			FREEPOST.FREEPOST_id, "
-	        + "			MARKETPOST.MARKETPOST_id, "
-	        + "			'Unknown' "
+	        + "			MARKETPOST.MARKETPOST_id "
 	        + "		) ," 
 			+ "		COALESCE ( "
 			+ "			HEADHUNTPOST.HEADHUNTPOST_title, "
 			+ "			JOBHUNTPOST.JOBHUNTPOST_title, "
 			+ "			FREEPOST.FREEPOST_title, "
-			+ "			MARKETPOST.MARKETPOST_title, "
-			+ "			'Unknown' "
+			+ "			MARKETPOST.MARKETPOST_title "
 			+ "		), "
 			+ "		COALESCE ( "
 			+ "			HEADHUNTPOST.HEADHUNTPOST_date, "
 			+ "			JOBHUNTPOST.JOBHUNTPOST_date,"
 			+ "			FREEPOST.FREEPOST_date, "
-			+ "			MARKETPOST.MARKETPOST_date, "
-			+ "			'Unknown' "
+			+ "			MARKETPOST.MARKETPOST_date "
 			+ "		), "
 			+ "ORDER BY "
-			+ "		post_recommendcnt DESC DESC " // 좋아요 수를 기준으로 내림차순 정렬 
+			+ "		post_recommendcnt DESC " // 좋아요 수를 기준으로 내림차순 정렬 
 			+ "LIMIT 8 "; // 글을 8개만 가져오도록 설정
 	
 //----------------------------------------------------------------- 마이 페이지 SELECTALL --------------------------------------
@@ -396,18 +387,6 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 			+ "ORDER BY "
 			+ "		post_date DESC "; // 게시글 작성일을 기준으로 내림차순 정렬 
 	
-	
-	// 글 상세 페이지 - 좋아요 클릭 시 색 변경.전미지
-	private static final String SELECTALL_RECOMMEDONOFF = "SELECT "
-			+ "		POST_id, "
-			+ "		MEMBER_id "
-			+ "FROM "
-			+ "		RECOMMEND "
-			+ "WHERE "
-			+ "		POST_id = ? AND MEMBER_id";
-	// 사용한 테이블 : 좋아요 테이블
-	// 사용한 컬럼 (출력 내용) : 게시글 아이디
-
 // ---------------------------------------------------------------------- SELECTONE ----------------------------------------------------------------------
 	
 	// 좋아요 중복검사 (좋아요를 눌렀는지 안눌렀는지 확인).전미지
@@ -491,13 +470,6 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 				System.out.println("RecommendDAO(selectAll) Out로그 = [" + result + "]");
 				return result;
 			}
-			// 글 상세 페이지 - 좋아요 클릭 시 색 변경
-			else if (recommendDTO.getSearchCondition().equals("recommendOnOff")) {
-				Object[] args = { recommendDTO.getPostId(), recommendDTO.getMemberId() };
-				result = (List<RecommendDTO>) jdbcTemplate.query( SELECTALL_RECOMMEDONOFF, args,new RecommendOnOffRowMapper()); 
-				System.out.println("RecommendDAO(selectAll) Out로그 = [" + result + "]");
-				return result;
-			}
 		} catch (Exception e) { // 예외 발생 시
 			e.printStackTrace(); // 예외 내용 출력
 			return null; // 예외 발생 시 null 반환
@@ -518,7 +490,7 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 			System.out.println("RecommendDAO(selectOne) Out로그 = [" + result + "]");
 			return result;
 		} catch (Exception e) { // 예외 발생 시
-			e.printStackTrace(); // 예외 내용 출력
+			//e.printStackTrace(); // 예외 내용 출력
 			return null; // 예외 발생 시 null 반환
 		}
 	}
@@ -536,12 +508,10 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 		return true; // 좋아요 추가 성공 시 true 반환
 	}
 	
-	
 	// 사용 안 할 예정
 	public boolean update(RecommendDTO recommendDTO) {
 		return false;
 	}
-
 	
 	// 게시글 좋아요 삭제
 	public boolean delete(RecommendDTO recommendDTO) {
@@ -577,7 +547,7 @@ class RecommendBestRecommendRowMapper implements RowMapper<RecommendDTO> {
 	}
 }
 
-/// 회원 페이지 - 특정 회원이 좋아요한 구인글 목록 출력 시 필요한 데이터를 저장할 RowMapper 클래스 - 수정버전2
+/// 회원 페이지 - 특정 회원이 좋아요한 구인글 목록 출력 시 필요한 데이터를 저장할 RowMapper 클래스
 class HeadHuntPostRecommendRowMapper implements RowMapper<RecommendDTO> {
 	@Override // mapRow 메서드 오버라이드
 	public RecommendDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -585,14 +555,14 @@ class HeadHuntPostRecommendRowMapper implements RowMapper<RecommendDTO> {
 
 		RecommendDTO recommendDTO = new RecommendDTO(); // 새로운 RecommendDTO 객체 생성
 		// ResultSet에 저장된 데이터를 RecommendDTO 객체에 저장
-		recommendDTO.setPostCategory(rs.getString("post_category")); 		// 게시글 카테고리
-		recommendDTO.setPostId(rs.getString("HEADHUNTPOST_id")); 			// 게시글 아이디
-		recommendDTO.setPostTitle(rs.getString("HEADHUNTPOST_title")); 		// 게시글 제목
-		recommendDTO.setPostContent(rs.getString("HEADHUNTPOST_content")); 	// 게시글 내용
-		recommendDTO.setPostDate(rs.getString("HEADHUNTPOST_date")); 		// 게시글 작성일
-		recommendDTO.setPostViewcnt(rs.getString("HEADHUNTPOST_viewcnt")); 	// 게시글 조회수
-		recommendDTO.setPostRecommendCnt(rs.getString("RECOMMEND_cnt")); 	// 게시글의 좋아요 수
-		recommendDTO.setPostImgName(rs.getString("POSTIMG_name")); 			// 게시글 대표 이미지
+		recommendDTO.setPostCategory(rs.getString("post_category")); 				// 게시글 카테고리
+		recommendDTO.setHeadHuntPostId(rs.getString("HEADHUNTPOST_id")); 			// 구인글 아이디
+		recommendDTO.setHeadHuntPostTitle(rs.getString("HEADHUNTPOST_title")); 		// 구인글 제목
+		recommendDTO.setHeadHuntPostContent(rs.getString("HEADHUNTPOST_content")); 	// 구인글 내용
+		recommendDTO.setHeadHuntPostDate(rs.getString("HEADHUNTPOST_date")); 		// 구인글 작성일
+		recommendDTO.setHeadHuntPostViewcnt(rs.getString("HEADHUNTPOST_viewcnt")); 	// 구인글 조회수
+		recommendDTO.setRecommendCnt(rs.getInt("RECOMMEND_cnt")); 					// 좋아요 수
+		recommendDTO.setPostImgName(rs.getString("POSTIMG_name")); 					// 게시글 대표 이미지
 		return recommendDTO; // recommendDTO에 저장된 데이터들을 반환
 	}
 }
@@ -607,11 +577,11 @@ class JobHuntPostRecommendRowMapper implements RowMapper<RecommendDTO> {
 		RecommendDTO recommendDTO = new RecommendDTO(); // 새로운 RecommendDTO 객체 생성
 		// ResultSet에 저장된 데이터를 RecommendDTO 객체에 저장
 		recommendDTO.setPostCategory(rs.getString("post_category")); 		// 게시글 카테고리
-		recommendDTO.setPostId(rs.getString("JOBHUNTPOST_id")); 			// 게시글 아이디
-		recommendDTO.setPostTitle(rs.getString("JOBHUNTPOST_title")); 		// 게시글 제목
-		recommendDTO.setPostContent(rs.getString("JOBHUNTPOST_content")); 	// 게시글 내용
-		recommendDTO.setPostDate(rs.getString("JOBHUNTPOST_date")); 		// 게시글 작성일
-		recommendDTO.setPostViewcnt(rs.getString("JOBHUNTPOST_viewcnt"));	// 게시글 조회수
+		recommendDTO.setJobHuntPostId(rs.getString("JOBHUNTPOST_id")); 			// 게시글 아이디
+		recommendDTO.setJobHuntPostTitle(rs.getString("JOBHUNTPOST_title")); 		// 게시글 제목
+		recommendDTO.setJobHuntPostContent(rs.getString("JOBHUNTPOST_content")); 	// 게시글 내용
+		recommendDTO.setJobHuntPostDate(rs.getString("JOBHUNTPOST_date")); 		// 게시글 작성일
+		recommendDTO.setJobHuntPostViewcnt(rs.getString("JOBHUNTPOST_viewcnt"));	// 게시글 조회수
 		recommendDTO.setPostRecommendCnt(rs.getString("RECOMMEND_cnt")); 	// 게시글의 좋아요 수
 		recommendDTO.setPostImgName(rs.getString("POSTIMG_name")); 			// 게시글 대표 이미지
 		return recommendDTO; // recommendDTO에 저장된 데이터들을 반환
