@@ -12,13 +12,14 @@ public class UnholdController {
   @Autowired
   private MemberService memberService;
 
+// 계정 정지 해제
   @RequestMapping(value = "/unHold")
   public String unHold(MemberDTO memberDTO) {
-
+// 검색 상태 설정
     memberDTO.setSearchCondition("unHold");
-
+// 회원 정보 수정으로 연결
     memberService.update(memberDTO);
-
+// View 에 값 전달
     return "redirect:adminTimeOutList";
   }
 

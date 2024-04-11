@@ -13,7 +13,7 @@
 input[type='range']::-webkit-slider-thumb {
 	background-color: #F73F52;
 }
-
+/* 범위 설정 css */
 input[type="range"] {
 	accent-color: #F73F52;
 }

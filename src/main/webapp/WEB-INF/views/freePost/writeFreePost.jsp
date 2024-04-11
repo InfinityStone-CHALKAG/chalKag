@@ -6,25 +6,20 @@
 <head>
     <chalKagTags:webCss/>
 <style>
+			/* 글 작성 폼 css */
 			#writerForm {
 				width: 70%;
 			}
-
+			/*  글 제목 css */
 			#freePostTitle {
 				margin-bottom: 1%;
 			}
-
+		/* CKEditor 설정 */
     .ck-editor .ck-rounded-corners {
 			width: 100%;
       height: 500px; /* 원하는 높이 설정 */
 			margin-bottom: 3%;
     }
-    
-        	.main pre {
-    white-space: pre-wrap; /* CSS3의 white-space 속성을 사용해 텍스트가 영역을 벗어나지 않도록 함 */
-    word-wrap: break-word; /* 긴 단어도 줄바꿈될 수 있도록 함 */
-    overflow-x: hidden; /* 가로 스크롤바를 숨김 */
-}
 
 		</style>
 </head>
@@ -40,10 +35,14 @@
 						<div class="box-body">
 							<form action="/writeFreePost" method="post" onsubmit="return validateForm()">
 								<div class="form-group" style="display: flex; justify-content: center;">
+									<!-- 글 제목 -->
 									<input type="text" id="freePostTitle" name="freePostTitle" class="form-control rounded" placeholder="Title" />
 								</div>
+								<!-- 이미지 업로드 시 안내 문구 -->
 										<p>※ The size. There is a maximum file size of '1GB' for all images.</p>
+										<!-- 에디터 설정 textara -->
 									<textarea id="freePostContent" name="freePostContent" class="form-control rounded" ></textarea>
+									<!-- 글 작성 완료 버튼 -->
 								<button class="btn btn-primary btn-block">Composite</button>
 							</form>	
 						</div>

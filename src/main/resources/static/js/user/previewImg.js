@@ -1,4 +1,4 @@
-let filesArray = [];
+let filesArray = [];    // 이미지 업로드 빈 배열 설정
 
 document.getElementById('customButton').addEventListener('click', function() {
     document.getElementById('fileInput').click();
