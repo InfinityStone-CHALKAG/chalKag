@@ -197,7 +197,7 @@
                     <header id="header" class="header">
                         <div class="top-left">
                             <div class="navbar-header">
-                                <a class="navbar-brand" href="adminMain"><img src="css/admin/images/logo.png"
+                                <a class="navbar-brand" href="adminMain"><img src="css/user/images/chalKagLogo.png"
                                         alt="Logo"></a>
                                 <a class="navbar-brand hidden" href="adminMain"><img src="css/admin/images/logo2.png"
                                         alt="Logo"></a>
@@ -700,19 +700,11 @@
                         <div class="footer-inner bg-white">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    Copyright &copy; 2018 Ela Admin
-                                </div>
-                                <div class="col-sm-6 text-right">
-                                    Designed by <a href="https://colorlib.com">Colorlib</a>
+                                    Copyright &copy; 2023 - 2024 INFINITY STONE . ALL RIGHT RESERVED.
                                 </div>
                             </div>
                         </div>
-                        <h4>${signInCountByDayOfWeek}</h4>
-                        <br>
-                        <h4>${adminLevelRank}</h4>
-                        <br>
-                        <h4>${signInCountByYearMonthDate}</h4>
-                        <h4>${signUpCountByYear}</h4>
+                     
 
                     </footer>
                     <!-- /.site-footer -->
