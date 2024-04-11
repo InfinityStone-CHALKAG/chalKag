@@ -44,12 +44,13 @@ public class AdminReportStateController {
 
   //이미 정지된 회원인지 체크
   @RequestMapping(value = "/reportStateCheck", method = RequestMethod.POST)
-  public @ResponseBody int reportStateCheck(TimeOutDTO timeOutDTO) {
+  public @ResponseBody int reportStateCheck(MemberDTO memberDTO) {
 
     System.out.println("AdminReportListController In로그");
 // 정지된 회원인지 selectOne 으로 탐색 후 아닐경우 0 정지된 회원일 경우 1로 반환
-    TimeOutDTO result = timeOutService.selectOne(timeOutDTO);
-    if (result != null) {
+    memberDTO.setSearchCondition("myPage");
+    MemberDTO result = memberService.selectOne(memberDTO);
+    if (result.getMemberGrade().equals("TIMEOUT")) {
       System.out.println("AdminReportListController Out로그");
       return 0;
     }
