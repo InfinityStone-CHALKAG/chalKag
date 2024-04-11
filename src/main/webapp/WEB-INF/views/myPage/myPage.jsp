@@ -355,7 +355,7 @@
                                         </div>
 
                                         <c:if test="${reviewList[0].reviewTotalCnt > 10}">
-                                            <button class="btn btn-magz btn-sm" id="moreReview">더보기</button>
+                                            <button class="btn btn-magz btn-sm" id="moreReview">More</button>
                                         </c:if>
 
 
