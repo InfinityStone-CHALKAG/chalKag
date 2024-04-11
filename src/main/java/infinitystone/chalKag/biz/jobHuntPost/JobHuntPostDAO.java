@@ -422,7 +422,7 @@ public class JobHuntPostDAO { // 구인 게시판 DAO
 		  // 메인 페이지 - 주간 추천순 게시글 목록 출력
 		  else if (jobHuntPostDTO.getSearchCondition().equals("jobHuntPostWeeklyBestList")) {
 			  result = jdbcTemplate.query(SELECTALL_JOBHUNTPOSTWEEKLYBEST, new JobHuntPostWeeklyBestRowMapper());
-			  System.out.println("JobHuntPostDAO(selectAll) Out로그 = [" + result + "]");
+			  System.out.println("JobHuntPostDAOWeekly(selectAll) Out로그 = [" + result + "]");
 			  return result;
 		  }
 		  // 구직글 페이지 - 프리미엄 회원이 작성한지 한 달 이내의 글 목록 출력
@@ -468,7 +468,7 @@ public class JobHuntPostDAO { // 구인 게시판 DAO
 		  else if (jobHuntPostDTO.getSearchCondition().equals("jobHuntPostRecentPostSingle")) {
 			  // SELECTONE_JOBHUNTPOST 쿼리를 실행해 데이터베이스에 구직글 데이터를 불러옴
 			  result = jdbcTemplate.queryForObject(SELECTONE_JOBHUNTPOSTRECENT, new SelectOneJobHuntPostRecentRowMapper());
-			  System.out.println("JobHuntPostDAO(selectOne) Out로그 = [" + result + "]");
+			  System.out.println("JobHuntPostDAORECENT(selectOne) Out로그 = [" + result + "]");
 			  return result;
 		  }
 		  // 게시글 상세 보기 
@@ -494,10 +494,10 @@ public class JobHuntPostDAO { // 구인 게시판 DAO
 		System.out.println("JobHuntPostDAO(insert) In로그 = [" + jobHuntPostDTO + "]");
 		// INSERT_JOBHUNTPOST 쿼리를 실행해 데이터베이스에 구직글 데이터를 저장
 		result = jdbcTemplate.update(INSERT_JOBHUNTPOST, jobHuntPostDTO.getMemberId(),
+				jobHuntPostDTO.getJobHuntPostTitle(), jobHuntPostDTO.getJobHuntPostContent(),
 				jobHuntPostDTO.getJobHuntPostRole(), jobHuntPostDTO.getJobHuntPostRegion(),
 				jobHuntPostDTO.getJobHuntPostPay(), jobHuntPostDTO.getJobHuntPostWorkDate(),
-				jobHuntPostDTO.getJobHuntPostConcept(), jobHuntPostDTO.getJobHuntPostTitle(),
-				jobHuntPostDTO.getJobHuntPostContent());
+				jobHuntPostDTO.getJobHuntPostConcept());
 		if (result <= 0) {
 			System.out.println("JobHuntPostDAO(insert) Out로그 = [" + result + "]");
 			return false; // 글 작성 실패 시 false 반환
