@@ -198,7 +198,7 @@
                             <article class="article col-md-12">
                                 <div class="inner">
                                     <figure>
-                                        <a href="jobHuntPostSingle?jobHuntPostId=${latestJobHuntPostId.jobHuntPostId}">
+                                        <a href="jobHuntPostSingle?jobHuntPostId=${latestJobHuntPost.jobHuntPostId}">
                                             <img class="latestPostImg" src="postImg/${latestJobHuntPost.postImgName}">
                                         </a>
                                     </figure>
@@ -209,7 +209,7 @@
                                             <div class="time">${latestJobHuntPost.memberNickname}</div>
                                         </div>
                                         <h2>
-                                            <a href="jobHuntPostSingle?jobHuntPostId=${latestJobHuntPostId.jobHuntPostId}">${latestJobHuntPost.jobHuntPostTitle}</a>
+                                            <a href="jobHuntPostSingle?jobHuntPostId=${latestJobHuntPost.jobHuntPostId}">${latestJobHuntPost.jobHuntPostTitle}</a>
                                         </h2>
                                         <p class="latestPostContent">${latestJobHuntPost.jobHuntPostContent}
                                         </p>
@@ -219,7 +219,7 @@
                                                 <div>${latestJobHuntPost.recommendCnt}</div>
                                             </a>
                                             <a class="btn btn-primary more"
-                                               href="jobHuntPostSingle?jobHuntPostId=${latestJobHuntPostId.jobHuntPostId}">
+                                               href="jobHuntPostSingle?jobHuntPostId=${latestJobHuntPost.jobHuntPostId}">
                                                 <div>More</div>
                                                 <div><i class="ion-ios-arrow-thin-right"></i></div>
                                             </a>
@@ -231,8 +231,7 @@
                                 <div class="inner">
                                     <figure>
                                         <a href="freePostSingle?freePostId=${latestFreePost.freePostId}">
-                                            <img class="latestPostImg" src="postImg/${latestFreePost.postImgName}"
-                                                 alt="Sample Article">
+                                            <img class="latestPostImg" src="${latestFreePost.postImgName ? 'postImg/' + latestFreePost.postImgName : 'postImg/postDefault.jpg'}" alt="Sample Article">
                                         </a>
                                     </figure>
                                     <div class="padding">
@@ -249,7 +248,7 @@
                                         <footer>
                                             <a href="#" class="love"><i
                                                     class="ion-android-favorite-outline"></i>
-                                                <div>${latestFreePost.recommentCnt}</div>
+                                                <div>${latestFreePost.recommendCnt}</div>
                                             </a>
                                             <a class="btn btn-primary more"
                                                href="freePostSingle?freePostId=${latestFreePost.freePostId}">
@@ -557,6 +556,82 @@
                                     </article>
                                 </div>
                             </c:forEach>
+                            <c:forEach items="${jobHuntPostPremiumList}" var="jobHuntPostPremiumList">
+                                <div class="aside-body">
+                                    <article class="article-mini">
+                                        <div class="inner">
+                                            <div class="detail">
+                                                <div class="category"><a href="jobHuntPostList">JOBHUNTPOST</a>
+                                                </div>
+                                                <div class="time">${jobHuntPostPremiumList.memberNickname}</div>
+                                            </div>
+                                            <figure>
+                                                <a href="jobHuntPostSingle?jobHuntPostId=${jobHuntPostPremiumList.jobHuntPostId}">
+                                                    <img class="latestPostImg"
+                                                         src="postImg/${jobHuntPostPremiumList.postImgName}"
+                                                         alt="Sample Article">
+                                                </a>
+                                            </figure>
+                                            <div class="padding">
+                                                <h1>
+                                                    <a href="jobHuntPostSingle?jobHuntPostId=${jobHuntPostPremiumList.jobHuntPostId}">${jobHuntPostPremiumList.jobHuntPostTitle}</a>
+                                                </h1>
+                                            </div>
+                                        </div>
+                                    </article>
+                                </div>
+                            </c:forEach>
+                            
+                            <c:forEach items="${marketPostPremiumList}" var="marketPostPremiumList">
+                                <div class="aside-body">
+                                    <article class="article-mini">
+                                        <div class="inner">
+                                            <div class="detail">
+                                                <div class="category"><a href="marketPostList">MARKETPOST</a>
+                                                </div>
+                                                <div class="time">${marketPostPremiumList.memberNickname}</div>
+                                            </div>
+                                            <figure>
+                                                <a href="marketPostSingle?marketPostId=${marketPostPremiumList.marketPostId}">
+                                                    <img class="latestPostImg"
+                                                         src="postImg/${marketPostPremiumList.postImgName}"
+                                                         alt="Sample Article">
+                                                </a>
+                                            </figure>
+                                            <div class="padding">
+                                                <h1>
+                                                    <a href="marketPostSingle?marketPostId=${marketPostPremiumList.marketPostId}">${marketPostPremiumList.marketPostTitle}</a>
+                                                </h1>
+                                            </div>
+                                        </div>
+                                    </article>
+                                </div>
+                            </c:forEach>
+                            
+                            <c:forEach items="${freePostPremiumList}" var="freePostPremiumList">
+                                <div class="aside-body">
+                                    <article class="article-mini">
+                                        <div class="inner">
+                                            <div class="detail">
+                                                <div class="category"><a href="marketPostList">FREEPOST</a>
+                                                </div>
+                                                <div class="time">${freePostPremiumList.memberNickname}</div>
+                                            </div>
+                                            <figure>
+                                                <a href="freePostSingle?freePostId=${freePostPremiumList.freePostId}">
+                                                    <img class="latestPostImg" src="${latestFreePost.postImgName ? 'postImg/' + latestFreePost.postImgName : 'postImg/postDefault.jpg'}"
+                                                         alt="Sample Article">
+                                                </a>
+                                            </figure>
+                                            <div class="padding">
+                                                <h1>
+                                                    <a href="freePostSingle?freePostId=${freePostPremiumList.freePostId}">${freePostPremiumList.freePostTitle}</a>
+                                                </h1>
+                                            </div>
+                                        </div>
+                                    </article>
+                                </div>
+                            </c:forEach>
                         </div>
                     </div>
                 </aside>
@@ -592,6 +667,7 @@
         </div>
     </div>
 </section>
+
 
 <section class="best-of-the-week">
     <div class="container">
@@ -637,7 +713,5 @@
 </section>
 
 <chalKagTags:webFooter/>
-
 </body>
-
 </html>
