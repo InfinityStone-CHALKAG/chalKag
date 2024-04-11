@@ -1,6 +1,7 @@
 package infinitystone.chalKag.controller.marketPost;
 
 import infinitystone.chalKag.biz.marketPost.MarketPostDTO;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import infinitystone.chalKag.biz.marketPost.MarketPostService;
 import infinitystone.chalKag.biz.postImg.PostImgDTO;
 import infinitystone.chalKag.biz.postImg.PostImgService;
@@ -78,7 +79,8 @@ public class WriteMarketPostController {
 		}
 
 		System.out.println("WriteMarketPostController Out Log");
-
-		return "redirect:marketPostList";
+		String status = marketPostDTO.getMarketPostStatus();
+		System.out.println("장터글 작성 로그 : "+status);
+		return "redirect:marketPostList?marketPostStatus=" + status; 
 	}
 }

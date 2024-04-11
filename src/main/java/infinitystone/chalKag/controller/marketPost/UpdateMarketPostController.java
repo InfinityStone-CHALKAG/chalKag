@@ -84,6 +84,8 @@ public class UpdateMarketPostController {
 		}
 
 		System.out.println("UpdateMarketPostController Out Log");
+		String status = marketPostDTO.getMarketPostStatus();
+		System.out.println("장터글 작성 로그 : "+status);
 
 
 		try {
@@ -91,10 +93,10 @@ public class UpdateMarketPostController {
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return "redirect:marketPostList";
+			return "redirect:marketPostList?marketPostStatus=" + status; 
 		}
 
-		return "redirect:marketPostList";
+		return "redirect:marketPostList?marketPostStatus=" + status; 
 
 
 	}
