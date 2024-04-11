@@ -14,11 +14,14 @@ public class AdminTimeOutListController {
   @Autowired
   private MemberService memberService;
 
+// 정지 당한 회원 목록 출력
   @RequestMapping(value = "/adminTimeOutList", method = RequestMethod.GET)
   public String timeOutPage(MemberDTO memberDTO, Model model) {
+// 검색 상태 설정
     memberDTO.setSearchCondition("timeOutList");
-
+// 설정한 검색 상태로 selectAll에 연결
     model.addAttribute("timeOutList", memberService.selectAll(memberDTO));
+// 목록 값을 View로 전달
     return "admin/adminTimeOutList";
   }
 

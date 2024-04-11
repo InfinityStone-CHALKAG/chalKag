@@ -8,10 +8,11 @@
 <!-- 페이지 이동 및 필터검색 CSS 파일 링크 달기 & Jsp로 작성할때 링크 프로젝트내 링크와 맞추기 -->
 <chalKagTags:webCss />
 <style>
+/* 라디오 버튼의 문구 css */
 [type="radio"], span {
 	vertical-align: middle;
 }
-
+/* 날짜(오늘, 일주일전, 한달전)라디오 버튼 css */
 [type="radio"] {
 	appearance: none;
 	border: max(2px, 0.1em) solid gray;
@@ -20,29 +21,29 @@
 	height: 1.25em;
 	transition: border 0.5s ease-in-out;
 }
-
+/* 라디오 버튼 클릭 css */
 [type="radio"]:checked {
 	border: 0.4em solid #F73F52;
 }
-
+/* 라디오 버튼 요소에 대한 스타일 지정 css */
 [type="radio"]:focus-visible {
 	outline-offset: max(2px, 0.1em);
 	outline: max(2px, 0.1em) dotted #F73F52;
 }
-
+/* 라디오 버튼 마우스 hover css */
 [type="radio"]:hover {
 	box-shadow: 0 0 0 max(4px, 0.2em) lightgray;
 	cursor: pointer;
 }
-
+/* 체크 박스 색 css */
 [type="checkbox"] {
 	accent-color: red;
 }
-
+/* 범위 설정 버튼 css */
 [type="range"] {
 	accent-color: red;
 }
-
+/* 필터검색 p 태그 css */
 div .inner p {
 	margin-left: 5%;
 }

@@ -1,10 +1,10 @@
 
 var isFiltered = false; // 필터링된 게시글 데이터를 저장할 변수
-var minPrice;		
-var maxPrice;
-var productCategory;
-var productCompany;
-var productStatus;
+var minPrice;		// 최소 가격
+var maxPrice;		// 최대 가격
+var productCategory;	// 상품의 종류
+var productCompany;		// 상품의 제조사
+var productStatus;		// 상품의 상태(판매, 판매완료, 무료나눔)
 
 
 $(document).ready(function() {
@@ -13,12 +13,15 @@ $(document).ready(function() {
     updateVariables();
     performAjaxRequest();
   });
-  
+  	// 최소 가격 설정 시 이벤트
 	document.getElementById('minPrice').addEventListener('input', handleFilterChange);
+	// 최대 가격 설정 시 이벤트
 	document.getElementById('maxPrice').addEventListener('input', handleFilterChange);
+	// 상품 종류 설정 시 이벤트 
 	document.getElementById('productCategory').addEventListener('change', handleFilterChange);
+	// 상품 제조사 설정 시 이벤트
 	document.getElementById('productCompany').addEventListener('change', handleFilterChange);
-	
+	// 필터 초기화 이벤트
 	document.getElementById('filterReset').addEventListener('click', function() {
 	    if(this.checked) {
 	        // 체크박스가 선택되었을 때 실행되는 로직
@@ -57,7 +60,7 @@ $(document).ready(function() {
 	          maxDate = formatDate(today);
 	          break;
 	      default:
-	          // "Anytime"이 선택된 경우, minDate와 maxDate를 초기화합니다.
+	          // "Anytime"이 선택된 경우, minDate와 maxDate를 초기화
 	          minDate = '';
 	          maxDate = '';
 	  }
@@ -123,9 +126,9 @@ function performAjaxRequest() {
     const requestData = {
     fromday: minDate,
     today: maxDate,
-    searchField: searchField,
-    searchInput: searchInput,
-    sortOrder: sortOrder,
+    searchField: searchField,	// search Condition(제목, 내용, 제목 + 내용)
+    searchInput: searchInput,	// search Condition (입력값)
+    sortOrder: sortOrder,	// 오름차순 정렬, 내림차순 정렬
     minPrice : minPrice,
     maxPrice : maxPrice,
     marketPostCategory : productCategory, 

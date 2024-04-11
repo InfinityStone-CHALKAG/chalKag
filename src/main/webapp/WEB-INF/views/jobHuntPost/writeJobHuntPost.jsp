@@ -8,11 +8,12 @@
 <chalKagTags:webCss />
 
 <style>
+	/* 작업일 css */
 #jobHuntPostWorkDate {
 	border-radius: 5px;
 	border: solid 1px rgb(179, 179, 179);
 }
-
+/* 글내용 css */
 #jobHuntPostContent {
 	height: 300px;
 }
@@ -40,16 +41,17 @@
 									id="jobHuntPostTitle" name="jobHuntPostTitle"
 									placeholder="Title" />
 							</div>
-							
+							<!-- 입력칸들 작성 안내 -->
 							<p>※ Please write down the Job, Concept, and Region you are looking for</p>
 							<div class="form-group" style="display: flex; margin-bottom: 4%;">
+								<!-- 직업 선택 -->
 								<select class="selectTags" id="jobHuntPostRole" name="jobHuntPostRole"
 								style="width: 32%; height: 43px; margin-right: 2%;">
 									<option value="" disabled selected>Role</option>
 									<option value="Model">Model</option>
 									<option value="Photographer">Photographer</option>
 								</select>
-
+								<!-- 작업 컨셉 선택 -->
 								<select class="selectTags" id="jobHuntPostConcept" 
 								style="width: 32%; height: 43px; margin-right: 2%;"
 								name="jobHuntPostConcept" >
@@ -60,7 +62,7 @@
 									<option value="outdoor">Outdoor</option>
 									<option value="etc">Etc</option>
 								</select> 
-								
+								<!-- 지역 선택 -->
 								<select class="selectTags" id="jobHuntPostRegion" style="width: 32%; 
 								height: 43px;" name="jobHuntPostRegion">
 									<option value="" disabled selected>Region</option>
@@ -73,41 +75,48 @@
 									<option value="JEJU">JEJU</option>
 								</select>
 							</div>
-							
+							<!-- 가격과 작업일 입력 안내 문구 -->
 							<p>※ Please write down the desired date and Pay </p>
 							<div class="form-group" style="display: flex; margin-bottom: 4%;">
+								<!-- 작업일 입력 -->
 								<input class="selectTags" type="date" 
 								id="jobHuntPostWorkDate" name="jobHuntPostWorkDate" 
 								style="width:49%; height:43px; padding-left: 8px; margin-right: 2%" >
-							
+								<!-- 가격 입력 -->
 								<input type="text" id="jobHuntPostPay" name="jobHuntPostPay" class="form-control rounded"
 									style="width: 49%; height:43px; padding-left: 8px;"
 									oninput="trimInput(this); validatePay(this);" placeholder="Pay" />
 							</div>
-							
+							<!-- 이미지 업로드 안내 문구 -->
 							<p>※ The size. There is a maximum file size of '1GB' for all images.</p>
 							<div class="form-group" style="margin-bottom: 4%;">
+								<!-- 이미지 업로드 버튼 -->
 								<input type="file" name="file" id="fileInput" accept="image/*"
 									style="display: none;" multiple> <input type="button"
 									id="customButton" value="Upload">
 							</div>
+							<!-- 이미지 미리보기 -->
 							<div id="preview" style="display: flex; justify-content: center;">
+								<!-- 이미지 슬라이드 버튼 -->
 								<button class="imgSlidebtn" id="slideLeft">◀</button>
+								<!-- 이미지 미리보기 출력 -->
 								<div style="overflow: hidden; flex-grow: 1;">
 									<div class="image-container"></div>
 								</div>
+								<!-- 이미지 슬라이드 버튼 -->
 								<button class="imgSlidebtn" id="slideRight">▶</button>
 							</div>
-						
+							<!-- 이미지 큰 화면으로 보는 태그 -->
 							<div class="big-image-container">
 							    <img id="big-image" src="" alt="큰 이미지 미리보기" />
 							</div>
-
+							<!-- 내용 작성 -->
 							<div class="form-group"
 								style="display: flex; justify-content: center; margin-bottom: 4%;">
 								<textarea class="form-control rounded" id="jobHuntPostContent"
 									name="jobHuntPostContent"></textarea>
 							</div>
+							<!-- 글 작성 완료 버튼 -->
 							<button class="btn btn-primary btn-rounded btn-block">Composite</button>
 						</form>
 					</div>

@@ -6,13 +6,13 @@
 <head>
 <chalKagTags:webCss />
 <style>
-
+/* 작업일 작성 css */
 #headHuntPostWorkDate {
 	border-radius: 5px;
 	border: solid 1px rgb(179, 179, 179);
 }
 
-
+/* 내용 입력칸 css */
 #headHuntPostContent {
 	height: 300px;
 }
@@ -34,17 +34,18 @@
 						<form action="/updateHeadHuntPost" method="post"
 							onsubmit="return validateForm(event)"
 							enctype="multipart/form-data">
-
+							<!-- 글 번호 -->
 							<input type="hidden" name="headHuntPostId" value="${updateHeadHuntPost.headHuntPostId}" />
 
 							<div class="form-group"
 								style="display: flex; justify-content: center; margin-bottom: 4%;">
+								<!-- 글 제목 -->
 								<input type="text" class="form-control rounded"
 									id="headHuntPostTitle" name="headHuntPostTitle"
 								placeholder="Title" value="${updateHeadHuntPost.headHuntPostTitle}" />
 
 							</div>
-
+							<!-- 가격 입력 -->
 							<div class="form-group" style="display: flex; margin-bottom: 4%;">
 								<select class="selectTags" id="headHuntPostRole" name="headHuntPostRole" 
 								style="width: 32%; height: 43px; margin-right: 2%;">
@@ -52,7 +53,7 @@
 									<option value="Model" ${'Model' == updateHeadHuntPost.headHuntPostRole ? 'selected' : ''}>Model</option>
 									<option value="Photographer "${'Photographer' == updateHeadHuntPost.headHuntPostRole ? 'selected' : ''}>Photographer</option>
 								</select>	
-							
+								<!-- 작업 컨셉 선택 -->
 								<select class="selectTags" id="headHuntPostConcept" 
 								style="width: 32%; height: 43px; margin-right: 2%;"
 								name="headHuntPostConcept">
@@ -63,7 +64,7 @@
  									<option value="updateHeadHuntPost"${'outdoor' == updateHeadHuntPost.headHuntPostConcept ? 'selected' : ''}>Outdoor</option>
   									<option value="etc" ${'etc' == updateHeadHuntPost.headHuntPostConcept ? 'selected' : ''}>Etc</option>
 								</select> 
-								
+								<!-- 지역 선택 -->
 								<select class="selectTags" id="headHuntPostRegion" style="width: 32%;
 									height: 43px;" name="headHuntPostRegion"> 
 									<option value="" disabled>Region</option>
@@ -76,16 +77,18 @@
 									<option value="JEJU" ${'JEJU' == updateHeadHuntPost.headHuntPostRegion ? 'selected' : ''}>JEJU</option>
 								</select>
 							</div>	
-							
+							<!-- 가격과 작업일 입력 안내 문구 -->
+							<p>※ Please write down the desired date and Pay </p>
 							<div class="form-group" style="display: flex; margin-bottom: 4%;">
+								 <!-- 작업일 입력 -->
 								 <input class="selectTags" type="date" id="headHuntPostWorkDate" name="headHuntPostWorkDate" 
 								 style=" width : 49%; height:43px; padding-left: 8px; margin-right: 2%" value="${updateHeadHuntPost.headHuntPostWorkDate}">
-							
+								<!-- 가격 입력 -->
 								<input type="text" id="headHuntPostPay" name="headHuntPostPay" class="form-control rounded" 
 								style=" width : 49%; height:43px; padding-left: 8px;" value="${updateHeadHuntPost.headHuntPostPay}"
 								oninput="trimInput(this); validatePay(this);" placeholder="Pay" />
 							</div>	
-
+							<!-- 이미지 업로드 안내 문구 -->
 							<p>※ The size. There is a maximum file size of '1GB' for all images.</p>
 							<div id="imageData"></div>
 							<div class="form-group" style="margin-bottom: 4%;">
@@ -93,24 +96,28 @@
 									style="display: none;" multiple> <input type="button"
 									id="customButton" value="Upload">
 							</div>
-							
+							<!-- 이미지 미리보기 -->
 							<div id="preview" style="display: flex; justify-content: center;">
+								<!-- 이미지 슬라이드 버튼 -->
 								<button class="imgSlidebtn" id="slideLeft">◀</button>
+								<!-- 이미지 미리보기 출력 -->
 								<div style="overflow: hidden; flex-grow: 1;">
 									<div class="image-container"></div>
 								</div>
+								<!-- 이미지 슬라이드 버튼 -->
 								<button class="imgSlidebtn" id="slideRight">▶</button>
 							</div>
-						
+							<!-- 이미지 큰 화면으로 보는 태그 -->
 							<div class="big-image-container">
 							    <img id="big-image" src="" alt="큰 이미지 미리보기" />
 							</div>
-
+							<!-- 내용 작성 -->
 							<div class="form-group"
 								style="display: flex; justify-content: center;  margin-bottom: 4%;">
 								<textarea class="form-control rounded" id="headHuntPostContent"
 									name="headHuntPostContent">${updateHeadHuntPost.headHuntPostContent}</textarea>
 							</div>
+							<!-- 글 수정 완료 버튼 -->
 							<button class="btn btn-primary btn-rounded btn-block ">Composite</button>
 						</form>
 					</div>
