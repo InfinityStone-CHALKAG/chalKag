@@ -169,9 +169,13 @@
 							</figure>
 							<div class="details">
 								<!-- 작성자 정보 출력 -->
-								<h3 class="name">${jobHuntPostSingle.memberNickname}</h3>
+									<c:if test="${member == null || member != jobHuntPostSingle.memberId}">
+										<h3 class="name"><a href="/memberPage?memberId=${jobHuntPostSingle.memberId}">${jobHuntPostSingle.memberNickname}</a></h3>
+									</c:if> 
+									<c:if test="${member == jobHuntPostSingle.memberId}">
+										<h3 class="name"><a href="/myPage?memberId=${jobHuntPostSingle.memberId}">${jobHuntPostSingle.memberNickname}</a></h3>
+									</c:if>
 								<p>${jobHuntPostSingle.memberIntroduction}</p>
-								<%-- <p>${jobHuntPostSingle.memberIntroduction}</p> --%>
 							</div>
 						</div>
 						<div class="line thin"></div>
