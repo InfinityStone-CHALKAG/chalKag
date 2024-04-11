@@ -49,7 +49,7 @@ public class UpdateMarketPostController {
 		String uploadDir = this.getClass().getResource("").getPath();
 		System.out.println("UpdateMarketPostController Log01 = [" + uploadDir + "]");
 
-		uploadDir = uploadDir.substring(1, uploadDir.indexOf("chalKag")) + "chalKag/src/main/resources/static/postImg";
+		uploadDir = uploadDir.substring(0, uploadDir.indexOf("chalKag")) + "chalKag/src/main/resources/static/postImg";
 		System.out.println("UpdateMarketPostController Log02 = [" + uploadDir + "]");
 
 		marketPostDTO.setSearchCondition("marketPostUpdate");

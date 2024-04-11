@@ -155,11 +155,16 @@
 								   	 	</a>
 									</c:if>
 									<c:if test="${member != null}">
-										<c:if test="${}">
-											<a id="recommendBtn" class="love" style="margin-top:0%" data-postid="${headHuntPostSingle.headHuntPostId}" data-memberid="${member}">
-								        	<i class="ion-android-favorite-outline"></i><div id="recommendCnt">${headHuntPostSingle.recommendCnt}</div>
-								   	 		</a>
-										</c:if>
+											<c:if test="${member != recommendInfo.memberId}">
+												<a id="recommendBtn" class="love" style="margin-top:0%" data-postid="${headHuntPostSingle.headHuntPostId}" data-memberid="${member}">
+								        		<i class="ion-android-favorite-outline"></i><div id="recommendCnt">${headHuntPostSingle.recommendCnt}</div>
+								   	 			</a>
+											</c:if>
+											<c:if test="${member == recommendInfo.memberId}">
+												<a id="recommendBtn" class="love active" style="margin-top:0%" data-postid="${headHuntPostSingle.headHuntPostId}" data-memberid="${member}">
+								        		<i class="ion-android-favorite-outline"></i><div id="recommendCnt">${headHuntPostSingle.recommendCnt}</div>
+								   	 			</a>
+											</c:if>
 									</c:if>
 								</div>
 							</footer>

@@ -47,7 +47,7 @@
 		</if>
 		<if test="searchField.equals('titleAndContents')">
 			AND (HEADHUNTPOST.HEADHUNTPOST_title LIKE CONCAT('%', #{searchInput}, '%')
-OR HEADHUNTPOST.HEADHUNTPOST_content LIKE CONCAT('%', #{searchInput}, '%'))
+			OR HEADHUNTPOST.HEADHUNTPOST_content LIKE CONCAT('%', #{searchInput}, '%'))
 		</if>
 		<if test="headHuntPostRole != null and headHuntPostRole != ''">
 		    AND HEADHUNTPOST_role LIKE CONCAT('%',#{headHuntPostRole},'%')
