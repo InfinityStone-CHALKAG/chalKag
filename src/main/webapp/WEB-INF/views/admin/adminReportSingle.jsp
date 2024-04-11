@@ -580,7 +580,7 @@
                             data: $('#reportStateHoldForm').serialize(), // 폼 데이터 전송
                             success: function (result) {
                                 if (result === 1) {
-                                    // 정지된 사용자가 아니면 정지상태로 변경
+                                    // 정지된 사용자가 없으면 정지상태로 변경
                                     reportStateHold();
                                 } else {
                                     swal("WARNING", "이미 정지된 사용자 입니다.", "error", {
