@@ -382,7 +382,7 @@
                                             <div class="comments">
                                                 <div class="comment-list">
                                                     <c:if test="${empty reviewList}">
-                                                        <h4>Write first review !</h4>
+                                                        <h4 id="emptyReview">Write first review !</h4>
                                                     </c:if>
                                                     <div class="writeReviewContainer">
 
@@ -531,7 +531,7 @@
                                             </div>
 
                                             <c:if test="${reviewList[0].reviewTotalCnt > 10}">
-                                                <button class="btn btn-magz btn-sm" id="moreReview">더보기</button>
+                                                <button class="btn btn-magz btn-sm" id="moreReview">More</button>
                                             </c:if>
 
 
@@ -650,7 +650,7 @@
                                     // 텍스트 영역 비우기
                                     $('textarea[name="reviewContent"]').val('');
                                     //h4 문구 지우기
-                                    $('.writeReviewContainer').prev('h4').remove();
+                                    $("#emptyReview").text("");
 
                                     var currentReviewTotalCnt = parseInt($('.title').text().match(/\d+/)[0]); // 현재 리뷰 총 개수 가져오기
                                     $('.title').text(currentReviewTotalCnt + 1 + ' REVIEWS'); // 업데이트된 리뷰 총 개수 반영
@@ -690,6 +690,8 @@
                                     }
                                     if (currentReviewTotalCnt >= 1) {
                                         linethin = '<div class="line thin" style="margin:0%;" id="line_thin_' + reviewData.reviewId + '"></div>';
+                                    } else {
+                                        linethin = '';
                                     }
 
                                     html += '</footer>' +
@@ -724,12 +726,14 @@
 
 
 
-
+                    var deletedCnt = 0 ;
                     var reviewStart = 10; // 초기값 설정
 
                     if (document.getElementById("moreReview")) {
                         // User Hold 버튼을 클릭했을 때의 이벤트 처리
                         document.getElementById("moreReview").addEventListener("click", function (event) {
+                            //삭제된 데이터가 있어도 처음 출력된 것의 다음 10개를 가져옴
+                            reviewStart -= deletedCnt; 
                             var checkedRadioIds = [];
                             var member = "${sessionScope.member}";
                             console.log("REVIEW");
@@ -806,6 +810,8 @@
                                             $('#' + id).prop('checked', true);
                                         });
 
+                                        console.log(data[0]);
+
 
                                         reviewStart += 10;
                                         var restReviewCnt = data[0].reviewTotalCnt - reviewStart;
@@ -813,6 +819,9 @@
                                         // reviewTotalCnt를 사용하여 추가적인 작업을 수행
                                         if (restReviewCnt > 0) {
                                             moreReviewButton.style.display = "block";
+
+                                         //삭제된 개수 초기화
+                                         deletedCnt = 0 ;
                                         }
                                     }
                                 }
@@ -1023,6 +1032,7 @@ reviewScore.click(function() {
                                 }
                                 var reviewScore = $('#reviewScore_' + reviewId);
                                 reviewScore.css('pointer-events', 'none');
+                                
 
 
 
@@ -1034,7 +1044,7 @@ reviewScore.click(function() {
 
 
                     }
-
+                   
                     function reviewDelete(reviewId) {
                         console.log("delete진입");
                         $.ajax({
@@ -1047,6 +1057,7 @@ reviewScore.click(function() {
                             success: function (response) {
                                 // 성공적으로 삭제되었다는 메시지를 콘솔에 출력
                                 console.log('삭제 완료:', response);
+                                deletedCnt ++; 
                                 // UI에서 삭제된 댓글 제거 또는 사용자에게 성공 알림
                                 // 예: $('#commentSection_' + commentId).remove();
                                 swal({
@@ -1064,6 +1075,14 @@ reviewScore.click(function() {
                                     var currentReviewTotalCnt = parseInt($('.title').text().match(/\d+/)[0]); // 현재 리뷰 총 개수 가져오기
                                     $('.title').text(currentReviewTotalCnt - 1 + ' REVIEWS'); // 업데이트된 리뷰 총 개수 반영
 
+
+        if (currentReviewTotalCnt <= 1) {
+            $("#emptyReview").text("Write first review !");
+        }
+
+
+
+
                                 });
                             },
                             error: function (error) {
@@ -1071,7 +1090,7 @@ reviewScore.click(function() {
                                 // 사용자에게 에러 발생을 알림
                                 swal({
                                     title: "fail",
-                                    text: "댓글을 삭제하는 도중 에러가 발생했습니다.",
+                                    text: "리뷰를 삭제하는 도중 에러가 발생했습니다.",
                                     type: "error",
                                     showCancelButton: false,
                                     confirmButtonColor: "#DD6B55",
