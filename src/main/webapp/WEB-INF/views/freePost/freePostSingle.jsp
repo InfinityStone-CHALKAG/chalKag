@@ -80,16 +80,13 @@
 										<!-- 글 카테고리 -->
 										<a href="/freePostList">Free Post List</a>
 									</li>
-									<li>By 
-												<!-- 작성자 본인일 경우 myPage 아닐경우 작성자의 memberPage 로 이동 -->
-													<c:if test="${member == null || member != freePostSingle.memberId}">
-											<a href="/memberPage?memberId=${freePostSingle.memberId}">${freePostSingle.memberNickname}</a>
-										</c:if> 
-										
-										<c:if test="${member == freePostSingle.memberId}">
-											<a href="/myPage?memberId=${freePostSingle.memberId}">${freePostSingle.memberNickname}</a>
-										</c:if>
-									</li>	
+									<li>By <!-- 작성자 본인일 경우 myPage 아닐경우 작성자의 memberPage 로 이동 --> <c:if
+										test="${member == null || member != freePostSingle.memberId}">
+										<a href="/memberPage?memberId=${freePostSingle.memberId}">${freePostSingle.memberNickname}</a>
+									</c:if> <c:if test="${member == freePostSingle.memberId}">
+										<a href="/myPage?memberId=${freePostSingle.memberId}">${freePostSingle.memberNickname}</a>
+									</c:if>
+								</li>	
 							</ul>
 						</header>
 						<div class="main">
@@ -134,10 +131,14 @@
 								<img src="profileImg/${freePostSingle.profileImgName}"style="width: 100%; height: 100%; object-fit: cover;">
 							</figure>
 							<div class="details">
+								<!-- 작성자 본인일 경우 myPage 아닐경우 작성자의 memberPage 로 이동 --> 
+									<c:if test="${member == null || member != freePostSingle.memberId}">
+										<h3 class="name"><a href="/memberPage?memberId=${freePostSingle.memberId}">${freePostSingle.memberNickname}</a></h3>
+									</c:if> <c:if test="${member == freePostSingle.memberId}">
+										<h3 class="name"><a href="/myPage?memberId=${freePostSingle.memberId}">${freePostSingle.memberNickname}</a></h3>
+									</c:if>
 								<!-- 작성자 정보 출력 -->
-								<h3 class="name">${freePostSingle.memberNickname}</h3>
 								<p>${freePostSingle.memberIntroduction}</p>
-								<%-- <p>${freePostSingle.memberIntroduction}</p> --%>
 							</div>
 						</div>
 						<div class="line thin"></div>
