@@ -104,25 +104,25 @@ loadReviewData = function(loadPage) {
     } else {
         pageDatas.forEach(function(marketPostList) {
 			
-			// 글 작성 시간을 Date 객체로 변환합니다.
+			// 글 작성 시간을 Date 객체로 변환
 		    const postDate = new Date(marketPostList.marketPostDate);
-		    // 현재 시간과 글 작성 시간의 차이를 밀리초 단위로 계산합니다.
+		    // 현재 시간과 글 작성 시간의 차이를 밀리초 단위로 계산
 		    const diff = now - postDate;
 		
-		    // 계산된 시간 차이를 분, 시간, 일 단위로 변환합니다.
+		    // 계산된 시간 차이를 분, 시간, 일 단위로 변환
 		    const mins = Math.floor(diff / 60000);
 		    const hours = Math.floor(diff / 3600000);
 		    const days = Math.floor(diff / 86400000);
 		
 		    let timeString = '';
 		    if (days >= 1) {
-		        // 1일 이상 차이날 경우, 날짜를 표시합니다.
+		        // 1일 이상 차이날 경우, 날짜를 표시
 		        timeString = postDate.toLocaleDateString();
 		    } else if (hours >= 1) {
-		        // 1~24시간 사이일 경우, 시간으로 표시합니다.
+		        // 1~24시간 사이일 경우, 시간으로 표시
 		        timeString = `${hours}시간 전`;
 		    } else {
-		        // 1시간 미만일 경우, 분으로 표시합니다.
+		        // 1시간 미만일 경우, 분으로 표시
 		        timeString = `${mins}분 전`;
 		    }
 			
@@ -164,7 +164,7 @@ loadReviewData = function(loadPage) {
     
             });
         }
-        
+        // div에 설정한 태그를 삽입
         div.innerHTML = innerHTML;
     }
   

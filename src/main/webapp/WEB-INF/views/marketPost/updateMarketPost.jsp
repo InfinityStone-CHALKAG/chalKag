@@ -7,12 +7,7 @@
 <chalKagTags:webCss />
 <style>
 
-#marketPostWorkDate {
-	border-radius: 5px;
-	border: solid 1px rgb(179, 179, 179);
-}
-
-
+/* 내용 입력칸 css */
 #marketPostContent {
 	height: 300px;
 }
@@ -32,7 +27,7 @@
 						<form action="/updateMarketPost" method="post"
 							onsubmit="return validateForm(event)"
 							enctype="multipart/form-data">
-
+							<!-- 글 번호 -->
 							<input type="hidden" name="headHuntPostId" value="${updateMarketPost.marketPostId}" />
 
 							<div class="form-group"
@@ -41,12 +36,13 @@
 									id="marketPostTitle" name="marketPostTitle" placeholder="Title" value="${updateMarketPost.marketPostTitle}"/>
 							</div>
 							<div class="form-group" style="display: flex; margin-bottom:  4%;">
+								<!-- 가격 입력 -->
 								<input type="text" id="marketPostPrice" name="marketPostPrice"
 									class="form-control rounded"
 									style="width: 32%; margin-right: 2%;"
 									oninput="trimInput(this); validatePrice(this);"
 									placeholder="productPrice" value="${updateMarketPost.marketPostPrice}"/> 
-									
+								<!-- 상품 제조사 선택 -->
 								<select class="selectTags"
 									id="marketPostCompany" name="marketPostCompany"
 									style="width: 23.5%; margin-right: 2%;">
@@ -55,6 +51,7 @@
 									<option value="Sony" ${'Sony' == updateMarketPost.marketPostCompany ? 'selected' : ''}>Sony</option>
 									<option value="Nikon" ${'Nikon' == updateMarketPost.marketPostCompany ? 'selected' : ''}>Nikon</option>
 								</select> 
+								<!-- 상품 종류 선택 -->
 								<select class="selectTags" 
 									id="marketPostCategory" name="marketPostCategory" 
 									style="width: 23.5%;  margin-right: 2%;">
@@ -63,6 +60,7 @@
 									<option value="MirrorLess" ${'MirrorLess' == updateMarketPost.marketPostCategory ? 'selected' : ''}>MirrorLess</option>
 									<option value="FilmCamera" ${'FilmCamera' == updateMarketPost.marketPostCategory ? 'selected' : ''}>FilmCamera</option>
 								</select>
+								<!-- 상품 상태 선택 -->
 								<select class="selectTags" id="marketPostStatus"
 									name="marketPostStatus" style="width: 23.5%;">
 									<option value="" disabled selected>Status</option>
@@ -71,29 +69,35 @@
 									<option value="Freecycle" ${'Freecycle' == updateMarketPost.marketPostStatus ? 'selected' : ''}>Freecycle</option>
 								</select>
 							</div>
+							<!-- 이미지 업로드 시 안내 문구 -->
 							<p>※ The size. There is a maximum file size of '1GB' for all images.</p>
 							<div class="form-group" style="margin-bottom: 4%;">
 								<input type="file" name="file" id="fileInput" accept="image/*"
 									style="display: none;" multiple> <input type="button"
 									id="customButton" value="Upload">
 							</div>
+							<!-- 업로드한 이미지 미리보기 -->
 							<div id="preview" style="display: flex; justify-content: center;">
+								<!-- 이미지 슬라이드 버튼 -->
 								<button class="imgSlidebtn" id="slideLeft">◀</button>
+								<!-- 이미지 순서 변경 -->
 								<div style="overflow: hidden; flex-grow: 1;">
 									<div class="image-container"></div>
 								</div>
+								<!-- 이미지 슬라이드 버튼 -->
 								<button class="imgSlidebtn" id="slideRight">▶</button>
 							</div>
-
+							<!-- 확대 이미지 출력 칸 -->
 							<div class="big-image-container">
 							    <img id="big-image" src="" alt="큰 이미지 미리보기" />
 							</div>
-
+							<!-- 글 내용 -->
 							<div class="form-group" style="margin-bottom: 4%;"
 								style="display: flex; justify-content: center;">
 								<textarea class="form-control rounded" id="marketPostContent"
 									name="marketPostContent">${updateMarketPost.marketPostContent}</textarea>
 							</div>
+							<!-- 수정 완료 버튼 -->
 							<button class="btn btn-primary btn-rounded btn-block">Composite</button>
 						</form>
 					</div>

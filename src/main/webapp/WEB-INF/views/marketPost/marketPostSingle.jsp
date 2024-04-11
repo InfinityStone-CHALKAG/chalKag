@@ -6,33 +6,35 @@
 <html>
 <head>
     <chalKagTags:webCss/>
-    
         <style type="text/css">
-	 .postInfo {
+	/* 글 상세보기 글씨체 설정 css */
+	.postInfo {
 	 	display: flex;
 	 	font-style: 'Malgun Gothic';
 	 	margin-bottom: 5px;
 		font-size:20px;
 		margin-left: 26%;
 	 }
+	 /* 글 상세보기 제목 css */
     	.postInfoTitle { 	
     	margin-right: 100px; 
     	width: 100px;
 		margin-left: 4%;
     	}
-
+		/* 캐러셀 효과 */
 		.owl-carousel {
             display: block;
             width: 100%;
             margin: 0 auto;
         }
+		/* 캐러셀 이미지 css */
         .owl-item img {
             display: block;
             width: 750px; /* 이미지의 너비를 750px로 강제 설정 */
             height: 575px; /* 이미지의 높이를 575px로 강제 설정 */
             object-fit: cover; /* 이미지의 비율을 유지하면서 요소에 맞게 잘리지 않도록 설정 */
         }
-    	
+    	/* 원본 이미지 출력 효과 css */
 		#fullScreenImageContainer {
 		    position: fixed;
 		    top: 0;
@@ -51,7 +53,7 @@
 		    max-width: 90%; /* 화면 너비의 90%를 넘지 않도록 */
 		    max-height: 90%; /* 화면 높이의 90%를 넘지 않도록 */
 		}    	
-    	
+    	/* 글 내용 css */
     	    	.main pre {
     white-space: pre-wrap; /* CSS3의 white-space 속성을 사용해 텍스트가 영역을 벗어나지 않도록 함 */
     word-wrap: break-word; /* 긴 단어도 줄바꿈될 수 있도록 함 */
@@ -68,20 +70,23 @@
 		<section class="single">
 			<div class="container">
 				<div class="row">
-
+					<!-- 사이드 배너 태그 파일 호출 -->
 					<chalKagTags:webSider />
 
 					<div class="col-md-8">
 						<article class="article main-article">
 							<header>
+								<!-- 글 제목 -->
 								<h3>${marketPostSingle.marketPostTitle}</h3>
 								<ul class="details" >
+									<!-- 글 작성일 -->
 									<li>${marketPostSingle.marketPostDate}</li>
 										<li>
+											<!-- 글 카테고리 -->
 											<a href="marketPostList?marketPostStatus=${marketPostSingle.marketPostCategory}">Market Post List</a>
 									</li>
 									<li>By 
-											
+											<!-- 작성자 본인일 경우 myPage 아닐경우 작성자의 memberPage 로 이동 -->
 										<c:if test="${member == null || member != marketPostSingle.memberId}">
 											<a href="/memberPage?memberId=${marketPostSingle.memberId}">${marketPostSingle.memberNickname}</a>
 										</c:if> 
@@ -94,7 +99,8 @@
 							</header>
 							<div class="main">
 									<div class="featured">
-									<div class="owl-carousel">
+									<!-- 이미지 목록 캐러셀로 출력 -->
+										<div class="owl-carousel">
 										<c:forEach var="postImgList" items="${postImgList}">
 												<figure>
 													<img src="/postImg/${postImgList.postImgName}">
@@ -107,6 +113,7 @@
 								<div id="fullScreenImageContainer" style="display:none;">
 								    <img id="fullScreenImage">
 								</div>
+									<!-- 작성한 상품 내용 출력 -->
 									<div class="featured" style="margin-bottom: 3%; margin-top: 2%; display: block; justify-content: center;">
 										<div>
 										<figure>
@@ -154,6 +161,7 @@
 								<img src="profileImg/${marketPostSingle.profileImgName}"style="width: 100%; height: 100%; object-fit: cover;">
 							</figure>
 							<div class="details">
+								<!-- 작성자 정보 출력 -->
 								<h3 class="name">${marketPostSingle.memberNickname}</h3>
 								<p>${marketPostSingle.memberIntroduction}</p>
 								<%-- <p>${marketPostSingle.memberIntroduction}</p> --%>
@@ -224,14 +232,14 @@
 
 		    // 이미지 클릭 이벤트를 위한 이벤트 위임
 		    $(".owl-carousel").on("click", ".owl-item", function(){
-		        var src = $(this).find("img").attr("src"); // 클릭한 div 내부의 이미지 src를 가져옵니다.
+		        var src = $(this).find("img").attr("src"); // 클릭한 div 내부의 이미지 src를 가져옴
 		        $("#fullScreenImage").attr("src", src); // 전체 화면에 표시할 이미지 src 설정
-		        $("#fullScreenImageContainer").fadeIn(); // 이미지 컨테이너를 페이드인으로 보여줍니다.
+		        $("#fullScreenImageContainer").fadeIn(); // 이미지 컨테이너를 페이드인으로 출력
 		    });
 
 		    // 전체 화면 이미지 컨테이너 클릭 시 닫기 기능
 		    $("#fullScreenImageContainer").click(function(){
-		        $(this).fadeOut(); // 컨테이너를 페이드아웃으로 숨깁니다.
+		        $(this).fadeOut(); // 컨테이너를 페이드아웃으로 숨긴다.
 		    });
 		});
 

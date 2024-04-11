@@ -8,6 +8,7 @@
     <chalKagTags:webCss/>
     
     <style type="text/css">
+		/* 글 상세보기 페이지 글꼴 설정 */
 	 .postInfo {
 	 	display: flex;
 	 	font-style: 'Malgun Gothic';
@@ -15,24 +16,26 @@
 		font-size:20px;
 		margin-left: 26%;
 	 }
+	 /* 글 제목 css */
     	.postInfoTitle { 	
     	margin-right: 100px; 
     	width: 100px;
 		margin-left: 4%;
     	}
-
+		/* 캐러셀 효과 */
 		.owl-carousel {
             display: block;
             width: 100%;
             margin: 0 auto;
         }
+		/* 캐러셀 이미지 css */
         .owl-item img {
             display: block;
             width: 750px; /* 이미지의 너비를 750px로 강제 설정 */
             height: 575px; /* 이미지의 높이를 575px로 강제 설정 */
             object-fit: cover; /* 이미지의 비율을 유지하면서 요소에 맞게 잘리지 않도록 설정 */
         }
-    	
+    	/* 이미지 확대 효과 css */
 		#fullScreenImageContainer {
 		    position: fixed;
 		    top: 0;
@@ -51,7 +54,7 @@
 		    max-width: 90%; /* 화면 너비의 90%를 넘지 않도록 */
 		    max-height: 90%; /* 화면 높이의 90%를 넘지 않도록 */
 		}    	
-    	
+    	/* 글 내용 css */
     	    	.main pre {
     white-space: pre-wrap; /* CSS3의 white-space 속성을 사용해 텍스트가 영역을 벗어나지 않도록 함 */
     word-wrap: break-word; /* 긴 단어도 줄바꿈될 수 있도록 함 */
@@ -68,16 +71,19 @@
 		<section class="single">
 			<div class="container">
 				<div class="row">
-
+					<!-- 사이드 배너 태그 파일 호출 -->
 					<chalKagTags:webSider />
 
 					<div class="col-md-8">
 						<article class="article main-article">
 							<header>
+								<!-- 글 제목 -->
 								<h3>${jobHuntPostSingle.jobHuntPostTitle}</h3>
 								<ul class="details" >
+									<!-- 글 작성일 -->
 									<li>${jobHuntPostSingle.jobHuntPostDate}</li>
 									<li>
+										<!-- 글 카테고리 -->
 										<a href="/jobHuntPostList">Head Hunt Post List</a>
 									</li>
 									<li>By 
@@ -94,6 +100,7 @@
 							</header>
 						<div class="main">
 							<div class="featured">
+								<!-- 이미지 목록 캐러셀로 출력 -->
 							<div class="owl-carousel">
 								<c:forEach var="postImgList" items="${postImgList}">
 										<figure>
@@ -108,7 +115,7 @@
 							    <img id="fullScreenImage">
 							</div>
 							
-							
+							<!-- 작성한 구직 내용 출력 -->
 								<div class="featured" style="margin-bottom: 3%; margin-top: 2%; display: block; justify-content: center;">
 										<div>
 											<div class="postInfo">
@@ -161,6 +168,7 @@
 								<img src="profileImg/${jobHuntPostSingle.profileImgName}"style="width: 100%; height: 100%; object-fit: cover;">
 							</figure>
 							<div class="details">
+								<!-- 작성자 정보 출력 -->
 								<h3 class="name">${jobHuntPostSingle.memberNickname}</h3>
 								<p>${jobHuntPostSingle.memberIntroduction}</p>
 								<%-- <p>${jobHuntPostSingle.memberIntroduction}</p> --%>

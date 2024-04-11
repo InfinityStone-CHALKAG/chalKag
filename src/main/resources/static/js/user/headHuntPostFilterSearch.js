@@ -8,11 +8,11 @@ var maxPay = 0;		// 최소 페이
 var role = "";		// 직업
 var region = "";		// 지역
 var concept = "";		// 촬영컨셉
-var searchField = "";		
-var searchInput="";
+var searchField = "";		// 검색 카테고리(제목, 내용, 제목 + 내용)
+var searchInput="";         // 검색어 입력값
 var startDate =	today;// 작업 시작일
 var endDate = today;// 작업 종료일
-var minDate = "";// 검색 시작일 설정
+var minDate = "";// 검색 시작일
 var maxDate = "";// 오늘날짜
 console.log('초기화 : ' + startDate.toDateString());
 console.log('초기화 : ' + endDate.toDateString());
@@ -24,23 +24,23 @@ $(document).ready(function() {
     updateVariables();
     performAjaxRequest();
   });
-  
+    // 최소가격 설정 시 이벤트
 	document.getElementById('minPay').addEventListener('mouseup', handleFilterChange);
-	
+	// 최대가격 설정 시 이벤트
 	document.getElementById('maxPay').addEventListener('mouseup', handleFilterChange);
-	
+	// 직업 설정 시 이벤트
 	document.getElementById('role').addEventListener('change', handleFilterChange);
-	
+	// 지역 설정 시 이벤트
 	document.getElementById('region').addEventListener('change', handleFilterChange);
-	
+	// 시작일 설정 시 이벤트
 	document.getElementById('startDate').addEventListener('input', handleFilterChange);
-	
+	// 종료일 설정 시 이벤트
 	document.getElementById('endDate').addEventListener('input', handleFilterChange);
-	
+	// 작업 컨셉 설정 시 이벤트
 	document.getElementById('concept').addEventListener('change', handleFilterChange);
-
+    // 필터 초기화 이벤트
 	document.getElementById('filterReset').addEventListener('click', function() {
-			// 검색어 초기화
+			                // 검색어 초기화
 							document.getElementById('searchInput').value = '';
 					
 							// 검색 필드 초기화
@@ -63,7 +63,7 @@ $(document).ready(function() {
 							// 촬영 컨셉 필터 초기화
 							document.getElementById('concept').selectedIndex = 0;
 							
-							    // 모든 라디오 버튼을 가져옴
+	// 모든 라디오 버튼을 가져옴
     var radioButtons = document.querySelectorAll('input[type="radio"][name="headHuntPostDate"]');
     
     // 각 라디오 버튼에 대해 루프를 돌며 Anytime 라디오 버튼을 체크하고 나머지는 체크 해제
@@ -116,14 +116,14 @@ $(document).ready(function() {
                 maxDate = formatDate(today);
                 break;
             default:
-                // "Anytime"이 선택된 경우, minDate와 maxDate를 초기화합니다.
+                // "Anytime"이 선택된 경우, minDate와 maxDate를 초기화.
                 minDate = '';
                 maxDate = '';
         }
 	  
 	  console.log("minDate : " + minDate);
 	  console.log("manDate : " + maxDate);
-	   updateVariables();
+	  updateVariables();
 	  performAjaxRequest(); // 필터링된 데이터 요청
 	  }
 	});
@@ -208,9 +208,9 @@ function performAjaxRequest() {
     const requestData = {
   	fromday: minDate,
 	today: maxDate,
-    searchField: searchField,
-    searchInput: searchInput,
-    sortOrder: sortOrder,
+    searchField: searchField,   // search Condition(제목, 내용, 제목 + 내용)
+    searchInput: searchInput,   // search Condition (입력값)
+    sortOrder: sortOrder,   // 오름차순 정렬, 내림차순 정렬
     minPay : minPay,
     maxPay : maxPay,
     headHuntPostRole : role, 

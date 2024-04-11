@@ -7,8 +7,8 @@ var region;		// 지역
 var startDate;	// 작업 시작일 
 var endDate;	// 작업 종료일
 var concept;	// 촬영컨셉
-var minDate;
-var maxDate;
+var minDate;	// 검색 시작일
+var maxDate;	// 오늘 날짜
 
 $(document).ready(function() {
   // 검색 필드와 입력값, 정렬 순서 업데이트 이벤트 리스너 추가
@@ -17,28 +17,29 @@ $(document).ready(function() {
     performAjaxRequest();
   });
   
-  
+   	// 최소가격 설정 시 이벤트
 	document.getElementById('minPay').addEventListener('input', handleFilterChange);
+	// 최대가격 설정 시 이벤트
 	document.getElementById('maxPay').addEventListener('input', handleFilterChange);
-	
+	// 직업 설정 시 이벤트
 	document.getElementById('role').addEventListener('change', handleFilterChange);
-	
+	// 지역 설정 시 이벤트
 	document.getElementById('region').addEventListener('change', handleFilterChange);
-	
+	// 시작일 설정 시 이벤트
 	document.getElementById('startDate').addEventListener('input', handleFilterChange);
+	// 종료일 설정 시 이벤트
 	document.getElementById('endDate').addEventListener('input', handleFilterChange);
-	
+	// 작업 컨셉 설정 시 이벤트
 	document.getElementById('concept').addEventListener('change', handleFilterChange);
-	
+	// 필터 초기화 이벤트
 	document.getElementById('filterReset').addEventListener('click', function() {
-			// 검색어 초기화
+							// 검색어 초기화
 							document.getElementById('searchInput').value = '';
 					
 							// 검색 필드 초기화
 							document.getElementById('searchField').selectedIndex = 0;
 					
 							// 날짜 필터 초기화
-
 							document.getElementById('Anytime').checked = true; 
 					
 							// 직업 필터 초기화

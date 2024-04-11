@@ -29,6 +29,7 @@
 			<div class="box-wrapper" id="writerForm">
 				<div class="box box-border">
 					<div class="box-body">
+						<!-- 내용 작성 폼 -->
 						<form action="/writeMarketPost" method="post"
 							onsubmit="return validateForm(event)"
 							enctype="multipart/form-data">
@@ -38,24 +39,30 @@
 									id="marketPostTitle" name="marketPostTitle" placeholder="Title" />
 							</div>
 							<div class="form-group" style="display: flex; margin-bottom:  4%;">
+								<!-- 가격 입력 -->
 								<input type="text" id="marketPostPrice" name="marketPostPrice"
 									class="form-control rounded"
 									style="width: 23.5%; margin-right: 2%;"
 									oninput="trimInput(this); validatePrice(this);"
-									placeholder="productPrice" /> <select class="selectTags"
+									placeholder="productPrice" /> 
+									<!-- 제조사 선택창 -->
+									<select class="selectTags"
 									id="marketPostCompany" name="marketPostCompany"
 									style="width: 23.5%; margin-right: 2%;">
 									<option value="" disabled selected>Company</option>
 									<option value="Canon">Canon</option>
 									<option value="Sony">Sony</option>
 									<option value="Nikon">Nikon</option>
-								</select> <select class="selectTags" id="marketPostCategory"
+								</select> 
+								<!-- 종류 선택 창 -->
+								<select class="selectTags" id="marketPostCategory"
 									name="marketPostCategory" style="width: 23.5%; margin-right: 2%;">
 									<option value="" disabled selected>Category</option>
 									<option value="DSLR">DSLR</option>
 									<option value="MirrorLess">MirrorLess</option>
 									<option value="FilmCamera">Film Camera</option>
 								</select>
+								<!-- 상태 선택 태그 -->
 								<select class="selectTags" id="marketPostStatus"
 									name="marketPostStatus" style="width: 23.5%;">
 									<option value="" disabled selected>Status</option>
@@ -64,29 +71,35 @@
 									<option value="Freecycle">Freecycle</option>
 								</select>
 							</div>
+							<!-- 이미지 업로드 시 안내문 -->
 							<p>※ The size. There is a maximum file size of '1GB' for all images.</p>
 							<div class="form-group" style="margin-bottom: 4%;">
 								<input type="file" name="file" id="fileInput" accept="image/*"
 									style="display: none;" multiple> <input type="button"
 									id="customButton" value="Upload">
 							</div>
+							<!-- 이미지 미리보기 태그 -->
 							<div id="preview" style="display: flex; justify-content: center;">
+								<!-- 이미지 슬라이드 버튼 -->
 								<button class="imgSlidebtn" id="slideLeft">◀</button>
+								<!-- 이미지 미리보기 출력 -->
 								<div style="overflow: hidden; flex-grow: 1;">
 									<div class="image-container"></div>
 								</div>
+								<!-- 이미지 슬라이드 버튼 -->
 								<button class="imgSlidebtn" id="slideRight">▶</button>
 							</div>
-
+							<!-- 이미지 큰 화면으로 보는 태그 -->
 							<div class="big-image-container">
 							    <img id="big-image" src="" alt="큰 이미지 미리보기" />
 							</div>
-
+							<!-- 내용 작성 -->
 							<div class="form-group" style="margin-bottom: 4%;"
 								style="display: flex; justify-content: center;">
 								<textarea class="form-control rounded" id="marketPostContent"
 									name="marketPostContent"></textarea>
 							</div>
+							<!-- 글 작성 완료 버튼 -->
 							<button class="btn btn-primary btn-rounded btn-block">Composite</button>
 						</form>
 					</div>
@@ -124,11 +137,10 @@
 	</script>
 	<script src="css/user/js/e-magz.js"></script>
 	<script>
-		// 공백 및 null 입력 막는 함수
+		// 공백 및 null 입력 막는 함수들
 		function trimInput(element) {
 			element.value = element.value.trim();
 		}
-
 		function validatePay(input) {
 			var cleanInput = input.value.replace(/,/g, '');
 			
