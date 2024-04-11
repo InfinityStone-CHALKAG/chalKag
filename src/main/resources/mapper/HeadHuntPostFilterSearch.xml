@@ -69,7 +69,7 @@ OR HEADHUNTPOST.HEADHUNTPOST_content LIKE CONCAT('%', #{searchInput}, '%'))
 		</if>
 
    		
-		  ORDER BY HEADHUNTPOST.HEADHUNTPOST_date DESC
+		  ORDER BY HEADHUNTPOST.HEADHUNTPOST_date ${sortOrder == 'asc' ? 'ASC' : 'DESC'}
   
 
 	</select>
