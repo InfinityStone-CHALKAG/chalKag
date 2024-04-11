@@ -197,7 +197,7 @@
                         </div>
                 
                         <!-- Start nav -->
-                        <div class="col-md-6 col-sm-12 col-xs-12" style="margin-left: 30px;">
+                        <div class="col-md-6 col-sm-12 col-xs-12" style="margin-left: 10%;">
                             <nav class="menu" style="border-top:0px; border-bottom:0px">
                                 <div class="container">
                                     <div id="menu-list">
@@ -220,7 +220,6 @@
                                                     <li><a href="recommendFreePostList">FreePost</a></li>
                                                 </ul>
                                             </li>
-                                            <li><a href="myReview">My Review List<i class="ion-ios-star"></i></a></li>
                                         </ul>
                                     </div>
                                 </div>
