@@ -438,7 +438,7 @@ public class JobHuntPostDAO { // 구인 게시판 DAO
 			  return result;
 		  }
 		  // 회원 페이지 - 특정 회원이 작성한 구직글 전체 출력
-		  else if (jobHuntPostDTO.getSearchCondition().equals("jobHuntPostMembertList")) {
+		  else if (jobHuntPostDTO.getSearchCondition().equals("jobHuntPostMemberList")) {
 			  result = jdbcTemplate.query(SELECTALL_JOBHUNTPOSTMEMBER, args, new JobHuntPostMemberRowMapper());
 			  System.out.println("JobHuntPostDAO(selectAll) Out로그 = [" + result + "]");
 			  return result;

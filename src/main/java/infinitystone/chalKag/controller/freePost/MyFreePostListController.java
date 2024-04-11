@@ -1,12 +1,11 @@
 package infinitystone.chalKag.controller.freePost;
 
-import java.util.List;
-
-import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.google.gson.Gson;
 
 import infinitystone.chalKag.biz.freePost.FreePostDTO;
 import infinitystone.chalKag.biz.freePost.FreePostService;
@@ -24,7 +23,7 @@ public class MyFreePostListController {
 		freePostDTO.setSearchCondition("freePostMemberList");
 		String freePostDatas = gson.toJson(freePostService.selectAll(freePostDTO));
 		
-		model.addAttribute("FreePostList", freePostDatas);
+		model.addAttribute("freePostList", freePostDatas);
 		
 		
 		return "myPost/myFreePostList";

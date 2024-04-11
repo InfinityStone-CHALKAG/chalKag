@@ -35,7 +35,7 @@
 						<div class="box-body">
 							<form action="/updateFreePost" method="post" onsubmit="return validateForm()">
 								<!-- 글 번호  -->
-								<input type="hidden" name="headHuntPostId" value="${updateFreePost.freePostId}" />
+								<input type="hidden" name="freePostId" value="${updateFreePost.freePostId}" />
 								<!-- 글 제목 -->
 								<div class="form-group" style="display: flex; justify-content: center;">
 									<input type="text" id="freePostTitle" name="freePostTitle" class="form-control rounded" placeholder="Title" value="${updateFreePost.freePostTitle}" />

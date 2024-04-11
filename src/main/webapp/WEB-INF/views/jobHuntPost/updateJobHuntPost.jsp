@@ -35,7 +35,7 @@
 							onsubmit="return validateForm(event)"
 							enctype="multipart/form-data">
 							<!-- 글 번호 -->
-							<input type="hidden" name="headHuntPostId" value="${updateJobHuntPost.jobHuntPostId}" />
+							<input type="hidden" name="jobHuntPostId" value="${updateJobHuntPost.jobHuntPostId}" />
 							
 							<div class="form-group"
 								style="display: flex; justify-content: center; margin-bottom: 4%;">

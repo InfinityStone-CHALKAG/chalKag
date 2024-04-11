@@ -29,7 +29,7 @@ public class MyHeadHuntPostListController {
 		
 		String headHuntPostDatas = gson.toJson(headHuntPostService.selectAll(headHuntPostDTO));
 
-		model.addAttribute("HeadHuntPostList", headHuntPostDatas);
+		model.addAttribute("headHuntPostList", headHuntPostDatas);
 
 
 		return "myPost/myHeadHuntPostList";

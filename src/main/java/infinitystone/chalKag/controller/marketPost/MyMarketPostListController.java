@@ -1,10 +1,11 @@
 package infinitystone.chalKag.controller.marketPost;
 
-import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.google.gson.Gson;
 
 import infinitystone.chalKag.biz.marketPost.MarketPostDTO;
 import infinitystone.chalKag.biz.marketPost.MarketPostService;
@@ -22,7 +23,7 @@ public class MyMarketPostListController {
 		marketPostDTO.setSearchCondition("marketPostMemberList");
 		String marketPostDatas = gson.toJson(marketPostService.selectAll(marketPostDTO));
 
-		model.addAttribute("MarketPostList", marketPostDatas);
+		model.addAttribute("marketPostList", marketPostDatas);
 
 
 		return "myPost/myMarketPostList";
