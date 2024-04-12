@@ -1,4 +1,4 @@
-package infinitystone.chalKag.controller;
+package infinitystone.chalKag.controller.chat;
 
 import infinitystone.chalKag.biz.chat.ChatMessageDTO;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +17,10 @@ public class StompChatController {
   //"/pub/chat/enter"
   @MessageMapping(value = "/chat/enter")
   public void enter(ChatMessageDTO message) {
+    System.out.println("StompChatController(enter) In로그");
     message.setMessage(message.getWriter() + "님이 채팅방에 참여하였습니다.");
     template.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
+    System.out.println("StompChatController(enter) Out로그 = ["+message.getMessage()+"]");
   }
 
   @MessageMapping(value = "/chat/message")

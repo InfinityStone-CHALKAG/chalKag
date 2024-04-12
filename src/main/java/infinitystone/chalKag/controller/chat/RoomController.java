@@ -1,17 +1,13 @@
-package infinitystone.chalKag.controller;
+package infinitystone.chalKag.controller.chat;
 
 import infinitystone.chalKag.biz.chat.ChatRoomDAO;
-import infinitystone.chalKag.biz.chat.ChatRoomDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.UUID;
 
 @Controller
 @RequiredArgsConstructor
@@ -31,7 +27,7 @@ public class RoomController {
 
     System.out.println("RoomController(rooms GET) Out로그" + model.getAttribute("list"));
 
-    return "rooms";
+    return "chat/rooms";
 
   }
 
@@ -52,9 +48,11 @@ public class RoomController {
   @GetMapping("/room")
   public void getRoom(String roomId, Model model) {
 
-    log.info("# get Chat Room, roomID : " + roomId);
+    System.out.println("RoomController(room GET) In로그");
 
     model.addAttribute("room", chatRoomDAO.findRoomById(roomId));
+
+    System.out.println("RoomController(room GET) Out로그" + model.getAttribute("room"));
   }
 
 }
