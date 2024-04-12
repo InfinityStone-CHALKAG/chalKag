@@ -8,44 +8,13 @@
 <!-- 페이지 이동 및 필터검색 CSS 파일 링크 달기 & Jsp로 작성할때 링크 프로젝트내 링크와 맞추기 -->
 <chalKagTags:webCss />
 <style>
-/* 라디오 버튼의 문구 css */
-[type="radio"], span {
-	vertical-align: middle;
+/* Min Max 스타일 */
+input[type='range']::-webkit-slider-thumb {
+	background-color: #F73F52;
 }
-/* 날짜(오늘, 일주일전, 한달전)라디오 버튼 css */
-[type="radio"] {
-	appearance: none;
-	border: max(2px, 0.1em) solid gray;
-	border-radius: 50%;
-	width: 1.25em;
-	height: 1.25em;
-	transition: border 0.5s ease-in-out;
-}
-/* 라디오 버튼 클릭 css */
-[type="radio"]:checked {
-	border: 0.4em solid #F73F52;
-}
-/* 라디오 버튼 요소에 대한 스타일 지정 css */
-[type="radio"]:focus-visible {
-	outline-offset: max(2px, 0.1em);
-	outline: max(2px, 0.1em) dotted #F73F52;
-}
-/* 라디오 버튼 마우스 hover css */
-[type="radio"]:hover {
-	box-shadow: 0 0 0 max(4px, 0.2em) lightgray;
-	cursor: pointer;
-}
-/* 체크 박스 색 css */
-[type="checkbox"] {
-	accent-color: red;
-}
-/* 범위 설정 버튼 css */
-[type="range"] {
-	accent-color: red;
-}
-/* 필터검색 p 태그 css */
-div .inner p {
-	margin-left: 5%;
+/* 범위 설정 css */
+input[type="range"] {
+	accent-color: #F73F52;
 }
 </style>
 </head>
@@ -54,6 +23,8 @@ div .inner p {
 	<!-- Start header tag로 출력 -->
 	<chalKagTags:webHeader />
 	<!-- End header tag로 출력 -->
+
+<input type="hidden" id="sessionId" value="${member}">
 
 	<!-- 필터 검색 용 메뉴 -->
 	<section class="search">
@@ -158,10 +129,16 @@ div .inner p {
 							<div class="group-title"
 								style="font-weight: bold; margin-bottom: 2%;">PRICE</div>
 							<div class="form-group">
-								<input type="range"
-									id="minPrice" name="minPrice" min="0" max="1000000" value="1">
-								<label for="maxPrice">최대 Price:</label> <input type="range"
-									id="maxPrice" name="maxPrice" min="0" max="1000000" value="1">
+								<label for="minPrice">Min</label> <input type="range"
+									id="minPrice" name="minPrice" min="0" max="10000000" value="0"
+									oninput="updateTextInput('minPrice', 'minPriceText')"> <input
+									type="text" id="minPriceText" readonly
+									style="border: 0; color: #f6931f; font-weight: bold;">
+								<br> <label for="maxPrice">Max</label> <input type="range"
+									id="maxPrice" name="maxPrice" min="0" max="10000000" value="0"
+									oninput="updateTextInput('maxPrice', 'maxPriceText')"> <input
+									type="text" id="maxPriceText" readonly
+									style="border: 0; color: #f6931f; font-weight: bold;">
 							</div>
 							<br>
 							
@@ -264,5 +241,69 @@ div .inner p {
 	    });
 	}
 	</script>
+	
+	<script>
+    function updateTextInput(rangeId, inputId) {
+        var range = document.getElementById(rangeId);
+        var input = document.getElementById(inputId);
+        var step = 1000; // 1000 단위로 움직이도록 설정
+        var newValue = Math.floor(range.value / step) * step;
+        range.value = newValue;
+        input.value = newValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); // 콤마 추가
+
+        // MIN 값이 MAX값을 넘어가지 않도록 확인
+        var minPrice = document.getElementById("minPrice").value;
+        var maxPrice = document.getElementById("maxPrice").value;
+        if (parseInt(minPrice) > parseInt(maxPrice)) {
+            document.getElementById(rangeId).value = maxPrice;
+            document.getElementById(inputId).value = maxPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        // MAX 값이 MIN 값보다 작지 않도록 확인
+        if (parseInt(maxPrice) < parseInt(minPrice)) {
+            document.getElementById("maxPrice").value = minPrice;
+            document.getElementById("maxPriceText").value = minPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+    }
+</script>
+
+
+<script>
+    // Get references to the input fields
+    var startDateInput = document.getElementById('startDate');
+    var endDateInput = document.getElementById('endDate');
+
+    // Add event listener to the endDate input field
+    endDateInput.addEventListener('change', function() {
+        // Parse the dates
+        var startDate = new Date(startDateInput.value);
+        var endDate = new Date(endDateInput.value);
+
+        // If endDate is before startDate, reset the value of endDate
+        if (endDate < startDate) {
+            endDateInput.value = '';
+        }
+    });
+
+    // Add event listener to the startDate input field
+    startDateInput.addEventListener('change', function() {
+        // Parse the dates
+        var startDate = new Date(startDateInput.value);
+        var endDate = new Date(endDateInput.value);
+
+        // If startDate is after endDate, reset the value of startDate
+        if (startDate > endDate) {
+            startDateInput.value = '';
+        }
+    });
+</script>
+
+
+<script>
+	$('input[type=radio][name=marketPostDate]').change(function() {
+		console.log("aaaaaaaaaaaaaaaaaaa")
+	});
+
+</script>
 </body>
 </html>

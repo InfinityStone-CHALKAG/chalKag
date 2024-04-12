@@ -32,12 +32,8 @@ public class HeadHuntPostListController {
 
     headHuntPostDTO.setSearchCondition("headHuntPostList");
     String headHuntPostListResult = gson.toJson(headHuntPostService.selectAll(headHuntPostDTO));
-    
-    headHuntPostDTO.setSearchCondition("headHuntPostPremium1MonthList");
-    String PremiumHeadHuntPostList = gson.toJson(headHuntPostService.selectAll(headHuntPostDTO));
 
     model.addAttribute("headHuntPostList", headHuntPostListResult);
-    model.addAttribute("PremiumHeadHuntPostList", PremiumHeadHuntPostList);
 
     System.out.println("HeadHuntPostListController Out로그");
 
