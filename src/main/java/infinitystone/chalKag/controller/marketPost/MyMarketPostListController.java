@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class MyMarketPostListController {
+	
 	@Autowired
 	private MarketPostService marketPostService;
 

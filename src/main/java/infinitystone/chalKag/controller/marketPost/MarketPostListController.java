@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 
 import infinitystone.chalKag.biz.marketPost.MarketPostDTO;
 import infinitystone.chalKag.biz.marketPost.MarketPostService;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class MarketPostListController {
@@ -17,11 +18,17 @@ public class MarketPostListController {
 	private MarketPostService marketPostService;
 
 	@RequestMapping("/marketPostList")
-	public String marketPostList(Model model, MarketPostDTO marketPostDTO, Gson gson) {
+	public String marketPostList(HttpSession session, Model model, MarketPostDTO marketPostDTO, Gson gson) {
 		System.out.println("DTO에 status가 안와유..." + marketPostDTO);
 
 		System.out.println("MarketPostListController In로그");
 
+		String memberId = (String)session.getAttribute("member");
+	    if (memberId == null) {
+	    	memberId = null;
+		}
+	    marketPostDTO.setMemberId(memberId);
+		
 		// 거래 게시글의 거래 상태를 담는 변수 status
 		String status = marketPostDTO.getMarketPostStatus();
 		System.out.println("이녀석 NULL이냐 ?!?!?" + status);
