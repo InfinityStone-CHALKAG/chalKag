@@ -93,7 +93,7 @@
 									</c:if>
 								</ul>
 							</li>
-							<li><a href="payment">Chat<i class="ion-ios-arrow-right"></i></a></li>
+							<li><a href="rooms">Chat<i class="ion-ios-arrow-right"></i></a></li>
 							</li>
 						</ul>
 					</div>
