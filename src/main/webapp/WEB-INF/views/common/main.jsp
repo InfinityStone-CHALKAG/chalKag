@@ -66,7 +66,7 @@
                         <article class="featured">
                             <div class="overlay"></div>
                             <figure>
-                                <img src="css/user/images/news/img04.jpg" alt="Sample Article">
+                                <img src="css/user/images/mainImg01.jpg" alt="Sample Article">
                             </figure>
                             <div class="details">
                                 <div class="category"><a href="category.html">Computer</a></div>
@@ -80,7 +80,7 @@
                         <article class="featured">
                             <div class="overlay"></div>
                             <figure>
-                                <img src="css/user/images/news/img14.jpg" alt="Sample Article">
+                                <img src="css/user/images/mainImg02.jpg" alt="Sample Article">
                             </figure>
                             <div class="details">
                                 <div class="category"><a href="category.html">Travel</a></div>
@@ -95,7 +95,7 @@
                         <article class="featured">
                             <div class="overlay"></div>
                             <figure>
-                                <img src="css/user/images/news/img13.jpg" alt="Sample Article">
+                                <img src="css/user/images/mainImg03.jpg" alt="Sample Article">
                             </figure>
                             <div class="details">
                                 <div class="category"><a href="category.html">International</a></div>
@@ -109,7 +109,52 @@
                         <article class="featured">
                             <div class="overlay"></div>
                             <figure>
-                                <img src="css/user/images/news/img05.jpg" alt="Sample Article">
+                                <img src="css/user/images/mainImg04.jpg" alt="Sample Article">
+                            </figure>
+                            <div class="details">
+                                <div class="category"><a href="category.html">Lifestyle</a></div>
+                                <h1><a href="single.html">Mauris elementum libero at pharetra auctor
+                                    Fusce ullamcorper
+                                    elit</a></h1>
+                                <div class="time">November 27, 2016</div>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="item">
+                        <article class="featured">
+                            <div class="overlay"></div>
+                            <figure>
+                                <img src="css/user/images/mainImg05.jpg" alt="Sample Article">
+                            </figure>
+                            <div class="details">
+                                <div class="category"><a href="category.html">Lifestyle</a></div>
+                                <h1><a href="single.html">Mauris elementum libero at pharetra auctor
+                                    Fusce ullamcorper
+                                    elit</a></h1>
+                                <div class="time">November 27, 2016</div>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="item">
+                        <article class="featured">
+                            <div class="overlay"></div>
+                            <figure>
+                                <img src="css/user/images/mainImg06.jpg" alt="Sample Article">
+                            </figure>
+                            <div class="details">
+                                <div class="category"><a href="category.html">Lifestyle</a></div>
+                                <h1><a href="single.html">Mauris elementum libero at pharetra auctor
+                                    Fusce ullamcorper
+                                    elit</a></h1>
+                                <div class="time">November 27, 2016</div>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="item">
+                        <article class="featured">
+                            <div class="overlay"></div>
+                            <figure>
+                                <img src="css/user/images/mainImg07.jpg" alt="Sample Article">
                             </figure>
                             <div class="details">
                                 <div class="category"><a href="category.html">Lifestyle</a></div>
@@ -281,6 +326,7 @@
                             </ol>
                         </div>
                     </div>
+                    <h4>${recommendBestList}</h4>
                     <div class="col-md-6 col-sm-6">
                         <h1 class="title-col">
                             Hot Post
@@ -293,128 +339,27 @@
                                 </div>
                             </div>
                         </h1>
+                        
                         <div class="body-col vertical-slider" data-max="4" data-nav="#hot-news-nav"
                              data-item="article">
-                            <article class="article-mini">
-                                <div class="inner">
-                                    <figure>
-                                        <a href="single.html">
-                                            <img src="css/user/images/news/img09.jpg"
-                                                 alt="Sample Article">
-                                        </a>
-                                    </figure>
-                                    <div class="padding">
-                                        <h1><a href="single.html">Duis aute irure dolor in reprehenderit
-                                            in voluptate
-                                            velit</a></h1>
-                                        <div class="detail">
-                                            <div class="category"><a href="category.html">Lifestyle</a>
+                             <c:forEach items="${recommendBestList}" var="recommendBestData">
+                                <article class="article-mini">
+                                    <div class="inner">
+                                        <figure>
+                                            <a href="single.html">
+                                                <img src="postImg/${recommendBestData.postImgName}" alt="Sample Article">
+                                            </a>
+                                        </figure>
+                                        <div class="padding">
+                                            <h1><a href="single.html">${recommendBestData.postTitle}</a></h1>
+                                            <div class="detail">
+                                                <div class="category"><a href="category.html">${recommendBestData.postCategory}</a></div>
+                                                <div class="time">${recommendBestData.postDate}</div>
                                             </div>
-                                            <div class="time">December 22, 2016</div>
                                         </div>
                                     </div>
-                                </div>
-                            </article>
-                            <article class="article-mini">
-                                <div class="inner">
-                                    <figure>
-                                        <a href="single.html">
-                                            <img src="css/user/images/news/img01.jpg"
-                                                 alt="Sample Article">
-                                        </a>
-                                    </figure>
-                                    <div class="padding">
-                                        <h1><a href="single.html">Duis aute irure dolor in reprehenderit
-                                            in voluptate
-                                            velit</a></h1>
-                                        <div class="detail">
-                                            <div class="category"><a href="category.html">Lifestyle</a>
-                                            </div>
-                                            <div class="time">December 22, 2016</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-                            <article class="article-mini">
-                                <div class="inner">
-                                    <figure>
-                                        <a href="single.html">
-                                            <img src="css/user/images/news/img05.jpg"
-                                                 alt="Sample Article">
-                                        </a>
-                                    </figure>
-                                    <div class="padding">
-                                        <h1><a href="single.html">Duis aute irure dolor in reprehenderit
-                                            in voluptate
-                                            velit</a></h1>
-                                        <div class="detail">
-                                            <div class="category"><a href="category.html">Lifestyle</a>
-                                            </div>
-                                            <div class="time">December 22, 2016</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-                            <article class="article-mini">
-                                <div class="inner">
-                                    <figure>
-                                        <a href="single.html">
-                                            <img src="css/user/images/news/img02.jpg"
-                                                 alt="Sample Article">
-                                        </a>
-                                    </figure>
-                                    <div class="padding">
-                                        <h1><a href="single.html">Fusce ullamcorper elit at felis cursus
-                                            suscipit</a>
-                                        </h1>
-                                        <div class="detail">
-                                            <div class="category"><a href="category.html">Travel</a>
-                                            </div>
-                                            <div class="time">December 21, 2016</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-                            <article class="article-mini">
-                                <div class="inner">
-                                    <figure>
-                                        <a href="single.html">
-                                            <img src="css/user/images/news/img13.jpg"
-                                                 alt="Sample Article">
-                                        </a>
-                                    </figure>
-                                    <div class="padding">
-                                        <h1><a href="single.html">Duis aute irure dolor in reprehenderit
-                                            in voluptate
-                                            velit</a></h1>
-                                        <div class="detail">
-                                            <div class="category"><a
-                                                    href="category.html">International</a></div>
-                                            <div class="time">December 20, 2016</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-                            <article class="article-mini">
-                                <div class="inner">
-                                    <figure>
-                                        <a href="single.html">
-                                            <img src="css/user/images/news/img08.jpg"
-                                                 alt="Sample Article">
-                                        </a>
-                                    </figure>
-                                    <div class="padding">
-                                        <h1><a href="single.html">Aliquam et metus convallis tincidunt
-                                            velit ut rhoncus
-                                            dolor</a></h1>
-                                        <div class="detail">
-                                            <div class="category"><a href="category.html">Computer</a>
-                                            </div>
-                                            <div class="time">December 19, 2016</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
+                                </article>
+                            </c:forEach>
                         </div>
                     </div>
                 </div>

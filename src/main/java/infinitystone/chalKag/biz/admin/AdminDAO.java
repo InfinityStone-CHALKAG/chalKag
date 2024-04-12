@@ -18,7 +18,7 @@ public class AdminDAO {
 
   // (관리자)연령별 가입자 수.안승준
   private static final String SELECTALL_SIGNUPCOUNTBYAGEGROUP = "SELECT FLOOR(TIMESTAMPDIFF(YEAR, STR_TO_DATE(MEMBER_birth, '%Y-%m-%d'), NOW()) / 10) * 10 AS AGEGROUP, "
-      + "COUNT(*) AS SIGNUPCOUNT " + "FROM MEMBER " + "WHERE MEMBER_grade = 'USER' " + "GROUP BY AGEGROUP "
+      + "COUNT(*) AS SIGNUPCOUNT " + "FROM MEMBER " + "WHERE MEMBER_grade != 'ADMIN' " + "GROUP BY AGEGROUP "
       + "ORDER BY AGEGROUP ";
 
   // (관리자)월 날짜별 로그인 수.안승준
@@ -34,7 +34,7 @@ public class AdminDAO {
       "COALESCE(COUNT(MEMBER.MEMBER_id), 0) AS SIGNINCOUNT " +
       "FROM DATERANGE " +
       "LEFT JOIN SIGNINLOG ON DATE(SIGNINLOG.SIGNINLOG_date) = DATERANGE.DATE " +
-      "LEFT JOIN MEMBER ON SIGNINLOG.MEMBER_id = MEMBER.MEMBER_id AND MEMBER.MEMBER_grade = 'USER' " +
+      "LEFT JOIN MEMBER ON SIGNINLOG.MEMBER_id = MEMBER.MEMBER_id AND MEMBER.MEMBER_grade != 'ADMIN' " +
       "GROUP BY DATE " +
       "ORDER BY DATE";
 
@@ -58,7 +58,7 @@ public class AdminDAO {
   private static final String SELECTALL_SIGNUPCOUNTBYYEAR = "SELECT YEAR(MEMBER_signupdate) AS YEAR, " +
       "COUNT(MEMBER_id) AS SIGNUPCOUNT " +
       "FROM MEMBER " +
-      "WHERE MEMBER_grade = 'USER' " +
+      "WHERE MEMBER_grade != 'ADMIN' " +
       "GROUP BY YEAR(MEMBER_signupdate) " +
       "ORDER BY YEAR(MEMBER_signupdate)";
 
@@ -68,7 +68,7 @@ public class AdminDAO {
   private static final String SELECTONE_SIGNUPCOUNTBYGENDERGROUP = "SELECT SUM(CASE WHEN MEMBER_gender = 'male' THEN 1 ELSE 0 END) AS MALEGROUP, "
       + "SUM(CASE WHEN MEMBER_gender = 'female' THEN 1 ELSE 0 END) AS FEMALEGROUP "
       + "FROM MEMBER "
-      + "WHERE MEMBER_grade = 'USER'";
+      + "WHERE MEMBER_grade != 'ADMIN'";
 
 // 관리자 메인 페이지 상단 정보 출력 쿼리
   private static final String SELECTONE_ADMINHEADER = "SELECT COALESCE((SELECT SUM(AMOUNT) " +
