@@ -9,8 +9,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import infinitystone.chalKag.biz.comment.CommentDTO;
 import infinitystone.chalKag.biz.comment.CommentService;
+import infinitystone.chalKag.biz.freePost.FreePostDTO;
+import infinitystone.chalKag.biz.freePost.FreePostService;
 import infinitystone.chalKag.biz.headHuntPost.HeadHuntPostDTO;
 import infinitystone.chalKag.biz.headHuntPost.HeadHuntPostService;
+import infinitystone.chalKag.biz.jobHuntPost.JobHuntPostDTO;
+import infinitystone.chalKag.biz.jobHuntPost.JobHuntPostService;
+import infinitystone.chalKag.biz.marketPost.MarketPostDTO;
+import infinitystone.chalKag.biz.marketPost.MarketPostService;
 import infinitystone.chalKag.biz.postImg.PostImgDTO;
 import infinitystone.chalKag.biz.postImg.PostImgService;
 import infinitystone.chalKag.biz.recommend.RecommendDTO;
@@ -35,8 +41,18 @@ public class HeadHuntPostSingleController {
 	@Autowired
 	private RecommendService recommendService;
 	
+	@Autowired
+	private JobHuntPostService jobHuntPostService;
+	
+	@Autowired
+	private FreePostService freePostService;
+	
+	@Autowired
+	private MarketPostService marketPostService;
+	
+	
 	@RequestMapping("/headHuntPostSingle")
-	public String headHuntPostList(HttpSession session, Model model, HeadHuntPostDTO headHuntPostDTO, CommentDTO commentDTO, PostImgDTO postImgDTO, RecommendDTO recommendDTO) {
+	public String headHuntPostList(HttpSession session, Model model, HeadHuntPostDTO headHuntPostDTO, CommentDTO commentDTO, PostImgDTO postImgDTO, RecommendDTO recommendDTO, MarketPostDTO marketPostDTO,JobHuntPostDTO jobHuntPostDTO, FreePostDTO freePostDTO) {
 
 		// headHuntPostDTO에 있는 정보로 게시글 내용 불러오기
 		headHuntPostDTO.setSearchCondition("headHuntPostSingle");
@@ -49,10 +65,27 @@ public class HeadHuntPostSingleController {
 		
 		recommendDTO.setMemberId((String)session.getAttribute("member"));
 	
-		
 		recommendDTO = recommendService.selectOne(recommendDTO);
+
+		HeadHuntPostDTO latedto = new HeadHuntPostDTO();
+		latedto.setSearchCondition("headHuntPostRecentPostSingle");
+		
+		HeadHuntPostDTO latestHeadHuntPost  = headHuntPostService.selectOne(latedto);
 		
 		
+	    // 최신 구직글
+	    jobHuntPostDTO.setSearchCondition("jobHuntPostRecentPostSingle");
+	    JobHuntPostDTO latestJobHuntPost = jobHuntPostService.selectOne(jobHuntPostDTO);
+	
+	    
+	    // 최신 판매글
+	    marketPostDTO.setSearchCondition("marketPostRecentPostSingle");
+	    MarketPostDTO latestMarketPost = marketPostService.selectOne(marketPostDTO);
+	  
+	   
+	    // 최신 자유글
+	    freePostDTO.setSearchCondition("freePostRecentPostSingle");
+	    FreePostDTO latestFreePost = freePostService.selectOne(freePostDTO);
 		
 		List<PostImgDTO> postImgList = postImgService.selectAll(postImgDTO);
 		List<CommentDTO> commentList = commentService.selectAll(commentDTO);
@@ -61,6 +94,10 @@ public class HeadHuntPostSingleController {
 		model.addAttribute("commentList", commentList);
 		model.addAttribute("postImgList", postImgList);
 		model.addAttribute("recommendInfo", recommendDTO);
+		model.addAttribute("latestHeadHuntPost", latestHeadHuntPost);
+	    model.addAttribute("latestJobHuntPost", latestJobHuntPost);
+	    model.addAttribute("latestMarketPost", latestMarketPost);
+	    model.addAttribute("latestFreePost", latestFreePost);
 
 		return "headHuntPost/headHuntPostSingle";
 	}

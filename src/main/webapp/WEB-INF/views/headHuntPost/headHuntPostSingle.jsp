@@ -72,7 +72,7 @@
 			<div class="container">
 				<div class="row">
 					<!-- 사이드 배너 태그 파일 호출 -->
-					<chalKagTags:webSider />
+					<chalKagTags:webHeadHuntPostSider />
 
 					<div class="col-md-8">
 						<article class="article main-article">
@@ -95,7 +95,8 @@
 										<c:if test="${member == headHuntPostSingle.memberId}">
 											<a href="/myPage?memberId=${headHuntPostSingle.memberId}">${headHuntPostSingle.memberNickname}</a>
 										</c:if>
-									</li>	
+									</li>
+									<li>View Count ${headHuntPostSingle.headHuntPostViewcnt}</li>		
 								</ul>
 							</header>
 						<div class="main">
@@ -147,6 +148,7 @@
 								<!-- 게시글 내용 출력 -->
 								<pre style="background: none; border: none; font-size: 15px; font-style: 'Malgun Gothic'; line-height: 210%;">${headHuntPostSingle.headHuntPostContent}</pre>
 							</div>
+							<!-- 게시글 추천 -->
 							<footer>
 								<div class="col" style="width:54.4%;">
 									<c:if test="${member == null}">

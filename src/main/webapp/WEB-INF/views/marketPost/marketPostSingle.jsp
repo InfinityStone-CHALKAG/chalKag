@@ -95,6 +95,7 @@
 											<a href="/myPage?memberId=${marketPostSingle.memberId}">${marketPostSingle.memberNickname}</a>
 										</c:if>
 									</li>	
+									<li>View Count ${marketPostSingle.marketPostViewcnt}</li>	
 								</ul>
 							</header>
 							<div class="main">

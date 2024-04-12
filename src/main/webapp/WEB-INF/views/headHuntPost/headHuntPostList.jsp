@@ -25,6 +25,7 @@ input[type="range"] {
 	<chalKagTags:webHeader />
 	<!-- End header tag로 출력 -->
 
+<input type="hidden" id="sessionId" value="${member}">
 
 	<!-- 필터 검색 용 메뉴 -->
 	<section class="search">
