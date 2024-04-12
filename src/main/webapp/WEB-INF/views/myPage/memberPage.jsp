@@ -242,6 +242,8 @@
                                class="btn btn-primary btn-sm" style="margin-left:61%">Report</a>
                         </c:if>
                         <c:if test="${sessionScope.member == null}">
+                            <a href="writeReport?reportSuspector=${memberInfo.memberId}"
+                               class="btn btn-primary btn-sm" style="margin-left:61%" onclick="checkSignIn(event)">Report</a>
                         </c:if>
 
                     </div>

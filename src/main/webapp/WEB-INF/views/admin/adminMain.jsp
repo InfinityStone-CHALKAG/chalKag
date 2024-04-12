@@ -427,7 +427,7 @@
                                                     <a href="#tab4">NM by Age</a>
                                                 </li>
                                                 <li class="tab__item">
-                                                    <a href="#tab5">NM by Gender</a>
+                                                    <a href="#tab5" id="genderGraph">NM by Gender</a>
                                                 </li>
                                             </ul><!-- 탭 내용 영역 -->
                                             <div class="tab__content-wrapper">
@@ -533,225 +533,229 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-4">
-                                                            <div class="card-body"
-                                                                id="signUpCountByGenderGroupBarContainer">
-                                                                <div class="row" style="margin-top: 20%; font-weight: 600;
+                                                            <div class="Icons">
+                                                                <div class="row" style="margin-top: 14%; font-weight: 600; margin-bottom:17%;
                                                                 font-size: 25px;"">
-                                                                    <span class="count float-left" style="
-                                                                    margin-left: 21%;">85</span>
-                                                                    <span style="margin-right: 10%;">%</span>
-                                                                    <span class="count float-left" style="
-                                                                    margin-left: 27%;">85</span>
-                                                                    <span style="margin-right: 10%;">%</span>
+                                                                    <span class="malePercent" id="malePercent"
+                                                                    name="percentage" style="
+                                                                    margin-left: 23%; margin-right:5.5%"></span>
+                                                                    <span style="margin-right: 10%;"
+                                                                        name="percentage">%</span>
+                                                                    <span class="malePercent" id="femalePercent"
+                                                                        name="percentage" style="
+                                                                    margin-left: 20.5%; margin-right:5.5%"></span>
+                                                                    <span style="margin-right: 10%;"
+                                                                        name="percentage">%</span>
                                                                 </div>
                                                                 <div class="row">
-                                                                    <img style="max-width: 23%;
+                                                                    <img style="max-width: 10%;
                                                             
                                                                 margin-right: 10%;
-                                                                margin-left: 14%;" alt="avatar"
+                                                                margin-left: 23%;" id="maleIcon" alt="avatar"
                                                                         src="css/admin/images/male_icon.png">
 
-                                                                    <img style="max-width: 23%;
+                                                                    <img style="max-width: 10%;
                                                        
                                                         margin-right: 10%;
-                                                        margin-left: 14%;" alt="avatar"
+                                                        margin-left: 25%;" id="femaleIcon"alt="avatar"
                                                                         src="css/admin/images/female_icon.png">
                                                                 </div>
                                                             </div>
+
+                                                        </div>
+                                                    </div> <!-- /.row -->
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="card-body"></div>
+                                    </div>
+                                </div>
+
+
+                                <!--  /Traffic -->
+                                <div class="clearfix"></div>
+                                <!-- Orders -->
+                                <div class="Rank">
+                                    <div class="row">
+                                        <div class="col-xl-8">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <h4 class="box-title">User Rank</h4>
+                                                </div>
+                                                <div class="card-body--">
+                                                    <div class="table-stats order-table ov-h">
+                                                        <table class="table ">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th style="width:12%;">Rank</th>
+                                                                    <th style="width:12%;">profile</th>
+                                                                    <th style="width:12%;">Lv</th>
+                                                                    <th style="width:20%;">EMAIL</th>
+                                                                    <th style="width:20%;">NICNAME</th>
+                                                                    <th style="width:12%;">Register Date</th>
+                                                                    <th style="width:12%;">GRADE</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <c:set var="counter" value="1" />
+                                                            <!-- 반복문을 통해 데이터를 삽입 -->
+                                                            <c:forEach items="${adminLevelRank}"
+                                                                var="adminLevelRankData">
+
+                                                                <tr>
+                                                                    <td>${counter}</td>
+                                                                    <td class="avatar">
+                                                                        <div class="round-img">
+                                                                            <img class="rounded-circle"
+                                                                                src="profileImg/${adminLevelRankData.profileImgName}"
+                                                                                alt=""
+                                                                                style="height: 45px; width: 45px;">
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>${adminLevelRankData.currentLevel}</td>
+                                                                    <td style="text-transform:none;">
+                                                                        ${adminLevelRankData.memberId}</td>
+                                                                    <td style="text-transform:none;">
+                                                                        ${adminLevelRankData.memberNickname}</td>
+                                                                    <td>${fn:substring(adminLevelRankData.signUpDate, 0,
+                                                                        10)}</td>
+                                                                    <c:if
+                                                                        test="${adminLevelRankData.memberGrade eq 'PREMIUM'}">
+                                                                        <td><span
+                                                                                class="badge badge-primary">${adminLevelRankData.memberGrade}</span>
+                                                                        </td>
+                                                                    </c:if>
+                                                                    <c:if
+                                                                        test="${adminLevelRankData.memberGrade ne 'PREMIUM'}">
+                                                                        <td><span
+                                                                                class="badge badge-secondary">${adminLevelRankData.memberGrade}</span>
+                                                                        </td>
+                                                                    </c:if>
+
+
+                                                                </tr>
+                                                                <c:set var="counter" value="${counter + 1}" />
+
+                                                            </c:forEach>
+                                                        </table>
+                                                    </div> <!-- /.table-stats -->
+                                                </div>
+                                            </div> <!-- /.card -->
+                                        </div> <!-- /.col-lg-8 -->
+
+                                        <div class="col-xl-4">
+
+
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <!-- <h4 class="box-title">Chandler</h4> -->
+                                                    <div class="calender-cont widget-calender">
+                                                        <div id="calendar"></div>
+                                                    </div>
+                                                </div>
+                                            </div><!-- /.card -->
+                                        </div>
+
+
+
+
+                                    </div> <!-- /.col-md-4 -->
+                                </div>
+                            </div>
+                            <!-- /.orders -->
+                            <!-- To Do and Live Chat -->
+                            <div class="row">
+
+
+                                <!-- /Calender Chart Weather -->
+                                <!-- Modal - Calendar - Add New Event -->
+                                <div class="modal fade none-border" id="event-modal">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-hidden="true">&times;</button>
+                                                <h4 class="modal-title"><strong>Add New Event</strong></h4>
+                                            </div>
+                                            <div class="modal-body"></div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default waves-effect"
+                                                    data-dismiss="modal">Close</button>
+                                                <button type="button"
+                                                    class="btn btn-success save-event waves-effect waves-light">Create
+                                                    event</button>
+                                                <button type="button"
+                                                    class="btn btn-danger delete-event waves-effect waves-light"
+                                                    data-dismiss="modal">Delete</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /#event-modal -->
+                                <!-- Modal - Calendar - Add Category -->
+                                <div class="modal fade none-border" id="add-category">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-hidden="true">&times;</button>
+                                                <h4 class="modal-title"><strong>Add a category </strong></h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <label class="control-label">Category Name</label>
+                                                            <input class="form-control form-white"
+                                                                placeholder="Enter name" type="text"
+                                                                name="category-name" />
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label class="control-label">Choose Category Color</label>
+                                                            <select class="form-control form-white"
+                                                                data-placeholder="Choose a color..."
+                                                                name="category-color">
+                                                                <option value="success">Success</option>
+                                                                <option value="danger">Danger</option>
+                                                                <option value="info">Info</option>
+                                                                <option value="pink">Pink</option>
+                                                                <option value="primary">Primary</option>
+                                                                <option value="warning">Warning</option>
+                                                            </select>
                                                         </div>
                                                     </div>
-                                                </div> <!-- /.row -->
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default waves-effect"
+                                                    data-dismiss="modal">Close</button>
+                                                <button type="button"
+                                                    class="btn btn-danger waves-effect waves-light save-category"
+                                                    data-dismiss="modal">Save</button>
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div class="card-body"></div>
                                 </div>
+                                <!-- /#add-category -->
                             </div>
+                            <!-- .animated -->
+                        </div>
+                        <!-- /.content -->
 
-
-                            <!--  /Traffic -->
-                            <div class="clearfix"></div>
-                            <!-- Orders -->
-                            <div class="Rank">
+                        <div class="clearfix"></div>
+                        <!-- Footer -->
+                        <footer class="site-footer">
+                            <div class="footer-inner bg-white">
                                 <div class="row">
-                                    <div class="col-xl-8">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <h4 class="box-title">User Rank</h4>
-                                            </div>
-                                            <div class="card-body--">
-                                                <div class="table-stats order-table ov-h">
-                                                    <table class="table ">
-                                                        <thead>
-                                                            <tr>
-                                                                <th style="width:12%;">Rank</th>
-                                                                <th style="width:12%;">profile</th>
-                                                                <th style="width:12%;">Lv</th>
-                                                                <th style="width:20%;">EMAIL</th>
-                                                                <th style="width:20%;">NICNAME</th>
-                                                                <th style="width:12%;">Register Date</th>
-                                                                <th style="width:12%;">GRADE</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <c:set var="counter" value="1" />
-                                                        <!-- 반복문을 통해 데이터를 삽입 -->
-                                                        <c:forEach items="${adminLevelRank}" var="adminLevelRankData">
-
-                                                            <tr>
-                                                                <td>${counter}</td>
-                                                                <td class="avatar">
-                                                                    <div class="round-img">
-                                                                        <img class="rounded-circle"
-                                                                            src="profileImg/${adminLevelRankData.profileImgName}"
-                                                                            alt="" style="height: 45px; width: 45px;">
-                                                                    </div>
-                                                                </td>
-                                                                <td>${adminLevelRankData.currentLevel}</td>
-                                                                <td style="text-transform:none;">
-                                                                    ${adminLevelRankData.memberId}</td>
-                                                                <td style="text-transform:none;">
-                                                                    ${adminLevelRankData.memberNickname}</td>
-                                                                <td>${fn:substring(adminLevelRankData.signUpDate, 0,
-                                                                    10)}</td>
-                                                                <c:if
-                                                                    test="${adminLevelRankData.memberGrade eq 'PREMIUM'}">
-                                                                    <td><span
-                                                                            class="badge badge-primary">${adminLevelRankData.memberGrade}</span>
-                                                                    </td>
-                                                                </c:if>
-                                                                <c:if
-                                                                    test="${adminLevelRankData.memberGrade ne 'PREMIUM'}">
-                                                                    <td><span
-                                                                            class="badge badge-secondary">${adminLevelRankData.memberGrade}</span>
-                                                                    </td>
-                                                                </c:if>
-
-
-                                                            </tr>
-                                                            <c:set var="counter" value="${counter + 1}" />
-
-                                                        </c:forEach>
-                                                    </table>
-                                                </div> <!-- /.table-stats -->
-                                            </div>
-                                        </div> <!-- /.card -->
-                                    </div> <!-- /.col-lg-8 -->
-
-                                    <div class="col-xl-4">
-
-
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <!-- <h4 class="box-title">Chandler</h4> -->
-                                                <div class="calender-cont widget-calender">
-                                                    <div id="calendar"></div>
-                                                </div>
-                                            </div>
-                                        </div><!-- /.card -->
-                                    </div>
-
-                                    <h4>${signUpCountByYear}</h4>
-
-
-
-
-                                </div> <!-- /.col-md-4 -->
-                            </div>
-                        </div>
-                        <!-- /.orders -->
-                        <!-- To Do and Live Chat -->
-                        <div class="row">
-
-
-                            <!-- /Calender Chart Weather -->
-                            <!-- Modal - Calendar - Add New Event -->
-                            <div class="modal fade none-border" id="event-modal">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal"
-                                                aria-hidden="true">&times;</button>
-                                            <h4 class="modal-title"><strong>Add New Event</strong></h4>
-                                        </div>
-                                        <div class="modal-body"></div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default waves-effect"
-                                                data-dismiss="modal">Close</button>
-                                            <button type="button"
-                                                class="btn btn-success save-event waves-effect waves-light">Create
-                                                event</button>
-                                            <button type="button"
-                                                class="btn btn-danger delete-event waves-effect waves-light"
-                                                data-dismiss="modal">Delete</button>
-                                        </div>
+                                    <div class="col-sm-6">
+                                        Copyright &copy; 2023 - 2024 INFINITY STONE . ALL RIGHT RESERVED.
                                     </div>
                                 </div>
                             </div>
-                            <!-- /#event-modal -->
-                            <!-- Modal - Calendar - Add Category -->
-                            <div class="modal fade none-border" id="add-category">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal"
-                                                aria-hidden="true">&times;</button>
-                                            <h4 class="modal-title"><strong>Add a category </strong></h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form>
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <label class="control-label">Category Name</label>
-                                                        <input class="form-control form-white" placeholder="Enter name"
-                                                            type="text" name="category-name" />
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label class="control-label">Choose Category Color</label>
-                                                        <select class="form-control form-white"
-                                                            data-placeholder="Choose a color..." name="category-color">
-                                                            <option value="success">Success</option>
-                                                            <option value="danger">Danger</option>
-                                                            <option value="info">Info</option>
-                                                            <option value="pink">Pink</option>
-                                                            <option value="primary">Primary</option>
-                                                            <option value="warning">Warning</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default waves-effect"
-                                                data-dismiss="modal">Close</button>
-                                            <button type="button"
-                                                class="btn btn-danger waves-effect waves-light save-category"
-                                                data-dismiss="modal">Save</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- /#add-category -->
-                        </div>
-                        <!-- .animated -->
-                    </div>
-                    <!-- /.content -->
-
-                    <div class="clearfix"></div>
-                    <!-- Footer -->
-                    <footer class="site-footer">
-                        <div class="footer-inner bg-white">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    Copyright &copy; 2023 - 2024 INFINITY STONE . ALL RIGHT RESERVED.
-                                </div>
-                            </div>
-                        </div>
 
 
-
-                    </footer>
-                    <!-- /.site-footer -->
+                        </footer>
+                        <!-- /.site-footer -->
                     </div>
                     <!-- /#right-panel -->
                     <div id="dataContainer" data-signUpCountByAgeGroup='${signUpCountByAgeGroup}'
