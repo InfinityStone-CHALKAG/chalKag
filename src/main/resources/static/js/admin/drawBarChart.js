@@ -17,6 +17,18 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('year').value = currentYear; // 연도 초기값 설정
     document.getElementById('month').value = currentMonth; // 월 초기값 설정
 });
+ var maleCount = parseInt(signUpCountByGenderGroup.maleGroup);
+ var femaleCount = parseInt(signUpCountByGenderGroup.femaleGroup);
+         
+ var totalGenderCount = maleCount + femaleCount;
+         
+         var malePercentage = Math.round((maleCount / totalGenderCount) * 100);
+		var femalePercentage = Math.round((femaleCount / totalGenderCount) * 100);
+		console.log(malePercentage);
+		console.log(femalePercentage);
+		 // Display male and female percentages
+    $("#malePercent").text(malePercentage);
+    $("#femalePercent").text(femalePercentage);
 
 //year 사이드 그래프 
 
@@ -50,6 +62,73 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // 연결된 탭 내용 활성화
         $(href).addClass("active");
+       
+    // 이미지와 백분율을 처음 크기로 확대
+    $(".Icons img").css("transform", "scale(1)");
+    $("span[name='percentage']").css("transform", "scale(1)");
+
+    // 애니메이션 효과로 이미지와 백분율 확대
+    setTimeout(function() {
+      if (malePercentage > femalePercentage) {
+    // maleIcon scale을 2로 transition
+    $("#maleIcon").css({
+        "transition": "transform 3s ease-in-out",
+        "transform": "scale(2)"
+    });
+    // femaleIcon scale을 1.6로 transition
+    $("#femaleIcon").css({
+        "transition": "transform 3s ease-in-out",
+        "transform": "scale(1.6)"
+    });
+} else if (femalePercentage > malePercentage) {
+    // femaleIcon scale을 2로 transition
+    $("#femaleIcon").css({
+        "transition": "transform 3s ease-in-out",
+        "transform": "scale(2)"
+    });
+    // maleIcon scale을 1.6로 transition
+    $("#maleIcon").css({
+        "transition": "transform 3s ease-in-out",
+        "transform": "scale(1.6)"
+    });
+}
+
+        
+        $("span[name='percentage']").css({
+            "transition": "transform 3s ease-in-out",
+            "opacity": "1",
+            "transform": "scale(1.5)"
+        });
+    }, 100);
+    
+    
+// percentage 출력
+document.getElementById('malePercent').innerHTML = malePercentage;
+document.getElementById('femalePercent').innerHTML = femalePercentage;
+
+function animateNumber(id) {
+    // 초기값을 0으로 설정
+    $('#' + id).prop('Counter', 0).stop().animate({
+        Counter: $('#' + id).text()
+    }, {
+        duration: 3000,
+        easing: 'swing',
+        step: function (now) {
+            $(this).text(Math.ceil(now));
+        },
+        complete: function() {
+            // 애니메이션이 끝나면 Counter 속성을 다시 0으로 설정하여 초기화
+            $(this).prop('Counter', 0);
+        }
+    });
+}
+
+
+animateNumber('malePercent');
+animateNumber('femalePercent');
+    
+
+        
 
         // 이후 필요한 로직을 chartId와 함께 구현
         if (chartId == "signInCountByDayOfWeekBar") {
@@ -137,16 +216,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log(year);
 
             drawLineChart(chartId, year, signUpCount, max, "YEAR", "SIGNUPCOUNT");
-           
-            
-            var appendTab = $("#signUpCountByYearLineContainer");
-    
-        var title = signUpCountByYear[signUpCountByYear.length-1].year;
-        var yValue = signUpCountByYear[signUpCountByYear.length-1].signUpCount;
-       // 모든 signInCount 값을 더하여 총 합 구함
-         var avgValue = avgSignUpCount;
-          var percent = Math.round((yValue / totalYvalue) * 100);
-        	addDataToHTML(appendTab, title, yValue, percent, avgValue);
+         
         }
 
         //나이별 회원 수
@@ -404,5 +474,5 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 
-
 })(jQuery);
+
