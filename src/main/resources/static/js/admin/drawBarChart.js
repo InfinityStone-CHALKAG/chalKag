@@ -72,23 +72,23 @@ document.addEventListener('DOMContentLoaded', function() {
       if (malePercentage > femalePercentage) {
     // maleIcon scale을 2로 transition
     $("#maleIcon").css({
-        "transition": "transform 3s ease-in-out",
+        "transition": "transform 1.5s ease-in-out",
         "transform": "scale(2)"
     });
     // femaleIcon scale을 1.6로 transition
     $("#femaleIcon").css({
-        "transition": "transform 3s ease-in-out",
+        "transition": "transform 1.5s ease-in-out",
         "transform": "scale(1.6)"
     });
 } else if (femalePercentage > malePercentage) {
     // femaleIcon scale을 2로 transition
     $("#femaleIcon").css({
-        "transition": "transform 3s ease-in-out",
+        "transition": "transform 1.5s ease-in-out",
         "transform": "scale(2)"
     });
     // maleIcon scale을 1.6로 transition
     $("#maleIcon").css({
-        "transition": "transform 3s ease-in-out",
+        "transition": "transform 1.5s ease-in-out",
         "transform": "scale(1.6)"
     });
 }
@@ -111,7 +111,7 @@ function animateNumber(id) {
     $('#' + id).prop('Counter', 0).stop().animate({
         Counter: $('#' + id).text()
     }, {
-        duration: 3000,
+        duration: 1500,
         easing: 'swing',
         step: function (now) {
             $(this).text(Math.ceil(now));
