@@ -414,7 +414,7 @@ public class MarketPostDAO {
 	private static final String UPDATE = "UPDATE MARKETPOST SET MARKETPOST_PRICE = ? ,MARKETPOST_category = ? ,MARKETPOST_company = ? ,MARKETPOST_status = ? ,MARKETPOST_title = ? ,MARKETPOST_content = ? "
 									+ "	 WHERE "
 									+ "  MARKETPOST_id = ?";
-	private static final String UPDATE_VIEWCNT = "UPDATE MARKETOPOST SET MARKETPOST_viewcnt = (MARKETPOST_viewcnt+1) WHERE MARKETPOST_id=?";
+	private static final String UPDATE_VIEWCNT = "UPDATE MARKETPOST SET MARKETPOST_viewcnt = (MARKETPOST_viewcnt+1) WHERE MARKETPOST_id=?";
 	private static final String DELETE = "DELETE FROM MARKETPOST WHERE MARKETPOST_id=? ";
 
 	

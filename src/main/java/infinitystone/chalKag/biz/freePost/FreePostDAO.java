@@ -356,7 +356,7 @@ public class FreePostDAO {
 	private static final String UPDATE = "UPDATE FREEPOST SET FREEPOST_title=?, FREEPOST_content=? "
 										+ "	WHERE "
 										+ " FREEPOST_id = ? ";
-	private static final String UPDATE_VIEWCNT = "UPDATE BOARD SET FREEPOST_viewcnt = (FREEPOST_viewcnt+1) WHERE FREEPOST_id=? ";
+	private static final String UPDATE_VIEWCNT = "UPDATE FREEPOST SET FREEPOST_viewcnt = (FREEPOST_viewcnt+1) WHERE FREEPOST_id=? ";
 	private static final String DELETE = "DELETE FROM FREEPOST WHERE FREEPOST_id = ?";
 
 	 // 자유글 목록 출력
