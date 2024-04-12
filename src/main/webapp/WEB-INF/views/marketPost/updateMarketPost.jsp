@@ -28,7 +28,7 @@
 							onsubmit="return validateForm(event)"
 							enctype="multipart/form-data">
 							<!-- 글 번호 -->
-							<input type="hidden" name="headHuntPostId" value="${updateMarketPost.marketPostId}" />
+							<input type="hidden" name="marketPostId" value="${updateMarketPost.marketPostId}" />
 
 							<div class="form-group"
 								style="display: flex; justify-content: center; margin-bottom: 4%;">

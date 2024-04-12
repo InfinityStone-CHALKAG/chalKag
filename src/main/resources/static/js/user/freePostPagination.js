@@ -138,7 +138,7 @@ loadReviewData = function(loadPage) {
 		    }
 		    
 		      // 조건에 따른 이미지 경로 결정
-    		var imgSrc = freePostList.postImgName ? `/postImg/${freePostSingle.postImgName}` : '/postImg/postDefault.jpg';
+    		var imgSrc = freePostList.postImgName ? `/postImg/${freePostList.postImgName}` : '/postImg/postDefault.jpg';
             
                innerHTML +=  `
                	<article class="col-md-12 article-list">

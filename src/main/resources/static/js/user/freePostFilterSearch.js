@@ -91,7 +91,7 @@ function performAjaxRequest() {
         success: function(filterData) {
             // 성공 시, 응답 처리.  검색 결과를 화면에 표시
             if (filterData != null) { // filterDatas가 존재하는 경우
-                window.filteredData = filterData; // 서버에서 받은 데이터를 변수에 할당
+                window.filterData = filterData; // 서버에서 받은 데이터를 변수에 할당
                 isFiltered = true; // 데이터가 존재하므로 isFiltered를 true로 설정
                 loadReviewData(1);
             }
