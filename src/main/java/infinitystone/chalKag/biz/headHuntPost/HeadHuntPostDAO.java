@@ -299,7 +299,7 @@ public class HeadHuntPostDAO { // 구인 게시판 DAO
 		  + "	HEADHUNTPOST.HEADHUNTPOST_date, "
 		  + "	( "
 		  + "      SELECT "
-		  + "         CASE WHEN COUNT(*) > 0 THEN TRUE ELSE FALSE END"
+		  + "         CASE WHEN COUNT(*) > 0 THEN TRUE ELSE FALSE END "
 		  + "      FROM "
 		  + "         RECOMMEND "
 		  + "      WHERE "
@@ -509,7 +509,7 @@ public class HeadHuntPostDAO { // 구인 게시판 DAO
 		  }
 		  // 최신 게시글 출력
 		  else if (headHuntPostDTO.getSearchCondition().equals("headHuntPostRecentPostSingle")) {
-			  Object[] args = { headHuntPostDTO.getHeadHuntPostId(), headHuntPostDTO.getMemberId() };
+			  Object[] args = { headHuntPostDTO.getMemberId() };
 			  // SELECTONE_HEADHUNTPOSTRECNT 쿼리를 실행해 데이터베이스에 구인글 데이터를 불러옴
 			  result = jdbcTemplate.queryForObject(SELECTONE_HEADHUNTPOSTRECENT, args, new SelectOneHeadHuntPostRecentRowMapper());
 			  System.out.println("HeadHuntPostDAO(selectOne) Out로그 = [" + result + "]");
@@ -522,7 +522,7 @@ public class HeadHuntPostDAO { // 구인 게시판 DAO
 				  update(headHuntPostDTO);
 				  
 			  // SELECTONE_HEADHUNTPOSTSINGLE 쿼리를 실행해 데이터베이스에 구인글 데이터를 불러옴
-			  Object[] args = { headHuntPostDTO.getHeadHuntPostId(), headHuntPostDTO.getMemberId() };
+			  Object[] args = { headHuntPostDTO.getHeadHuntPostId()};
 			  result = jdbcTemplate.queryForObject(SELECTONE_HEADHUNTPOST, args, new SelectOneHeadHuntPostRowMapper());
 			  System.out.println("HeadHuntPostDAO(selectOne) Out로그 = [" + result + "]");
 			  return result;
