@@ -66,7 +66,7 @@
 		<div class="container">
 			<div class="row">
 				<!-- 사이드 배너 태그 파일 호출 -->
-				<chalKagTags:webSider />
+				<chalKagTags:webFreePostSider />
 
 				<div class="col-md-8">
 					<article class="article main-article">
@@ -86,7 +86,8 @@
 									</c:if> <c:if test="${member == freePostSingle.memberId}">
 										<a href="/myPage?memberId=${freePostSingle.memberId}">${freePostSingle.memberNickname}</a>
 									</c:if>
-								</li>	
+								</li>
+								<li>View Count ${freePostSingle.freePostViewcnt}</li>	
 							</ul>
 						</header>
 						<div class="main">

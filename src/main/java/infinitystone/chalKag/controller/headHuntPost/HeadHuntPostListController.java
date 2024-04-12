@@ -3,6 +3,8 @@ package infinitystone.chalKag.controller.headHuntPost;
 import com.google.gson.Gson;
 import infinitystone.chalKag.biz.headHuntPost.HeadHuntPostDTO;
 import infinitystone.chalKag.biz.headHuntPost.HeadHuntPostService;
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,13 +20,19 @@ public class HeadHuntPostListController {
   private HeadHuntPostService headHuntPostService;
 
   @RequestMapping("/headHuntPostList")
-  public String headHuntPostList(Model model, HeadHuntPostDTO headHuntPostDTO, Gson gson) {
+  public String headHuntPostList(HttpSession session, Model model, HeadHuntPostDTO headHuntPostDTO, Gson gson) {
 
     System.out.println("HeadHuntPostListController In로그");
+    
+    String memberId = (String)session.getAttribute("member");
+    if (memberId == null) {
+    	memberId = null;
+	}
+    headHuntPostDTO.setMemberId(memberId);
 
     headHuntPostDTO.setSearchCondition("headHuntPostList");
     String headHuntPostListResult = gson.toJson(headHuntPostService.selectAll(headHuntPostDTO));
-
+    
     headHuntPostDTO.setSearchCondition("headHuntPostPremium1MonthList");
     String PremiumHeadHuntPostList = gson.toJson(headHuntPostService.selectAll(headHuntPostDTO));
 

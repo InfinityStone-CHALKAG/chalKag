@@ -72,7 +72,7 @@
 			<div class="container">
 				<div class="row">
 					<!-- 사이드 배너 태그 파일 호출 -->
-					<chalKagTags:webSider />
+					<chalKagTags:webJobHuntPostSider />
 
 					<div class="col-md-8">
 						<article class="article main-article">
@@ -96,6 +96,7 @@
 											<a href="/myPage?memberId=${jobHuntPostSingle.memberId}">${jobHuntPostSingle.memberNickname}</a>
 										</c:if>
 									</li>	
+									<li>View Count ${jobHuntPostSingle.jobHuntPostViewcnt}</li>	
 								</ul>
 							</header>
 						<div class="main">

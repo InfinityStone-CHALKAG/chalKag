@@ -99,7 +99,7 @@
 								</c:if>
 							</h5>
 							<!-- 댓글 내용 출력 -->
-							<div class="description"
+							<div class="description" style="word-break: break-all;"
 								id="commentContent_${commentList.commentId}">${commentList.commentContent}</div>
 							<!-- 댓글 버튼들 수정, 삭제 버튼은 로그인한 유저가 작성자 본인일 경우에만 출력 답글 작성 버튼은 기본으로 출력 -->
 							<footer
@@ -542,7 +542,7 @@ function toggleReply(commentId) {
         	    	        '<h5 class="title">' + data[i].memberNickname +
         	    	        '<a href="/memberPage?memberId=' + data[i].memberId + '">' + data[i].memberId + '</a></h5>' +
         	    	        '<div class="time"></div>' +
-        	    	        '<div class="description" value="Update" id="replyContent_' + data[i].replyId + '">' + data[i].replyContent + '</div>' + 
+        	    	        '<div class="description" style="word-break: break-all;" value="Update" id="replyContent_' + data[i].replyId + '">' + data[i].replyContent + '</div>' + 
         	    	        '<div style="display: flex; flex-wrap: wrap; justify-content: flex-end;">' +
         	    	    	'<i class="ion-android-refresh" id="replyUpdateIcon_' + data[i].replyId + '" onclick="document.getElementById(\'replyUpdate_' + data[i].replyId + '\').click();" style="cursor: pointer; font-size: 25px; margin-right: 10px;"></i>' +
         	    	        '<input type="button" style="display: none;" id="replyUpdate_'+ data[i].replyId +'" style="width: 25%; margin-right: 10px;" value="Update" onclick="replyUpdate(' + data[i].replyId + ', \'' + data[i].replyContent + '\')">' +
@@ -559,7 +559,7 @@ function toggleReply(commentId) {
         	        	    	        '<h5 class="title">' + data[i].memberNickname +
         	        	    	        '<a href="/memberPage?memberId=' + data[i].memberId + '">' + data[i].memberId + '</a></h5>' +
         	        	    	        '<div class="time"></div>' +
-        	        	    	        '<div class="description" id="replyContent_' + data[i].replyId + '">' + data[i].replyContent + '</div>' +
+        	        	    	        '<div class="description" style="word-break: break-all;" id="replyContent_' + data[i].replyId + '">' + data[i].replyContent + '</div>' +
         	        	    	        '</div></div></div>';
         	    	        }
         	    	    
