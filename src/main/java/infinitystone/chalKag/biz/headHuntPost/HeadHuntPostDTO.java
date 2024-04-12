@@ -18,6 +18,7 @@ public class HeadHuntPostDTO { // 구인 게시판 DTO 생성.전미지
 	private String headHuntPostTitle;		// 구인글 제목
 	private String headHuntPostContent;		// 구인글 내용
 	private String headHuntPostViewcnt;		// 구인글 조회수
+	private int    myRecommend; 			// 로그인한 회원이 좋아요를 눌렀는지 체크 
 	
 	private String postId;					// 게시글 아이디
 	

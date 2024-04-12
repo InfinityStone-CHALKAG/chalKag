@@ -17,6 +17,8 @@ import infinitystone.chalKag.biz.marketPost.MarketPostDTO;
 import infinitystone.chalKag.biz.marketPost.MarketPostService;
 import infinitystone.chalKag.biz.member.MemberDTO;
 import infinitystone.chalKag.biz.member.MemberService;
+import infinitystone.chalKag.biz.recommend.RecommendDTO;
+import infinitystone.chalKag.biz.recommend.RecommendService;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -37,8 +39,12 @@ public class MainController {
   @Autowired
   private FreePostService freePostService;
 
+  @Autowired
+  private RecommendService recommendService;
+  
   @RequestMapping("/main")
-  public String main(MemberDTO memberDTO, HeadHuntPostDTO headHuntPostDTO, Model model, HttpSession session,MarketPostDTO marketPostDTO,JobHuntPostDTO jobHuntPostDTO,FreePostDTO freePostDTO) {
+  public String main(MemberDTO memberDTO, HeadHuntPostDTO headHuntPostDTO, Model model, HttpSession session,
+		  MarketPostDTO marketPostDTO,JobHuntPostDTO jobHuntPostDTO,FreePostDTO freePostDTO, RecommendDTO recommendDTO) {
 
     System.out.println("MainController In로그");
 
@@ -121,10 +127,17 @@ public class MainController {
     // 메인페이지 주간 베스트 글
     freePostDTO.setSearchCondition("freePostWeeklyBestList");
     model.addAttribute("freePostWeeklyBestList", freePostService.selectAll(freePostDTO));
+
+    //----------------------------------------------------
     
-
+    // 메인페이지 추천순 게시글 목록 출력 (게시판 통합. 8개 출력)
+ 
+    recommendDTO.setSearchCondition("recommendBestList");
+    List<RecommendDTO> recommendBestList = recommendService.selectAll(recommendDTO);
+    model.addAttribute("recommendBestList", recommendBestList);
+	
     System.out.println("MainController Out로그");
-
+	
     return "common/main";
   }
 }
