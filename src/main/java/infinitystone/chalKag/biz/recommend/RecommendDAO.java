@@ -19,8 +19,7 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 
 	// 메인 페이지 - 추천순 게시글 목록 출력 (게시판 통합. 8개 출력).전미지  
 	private static final String SELECTALL_RECOMMENDBEST = "SELECT "
-			  // 게시글의 데이터 중 가져올 정보를 선택하는 쿼리끝
-			+ " SELECT "
+			  // 게시글의 데이터 중 가져올 정보를 선택하는 쿼리 시작
 			+ "		CASE " // 게시글에 해당하는 카테고리 선택
 			+ "			WHEN HEADHUNTPOST.HEADHUNTPOST_id IS NOT NULL THEN 'HEADHUNTPOST' "
 			+ "       	WHEN JOBHUNTPOST.JOBHUNTPOST_id IS NOT NULL THEN 'JOBHUNTPOST' "
@@ -99,7 +98,7 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 			+ "			JOBHUNTPOST.JOBHUNTPOST_date,"
 			+ "			FREEPOST.FREEPOST_date, "
 			+ "			MARKETPOST.MARKETPOST_date "
-			+ "		), "
+			+ "		)"
 			+ "ORDER BY "
 			+ "		post_recommendCnt DESC " // 좋아요 수를 기준으로 내림차순 정렬 
 			+ "LIMIT 8 "; // 글을 8개만 가져오도록 설정
