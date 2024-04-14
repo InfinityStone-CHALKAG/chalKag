@@ -44,7 +44,7 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 	        + "			FREEPOST.FREEPOST_date, "
 	        + "			MARKETPOST.MARKETPOST_date "
 	        + "		) AS post_date, " // 각 게시글의 날짜를 선택
-	        + "		COUNT (RECOMMEND.POST_id) AS post_recommendCnt, " // 각 게시글의 좋아요 수를 합산
+	        + "		COUNT(RECOMMEND.POST_id) AS post_recommendCnt, " // 각 게시글의 좋아요 수를 합산
 	        + "			( " // 게시글의 대표 이미지 지정
 	        + "				SELECT "
 	        + "					POSTIMG.POSTIMG_name "  // 게시글 이미지 선택
@@ -113,7 +113,7 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 	        + "    	HEADHUNTPOST.HEADHUNTPOST_content, " 
 	        + "    	HEADHUNTPOST.HEADHUNTPOST_date, "
 	        + "    	HEADHUNTPOST.HEADHUNTPOST_viewcnt, "
-			+ "	( "
+			+ "		( "
 			+ "      SELECT "
 			+ "         CASE WHEN COUNT(*) > 0 THEN TRUE ELSE FALSE END"
 			+ "      FROM "
@@ -164,7 +164,7 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 			+ "      FROM "
 			+ "         RECOMMEND "
 			+ "      WHERE "
-			+ "         RECOMMEND.POST_id = HEADHUNTPOST.HEADHUNTPOST_id AND RECOMMEND.MEMBER_id = ? "
+			+ "         RECOMMEND.POST_id = JOBHUNTPOST.JOBHUNTPOST_id AND RECOMMEND.MEMBER_id = ? "
 			+ "  	 ) AS myRecommend, " // 로그인한 회원이 좋아요를 눌렀는지 체크
 	        + "		( " // 게시글의 좋아요 수를 합산
 	        + "		SELECT "
@@ -209,7 +209,7 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 			+ "      FROM "
 			+ "         RECOMMEND "
 			+ "      WHERE "
-			+ "         RECOMMEND.POST_id = HEADHUNTPOST.HEADHUNTPOST_id AND RECOMMEND.MEMBER_id = ? "
+			+ "         RECOMMEND.POST_id = FREEPOST.FREEPOST_id AND RECOMMEND.MEMBER_id = ? "
 			+ "  	 ) AS myRecommend, " // 로그인한 회원이 좋아요를 눌렀는지 체크
 	        + "		( " // 게시글의 좋아요 수를 합산
 	        + "		SELECT "
@@ -254,7 +254,7 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 			+ "      FROM "
 			+ "         RECOMMEND "
 			+ "      WHERE "
-			+ "         RECOMMEND.POST_id = HEADHUNTPOST.HEADHUNTPOST_id AND RECOMMEND.MEMBER_id = ? "
+			+ "         RECOMMEND.POST_id = MARKETPOST.MARKETPOST_id AND RECOMMEND.MEMBER_id = ? "
 			+ "  	 ) AS myRecommend, " // 로그인한 회원이 좋아요를 눌렀는지 체크+ "		( " // 게시글의 좋아요 수를 합산
 	        + "		SELECT "
 	        + "            COUNT(*) " // 해당 게시글에 대한 좋아요 수를 COUNT 함수를 사용해 합산
@@ -335,7 +335,7 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 			}
 			// 회원 페이지 - 특정 회원이 좋아요한 구인글 목록 출력
 			else if (recommendDTO.getSearchCondition().equals("headHuntPostRecommendList")) {
-				Object[] args = { recommendDTO.getMemberId() };
+				Object[] args = { recommendDTO.getMemberId(), recommendDTO.getMemberId()  };
 				result = (List<RecommendDTO>) jdbcTemplate.query(SELECTALL_HEADHUNTPOSTRECOMMEND, args, new HeadHuntPostRecommendRowMapper());
 				System.out.println("RecommendDAO(selectAll) Out로그 = [" + result + "]");
 				return result;
@@ -432,12 +432,12 @@ class RecommendBestRowMapper implements RowMapper<RecommendDTO> {
 		recommendDTO.setPostTitle(rs.getString("post_title")); 					// 게시글 제목
 		recommendDTO.setPostDate(rs.getString("post_date")); 					// 게시글 작성일
 		recommendDTO.setPostRecommendCnt(rs.getInt("post_recommendCnt"));		// 좋아요 수
-		recommendDTO.setPostImgName(rs.getString("post_imgname")); 				// 게시글 대표 이미지
+		recommendDTO.setPostImgName(rs.getString("POSTIMG_name")); 				// 게시글 대표 이미지
 		return recommendDTO; // recommendDTO에 저장된 데이터들을 반환	
 	}
 }
 
-/// 회원 페이지 - 특정 회원이 좋아요한 구인글 목록 출력 시 필요한 데이터를 저장할 RowMapper 클래스
+// 회원 페이지 - 특정 회원이 좋아요한 구인글 목록 출력 시 필요한 데이터를 저장할 RowMapper 클래스
 class HeadHuntPostRecommendRowMapper implements RowMapper<RecommendDTO> {
 	@Override // mapRow 메서드 오버라이드
 	public RecommendDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -457,7 +457,6 @@ class HeadHuntPostRecommendRowMapper implements RowMapper<RecommendDTO> {
 		return recommendDTO; // recommendDTO에 저장된 데이터들을 반환
 	}
 }
-
 
 // 회원 페이지 - 특정 회원이 좋아요한 구직글 목록 출력 시 필요한 데이터를 저장할 RowMapper 클래스.전미지 - 수정버전1
 class JobHuntPostRecommendRowMapper implements RowMapper<RecommendDTO> {

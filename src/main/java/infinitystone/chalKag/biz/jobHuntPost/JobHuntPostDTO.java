@@ -18,6 +18,7 @@ public class JobHuntPostDTO { // 구직글 게시판 DTO 생성.전미지
 	private String jobHuntPostTitle;		// 구직글 제목
 	private String jobHuntPostContent;		// 구직글 내용
 	private String jobHuntPostViewcnt;		// 구직글 조회수
+	private int    myRecommend; 			// 로그인한 회원이 좋아요를 눌렀는지 체크 
 	
 	private String postId;					// 게시글 아이디
 	

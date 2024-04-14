@@ -3,6 +3,8 @@ package infinitystone.chalKag.controller.jobHuntPost;
 import com.google.gson.Gson;
 import infinitystone.chalKag.biz.jobHuntPost.JobHuntPostDTO;
 import infinitystone.chalKag.biz.jobHuntPost.JobHuntPostService;
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,15 +17,19 @@ public class JobHuntPostListController {
 	private JobHuntPostService jobHuntPostService;
 
 	@RequestMapping("/jobHuntPostList")
-	public String jobHuntPostList(Model model, JobHuntPostDTO jobHuntPostDTO, Gson gson) {
+	public String jobHuntPostList(HttpSession session, Model model, JobHuntPostDTO jobHuntPostDTO, Gson gson) {
 
 		System.out.println("JobHuntPostListController In로그");
 
-		jobHuntPostDTO.setSearchCondition("jobHuntPostList");
-
+		 String memberId = (String)session.getAttribute("member");
+		    if (memberId == null) {
+		    	memberId = null;
+			}
+		    jobHuntPostDTO.setMemberId(memberId);
+		
+		    jobHuntPostDTO.setSearchCondition("jobHuntPostList");
+		
 		String jobHuntPostListResult = gson.toJson(jobHuntPostService.selectAll(jobHuntPostDTO));
-
-
 
 		model.addAttribute("jobHuntPostList", jobHuntPostListResult);
 

@@ -8,7 +8,7 @@ public class RecommendDTO {	// 게시글 좋아요 DTO 생성.전미지
 	private String postId;				// 게시글 아이디
 	private String memberId;			// 회원 아이디
 	private int	   recommendCnt;		// 좋아요수
-	private int    myRecommend; 			// 로그인한 회원이 좋아요를 눌렀는지 체크 
+	private int    myRecommend; 		// 로그인한 회원이 좋아요를 눌렀는지 체크 
 	private String postCategory; 		// 게시판 종류 (HEADHUNTPOST, JOBHUNTPOST, FREEPOST, MARKETPOST)
 	private String chalKagPostId; 		// 게시글 아이디 별칭
 	private String postTitle; 			// 제목 별칭 
@@ -43,4 +43,5 @@ public class RecommendDTO {	// 게시글 좋아요 DTO 생성.전미지
 	private String marketPostViewcnt; 	// 장터글 조회수	
 	
 	private String searchCondition;		// 검색 조건
+
 }

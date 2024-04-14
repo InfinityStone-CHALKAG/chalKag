@@ -2,40 +2,40 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="infinitystone.chalKag.biz.headHuntPost.IHeadHuntPostDAO">
 	<select id="selectAll" resultMap="headHuntPostMap">
-		   SELECT 
-      DISTINCT
-          HEADHUNTPOST.HEADHUNTPOST_id,
-          MEMBER.MEMBER_nickname,
-          HEADHUNTPOST.HEADHUNTPOST_title,
-          HEADHUNTPOST.HEADHUNTPOST_content,
-          HEADHUNTPOST.HEADHUNTPOST_date,
-          HEADHUNTPOST.HEADHUNTPOST_viewcnt,
-          ( 
-              SELECT 
-                  COUNT(*) 
-              FROM 
-                  RECOMMEND 
-              WHERE 
-                  RECOMMEND.POST_id = HEADHUNTPOST.HEADHUNTPOST_id
-          ) AS RECOMMEND_cnt, 
-          ( 
-              SELECT 
-                  POSTIMG.POSTIMG_name
-              FROM 
-                  POSTIMG 
-              WHERE 
-                  POSTIMG.POST_id = HEADHUNTPOST.HEADHUNTPOST_id
-              ORDER BY 
-                  POSTIMG.POSTIMG_id ASC 
-              LIMIT 1
-          ) AS POSTIMG_name 
-      FROM 
-          HEADHUNTPOST 
-      INNER JOIN 
-          MEMBER ON HEADHUNTPOST.MEMBER_id = MEMBER.MEMBER_id 
-      LEFT JOIN 
-          RECOMMEND ON HEADHUNTPOST.HEADHUNTPOST_id = RECOMMEND.POST_id 
-      WHERE 1=1
+        SELECT DISTINCT
+            'HeadHuntPost' AS POST_category,
+            HEADHUNTPOST.HEADHUNTPOST_id,
+            HEADHUNTPOST.MEMBER_id,
+            MEMBER.MEMBER_nickname,
+            HEADHUNTPOST.HEADHUNTPOST_title,
+            HEADHUNTPOST.HEADHUNTPOST_content,
+            HEADHUNTPOST.HEADHUNTPOST_date,
+            HEADHUNTPOST.HEADHUNTPOST_viewcnt,
+            (
+                SELECT CASE WHEN COUNT(*) > 0 THEN TRUE ELSE FALSE END
+                FROM RECOMMEND
+                WHERE RECOMMEND.POST_id = HEADHUNTPOST.HEADHUNTPOST_id AND RECOMMEND.MEMBER_id = #{memberId}
+            ) AS myRecommend,
+            (
+                SELECT COUNT(*)
+                FROM RECOMMEND
+                WHERE RECOMMEND.POST_id = HEADHUNTPOST.HEADHUNTPOST_id
+            ) AS RECOMMEND_cnt,
+            (
+                SELECT POSTIMG.POSTIMG_name
+                FROM POSTIMG
+                WHERE POSTIMG.POST_id = HEADHUNTPOST.HEADHUNTPOST_id
+                ORDER BY POSTIMG.POSTIMG_id ASC
+                LIMIT 1
+            ) AS POSTIMG_name
+        FROM
+            HEADHUNTPOST
+        INNER JOIN
+            MEMBER ON HEADHUNTPOST.MEMBER_id = MEMBER.MEMBER_id
+        LEFT JOIN
+            RECOMMEND ON HEADHUNTPOST.HEADHUNTPOST_id = RECOMMEND.POST_id
+        WHERE 1=1
+	
         <if test="searchField.equals('headHuntPostTitle')">
       	 AND HEADHUNTPOST.HEADHUNTPOST_title LIKE CONCAT('%', #{searchInput}, '%')
 	    </if>
@@ -69,9 +69,8 @@
 		</if>
 
    		
-		  ORDER BY HEADHUNTPOST.HEADHUNTPOST_date ${sortOrder == 'asc' ? 'ASC' : 'DESC'}
-  
-
+		  ORDER BY HEADHUNTPOST.HEADHUNTPOST_date ${sortOrder == 'asc' ? 'ASC' : 'DESC'}        
+        
 	</select>
 	<resultMap id="headHuntPostMap" type="infinitystone.chalKag.biz.headHuntPost.HeadHuntPostDTO">
 		<result column="HEADHUNTPOST_id" property="headHuntPostId" jdbcType="INTEGER" javaType="String"/>
@@ -82,6 +81,8 @@
 		<result column="HEADHUNTPOST_viewcnt" property="headHuntPostViewcnt" jdbcType="INTEGER" javaType="String"/>
 		<result column="POSTIMG_name" property="postImgName" jdbcType="VARCHAR" javaType="String"/>
 		<result column="RECOMMEND_cnt" property="recommendCnt" jdbcType="INTEGER" javaType="int"/>
+		<result column="myRecommend" property="myRecommend" jdbcType="INTEGER" javaType="int"/>
+		<result column="MEMBER_id" property="memberId" jdbcType="VARCHAR" javaType="String"/>
 		<!-- Add mappings for other properties -->
 	</resultMap>
 </mapper>
