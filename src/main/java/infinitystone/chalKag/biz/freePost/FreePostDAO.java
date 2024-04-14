@@ -21,7 +21,7 @@ public class FreePostDAO {
 	 // 프리미엄 회원이 작성한 자유글 출력 (최신글 2개만 출력).전미지
 	 private static final String SELECTALL_FREEPOSTPREMIUM = "SELECT "
 			  + "DISTINCT " // 중복 제거 함수
-			  + "	'FREEPost' AS POST_category, " // 게시판 카테고리 설정
+			  + "	'FreePost' AS POST_category, " // 게시판 카테고리 설정
 			  + "	FREEPOST.FREEPOST_id, "
 			  + "	FREEPOST.MEMBER_id, "
 			  + "	MEMBER.MEMBER_nickname, "
@@ -67,6 +67,14 @@ public class FreePostDAO {
 			  + "	FREEPOST.FREEPOST_title, "
 			  + "	FREEPOST.FREEPOST_content, "
 			  + "	FREEPOST.FREEPOST_date, "
+			  + "	( "
+			  + "      SELECT "
+			  + "         CASE WHEN COUNT(*) > 0 THEN TRUE ELSE FALSE END"
+			  + "      FROM "
+			  + "         RECOMMEND "
+			  + "      WHERE "
+			  + "         RECOMMEND.POST_id = FREEPOST.FREEPOST_id AND RECOMMEND.MEMBER_id = ? "
+			  + "  	 ) AS myRecommend, " // 로그인한 회원이 좋아요를 눌렀는지 중복 체크		 
 			  + "	( " // 게시글의 좋아요 수를 합산
 			  + "		SELECT "
 			  + "            COUNT(*) " // 해당 게시글에 대한 좋아요 수를 COUNT 함수를 사용해 합산
@@ -87,17 +95,15 @@ public class FreePostDAO {
 			  + "		LIMIT 1 " // 이미지를 1개만 가져오도록 설정
 			  + "	 ) AS POSTIMG_name " // 대표 이미지의 이름
 			  + "FROM "
-			  + "	FREEPOST " // 자유글 테이블
+			  + "	FREEPOST " // 구인글 테이블
 			  + "INNER JOIN  "
 			  + "	MEMBER ON FREEPOST.MEMBER_id = MEMBER.MEMBER_id " // 회원 정보와 INNER JOIN
 			  + "LEFT JOIN "
 			  + "	RECOMMEND ON FREEPOST.FREEPOST_id = RECOMMEND.POST_id " // 좋아요 정보와 LEFT JOIN
 			  + "WHERE "
 			  + "	FREEPOST.FREEPOST_date >= DATE_SUB(NOW(), INTERVAL 1 WEEK) "
-			  + "GROUP BY "
-			  + "	FREEPOST.FREEPOST_id "
 			  + "ORDER BY "
-			  + "	COUNT(RECOMMEND.POST_id) DESC, " // (1) 좋아요 수가 많은 순으로 정렬한 뒤
+			  + "	RECOMMEND_cnt DESC, " // (1) 좋아요 수가 많은 순으로 정렬한 뒤
 			  + "	FREEPOST.FREEPOST_date DESC " // (2) 다음 작성일이 최신인 순으로 정렬
 			  + "LIMIT 2 ";
 	 // 사용한 테이블 : 자유글 테이블, 회원 테이블, 좋아요 테이블, 게시글 이미지 테이블
@@ -110,7 +116,7 @@ public class FreePostDAO {
 	 
 // ----------------------------------------------------------------- 자유글 페이지 SELECTALL -----------------------------------------------------------------
 	 
- // 프리미엄 회원이 작성한지 한 달 이내의 글 목록 출력.전미지
+	// 프리미엄 회원이 작성한지 한 달 이내의 글 목록 출력.전미지
 	 private static final String SELECTALL_FREEPOSTPREMIUM1MONTH = "SELECT "
 			  + "DISTINCT " // 중복 제거 함수
 			  + "	'FREEPost' AS POST_category, " // 게시판 카테고리 설정
@@ -121,6 +127,14 @@ public class FreePostDAO {
 			  + "	FREEPOST.FREEPOST_content, "
 			  + "	FREEPOST.FREEPOST_date, "
 			  + "	FREEPOST.FREEPOST_viewcnt, "
+			  + "	( "
+			  + "      SELECT "
+			  + "         CASE WHEN COUNT(*) > 0 THEN TRUE ELSE FALSE END"
+			  + "      FROM "
+			  + "         RECOMMEND "
+			  + "      WHERE "
+			  + "         RECOMMEND.POST_id = FREEPOST.FREEPOST_id AND RECOMMEND.MEMBER_id = ? "
+			  + "  	 ) AS myRecommend, " // 로그인한 회원이 좋아요를 눌렀는지 중복 체크
 			  + "	( " // 대표 이미지 설정
 			  + "		SELECT "
 			  + "			POSTIMG.POSTIMG_name " // 게시글 이미지를 선택
@@ -141,7 +155,7 @@ public class FreePostDAO {
 			  + "            RECOMMEND.POST_id = FREEPOST.FREEPOST_id " // 게시글 아이디와 좋아요 테이블의 게시글 아이디가 동일한 것을 선택
 			  + "	) AS RECOMMEND_cnt " // 좋아요 수
 			  + "FROM "
-			  + "	FREEPOST " // 자유글 테이블
+			  + "	FREEPOST " // 구인글 테이블
 			  + "INNER JOIN "
 			  + "	MEMBER ON FREEPOST.MEMBER_id = MEMBER.MEMBER_id " // 회원 정보와 INNER JOIN
 			  + "LEFT JOIN "
@@ -151,16 +165,16 @@ public class FreePostDAO {
 			  + "	AND FREEPOST.FREEPOST_date >= DATE_SUB(NOW(), INTERVAL 1 MONTH) " // 작성일이 한 달 이내인 경우
 			  + "ORDER BY "
 			  + "   FREEPOST.FREEPOST_date DESC "; // 작성일을 기준으로 내림차순 정렬
-	 // 사용한 테이블 : 자유글 테이블, 회원 테이블, 좋아요 테이블, 게시글 이미지 테이블
-	 // 사용한 컬럼 (출력 내용) : 카테고리, 게시글 아이디, 회원 아이디, 회원 닉네임(회원 테이블), 제목, 내용, 작성일, 좋아요 수(좋아요 테이블), 대표 이미지 (게시글 이미지 테이블)
+	 // 사용한 테이블 : 구인글 테이블, 회원 테이블, 좋아요 테이블, 게시글 이미지 테이블
+	 // 사용한 컬럼 (출력 내용) : 카테고리, 게시글 아이디, 회원 아이디, 회원 닉네임(회원 테이블), 제목, 내용, 작성일, 좋아요 중복 체크, 좋아요 수(좋아요 테이블), 대표 이미지 (게시글 이미지 테이블)
 	 // 쿼리문 설명 :
-	 // INNER JOIN을 사용해 자유글 테이블과 회원 테이블을 연결하고, 또 다른 LEFT JOIN을 사용해 자유글 테이블과 좋아요 테이블을 연결
+	 // INNER JOIN을 사용해 구인글 테이블과 회원 테이블을 연결하고, 또 다른 LEFT JOIN을 사용해 구인글 테이블과 좋아요 테이블을 연결
 	 // 게시글 이미지는 테이블을 따로 나누었으며 서브 쿼리를 사용해 게시글 이미지 중 대표 이미지로 보여줄 이미지를 설정하고, 그 결과를 "POSTIMG_name"라는 별칭으로 반환	 
 	
 	// 자유글 목록 출력.전미지
-	  private static final String SELECTALL_FREEPOST = "SELECT "
+	 private static final String SELECTALL_FREEPOST = "SELECT "
 			  + "DISTINCT " // 중복 제거 함수
-			  + "	'FREEPost' AS POST_category, " // 게시판 카테고리 설정
+			  + "	'FreePost' AS POST_category, " // 게시판 카테고리 설정
 			  + "	FREEPOST.FREEPOST_id, "
 			  + "	FREEPOST.MEMBER_id, "
 			  + "	MEMBER.MEMBER_nickname, "
@@ -168,6 +182,14 @@ public class FreePostDAO {
 			  + "	FREEPOST.FREEPOST_content, "
 			  + "	FREEPOST.FREEPOST_date, "
 			  + "	FREEPOST.FREEPOST_viewcnt, "
+			  + "	( "
+			  + "      SELECT "
+			  + "         CASE WHEN COUNT(*) > 0 THEN TRUE ELSE FALSE END"
+			  + "      FROM "
+			  + "         RECOMMEND "
+			  + "      WHERE "
+			  + "         RECOMMEND.POST_id = FREEPOST.FREEPOST_id AND RECOMMEND.MEMBER_id = ? "
+			  + "  	 ) AS myRecommend, " // 로그인한 회원이 좋아요를 눌렀는지 중복 체크
 			  + "	( " // 게시글의 좋아요 수를 합산
 			  + "		SELECT "
 			  + "            COUNT(*) " // 해당 게시글에 대한 좋아요 수를 COUNT 함수를 사용해 합산
@@ -188,7 +210,7 @@ public class FreePostDAO {
 			  + "		LIMIT 1 " // 이미지를 1개만 가져오도록 설정
 			  + "	 ) AS POSTIMG_name " // 대표 이미지의 이름
 			  + "FROM "
-			  + "	FREEPOST " // 자유글 테이블
+			  + "	FREEPOST " // 구인글 테이블
 			  + "INNER JOIN "
 			  + "	MEMBER ON FREEPOST.MEMBER_id = MEMBER.MEMBER_id " // 회원 정보와 INNER JOIN
 			  + "LEFT JOIN "
@@ -205,7 +227,7 @@ public class FreePostDAO {
 	// ----------------------------------------------------------------- 회원 페이지 SELECTALL -----------------------------------------------------------------
 	  
 	  // 특정 회원이 작성한 자유글 목록 출력.전미지
-	  private static final String SELECTALL_FREEPOSTMEMBER = "SELECT "
+	 private static final String SELECTALL_FREEPOSTMEMBER = "SELECT "
 			  + "DISTINCT " // 중복 제거 함수		  
 			  + "	'FREEPost' AS POST_category, " // 게시판 카테고리 설정
 			  + "	FREEPOST.FREEPOST_id, "
@@ -214,6 +236,14 @@ public class FreePostDAO {
 			  + "	FREEPOST.FREEPOST_content, "
 			  + "	FREEPOST.FREEPOST_date, "
 			  + "	FREEPOST.FREEPOST_viewcnt, "
+			  + "	( "
+			  + "      SELECT "
+			  + "         CASE WHEN COUNT(*) > 0 THEN TRUE ELSE FALSE END"
+			  + "      FROM "
+			  + "         RECOMMEND "
+			  + "      WHERE "
+			  + "         RECOMMEND.POST_id = FREEPOST.FREEPOST_id AND RECOMMEND.MEMBER_id = ? "
+			  + "  	 ) AS myRecommend, " // 로그인한 회원이 좋아요를 눌렀는지 중복 체크
 			  + "	( " // 게시글의 좋아요 수를 합산
 			  + "		SELECT "
 			  + "            COUNT(*) " // 해당 게시글에 대한 좋아요 수를 COUNT 함수를 사용해 합산
@@ -234,7 +264,7 @@ public class FreePostDAO {
 			  + "		LIMIT 1 " // 이미지를 1개만 가져오도록 설정
 			  + "	 ) AS POSTIMG_name " // 대표 이미지의 이름
 			  + "FROM "
-			  + "	FREEPOST " // 자유글 테이블
+			  + "	FREEPOST " // 구인글 테이블
 			  + "INNER JOIN "
 			  + "	MEMBER ON FREEPOST.MEMBER_id = MEMBER.MEMBER_id " // 회원 정보와 INNER JOIN
 			  + "LEFT JOIN "
@@ -242,7 +272,7 @@ public class FreePostDAO {
 			  + "WHERE "
 			  + "	MEMBER.MEMBER_id = ? " // 조회할 회원의 아이디
 			  + "ORDER BY "
-			  + "	FREEPOST.FREEPOST_id DESC "; // 게시글 아이디를 기준으로 내림차순 정렬
+			  + "	FREEPOST.FREEPOST_id DESC";  // 게시글 아이디를 기준으로 내림차순 정렬
 	  // 사용한 테이블 : 자유글 테이블, 회원 테이블, 좋아요 테이블, 게시글 이미지 테이블
 	  // 사용한 컬럼 (출력 내용) : 카테고리, 자유글 아이디, 회원 닉네임(회원 테이블), 제목, 내용, 작성일, 조회수, 좋아요 수(좋아요 테이블), 대표 이미지(게시글 이미지 테이블)
 	  // 쿼리문 설명 :
@@ -257,15 +287,23 @@ public class FreePostDAO {
 	// selectOneByFreePostRecent
 	
 	// 메인 페이지 - 최신 게시글 1개 출력.전미지
-	 private static final String SELECTONE_FREEPOSTRECENT= "SELECT "
+	private static final String SELECTONE_FREEPOSTRECENT= "SELECT "
 			  + "DISTINCT " // 중복 제거 함수
-			  + "	'FreePost' AS POST_category, " // 게시판 카테고리 설정
+			  + "	'FREEPost' AS POST_category, " // 게시판 카테고리 설정
 			  + "	FREEPOST.FREEPOST_id, "	
 			  + "	FREEPOST.MEMBER_id, "
 			  + "	MEMBER.MEMBER_nickname, "
 			  + "	FREEPOST.FREEPOST_title, "
 			  + "	FREEPOST.FREEPOST_content, "
 			  + "	FREEPOST.FREEPOST_date, "
+			  + "	( "
+			  + "      SELECT "
+			  + "         CASE WHEN COUNT(*) > 0 THEN TRUE ELSE FALSE END "
+			  + "      FROM "
+			  + "         RECOMMEND "
+			  + "      WHERE "
+			  + "         RECOMMEND.POST_id = FREEPOST.FREEPOST_id AND RECOMMEND.MEMBER_id = ? "
+			  + "  	 ) AS myRecommend, " // 로그인한 회원이 좋아요를 눌렀는지 중복 체크
 			  + "	( " // 게시글의 좋아요 수를 합산
 			  + "		SELECT "
 			  + "            COUNT(*) " // 해당 게시글에 대한 좋아요 수를 COUNT 함수를 사용해 합산
@@ -293,7 +331,7 @@ public class FreePostDAO {
 			  + "	RECOMMEND ON FREEPOST.FREEPOST_id = RECOMMEND.POST_id " // 좋아요 정보와 LEFT JOIN
 			  + "ORDER BY "
 			  + "    FREEPOST.FREEPOST_date DESC " // 작성일을 기준으로 내림차순 정렬
-			  + "LIMIT 1 "; // 글을 1개만 가져오도록 설정
+			  + "LIMIT 1 ";// 글을 1개만 가져오도록 설정
   // 사용한 테이블 : 자유글 테이블, 회원 테이블, 좋아요 테이블, 게시글 이미지 테이블
   // 사용한 컬럼 (출력 내용) : 카테고리, 게시글 아이디, 회원 아이디, 회원 닉네임(회원 테이블), 제목, 내용, 작성일, 좋아요 수(좋아요 테이블), 대표 이미지(게시글 이미지 테이블)
   // 쿼리문 설명 :
@@ -373,27 +411,30 @@ public class FreePostDAO {
 			  }
 			  // 메인 페이지 - 주간 추천순 게시글 목록 출력
 			  else if (freePostDTO.getSearchCondition().equals("freePostWeeklyBestList")) {
-				  result = jdbcTemplate.query(SELECTALL_FREEPOSTWEEKLYBEST, new FreePostWeeklyBestRowMapper());
+				  Object[] args = { freePostDTO.getMemberId() };
+				  result = jdbcTemplate.query(SELECTALL_FREEPOSTWEEKLYBEST, args,new FreePostWeeklyBestRowMapper());
 				  System.out.println("FreePostDAO(selectAll) Out로그 = [" + result + "]");
 				  return result;
 			  }
 			  // 자유글 페이지 - 프리미엄 회원이 작성한지 한 달 이내의 글 목록 출력
 			  else if (freePostDTO.getSearchCondition().equals("freePostPremium1MonthList")) {
-				  result = jdbcTemplate.query(SELECTALL_FREEPOSTPREMIUM1MONTH, new FreePostPremium1MonthRowMapper());
+				  Object[] args = { freePostDTO.getMemberId() };
+				  result = jdbcTemplate.query(SELECTALL_FREEPOSTPREMIUM1MONTH, args,new FreePostPremium1MonthRowMapper());
 				  System.out.println("FreePostDAO(selectAll) Out로그 = [" + result + "]");
 				  return result;
 			  }		  
 			  // 자유글 페이지 - 자유글 전체 출력
 			  else if (freePostDTO.getSearchCondition().equals("freePostList")) {
-				  result = jdbcTemplate.query(SELECTALL_FREEPOST, new FreePostRowMapper());
+				  Object[] args = { freePostDTO.getMemberId() };
+				  result = jdbcTemplate.query(SELECTALL_FREEPOST, args,new FreePostRowMapper());
 				  System.out.println("FreePostDAO(selectAll) Out로그 = [" + result + "]");
 				  return result;
 			  }
 			  // 회원 페이지 - 특정 회원이 작성한 자유글 전체 출력
 			  else if (freePostDTO.getSearchCondition().equals("freePostMemberList")) {
-				  Object[] args = { freePostDTO.getMemberId()};
+				  Object[] args = { freePostDTO.getMemberId(), freePostDTO.getMemberId()};
 				  result = jdbcTemplate.query(SELECTALL_FREEPOSTMEMBER, args, new FreePostMemberRowMapper());
-				  System.out.println("HeadHuntPostDAO(selectAll) Out로그 = [" + result + "]");
+				  System.out.println("FREEPostDAO(selectAll) Out로그 = [" + result + "]");
 				  return result;
 			  }
 		  } catch (Exception e) { // 예외 발생 시
@@ -409,7 +450,6 @@ public class FreePostDAO {
 		  FreePostDTO result = null;
 		  System.out.println("freePostDAO(selectOne) In로그 = [" + freePostDTO + "]");
 		  try {
-			  Object[] args = { freePostDTO.getFreePostId() };
 			  // 게시글 이미지 저장 시 필요한 게시글 아이디의 최대값 가져오기
 			  if (freePostDTO.getSearchCondition().equals("maxPostId")) { // 게시글 작성 시 이미지에 들어갈 PostId 추가
 				  result = jdbcTemplate.queryForObject(SELECTONE_MAXPOSTID, new SelectOneMaxPostIdRowMapper());
@@ -418,14 +458,20 @@ public class FreePostDAO {
 			  }
 			  // 최신 게시글 출력
 			  else if (freePostDTO.getSearchCondition().equals("freePostRecentPostSingle")) {
-				  // SELECTONE_HEADHUNTPOST 쿼리를 실행해 데이터베이스에 자유글 데이터를 불러옴
-				  result = jdbcTemplate.queryForObject(SELECTONE_FREEPOSTRECENT, new SelectOneFreePostRecentRowMapper());
+				  Object[] args = { freePostDTO.getMemberId() };
+				  // SELECTONE_FREEPOST 쿼리를 실행해 데이터베이스에 자유글 데이터를 불러옴
+				  result = jdbcTemplate.queryForObject(SELECTONE_FREEPOSTRECENT, args,new SelectOneFreePostRecentRowMapper());
 				  System.out.println("FreePostDAO(selectOne) Out로그 = [" + result + "]");
 				  return result;
 			  }
 			  // 게시글 상세 보기 
 			  else if (freePostDTO.getSearchCondition().equals("freePostSingle")) {
-				  // SELECTONE_HEADHUNTPOSTSINGLE 쿼리를 실행해 데이터베이스에 자유글 데이터를 불러옴
+				  
+				  freePostDTO.setSearchCondition("freePostViewcntUpdate");
+				  update(freePostDTO);
+				  
+				  // SELECTONE_FREEPOSTSINGLE 쿼리를 실행해 데이터베이스에 자유글 데이터를 불러옴
+				  Object[] args = { freePostDTO.getFreePostId() };
 				  result = jdbcTemplate.queryForObject(SELECTONE_FREEPOST, args, new SelectOneFreePostRowMapper());
 				  System.out.println("FreePostDAO(selectOne) Out로그 = [" + result + "]");
 				  return result;
@@ -435,7 +481,7 @@ public class FreePostDAO {
 			  e.printStackTrace(); // 예외 내용 출력
 			  return null; // 예외 발생 시 null 반환
 		  }
-		  System.out.println("HeadHuntPostDAO(selectOne) Error로그 = [" + freePostDTO.getSearchCondition() + "]");
+		  System.out.println("FREEPostDAO(selectOne) Error로그 = [" + freePostDTO.getSearchCondition() + "]");
 		  return null; // 글 상세 출력 조건에 해당되지 않거나 처리되지 않은 경우 null 반환
 	  }
 
@@ -475,10 +521,10 @@ public class FreePostDAO {
 class FreePostPremiumRowMapper implements RowMapper<FreePostDTO> {
 	@Override // mapRow 메서드 오버라이드
 	public FreePostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
-		// ResultSet에 저장된 데이터를 HeadHuntPostDTO 객체에 매핑(저장)하는 메서드
+		// ResultSet에 저장된 데이터를 FREEPostDTO 객체에 매핑(저장)하는 메서드
 
-		FreePostDTO freePostDTO = new FreePostDTO(); // 새로운 HeadHuntPostDTO 객체 생성
-		// ResultSet에 저장된 데이터를 HeadHuntPostDTO 객체에 저장
+		FreePostDTO freePostDTO = new FreePostDTO(); // 새로운 FREEPostDTO 객체 생성
+		// ResultSet에 저장된 데이터를 FREEPostDTO 객체에 저장
 		freePostDTO.setPostCategory(rs.getString("POST_category"));            		// 카테고리
 		freePostDTO.setFreePostId(rs.getString("FREEPOST_id")); 			// 자유글 아이디
 		freePostDTO.setMemberId(rs.getString("MEMBER_id"));							// 회원 아이디
@@ -499,12 +545,13 @@ class FreePostWeeklyBestRowMapper implements RowMapper<FreePostDTO> {
 		FreePostDTO freePostDTO = new FreePostDTO(); // 새로운 freePostDTO 객체 생성
 		// ResultSet에 저장된 데이터를 freePostDTO 객체에 저장
 		freePostDTO.setPostCategory(rs.getString("POST_category"));            		// 카테고리
-		freePostDTO.setFreePostId(rs.getString("FREEPOST_id")); 			// 자유글 아이디
+		freePostDTO.setFreePostId(rs.getString("FREEPOST_id")); 			// 구인글 아이디
 		freePostDTO.setMemberId(rs.getString("MEMBER_id"));							// 회원 아이디
 		freePostDTO.setMemberNickname(rs.getString("MEMBER_nickname"));				// 회원 닉네임
 		freePostDTO.setFreePostTitle(rs.getString("FREEPOST_title")); 		// 제목
 		freePostDTO.setFreePostContent(rs.getString("FREEPOST_content")); 	// 내용
-		freePostDTO.setFreePostDate(rs.getString("FREEPOST_date")); 		// 자유글 작성일
+		freePostDTO.setFreePostDate(rs.getString("FREEPOST_date")); 		// 구인글 작성일
+		freePostDTO.setMyRecommend(rs.getInt("myRecommend")); 						// 좋아요 로그인한 회원이 좋아요를 눌렀는지 체크 
 		freePostDTO.setRecommendCnt(rs.getInt("RECOMMEND_cnt")); 					// 좋아요 수
 		freePostDTO.setPostImgName(rs.getString("POSTIMG_name"));					// 대표 이미지
 		return freePostDTO; // freePostDTO에 저장된 데이터들을 반환
@@ -520,15 +567,16 @@ class FreePostPremium1MonthRowMapper implements RowMapper<FreePostDTO> {
 		FreePostDTO freePostDTO = new FreePostDTO(); // 새로운 freePostDTO 객체 생성
 		// ResultSet에 저장된 데이터를 freePostDTO 객체에 저장
 		freePostDTO.setPostCategory(rs.getString("POST_category"));            		// 카테고리
-		freePostDTO.setFreePostId(rs.getString("FREEPOST_id")); 			// 자유글 아이디
+		freePostDTO.setFreePostId(rs.getString("FREEPOST_id")); 			// 구인글 아이디
 		freePostDTO.setMemberId(rs.getString("MEMBER_id"));							// 회원 아이디
 		freePostDTO.setMemberNickname(rs.getString("MEMBER_nickname"));				// 회원 닉네임
 		freePostDTO.setFreePostTitle(rs.getString("FREEPOST_title")); 		// 제목
 		freePostDTO.setFreePostContent(rs.getString("FREEPOST_content")); 	// 내용
 		freePostDTO.setFreePostDate(rs.getString("FREEPOST_date")); 		// 작성일
 		freePostDTO.setFreePostViewcnt(rs.getString("FREEPOST_viewcnt")); 	// 조회수
+		freePostDTO.setMyRecommend(rs.getInt("myRecommend")); 						// 좋아요 로그인한 회원이 좋아요를 눌렀는지 체크 
 		freePostDTO.setRecommendCnt(rs.getInt("RECOMMEND_cnt")); 					// 좋아요 수
-		freePostDTO.setPostImgName(rs.getString("POSTIMG_name"));					// 대표 이미지
+		freePostDTO.setPostImgName(rs.getString("POSTIMG_name"));				// 대표 이미지
 		return freePostDTO; // freePostDTO에 저장된 데이터들을 반환
 	}
 }
@@ -542,15 +590,16 @@ class FreePostRowMapper implements RowMapper<FreePostDTO> {
 		FreePostDTO freePostDTO = new FreePostDTO(); // 새로운 freePostDTO 객체 생성
 		// ResultSet에 저장된 데이터를 freePostDTO 객체에 저장
 		freePostDTO.setPostCategory(rs.getString("POST_category"));            		// 카테고리
-		freePostDTO.setFreePostId(rs.getString("FREEPOST_id")); 			// 자유글 아이디
+		freePostDTO.setFreePostId(rs.getString("FREEPOST_id")); 			// 구인글 아이디
 		freePostDTO.setMemberId(rs.getString("MEMBER_id"));							// 회원 아이디
 		freePostDTO.setMemberNickname(rs.getString("MEMBER_nickname"));				// 회원 닉네임
 		freePostDTO.setFreePostTitle(rs.getString("FREEPOST_title")); 		// 제목
 		freePostDTO.setFreePostContent(rs.getString("FREEPOST_content")); 	// 내용
 		freePostDTO.setFreePostDate(rs.getString("FREEPOST_date")); 		// 작성일
 		freePostDTO.setFreePostViewcnt(rs.getString("FREEPOST_viewcnt")); 	// 조회수
+		freePostDTO.setMyRecommend(rs.getInt("myRecommend")); 						// 좋아요 로그인한 회원이 좋아요를 눌렀는지 체크 
 		freePostDTO.setRecommendCnt(rs.getInt("RECOMMEND_cnt")); 					// 좋아요 수
-		freePostDTO.setPostImgName(rs.getString("POSTIMG_name"));					// 대표 이미지
+		freePostDTO.setPostImgName(rs.getString("POSTIMG_name"));						// 대표 이미지
 		return freePostDTO; // freePostDTO에 저장된 데이터들을 반환
 	}
 }
@@ -570,6 +619,7 @@ class FreePostMemberRowMapper implements RowMapper<FreePostDTO> {
 		freePostDTO.setFreePostContent(rs.getString("FREEPOST_content")); 	// 내용
 		freePostDTO.setFreePostDate(rs.getString("FREEPOST_date")); 		// 작성일
 		freePostDTO.setFreePostViewcnt(rs.getString("freePOST_viewcnt")); 	// 자유글 조회수
+		freePostDTO.setMyRecommend(rs.getInt("myRecommend")); 						// 좋아요 로그인한 회원이 좋아요를 눌렀는지 체크
 		freePostDTO.setRecommendCnt(rs.getInt("RECOMMEND_cnt")); 					// 좋아요 수
 		freePostDTO.setPostImgName(rs.getString("POSTIMG_name"));					// 대표 이미지
 		return freePostDTO; // freePostDTO에 저장된 데이터들을 반환
@@ -592,14 +642,33 @@ class SelectOneMaxPostIdRowMapper implements RowMapper<FreePostDTO> {
 	}
 }
 
+//메인 페이지 - 최신 게시글 목록 출력 RowMapper 클래스.전미지
+class SelectOneFreePostRecentRowMapper implements RowMapper<FreePostDTO> {
+	@Override // mapRow 메서드 오버라이드
+	public FreePostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+		// ResultSet에 저장된 데이터를 freePostDTO 객체에 매핑(저장)하는 메서드
 
+		FreePostDTO freePostDTO = new FreePostDTO(); // 새로운 freePostDTO 객체 생성
+		// ResultSet에 저장된 데이터를 freePostDTO 객체에 저장
+		freePostDTO.setPostCategory(rs.getString("POST_category"));            		// 카테고리
+		freePostDTO.setFreePostId(rs.getString("FREEPOST_id")); 			// 구인글 아이디
+		freePostDTO.setMemberId(rs.getString("MEMBER_id")); 						// 회원 아이디
+		freePostDTO.setMemberNickname(rs.getString("MEMBER_nickname")); 			// 회원 닉네임
+		freePostDTO.setFreePostTitle(rs.getString("FREEPOST_title")); 		// 제목
+		freePostDTO.setFreePostContent(rs.getString("FREEPOST_content"));	// 내용
+		freePostDTO.setFreePostDate(rs.getString("FREEPOST_date")); 		// 작성일
+		freePostDTO.setMyRecommend(rs.getInt("myRecommend")); 						// 좋아요 로그인한 회원이 좋아요를 눌렀는지 체크 
+		freePostDTO.setRecommendCnt(rs.getInt("RECOMMEND_cnt")); 					// 좋아요 수
+		freePostDTO.setPostImgName(rs.getString("POSTIMG_name"));					// 대표 이미지
+		return freePostDTO; // freePostDTO에 저장된 데이터들을 반환
+	}
+}
 
 
 class FreePostSelectOneRowMapper implements RowMapper<FreePostDTO> {
 
 	@Override
 	public FreePostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
-		// TODO Auto-generated method stub
 
 		FreePostDTO data = new FreePostDTO();
 
@@ -634,28 +703,8 @@ class FreePostPremiumSelectAllRowMapper implements RowMapper<FreePostDTO>{
 	
 }
 
-//메인 페이지 - 최신 게시글 목록 출력 RowMapper 클래스.전미지
-class SelectOneFreePostRecentRowMapper implements RowMapper<FreePostDTO> {
-	@Override // mapRow 메서드 오버라이드
-	public FreePostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
-		// ResultSet에 저장된 데이터를 freePostDTO 객체에 매핑(저장)하는 메서드
 
-		FreePostDTO freePostDTO = new FreePostDTO(); // 새로운 freePostDTO 객체 생성
-		// ResultSet에 저장된 데이터를 freePostDTO 객체에 저장
-		freePostDTO.setPostCategory(rs.getString("POST_category"));            		// 카테고리
-		freePostDTO.setFreePostId(rs.getString("FREEPOST_id")); 			// 자유글 아이디
-		freePostDTO.setMemberId(rs.getString("MEMBER_id")); 						// 회원 아이디
-		freePostDTO.setMemberNickname(rs.getString("MEMBER_nickname")); 			// 회원 닉네임
-		freePostDTO.setFreePostTitle(rs.getString("FREEPOST_title")); 		// 제목
-		freePostDTO.setFreePostContent(rs.getString("FREEPOST_content"));	// 내용
-		freePostDTO.setFreePostDate(rs.getString("FREEPOST_date")); 		// 작성일
-		freePostDTO.setRecommendCnt(rs.getInt("RECOMMEND_cnt")); 					// 좋아요 수
-		freePostDTO.setPostImgName(rs.getString("POSTIMG_name"));					// 대표 이미지
-		return freePostDTO; // freePostDTO에 저장된 데이터들을 반환
-	}
-}
-
-//자유글 페이지 - 자유글 상세 출력 시 필요한 데이터를 저장할 RowMapper 클래스.전미지
+//구인글 페이지 - 구인글 상세 출력 시 필요한 데이터를 저장할 RowMapper 클래스.전미지
 class SelectOneFreePostRowMapper implements RowMapper<FreePostDTO> {
 	@Override // mapRow 메서드 오버라이드
 	public FreePostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -664,7 +713,7 @@ class SelectOneFreePostRowMapper implements RowMapper<FreePostDTO> {
 		FreePostDTO freePostDTO = new FreePostDTO(); // 새로운 freePostDTO 객체 생성
 		// ResultSet에 저장된 데이터를 freePostDTO 객체에 저장
 		freePostDTO.setPostCategory(rs.getString("POST_category"));            		// 카테고리
-		freePostDTO.setFreePostId(rs.getString("FREEPOST_id")); 			// 자유글 아이디
+		freePostDTO.setFreePostId(rs.getString("FREEPOST_id")); 			// 구인글 아이디
 		freePostDTO.setMemberId(rs.getString("MEMBER_id")); 						// 회원 아이디
 		freePostDTO.setMemberNickname(rs.getString("MEMBER_nickname")); 			// 회원 닉네임
 		freePostDTO.setMemberIntroduction(rs.getString("MEMBER_introduction"));		// 회원 자기소개

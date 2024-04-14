@@ -12,40 +12,13 @@
 [type="radio"], span {
 	vertical-align: middle;
 }
-/* 필터 검색 버튼 css */
-[type="radio"] {
-	appearance: none;
-	border: max(2px, 0.1em) solid gray;
-	border-radius: 50%;
-	width: 1.25em;
-	height: 1.25em;
-	transition: border 0.5s ease-in-out;
+/* Min Max 스타일 */
+input[type='range']::-webkit-slider-thumb {
+	background-color: #F73F52;
 }
-/* 필터 검색 버튼 선택시 css */
-[type="radio"]:checked {
-	border: 0.4em solid #F73F52;
-}
-/* 라디오 버튼 요소에 대한 스타일 지정 css */
-[type="radio"]:focus-visible {
-	outline-offset: max(2px, 0.1em);
-	outline: max(2px, 0.1em) dotted #F73F52;
-}
-/* 라디오 버튼 hover css */
-[type="radio"]:hover {
-	box-shadow: 0 0 0 max(4px, 0.2em) lightgray;
-	cursor: pointer;
-}
-/* 체크버튼 css */
-[type="checkbox"] {
-	accent-color: red;
-}
-/* 범위 버튼 설정 css */
-[type="range"] {
-	accent-color: red;
-}
-/* 필터검색 p 태그 css */
-div .inner p {
-	margin-left: 5%;
+/* 범위 설정 css */
+input[type="range"] {
+	accent-color: #F73F52;
 }
 </style>
 
@@ -55,6 +28,8 @@ div .inner p {
 	<!-- Start header tag로 출력 -->
 	<chalKagTags:webHeader />
 	<!-- End header tag로 출력 -->
+	<input type="hidden" id="sessionId" value="${member}">
+
 
 	<!-- 필터 검색 용 메뉴 -->
 	<section class="search">
@@ -163,6 +138,13 @@ div .inner p {
 							</ul>
 						</div>
 						<!-- 페이징 끝 -->
+						
+						<br>
+							<button class="btn btn-primary btn-sm" id="filterReset"
+								style="font-size: 100%;">
+								<i class="ion-ios-refresh-empty" style="font-size: 15px;"></i>
+								FILTER RESET
+							</button>
 					</div>
 				</div>
 			</div>
@@ -215,5 +197,12 @@ div .inner p {
 	    });
 	}
 	</script>
+
+<script>
+	$('input[type=radio][name=freePostDate]').change(function() {
+		console.log("aaaaaaaaaaaaaaaaaaa")
+	});
+
+</script>
 </body>
 </html>

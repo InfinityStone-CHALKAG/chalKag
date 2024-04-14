@@ -17,18 +17,18 @@
 			<article class="article-fw">
 				<div class="inner">
 					<figure>
-                         <a href="headHuntPostSingle?headHuntPostId=${latestFreePost.headHuntPostId}">
+                         <a href="freePostSingle?freePostId=${latestFreePost.freePostId}">
                              <img class="latestPostImg" src="postImg/${latestFreePost.postImgName}">
                          </a>
                     </figure>
 					<div class="details">
 						<h1>
-							 <a href="headHuntPostSingle?headHuntPostId=${latestFreePost.headHuntPostId}">${latestFreePost.headHuntPostTitle}</a>
+							 <a href="freePostSingle?freePostId=${latestFreePost.freePostId}">${latestFreePost.freePostTitle}</a>
 						</h1>
-						 <p class="latestPostContent">${latestFreePost.headHuntPostContent}</p>
+						 <p class="latestPostContent">${latestFreePost.freePostContent}</p>
 						<div class="detail">
 							 <div class="time">${latestFreePost.memberNickname}</div>
-							 <div class="category"><a href="headHuntPostList">HEADHUNTPOST</a></div>
+							 <div class="category"><a href="freePostList">freePOST</a></div>
 						</div>
 					</div>
 				</div>
@@ -39,7 +39,7 @@
 				<div class="inner">
 					<figure>
 						<a
-							href="headHuntPostSingle?headHuntPostId=${latestheadHuntPost.headHuntPostId}">
+							href="headHuntPostSingle?headHuntPostId=${latestHeadHuntPost.headHuntPostId}">
 							<img class="latestPostImg"
 							src="postImg/${latestHeadHuntPost.postImgName}">
 						</a>
@@ -47,11 +47,11 @@
 					<div class="padding">
 						<h1>
 							<a
-								href="headHuntPostSingle?headHuntPostId=${latestHeadHuntPost.headHuntPostId}">${latestHeadHuntPost.headHuntPostTitle}</a>
+								href="headHuntPostSingle?headHuntPostId=${latestheadHuntPost.headHuntPostId}">${latestHeadHuntPost.headHuntPostTitle}</a>
 						</h1>
 						<div class="detail">
 							<div class="category">
-								<a href="headHuntPostList">HEADHUNTPOST</a>
+								<a href="headHuntPostList">headHuntPOST</a>
 							</div>
 							<div class="time">${latestHeadHuntPost.memberNickname}</div>
 						</div>
