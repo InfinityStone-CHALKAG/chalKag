@@ -326,7 +326,6 @@
                             </ol>
                         </div>
                     </div>
-                    <h4>${recommendBestList}</h4>
                     <div class="col-md-6 col-sm-6">
                         <h1 class="title-col">
                             Hot Post

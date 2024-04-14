@@ -45,6 +45,8 @@ public class IJobHuntPostServiceImpl implements IJobHuntPostService{  // 구인 
 		map.put("searchField", jobHuntPostDTO.getSearchField());					// 검색 키워드
 		map.put("searchInput", jobHuntPostDTO.getSearchInput());					// 검색어
 		
+		map.put("memberId", jobHuntPostDTO.getMemberId());							// 회원 아이디
+		
 		System.out.println("MAP" + map);
 		System.out.println("iJobHuntPostDAO.selectAll(map) :" + iJobHuntPostDAO.selectAll(map));// 검색 조건
 

@@ -170,7 +170,7 @@
                                         <div class="card-header">
                                             <strong>Report Details</strong>
                                         </div>
-                                        <div class="card-body card-block">
+                                        <div class="card-body card-block" style="width:102%;">
                                             <form id="reportStateHoldForm" action="reportStateHold" method="post"
                                                 class="form-horizontal">
                                                 <!-- reportState를 HOLD로 바꾸기 위한 hidden value 제출-->
@@ -202,8 +202,7 @@
                                                             style="font-weight: bold;" readonly></div>
                                                 </div>
                                                 <div class="row form-group">
-                                                    <div class="col col-md-3"><strong class=" form-control-label"
-                                                            style="font-size:15px;">Suspector Nickname</Strong></div>
+                                                    <div class="col col-md-3" style="padding-right:0%;"><strong class=" form-control-label">Suspector Nickname</Strong></div>
                                                     <div class="col-12 col-md-9"><input type="email" id="memberNickname"
                                                             name="memberNickname" class="form-control"
                                                             value="${reportSingle.suspectorNickname}"
@@ -292,10 +291,7 @@
                         <div class="footer-inner bg-white">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    Copyright &copy; 2018 Ela Admin
-                                </div>
-                                <div class="col-sm-6 text-right">
-                                    Designed by <a href="https://colorlib.com">Colorlib</a>
+                                    Copyright &copy; 2023 - 2024 INFINITY STONE . ALL RIGHT RESERVED.
                                 </div>
                             </div>
                         </div>

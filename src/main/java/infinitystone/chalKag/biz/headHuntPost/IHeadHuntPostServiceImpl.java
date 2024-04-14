@@ -45,6 +45,8 @@ public class IHeadHuntPostServiceImpl implements IHeadHuntPostService { // 구�
 		map.put("searchField", headHuntPostDTO.getSearchField());					// 검색 키워드
 		map.put("searchInput", headHuntPostDTO.getSearchInput());					// 검색어
 		
+		map.put("memberId", headHuntPostDTO.getMemberId());							// 회원 아이디
+		
 		System.out.println("MAP" + map);
 		System.out.println("iHeadHuntPostDAO.selectAll(map) :" + iHeadHuntPostDAO.selectAll(map));// 검색 조건
 		

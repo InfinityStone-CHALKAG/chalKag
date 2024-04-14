@@ -151,15 +151,15 @@
                         }
 
                         #bootstrap-data-table th:nth-child(5) {
-                            width: 14% !important;
+                            width: 16% !important;
                         }
 
                         #bootstrap-data-table th:nth-child(6) {
-                            width: 37% !important;
+                            width: 34% !important;
                         }
 
                         #bootstrap-data-table th:nth-child(7) {
-                            width: 6% !important;
+                            width: 7% !important;
                         }
 
                         #bootstrap-data-table th:nth-child(8) {
@@ -361,10 +361,7 @@
                             <div class="footer-inner bg-white">
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        Copyright &copy; 2018 Ela Admin
-                                    </div>
-                                    <div class="col-sm-6 text-right">
-                                        Designed by <a href="https://colorlib.com">Colorlib</a>
+                                        Copyright &copy; 2023 - 2024 INFINITY STONE . ALL RIGHT RESERVED.
                                     </div>
                                 </div>
                             </div>
