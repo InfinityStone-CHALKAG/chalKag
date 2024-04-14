@@ -4,6 +4,7 @@ var signInCountByYearMonthDate = JSON.parse(dataContainer.getAttribute("data-sig
 var signUpCountByYear = JSON.parse(dataContainer.getAttribute("data-signUpCountByYear"));
 var signUpCountByAgeGroup = JSON.parse(dataContainer.getAttribute("data-signUpCountByAgeGroup"));
 var signUpCountByGenderGroup = JSON.parse(dataContainer.getAttribute("data-signUpCountByGenderGroup"));
+console.log(signUpCountByAgeGroup);
 
 // 현재 날짜 객체 생성
 var currentDate = new Date();
@@ -23,10 +24,8 @@ document.addEventListener('DOMContentLoaded', function() {
  var totalGenderCount = maleCount + femaleCount;
          
          var malePercentage = Math.round((maleCount / totalGenderCount) * 100);
-		var femalePercentage = Math.round((femaleCount / totalGenderCount) * 100);
-		console.log(malePercentage);
-		console.log(femalePercentage);
-		 // Display male and female percentages
+		var femalePercentage = 100 - malePercentage;
+		
     $("#malePercent").text(malePercentage);
     $("#femalePercent").text(femalePercentage);
 
@@ -72,30 +71,30 @@ document.addEventListener('DOMContentLoaded', function() {
       if (malePercentage > femalePercentage) {
     // maleIcon scale을 2로 transition
     $("#maleIcon").css({
-        "transition": "transform 1.5s ease-in-out",
+        "transition": "transform 1s ease-in-out",
         "transform": "scale(2)"
     });
     // femaleIcon scale을 1.6로 transition
     $("#femaleIcon").css({
-        "transition": "transform 1.5s ease-in-out",
+        "transition": "transform 1s ease-in-out",
         "transform": "scale(1.6)"
     });
 } else if (femalePercentage > malePercentage) {
     // femaleIcon scale을 2로 transition
     $("#femaleIcon").css({
-        "transition": "transform 1.5s ease-in-out",
+        "transition": "transform 1s ease-in-out",
         "transform": "scale(2)"
     });
     // maleIcon scale을 1.6로 transition
     $("#maleIcon").css({
-        "transition": "transform 1.5s ease-in-out",
+        "transition": "transform 1s ease-in-out",
         "transform": "scale(1.6)"
     });
 }
 
         
         $("span[name='percentage']").css({
-            "transition": "transform 3s ease-in-out",
+            "transition": "transform 1s ease-in-out",
             "opacity": "1",
             "transform": "scale(1.5)"
         });
@@ -111,7 +110,7 @@ function animateNumber(id) {
     $('#' + id).prop('Counter', 0).stop().animate({
         Counter: $('#' + id).text()
     }, {
-        duration: 1500,
+        duration: 1000,
         easing: 'swing',
         step: function (now) {
             $(this).text(Math.ceil(now));
@@ -224,14 +223,30 @@ animateNumber('femalePercent');
 
             var ageGroup = ["10", "20", "30", "40", "50", "60"];
             var signUpCount = new Array(6).fill(0); // signUpCount 배열을 0으로 초기화
+            var signUpPercentage = new Array(6).fill(0);
+            var totalSignUpCount = 0;
 
-
+            
             signUpCountByAgeGroup.forEach(function(item) {
-                var index = ageGroup.indexOf(item.ageGroup);
-                if (index !== -1) {
-                    signUpCount[index] = parseInt(item.signUpCount); // parseInt를 사용하여 문자열을 숫자로 변환
-                }
+                totalSignUpCount += parseInt(item.signUpCount);
             });
+            console.log("totalSignUpCount :" + totalSignUpCount);
+            
+
+     signUpCountByAgeGroup.forEach(function(item, idx) {
+    var index = ageGroup.indexOf(item.ageGroup);
+    if (index !== -1) {
+        signUpCount[index] = parseInt(item.signUpCount);
+        signUpPercentage[index] = Math.round((parseInt(item.signUpCount) / totalSignUpCount) * 100);
+        if (idx === signUpCountByAgeGroup.length - 1) {
+            // 마지막 인덱스인 경우
+            var sum = signUpPercentage.slice(0, 5).reduce((acc, val) => acc + val, 0);
+            signUpPercentage[index] = 100 - sum;
+        }
+    }
+});
+
+console.log("[로그]" + signUpPercentage);
 
             // 최대값 찾기
             var maxSignUpCount = Math.max(...signUpCount);
@@ -254,6 +269,81 @@ animateNumber('femalePercent');
                     stepSize: 10
                 }
             )
+         
+          
+            
+      /*      
+           	 percentage_10 =  Math.round((signUpCountByAgeGroup[0].signUpCount / totalSignUpCount) * 100);
+             percentage_20 = Math.round((signUpCountByAgeGroup[1].signUpCount / totalSignUpCount) * 100);
+             percentage_30 = Math.round((signUpCountByAgeGroup[2].signUpCount / totalSignUpCount) * 100);
+             percentage_40 = Math.round((signUpCountByAgeGroup[3].signUpCount / totalSignUpCount) * 100);
+             percentage_50 = Math.round((signUpCountByAgeGroup[4].signUpCount / totalSignUpCount) * 100);
+             percentage_60 = 100 - (percentage_10 +percentage_20 + percentage_30 + percentage_40 + percentage_50);
+            */
+            
+            //pie char
+         var ctx = document.getElementById("signUpCountByAgeGroupPieChart");
+var oldChart = Chart.getChart(ctx);
+if (oldChart) {
+    oldChart.destroy();
+}
+
+ctx.height = 150;
+var myChart = new Chart(ctx, {
+    type: 'pie',
+      data: {
+        datasets: [{
+            data: signUpPercentage,
+             dataLabel: '%',
+            backgroundColor: [
+                "rgba(0,0,0,0.07)",
+                "rgba(247, 63, 82,0.1)",
+                "rgba(247, 63, 82,0.3)",
+                "rgba(247, 63, 82,0.5)",
+                "rgba(247, 63, 82,0.6)",
+                "rgba(247, 63, 82,0.9)"
+            ],
+            hoverBackgroundColor: [
+                "rgba(0,0,0,0.07)",
+                "rgba(247, 63, 82,0.1)",
+                "rgba(247, 63, 82,0.3)",
+                "rgba(247, 63, 82,0.5)",
+                "rgba(247, 63, 82,0.7)",
+                "rgba(247, 63, 82,0.9)"
+            ]
+        }],
+        labels: [
+            "10s", "20s", "30s",
+            "40s", "50s", "60s"
+        ]
+    },
+     options: {
+        responsive: true,
+        layout: {
+            padding: {
+                left: 53,
+                right: 53
+            }
+        },
+	          plugins: {
+	        tooltip: {
+	            callbacks: {
+	                label: function(context) {
+	                    var label ='';
+	                    if (label) {
+	                        label += ': ';
+	                    }
+	                    if (context.parsed !== undefined) {
+	                        label += context.parsed + '%';
+	                    }
+	                    return label;
+	                }
+	            }
+	        }
+	    },
+    }
+});
+		    
         }
 
         //성별 회원 수

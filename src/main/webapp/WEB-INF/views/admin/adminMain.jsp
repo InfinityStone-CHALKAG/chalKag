@@ -288,7 +288,7 @@
                                                         </div>
                                                         <div class="col-lg-4">
                                                             <div class="card-body" id="signUpCountByYearLineContainer">
-                                                                <label>평균 가입자수 대비 올해 가입자수</label>
+                                                                <label>연별 평균 가입자수 대비 올해 가입자수</label>
 
                                                                 <!-- 서브테이블 동적생성 -->
 
@@ -306,10 +306,9 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-4">
-                                                            <div class="card-body"
-                                                                id="signUpCountByAgeGroupBarContainer">
+                                                            <div class="card-body">
+                                                                <canvas id="signUpCountByAgeGroupPieChart"></canvas>
 
-                                                                <!-- 서브테이블 동적생성 -->
 
                                                             </div>
                                                         </div>
@@ -383,7 +382,7 @@
                                                                     <th style="width:12%;">Lv</th>
                                                                     <th style="width:20%;">EMAIL</th>
                                                                     <th style="width:20%;">NICNAME</th>
-                                                                    <th style="width:12%;">Register Date</th>
+                                                                    <th style="width:13%;">Register Date</th>
                                                                     <th style="width:12%;">GRADE</th>
                                                                 </tr>
                                                             </thead>
@@ -445,6 +444,7 @@
                                                 </div>
                                             </div><!-- /.card -->
                                         </div>
+                                    
 
 
 
@@ -529,6 +529,7 @@
                                 <!-- /#add-category -->
                             </div>
                             <!-- .animated -->
+                          
                         </div>
                         <!-- /.content -->
 
@@ -597,19 +598,28 @@
 
 
                         function drawSideGraph() {
-                            // 받아온 데이터를 반복하면서 HTML에 추가
-                            signInCountByDayOfWeek.forEach(function (data) {
-                                var appendTab = $("#signInCountByDayOfWeekBarContainer");
-                                var title = data.dayOfWeek;
-                                var yValue = data.signInCount;
-                                // 모든 signInCount 값을 더하여 총 합 구함
-                                var totalYvalue = signInCountByDayOfWeek.reduce(function (acc, cur) {
-                                    return acc + parseInt(cur.signInCount);
-                                }, 0);
-                                var percent = Math.round((yValue / totalYvalue) * 100);
-                                addDataToHTML(appendTab, title, yValue, percent, totalYvalue);
-                            });
-                        }
+    var totalPercent = 0;
+    var totalYvalue = 0;
+    signInCountByDayOfWeek.forEach(function (data) {
+        totalYvalue += parseInt(data.signInCount);
+    })
+    // 받아온 데이터를 반복하면서 HTML에 추가
+    signInCountByDayOfWeek.forEach(function (data, index, array) {
+        var appendTab = $("#signInCountByDayOfWeekBarContainer");
+        var title = data.dayOfWeek;
+        var yValue = data.signInCount;
+        var percent = Math.round((yValue / totalYvalue) * 100);
+
+        if (index === array.length - 1) { // 마지막 요소인 경우
+            // 마지막 요소의 percent를 조정하여 totalPercent가 100이 되도록 함
+            percent = 100 - totalPercent;
+        }
+
+        totalPercent += percent;
+
+        addDataToHTML(appendTab, title, yValue, percent, totalYvalue);
+    });
+}
 
                         // var appendTab = $("#signInCountByYearMonthDateLineContainer");
                         // addDataToHTML(appendTab, data.dayOfWeek, data.signInCount);
@@ -625,10 +635,10 @@
 
                             var avgValue = 0;
                             var totalYvalue = 0;
-                            for (var i = 0; i < signUpCountByYear.length - 1; i++) {
+                            for (var i = 0; i <= signUpCountByYear.length - 1; i++) {
                                 totalYvalue += signUpCountByYear[i].signUpCount;
                             }
-                            avgValue = Math.round(totalYvalue / (signUpCountByYear.length - 1));
+                            avgValue = Math.round(totalYvalue / (signUpCountByYear.length));
 
                             var appendTab = $("#signUpCountByYearLineContainer");
                             var title = signUpCountByYear[signUpCountByYear.length - 1].year;
@@ -636,13 +646,8 @@
                             // 모든 signInCount 값을 더하여 총 합 구함
                             var percent = Math.round((yValue / avgValue) * 100);
 
-                            console.log("왜아난와");
-                            console.log(appendTab);
-                            console.log(title);
-                            console.log(yValue);
-                            console.log(avgValue);
-                            console.log(percent);
                             addDataToHTML(appendTab, title, yValue, percent, avgValue);
+
                         }
 
 
@@ -651,7 +656,7 @@
                         function addDataToHTML(appendTab, title, yValue, percent, totalYvalue) {
                             var html = '<div class="progress-box progress-2">' +
                                 '<h4 class="por-title">' + title + '</h4>' +
-                                '<div class="por-txt">' + yValue + ' Users (' + percent + '%)</div>' +
+                                '<div class="por-txt">' + yValue + ' Users (<strong>' + percent + '%</strong>)</div>' +
                                 '<div class="progress mb-2" style="height: 5px;">' +
                                 '<div class="progress-bar bg-flat-color-4" role="progressbar" style="width: ' + percent + '%;" aria-valuenow="' + yValue + '" aria-valuemin="0" aria-valuemax="' + totalYvalue + '"></div>' +
                                 '</div>' +
