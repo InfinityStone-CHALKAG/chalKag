@@ -28,3 +28,4 @@ public class StompChatController {
     template.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
   }
 }
+
