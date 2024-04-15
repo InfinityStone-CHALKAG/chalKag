@@ -67,9 +67,9 @@ div .inner p {
 							<!-- 검색창 옵션(제목, 내용, 작성자, 제목 + 작성자) -->
 							<select id="searchField" name="searchField" class="searchOption"
 								style="margin-bottom: 5%; padding-left: 10px; border-color: gray; border-radius: 5px; height: 40px; width: 100%;">
-								<option value="title">title</option>
-								<option value="contents">contents</option>
-								<option value="writer">writer</option>
+								<option value="marketPostTitle">title</option>
+								<option value="marketPostContent">contents</option>
+								<option value="memberNickname">writer</option>
 								<option value="titleAndContents">title + contents</option>
 							</select>
 							<div class="form-group">

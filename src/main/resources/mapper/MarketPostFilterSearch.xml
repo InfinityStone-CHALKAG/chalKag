@@ -32,9 +32,16 @@
 	LEFT JOIN  
 	    RECOMMEND ON MARKETPOST.MARKETPOST_id = RECOMMEND.POST_id  
 	WHERE  
-	    MARKETPOST.MARKETPOST_status = 'sell'
-	AND
-		1=1
+	<if test="marketPostStatus.equals('sell')">
+		MARKETPOST.MARKETPOST_status = 'sell'
+	</if>    
+	<if test="marketPostStatus.equals('buy')">
+		MARKETPOST.MARKETPOST_status = 'buy'
+	</if>  
+	<if test="marketPostStatus.equals('freecycle')">
+		MARKETPOST.MARKETPOST_status = 'freecycle'
+	</if>  
+	
 	<if test="searchField.equals('marketPostTitle')">
 		AND MARKETPOST.MARKETPOST_title LIKE CONCAT('%',#{searchInput},'%')
 	</if>

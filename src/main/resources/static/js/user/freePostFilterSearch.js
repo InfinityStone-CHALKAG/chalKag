@@ -1,7 +1,10 @@
 const today = new Date(); // 현재날짜 설정
 
+console.log("today : " + today);
 
 var isFiltered = false; // 필터링된 게시글 데이터를 저장할 변수
+var searchField = "";		// 검색 카테고리(제목, 내용, 제목 + 내용)
+var searchInput="";         // 검색어 입력값
 var minDate = "";// 검색 시작일
 var maxDate = "";// 오늘날짜
 
@@ -19,6 +22,7 @@ $(document).ready(function() {
 							// 검색 필드 초기화
 							document.getElementById('searchField').selectedIndex = 0;
 										
+							
 	// 모든 라디오 버튼을 가져옴
     var radioButtons = document.querySelectorAll('input[type="radio"][name="freePostDate"]');
     
@@ -39,8 +43,8 @@ $(document).ready(function() {
             }
         }
     });
-    	minDate = "";
-        maxDate = "";
+    	minDate = '';
+        maxDate = '';
     
         
         // 필요하다면, 변수 업데이트 및 데이터 요청 로직도 여기서 호출
@@ -86,12 +90,6 @@ $(document).ready(function() {
 });
 
 
-// 상품 필터 검색
-function handleFilterChange() {
-    updateVariables(); // 필터링 및 정렬에 사용되는 변수들 업데이트
-    performAjaxRequest(); // 필터링된 데이터 요청
-}
-
 
 // 조회수, 추천수로 정렬 할 수 있게 jsp에서 받아온 값을 보내준다.
 function sortItems(type) {
@@ -122,11 +120,8 @@ function updateVariables() {
   	searchField = $('#searchField').val();
   	
   	searchInput = $('#searchInput').val();
-  	
-  		console.log("searchInput : " + searchInput);
-  		
    // 정렬 순서
-  sortOrder = $('#sortOrder').val();
+  	sortOrder = $('#sortOrder').val();
   
   // 전역 변수나 필터링에 사용될 변수에 선택된 카테고리들, 검색 카테고리, 입력값, 정렬 순서 저장
 }
@@ -139,7 +134,7 @@ function performAjaxRequest() {
 	today: maxDate,
     searchField: searchField,   // search Condition(제목, 내용, 제목 + 내용)
     searchInput: searchInput,   // search Condition (입력값)
-    sortOrder: sortOrder,   // 오름차순 정렬, 내림차순 정렬
+    sortOrder: sortOrder   // 오름차순 정렬, 내림차순 정렬
     };
     console.log("requestData!!!!!!!!!!!!!!!!!!" + JSON.stringify(requestData));
 
@@ -151,7 +146,7 @@ function performAjaxRequest() {
         dataType: 'json',
         success: function(filterData) {
 			console.log("필터 AJAX 콘솔진입!!!!!!!!!" + JSON.stringify(filterData));
-			//console.log(JSON.parse(filterData).get(0).items.item);
+			
             // 성공 시, 응답 처리.  검색 결과를 화면에 표시
             if (filterData != null) { // filterDatas가 존재하는 경우
             	console.log("filterData!!!!!!!!!!:" + filterData);

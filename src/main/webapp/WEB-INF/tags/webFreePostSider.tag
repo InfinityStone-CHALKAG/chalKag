@@ -3,111 +3,112 @@
 
 
 <div class="col-md-4 sidebar" id="sidebar">
-	<aside>
-		<div class="aside-body">
-			<figure class="ads">
-					<img src="css/user/images/ad.png">
-				<figcaption>Advertisement</figcaption>
-			</figure>
-		</div>
-	</aside>
-	<aside>
-		<h1 class="aside-title">Recent Post</h1>
-		<div class="aside-body">
-			<article class="article-fw">
-				<div class="inner">
-					<figure>
+   <aside>
+      <div class="aside-body">
+         <figure class="ads">
+               <img src="css/user/images/ad.png">
+            <figcaption>Advertisement</figcaption>
+         </figure>
+      </div>
+   </aside>
+   <aside>
+      <h1 class="aside-title">Recent Post</h1>
+      <div class="aside-body">
+         <article class="article-fw">
+            <div class="inner">
+               <figure>
                          <a href="freePostSingle?freePostId=${latestFreePost.freePostId}">
-                             <img class="latestPostImg" src="postImg/${latestFreePost.postImgName}">
+                             <img class="latestPostImg"
+                     src="${latestFreePost.postImgName ? 'postImg/' + latestFreePost.postImgName : 'postImg/postDefault.jpg'}">
                          </a>
                     </figure>
-					<div class="details">
-						<h1>
-							 <a href="freePostSingle?freePostId=${latestFreePost.freePostId}">${latestFreePost.freePostTitle}</a>
-						</h1>
-						 <p class="latestPostContent">${latestFreePost.freePostContent}</p>
-						<div class="detail">
-							 <div class="time">${latestFreePost.memberNickname}</div>
-							 <div class="category"><a href="freePostList">freePOST</a></div>
-						</div>
-					</div>
-				</div>
-			</article>
-			<div class="line"></div>
-			<!-- 구인글 -->
-			<article class="article-mini">
-				<div class="inner">
-					<figure>
-						<a
-							href="headHuntPostSingle?headHuntPostId=${latestHeadHuntPost.headHuntPostId}">
-							<img class="latestPostImg"
-							src="postImg/${latestHeadHuntPost.postImgName}">
-						</a>
-					</figure>
-					<div class="padding">
-						<h1>
-							<a
-								href="headHuntPostSingle?headHuntPostId=${latestheadHuntPost.headHuntPostId}">${latestHeadHuntPost.headHuntPostTitle}</a>
-						</h1>
-						<div class="detail">
-							<div class="category">
-								<a href="headHuntPostList">headHuntPOST</a>
-							</div>
-							<div class="time">${latestHeadHuntPost.memberNickname}</div>
-						</div>
-					</div>
-				</div>
-			</article>
-			<!-- 구직글 -->
-			<article class="article-mini">
-				<div class="inner">
-					<figure>
-						<a
-							href="jobHuntPostSingle?jobHuntPostId=${latestJobHuntPost.jobHuntPostId}">
-							<img class="latestPostImg"
-							src="postImg/${latestJobHuntPost.postImgName}">
-						</a>
-					</figure>
-					<div class="padding">
-						<h1>
-							<a
-								href="jobHuntPostSingle?jobHuntPostId=${latestJobHuntPost.jobHuntPostId}">${latestJobHuntPost.jobHuntPostTitle}</a>
-						</h1>
-						<div class="detail">
-							<div class="category">
-								<a href="jobHuntPostList">JOBHUNTPOST</a>
-							</div>
-							<div class="time">${latestJobHuntPost.memberNickname}</div>
-						</div>
-					</div>
-				</div>
-			</article>
-			<!-- 장터글 -->
-			<article class="article-mini">
-				<div class="inner">
-					<figure>
-						<a
-							href="marketPostSingle?marketPostId=${latestMarketPost.marketPostId}">
-							<img class="latestPostImg"
-							src="postImg/${latestMarketPost.postImgName}"
-							alt="Sample Article">
-						</a>
-					</figure>
-					<div class="padding">
-						<h1>
-							<a
-								href="marketPostSingle?marketPostId=${latestMarketPost.marketPostId}">${latestMarketPost.marketPostTitle}</a>
-						</h1>
-						<div class="detail">
-							<div class="category">
-								<a href="marketPostList">MARKETPOST</a>
-							</div>
-							<div class="time">${latestMarketPost.memberNickname}</div>
-						</div>
-					</div>
-				</div>
-			</article>
-		</div>
-	</aside>
-	
+               <div class="details">
+                  <h1>
+                      <a href="freePostSingle?freePostId=${latestFreePost.freePostId}">${latestFreePost.freePostTitle}</a>
+                  </h1>
+                   <p class="latestPostContent">${latestFreePost.freePostContent}</p>
+                  <div class="detail">
+                      <div class="time">${latestFreePost.memberNickname}</div>
+                      <div class="category"><a href="headHuntPostList">FREEPOST</a></div>
+                  </div>
+               </div>
+            </div>
+         </article>
+         <div class="line"></div>
+         <!-- 구인글 -->
+         <article class="article-mini">
+            <div class="inner">
+               <figure>
+                  <a
+                     href="headHuntPostSingle?headHuntPostId=${latestheadHuntPost.headHuntPostId}">
+                     <img class="latestPostImg"
+                     src="postImg/${latestHeadHuntPost.postImgName}">
+                  </a>
+               </figure>
+               <div class="padding">
+                  <h1>
+                     <a
+                        href="headHuntPostSingle?headHuntPostId=${latestHeadHuntPost.headHuntPostId}">${latestHeadHuntPost.headHuntPostTitle}</a>
+                  </h1>
+                  <div class="detail">
+                     <div class="category">
+                        <a href="headHuntPostList">HEADHUNTPOST</a>
+                     </div>
+                     <div class="time">${latestHeadHuntPost.memberNickname}</div>
+                  </div>
+               </div>
+            </div>
+         </article>
+         <!-- 구직글 -->
+         <article class="article-mini">
+            <div class="inner">
+               <figure>
+                  <a
+                     href="jobHuntPostSingle?jobHuntPostId=${latestJobHuntPost.jobHuntPostId}">
+                     <img class="latestPostImg"
+                     src="postImg/${latestJobHuntPost.postImgName}">
+                  </a>
+               </figure>
+               <div class="padding">
+                  <h1>
+                     <a
+                        href="jobHuntPostSingle?jobHuntPostId=${latestJobHuntPost.jobHuntPostId}">${latestJobHuntPost.jobHuntPostTitle}</a>
+                  </h1>
+                  <div class="detail">
+                     <div class="category">
+                        <a href="jobHuntPostList">JOBHUNTPOST</a>
+                     </div>
+                     <div class="time">${latestJobHuntPost.memberNickname}</div>
+                  </div>
+               </div>
+            </div>
+         </article>
+         <!-- 장터글 -->
+         <article class="article-mini">
+            <div class="inner">
+               <figure>
+                  <a
+                     href="marketPostSingle?marketPostId=${latestMarketPost.marketPostId}">
+                     <img class="latestPostImg"
+                     src="postImg/${latestMarketPost.postImgName}"
+                     alt="Sample Article">
+                  </a>
+               </figure>
+               <div class="padding">
+                  <h1>
+                     <a
+                        href="marketPostSingle?marketPostId=${latestMarketPost.marketPostId}">${latestMarketPost.marketPostTitle}</a>
+                  </h1>
+                  <div class="detail">
+                     <div class="category">
+                        <a href="marketPostList">MARKETPOST</a>
+                     </div>
+                     <div class="time">${latestMarketPost.memberNickname}</div>
+                  </div>
+               </div>
+            </div>
+         </article>
+      </div>
+   </aside>
+   
 </div>
