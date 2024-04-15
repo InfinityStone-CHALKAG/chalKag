@@ -151,7 +151,23 @@
 							</div>
 							<footer>
 								<div class="col" style="width:54.4%;">
-									<a href="#" class="love" style="margin-top:0%"><i class="ion-android-favorite-outline"></i><div>${jobHuntPostList.recommendCnt}</div></a>
+									<c:if test="${member == null}">
+										<a id="recommendBtnMessage" onclick="message()" class="love" style="margin-top:0%">
+								        	<i class="ion-android-favorite-outline"></i><div id="recommendCnt">${jobHuntPostSingle.recommendCnt}</div>
+								   	 	</a>
+									</c:if>
+									<c:if test="${member != null}">
+											<c:if test="${member != recommendInfo.memberId}">
+												<a id="recommendBtn" class="love" style="margin-top:0%" data-postid="${jobHuntPostSingle.jobHuntPostId}" data-memberid="${member}">
+								        		<i class="ion-android-favorite-outline"></i><div id="recommendCnt">${jobHuntPostSingle.recommendCnt}</div>
+								   	 			</a>
+											</c:if>
+											<c:if test="${member == recommendInfo.memberId}">
+												<a id="recommendBtn" class="love active" style="margin-top:0%" data-postid="${jobHuntPostSingle.jobHuntPostId}" data-memberid="${member}">
+								        		<i class="ion-android-favorite-outline"></i><div id="recommendCnt">${jobHuntPostSingle.recommendCnt}</div>
+								   	 			</a>
+											</c:if>
+									</c:if>
 								</div>
 							</footer>
 						</article>

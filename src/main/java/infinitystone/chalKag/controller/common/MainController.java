@@ -137,6 +137,32 @@ public class MainController {
     model.addAttribute("recommendBestList", recommendBestList);
 	
     System.out.println("MainController Out로그");
+    
+    //-----------------------------------------------------------
+    RecommendDTO recommendDTOHeadHunt = new RecommendDTO();
+    
+    recommendDTOHeadHunt.setPostId(latestHeadHuntPost.getHeadHuntPostId());
+    recommendDTOHeadHunt.setMemberId((String)session.getAttribute("member"));
+	model.addAttribute("recommendInfoHeadHunt", recommendService.selectOne(recommendDTOHeadHunt));
+	
+	RecommendDTO recommendDTOFreeHunt = new RecommendDTO();
+	    
+	recommendDTOFreeHunt.setPostId(latestFreePost.getFreePostId());
+	recommendDTOFreeHunt.setMemberId((String)session.getAttribute("member"));
+	model.addAttribute("recommendInfoFree", recommendService.selectOne(recommendDTOFreeHunt));
+	
+	RecommendDTO recommendDTOJobHunt = new RecommendDTO();
+	
+	recommendDTOJobHunt.setPostId(latestJobHuntPost.getJobHuntPostId());
+	recommendDTOJobHunt.setMemberId((String)session.getAttribute("member"));
+	model.addAttribute("recommendInfoJobHunt", recommendService.selectOne(recommendDTOJobHunt));
+	
+	RecommendDTO recommendDTOMarket = new RecommendDTO();
+	
+	recommendDTOMarket.setPostId(latestMarketPost.getMarketPostId());
+	recommendDTOMarket.setMemberId((String)session.getAttribute("member"));
+	model.addAttribute("recommendInfoMarket", recommendService.selectOne(recommendDTOMarket));
+	
 	
     return "common/main";
   }
