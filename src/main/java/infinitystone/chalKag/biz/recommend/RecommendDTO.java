@@ -7,6 +7,7 @@ public class RecommendDTO {	// 게시글 좋아요 DTO 생성.전미지
 	private String recommendId; 		// 게시글 좋아요 아이디
 	private String postId;				// 게시글 아이디
 	private String memberId;			// 회원 아이디
+	private String memberNickname;		// 회원 아이디
 	private int	   recommendCnt;		// 좋아요수
 	private int    myRecommend; 		// 로그인한 회원이 좋아요를 눌렀는지 체크 
 	private String postCategory; 		// 게시판 종류 (HEADHUNTPOST, JOBHUNTPOST, FREEPOST, MARKETPOST)
