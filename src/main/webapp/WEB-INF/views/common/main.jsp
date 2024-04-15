@@ -398,12 +398,52 @@
                                 <article class="article-mini">
                                     <div class="inner">
                                         <figure>
-                                            <a href="single.html">
-                                                <img src="postImg/${recommendBestData.postImgName}" alt="Sample Article">
-                                            </a>
+                                        	<c:if test="${recommendBestData.postCategory.equals('HEADHUNTPOST')}">
+                                        		<a href="/headHuntPostSingle?headHuntPostId=${recommendBestData.chalKagPostId}">
+                                                	<img src="postImg/${recommendBestData.postImgName}" alt="Sample Article">
+                                            	</a>
+                                        	</c:if>
+                                        	<c:if test="${recommendBestData.postCategory.equals('JOBHUNTPOST')}">
+                                        		<a href="/jobHuntPostSingle?jobHuntPostId=${recommendBestData.chalKagPostId}">
+                                                	<img src="postImg/${recommendBestData.postImgName}" alt="Sample Article">
+                                            	</a>
+                                        	</c:if>
+                                        	<c:if test="${recommendBestData.postCategory.equals('MARKETPOST')}">
+                                        		<a href="/marketPostSingle?marketPostId=${recommendBestData.chalKagPostId}">
+                                                	<img src="postImg/${recommendBestData.postImgName}" alt="Sample Article">
+                                            	</a>
+                                        	</c:if>
+                                        	<c:if test="${recommendBestData.postCategory.equals('FREEPOST')}">
+                                        		<a href="/freePostSingle?freePostId=${recommendBestData.chalKagPostId}">
+                                                	<img src="postImg/${recommendBestData.postImgName}" alt="Sample Article">
+                                            	</a>
+                                        	</c:if>
+                                        
                                         </figure>
                                         <div class="padding">
-                                            <h1><a href="single.html">${recommendBestData.postTitle}</a></h1>
+                                            <h1 style="width: 255px; max-height: 44px; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1;">
+                                            <c:if test="${recommendBestData.postCategory.equals('HEADHUNTPOST')}">
+                                        		<a href="/headHuntPostSingle?headHuntPostId=${recommendBestData.chalKagPostId}">
+                                                	${recommendBestData.postTitle}
+                                            	</a>
+                                        	</c:if>
+                                        	<c:if test="${recommendBestData.postCategory.equals('JOBHUNTPOST')}">
+                                        		<a href="/jobHuntPostSingle?jobHuntPostId=${recommendBestData.chalKagPostId}">
+                                                	${recommendBestData.postTitle}
+                                            	</a>
+                                        	</c:if>
+                                        	<c:if test="${recommendBestData.postCategory.equals('MARKETPOST')}">
+                                        		<a href="/marketPostSingle?marketPostId=${recommendBestData.chalKagPostId}">
+                                                	${recommendBestData.postTitle}
+                                            	</a>
+                                        	</c:if>
+                                        	<c:if test="${recommendBestData.postCategory.equals('FREEPOST')}">
+                                        		<a href="/freePostSingle?freePostId=${recommendBestData.chalKagPostId}">
+                                                	${recommendBestData.postTitle}
+                                            	</a>
+                                        	</c:if>
+                                            
+                                            </h1>
                                             <div class="detail">
                                                 <div class="category"><a href="category.html">${recommendBestData.postCategory}</a></div>
                                                 <div class="time">${recommendBestData.postDate}</div>

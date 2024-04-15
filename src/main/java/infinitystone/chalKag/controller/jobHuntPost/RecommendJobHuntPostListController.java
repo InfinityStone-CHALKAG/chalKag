@@ -21,7 +21,7 @@ public class RecommendJobHuntPostListController {
 		recommendDTO.setSearchCondition("jobHuntPostRecommendList");
 		String jobHuntPostDatas = gson.toJson(recommendService.selectAll(recommendDTO));
 
-		model.addAttribute("JobHuntPostList", jobHuntPostDatas);
+		model.addAttribute("jobHuntPostList", jobHuntPostDatas);
 
 
 		return "recommendPost/recommendJobHuntPostList";
