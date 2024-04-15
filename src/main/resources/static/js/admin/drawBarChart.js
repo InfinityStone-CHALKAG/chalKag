@@ -4,7 +4,7 @@ var signInCountByYearMonthDate = JSON.parse(dataContainer.getAttribute("data-sig
 var signUpCountByYear = JSON.parse(dataContainer.getAttribute("data-signUpCountByYear"));
 var signUpCountByAgeGroup = JSON.parse(dataContainer.getAttribute("data-signUpCountByAgeGroup"));
 var signUpCountByGenderGroup = JSON.parse(dataContainer.getAttribute("data-signUpCountByGenderGroup"));
-console.log(signUpCountByAgeGroup);
+console.log(JSON.stringify(signUpCountByAgeGroup));
 
 // 현재 날짜 객체 생성
 var currentDate = new Date();
@@ -232,15 +232,23 @@ animateNumber('femalePercent');
             });
             console.log("totalSignUpCount :" + totalSignUpCount);
             
-
+			var sum = 0;
      signUpCountByAgeGroup.forEach(function(item, idx) {
     var index = ageGroup.indexOf(item.ageGroup);
     if (index !== -1) {
         signUpCount[index] = parseInt(item.signUpCount);
-        signUpPercentage[index] = Math.round((parseInt(item.signUpCount) / totalSignUpCount) * 100);
-        if (idx === signUpCountByAgeGroup.length - 1) {
-            // 마지막 인덱스인 경우
-            var sum = signUpPercentage.slice(0, 5).reduce((acc, val) => acc + val, 0);
+        signUpPercentage[index] = Math.round((signUpCount[index] / totalSignUpCount) * 100);
+        console.log("signUpCount[index] = " + signUpCount[index]);
+        console.log("totalSignUpCount = " + totalSignUpCount);
+        console.log("signUpPercentage[index] = " + signUpPercentage[index]);
+        console.log("index = " + index );
+          console.log("signUpPercentage[2] = " + signUpPercentage[2]);
+          
+          if (idx != signUpCountByAgeGroup.length - 1) {
+			  sum += signUpPercentage[index];
+		  }
+        
+        if (idx == signUpCountByAgeGroup.length - 1 && signUpCountByAgeGroup.length != 1) {
             signUpPercentage[index] = 100 - sum;
         }
     }
@@ -321,9 +329,9 @@ var myChart = new Chart(ctx, {
         responsive: true,
         layout: {
             padding: {
-                left: 53,
-                right: 53
-            }
+                left: 70,
+                right: 70
+                      }
         },
 	          plugins: {
 	        tooltip: {

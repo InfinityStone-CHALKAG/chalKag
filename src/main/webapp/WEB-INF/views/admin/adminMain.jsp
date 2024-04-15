@@ -636,7 +636,7 @@
                             var avgValue = 0;
                             var totalYvalue = 0;
                             for (var i = 0; i <= signUpCountByYear.length - 1; i++) {
-                                totalYvalue += signUpCountByYear[i].signUpCount;
+                                totalYvalue += parseInt(signUpCountByYear[i].signUpCount);
                             }
                             avgValue = Math.round(totalYvalue / (signUpCountByYear.length));
 
