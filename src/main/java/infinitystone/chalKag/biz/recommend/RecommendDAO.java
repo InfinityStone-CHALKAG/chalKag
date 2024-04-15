@@ -108,14 +108,16 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 	// 회원 페이지 - 특정 회원이 좋아요한 구인글 목록 출력 (구인글만 출력).전미지	
 	private static final String SELECTALL_HEADHUNTPOSTRECOMMEND = "SELECT "
 	        + "		'HeadHuntPost' AS POST_category, " // 게시판 카테고리 설정
-	        + "    	HEADHUNTPOST.HEADHUNTPOST_id, " 
+	        + "    	HEADHUNTPOST.HEADHUNTPOST_id, "
+	        + "		RECOMMEND.MEMBER_id, "
+	        + "		MEMBER.MEMBER_nickname, " 
 	        + "    	HEADHUNTPOST.HEADHUNTPOST_title, " 
 	        + "    	HEADHUNTPOST.HEADHUNTPOST_content, " 
 	        + "    	HEADHUNTPOST.HEADHUNTPOST_date, "
 	        + "    	HEADHUNTPOST.HEADHUNTPOST_viewcnt, "
 			+ "		( "
 			+ "      SELECT "
-			+ "         CASE WHEN COUNT(*) > 0 THEN TRUE ELSE FALSE END"
+			+ "         CASE WHEN COUNT(*) > 0 THEN TRUE ELSE FALSE END "
 			+ "      FROM "
 			+ "         RECOMMEND "
 			+ "      WHERE "
@@ -142,7 +144,9 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 	        + "	 	) AS POSTIMG_name " // 대표 이미지의 이름	        
 	        + "FROM "
 	        + "		RECOMMEND " // 좋아요 테이블에서 데이터를 가져옴
-	        + "LEFT JOIN " // 구인글 테이블과 좋아요 테이블을 LEFT JOIN하여 게시글 정보를 가져옴
+	        + "INNER JOIN " // 좋아요 테이블과 회원 테이블을 INNER JOIN하여 회원 정보를 가져옴
+	        + "    MEMBER ON RECOMMEND.MEMBER_id  = MEMBER.MEMBER_id "
+	        + "INNER JOIN" // 좋아요 테이블과 구인글 테이블을 INNER JOIN하여 게시글 정보를 가져옴
 	        + "    	HEADHUNTPOST ON RECOMMEND.POST_id = HEADHUNTPOST.HEADHUNTPOST_id "
 	        + "WHERE " // 회원이 좋아요한 게시글 선택 (조회할 멤버 아이디 입력)
 	        + "    	RECOMMEND.MEMBER_id = ? " 
@@ -154,6 +158,8 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 	private static final String SELECTALL_JOBHUNTPOSTRECOMMEND = "SELECT "
 	        + "		'JOBHUNTPOST' AS post_category, " // 게시판 카테고리 설정
 	        + "    	JOBHUNTPOST.JOBHUNTPOST_id, " 
+	        + "		RECOMMEND.MEMBER_id, "
+	        + "		MEMBER.MEMBER_nickname, " 
 	        + "    	JOBHUNTPOST.JOBHUNTPOST_title, " 
 	        + "    	JOBHUNTPOST.JOBHUNTPOST_content, " 
 	        + "    	JOBHUNTPOST.JOBHUNTPOST_date, "
@@ -187,7 +193,9 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 	        + "	 	) AS POSTIMG_name " // 대표 이미지의 이름	        
 	        + "FROM "
 	        + "		RECOMMEND " // 좋아요 테이블에서 데이터를 가져옴
-	        + "LEFT JOIN " // 구직글 테이블과 좋아요 테이블을 LEFT JOIN하여 게시글 정보를 가져옴
+	        + "INNER JOIN " // 좋아요 테이블과 회원 테이블을 INNER JOIN하여 회원 정보를 가져옴
+	        + "    MEMBER ON RECOMMEND.MEMBER_id  = MEMBER.MEMBER_id " 
+	        + "INNER JOIN " // 좋아요 테이블과 구직글 테이블을 INNER JOIN하여 게시글 정보를 가져옴
 	        + "    	JOBHUNTPOST ON RECOMMEND.POST_id = JOBHUNTPOST.JOBHUNTPOST_id "
 	        + "WHERE " // 회원이 좋아요한 게시글 선택 (조회할 멤버 아이디 입력)
 	        + "    	RECOMMEND.MEMBER_id = ? " 
@@ -199,6 +207,8 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 	private static final String SELECTALL_FREEPOSTRECOMMEND = "SELECT "
 	        + "    	'FREEPOST' AS post_category, " // 카테고리를 자유글로 지정
 	        + "    	FREEPOST.FREEPOST_id, " 
+	        + "		RECOMMEND.MEMBER_id, "
+	        + "		MEMBER.MEMBER_nickname, " 
 	        + "    	FREEPOST.FREEPOST_title, " 
 	        + "    	FREEPOST.FREEPOST_content, " 
 	        + "    	FREEPOST.FREEPOST_date, "
@@ -232,7 +242,9 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 	        + "	 	) AS POSTIMG_name " // 대표 이미지의 이름	       
 	        + "FROM "
 	        + "		RECOMMEND " // 좋아요 테이블에서 데이터를 가져옴
-	        + "LEFT JOIN " // 자유글 테이블과 좋아요 테이블을 LEFT JOIN하여 게시글 정보를 가져옴
+	        + "INNER JOIN " // 좋아요 테이블과 회원 테이블을 INNER JOIN하여 회원 정보를 가져옴
+	        + "    MEMBER ON RECOMMEND.MEMBER_id  = MEMBER.MEMBER_id "
+	        + "INNER JOIN " // 좋아요 테이블과 자유글 테이블을 INNER JOIN하여 게시글 정보를 가져옴
 	        + "    	FREEPOST ON RECOMMEND.POST_id = FREEPOST.FREEPOST_id "
 	        + "WHERE " // 회원이 좋아요한 게시글 선택 (조회할 멤버 아이디 입력)
 	        + "    	RECOMMEND.MEMBER_id = ? " 
@@ -244,6 +256,8 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 	private static final String SELECTALL_MARKETPOSTRECOMMEND = "SELECT "
 	        + "    	'MARKETPOST' AS post_category, " // 카테고리를 장터글로 지정
 	        + "    	MARKETPOST.MARKETPOST_id, " 
+	        + "		RECOMMEND.MEMBER_id, "
+	        + "		MEMBER.MEMBER_nickname, " 
 	        + "    	MARKETPOST.MARKETPOST_title, " 
 	        + "    	MARKETPOST.MARKETPOST_content, " 
 	        + "    	MARKETPOST.MARKETPOST_date, "
@@ -255,7 +269,8 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 			+ "         RECOMMEND "
 			+ "      WHERE "
 			+ "         RECOMMEND.POST_id = MARKETPOST.MARKETPOST_id AND RECOMMEND.MEMBER_id = ? "
-			+ "  	 ) AS myRecommend, " // 로그인한 회원이 좋아요를 눌렀는지 체크+ "		( " // 게시글의 좋아요 수를 합산
+			+ "  	 ) AS myRecommend, " // 로그인한 회원이 좋아요를 눌렀는지 체크
+			+ "		( " // 게시글의 좋아요 수를 합산
 	        + "		SELECT "
 	        + "            COUNT(*) " // 해당 게시글에 대한 좋아요 수를 COUNT 함수를 사용해 합산
 	        + "		FROM "
@@ -276,12 +291,14 @@ public class RecommendDAO { // 게시글 좋아요 DAO
 	        + "	 	) AS POSTIMG_name " // 대표 이미지의 이름	       
 	        + "FROM "
 	        + "		RECOMMEND " // 좋아요 테이블에서 데이터를 가져옴
-	        + "LEFT JOIN " // 장터글 테이블과 좋아요 테이블을 LEFT JOIN하여 게시글 정보를 가져옴
+	        + "INNER JOIN " // 좋아요 테이블과 회원 테이블을 INNER JOIN하여 회원 정보를 가져옴
+	        + "    MEMBER ON RECOMMEND.MEMBER_id  = MEMBER.MEMBER_id "
+	        + "INNER JOIN " // 좋아요 테이블과 장터글 테이블을 LEFT JOIN하여 게시글 정보를 가져옴
 	        + "		MARKETPOST ON RECOMMEND.POST_id = MARKETPOST.MARKETPOST_id "
 	        + "WHERE " // 회원이 좋아요한 게시글 선택 (조회할 멤버 아이디 입력)
 	        + "		RECOMMEND.MEMBER_id = ? " 
 	        + "GROUP BY "
-	        + "		RECOMMEND.POST_id, " // 게시글 아이디를 기준으로 결과를 그룹화
+	        + "		RECOMMEND.POST_id " // 게시글 아이디를 기준으로 결과를 그룹화
 			+ "ORDER BY "
 			+ "		POST_id DESC ";  // 게시글 아이디를 기준으로 내림차순 정렬
 	
@@ -447,6 +464,8 @@ class HeadHuntPostRecommendRowMapper implements RowMapper<RecommendDTO> {
 		// ResultSet에 저장된 데이터를 RecommendDTO 객체에 저장
 		recommendDTO.setPostCategory(rs.getString("post_category")); 				// 게시글 카테고리
 		recommendDTO.setHeadHuntPostId(rs.getString("HEADHUNTPOST_id")); 			// 구인글 아이디
+		recommendDTO.setMemberId(rs.getString("MEMBER_id")); 						// 회원 아이디
+		recommendDTO.setMemberNickname(rs.getString("MEMBER_nickname")); 			// 회원 닉네임
 		recommendDTO.setHeadHuntPostTitle(rs.getString("HEADHUNTPOST_title")); 		// 구인글 제목
 		recommendDTO.setHeadHuntPostContent(rs.getString("HEADHUNTPOST_content")); 	// 구인글 내용
 		recommendDTO.setHeadHuntPostDate(rs.getString("HEADHUNTPOST_date")); 		// 구인글 작성일
@@ -458,6 +477,7 @@ class HeadHuntPostRecommendRowMapper implements RowMapper<RecommendDTO> {
 	}
 }
 
+
 // 회원 페이지 - 특정 회원이 좋아요한 구직글 목록 출력 시 필요한 데이터를 저장할 RowMapper 클래스.전미지 - 수정버전1
 class JobHuntPostRecommendRowMapper implements RowMapper<RecommendDTO> {
 	@Override // mapRow 메서드 오버라이드
@@ -468,6 +488,8 @@ class JobHuntPostRecommendRowMapper implements RowMapper<RecommendDTO> {
 		// ResultSet에 저장된 데이터를 RecommendDTO 객체에 저장
 		recommendDTO.setPostCategory(rs.getString("post_category")); 				// 게시글 카테고리
 		recommendDTO.setJobHuntPostId(rs.getString("JOBHUNTPOST_id")); 				// 구직글 아이디
+		recommendDTO.setMemberId(rs.getString("MEMBER_id")); 						// 회원 아이디
+		recommendDTO.setMemberNickname(rs.getString("MEMBER_nickname")); 			// 회원 닉네임
 		recommendDTO.setJobHuntPostTitle(rs.getString("JOBHUNTPOST_title")); 		// 구직글 제목
 		recommendDTO.setJobHuntPostContent(rs.getString("JOBHUNTPOST_content")); 	// 구직글 내용
 		recommendDTO.setJobHuntPostDate(rs.getString("JOBHUNTPOST_date")); 			// 구직글 작성일
@@ -489,6 +511,8 @@ class FreePostRecommendRowMapper implements RowMapper<RecommendDTO> {
 		// ResultSet에 저장된 데이터를 RecommendDTO 객체에 저장
 		recommendDTO.setPostCategory(rs.getString("post_category")); 			// 게시글 카테고리
 		recommendDTO.setFreePostId(rs.getString("FREEPOST_id"));				// 자유글 아이디
+		recommendDTO.setMemberId(rs.getString("MEMBER_id")); 					// 회원 아이디
+		recommendDTO.setMemberNickname(rs.getString("MEMBER_nickname")); 		// 회원 닉네임
 		recommendDTO.setFreePostTitle(rs.getString("FREEPOST_title")); 			// 자유글 제목
 		recommendDTO.setFreePostContent(rs.getString("FREEPOST_content"));		// 자유 내용
 		recommendDTO.setFreePostDate(rs.getString("FREEPOST_date")); 			// 자유글 작성일
@@ -508,36 +532,17 @@ class MarketPostRecommendRowMapper implements RowMapper<RecommendDTO> {
 
 		RecommendDTO recommendDTO = new RecommendDTO(); // 새로운 RecommendDTO 객체 생성
 		// ResultSet에 저장된 데이터를 RecommendDTO 객체에 저장
-		recommendDTO.setPostCategory(rs.getString("post_category")); 			// 게시글 카테고리
-		recommendDTO.setMarketPostId(rs.getString("MARKETPOST_id"));			// 장터글 아이디
-		recommendDTO.setMarketPostTitle(rs.getString("MARKETPOST_title")); 		// 장터글 제목
-		recommendDTO.setMarketPostContent(rs.getString("MARKETPOST_content"));	// 장터글 내용
-		recommendDTO.setMarketPostDate(rs.getString("MARKETPOST_date")); 		// 장터글 작성일
-		recommendDTO.setMarketPostViewcnt(rs.getString("MARKETPOST_viewcnt")); 	// 장터글 조회수
+		recommendDTO.setPostCategory(rs.getString("post_category")); 				// 게시글 카테고리
+		recommendDTO.setMarketPostId(rs.getString("MARKETPOST_id"));				// 장터글 아이디
+		recommendDTO.setMemberId(rs.getString("MEMBER_id")); 						// 회원 아이디
+		recommendDTO.setMemberNickname(rs.getString("MEMBER_nickname")); 			// 회원 닉네임
+		recommendDTO.setMarketPostTitle(rs.getString("MARKETPOST_title")); 			// 장터글 제목
+		recommendDTO.setMarketPostContent(rs.getString("MARKETPOST_content"));		// 장터글 내용
+		recommendDTO.setMarketPostDate(rs.getString("MARKETPOST_date")); 			// 장터글 작성일
+		recommendDTO.setMarketPostViewcnt(rs.getString("MARKETPOST_viewcnt")); 		// 장터글 조회수
 		recommendDTO.setMyRecommend(rs.getInt("myRecommend")); 						// 좋아요 로그인한 회원이 좋아요를 눌렀는지 체크
-		recommendDTO.setRecommendCnt(rs.getInt("RECOMMEND_cnt")); 				// 좋아요 수
-		recommendDTO.setPostImgName(rs.getString("POSTIMG_name")); 				// 게시글 대표 이미지
-		return recommendDTO; // recommendDTO에 저장된 데이터들을 반환
-	}
-}
-
-// 회원 페이지 - 특정 회원이 좋아요한 게시글 카테고리별 출력 시 필요한 데이터를 저장할 RowMapper 클래스.전미지
-class  RecommendTotalCategoryRowMapper implements RowMapper<RecommendDTO>{
-	@Override // mapRow 메서드 오버라이드
-	public RecommendDTO mapRow(ResultSet rs,int rowNum) throws SQLException{
-		// ResultSet에 저장된 데이터를 RecommendDTO 객체에 매핑(저장)하는 메서드
-		
-		RecommendDTO recommendDTO = new RecommendDTO(); // 새로운 RecommendDTO 객체 생성	
-		// ResultSet에 저장된 데이터를 RecommendDTO 객체에 저장
-		recommendDTO.setPostCategory(rs.getString("post_category"));			// 게시글 카테고리
-		recommendDTO.setChalKagPostId(rs.getString("chalKag_postid"));			// 게시글 아이디	
-		recommendDTO.setPostTitle(rs.getString("post_title"));					// 게시글 제목
-		recommendDTO.setPostContent(rs.getString("post_content"));				// 게시글 내용
-		recommendDTO.setPostDate(rs.getString("post_date"));					// 게시글 작성일
-		recommendDTO.setPostViewcnt(rs.getString("post_viewcnt"));				// 게시글 조회수
-		recommendDTO.setMyRecommend(rs.getInt("myRecommend")); 					// 좋아요 로그인한 회원이 좋아요를 눌렀는지 체크
-		recommendDTO.setPostRecommendCnt(rs.getInt("post_recommendCnt"));		// 게시글의 좋아요 수
-		recommendDTO.setPostImgName(rs.getString("post_imgname"));				// 게시글 대표 이미지
+		recommendDTO.setRecommendCnt(rs.getInt("RECOMMEND_cnt")); 					// 좋아요 수
+		recommendDTO.setPostImgName(rs.getString("POSTIMG_name")); 					// 게시글 대표 이미지
 		return recommendDTO; // recommendDTO에 저장된 데이터들을 반환
 	}
 }
