@@ -8,43 +8,13 @@
 <!-- 페이지 이동 및 필터검색 CSS 파일 링크 달기 & Jsp로 작성할때 링크 프로젝트내 링크와 맞추기 -->
 <chalKagTags:webCss />
 <style>
-[type="radio"], span {
-	vertical-align: middle;
+/* Min Max 스타일 */
+input[type='range']::-webkit-slider-thumb {
+	background-color: #F73F52;
 }
-
-[type="radio"] {
-	appearance: none;
-	border: max(2px, 0.1em) solid gray;
-	border-radius: 50%;
-	width: 1.25em;
-	height: 1.25em;
-	transition: border 0.5s ease-in-out;
-}
-
-[type="radio"]:checked {
-	border: 0.4em solid #F73F52;
-}
-
-[type="radio"]:focus-visible {
-	outline-offset: max(2px, 0.1em);
-	outline: max(2px, 0.1em) dotted #F73F52;
-}
-
-[type="radio"]:hover {
-	box-shadow: 0 0 0 max(4px, 0.2em) lightgray;
-	cursor: pointer;
-}
-
-[type="checkbox"] {
-	accent-color: red;
-}
-
-[type="range"] {
-	accent-color: red;
-}
-
-div .inner p {
-	margin-left: 5%;
+/* 범위 설정 css */
+input[type="range"] {
+	accent-color: #F73F52;
 }
 </style>
 </head>
@@ -53,6 +23,9 @@ div .inner p {
 	<!-- Start header tag로 출력 -->
 	<chalKagTags:webHeader />
 	<!-- End header tag로 출력 -->
+
+<input type="hidden" id="sessionId" value="${member}">
+<input type="hidden" id="marketPostStatus" >
 
 	<!-- 필터 검색 용 메뉴 -->
 	<section class="search">
@@ -81,9 +54,9 @@ div .inner p {
 							<!-- 검색창 옵션(제목, 내용, 작성자, 제목 + 작성자) -->
 							<select id="searchField" name="searchField" class="searchOption"
 								style="margin-bottom: 5%; padding-left: 10px; border-color: gray; border-radius: 5px; height: 40px; width: 100%;">
-								<option value="title">title</option>
-								<option value="contents">contents</option>
-								<option value="writer">writer</option>
+								<option value="marketPostTitle">title</option>
+								<option value="marketPostcontent">contents</option>
+								<option value="memberNickname">writer</option>
 								<option value="titleAndContents">title + contents</option>
 							</select>
 							<div class="form-group">
@@ -108,22 +81,22 @@ div .inner p {
 								style="font-weight: bold; margin-bottom: 2%;">DATE</div>
 							<div class="form-group">
 								<!-- 모든 시간 selectAll -->
-								<label><input type="radio" name="marketPostDate" id="Anytime"
-									checked>&nbsp; Anytime</label>
+								<label><input type="radio" name="marketPostDate" id="Anytime" value="Anytime"
+									checked>Anytime</label>
 							</div>
 							<div class="form-group">
 								<!-- 오늘 하루 동안 작성한 글들 selectAll_today -->
-								<label><input type="radio" name="marketPostDate" id="Today">&nbsp;
+								<label><input type="radio" name="marketPostDate" id="Today" value="Today">
 									Today</label>
 							</div>
 							<div class="form-group">
 								<!-- 지난주 동안 작성한 글들 selectAll_today -->
-								<label><input type="radio" name="marketPostDate" id="LastWeek">&nbsp;
+								<label><input type="radio" name="marketPostDate" id="LastWeek" value="Last Week">
 									Last Week</label>
 							</div>
 							<div class="form-group">
 								<!-- 전 달동안 작성한 글들 selectAll_today -->
-								<label><input type="radio" name="marketPostDate" id="LastMonth">&nbsp;
+								<label><input type="radio" name="marketPostDate" id="LastMonth" value="Last Month">
 									Last Month</label>
 							</div>
 							<br>
@@ -132,7 +105,7 @@ div .inner p {
 								style="font-weight: bold; margin-bottom: 2%;">COMPANY</div>
 							<div class="form-group">
 								<select
-									style="width: 100%; height: 40px;" id="role" name="marketPostCompany">
+									style="width: 100%; height: 40px;" id="productCompany" name="marketPostCompany">
 									<option value="" disabled selected>Select</option>
 									<option value="Canon">Canon</option>
 									<option value="Sony">Sony</option>
@@ -157,10 +130,16 @@ div .inner p {
 							<div class="group-title"
 								style="font-weight: bold; margin-bottom: 2%;">PRICE</div>
 							<div class="form-group">
-								<input type="range"
-									id="minPrice" name="minPrice" min="0" max="1000000" value="1">
-								<label for="maxPrice">최대 Price:</label> <input type="range"
-									id="maxPrice" name="maxPrice" min="0" max="1000000" value="1">
+								<label for="minPrice">Min</label> <input type="range"
+									id="minPrice" name="minPrice" min="0" max="10000000" value="0"
+									oninput="updateTextInput('minPrice', 'minPriceText')"> <input
+									type="text" id="minPriceText" readonly
+									style="border: 0; color: #f6931f; font-weight: bold;">
+								<br> <label for="maxPrice">Max</label> <input type="range"
+									id="maxPrice" name="maxPrice" min="0" max="10000000" value="0"
+									oninput="updateTextInput('maxPrice', 'maxPriceText')"> <input
+									type="text" id="maxPriceText" readonly
+									style="border: 0; color: #f6931f; font-weight: bold;">
 							</div>
 							<br>
 							
@@ -232,12 +211,15 @@ div .inner p {
 	<script src="css/user/scripts/owlcarousel/dist/owl.carousel.min.js"></script>
 	<script
 		src="css/user/scripts/magnific-popup/dist/jquery.magnific-popup.min.js"></script>
-	<script src="css/user/scripts/easescroll/jquery.easeScroll.js"></script>
 	<script src="css/user/scripts/sweetalert/dist/sweetalert.min.js"></script>
 	<script src="css/user/scripts/toast/jquery.toast.min.js"></script>
 	<script src="js/user/marketPostPagination.js"></script>
 	<script src="js/user/marketPostFilterSearch.js"></script>
+	
+	
 	<script src="css/user/js/demo.js"></script>
+	<script src="css/user/js/e-magz.js"></script>
+	<script src="css/user/scripts/icheck/icheck.min.js"></script>
 	<script>
 		$("input").iCheck({
 			checkboxClass : 'icheckbox_square-red',
@@ -245,7 +227,6 @@ div .inner p {
 			cursor : true
 		});
 	</script>
-	<script src="css/user/js/e-magz.js"></script>
 	<script>
 	function message() {
 	    swal({
@@ -262,5 +243,54 @@ div .inner p {
 	    });
 	}
 	</script>
+	
+	<script>
+    function updateTextInput(rangeId, inputId) {
+        var range = document.getElementById(rangeId);
+        var input = document.getElementById(inputId);
+        var step = 1000; // 1000 단위로 움직이도록 설정
+        var newValue = Math.floor(range.value / step) * step;
+        range.value = newValue;
+        input.value = newValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); // 콤마 추가
+
+        // MIN 값이 MAX값을 넘어가지 않도록 확인
+        var minPrice = document.getElementById("minPrice").value;
+        var maxPrice = document.getElementById("maxPrice").value;
+        if (parseInt(minPrice) > parseInt(maxPrice)) {
+            document.getElementById(rangeId).value = maxPrice;
+            document.getElementById(inputId).value = maxPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        // MAX 값이 MIN 값보다 작지 않도록 확인
+        if (parseInt(maxPrice) < parseInt(minPrice)) {
+            document.getElementById("maxPrice").value = minPrice;
+            document.getElementById("maxPriceText").value = minPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+    }
+</script>
+
+<script>
+	// 주소창의 status 값을 가져오는 함수
+	function getQueryParam(param) {
+    	var searchParams = new URLSearchParams(window.location.search);
+    	return searchParams.get(param);
+	}
+	
+    document.addEventListener("DOMContentLoaded", function(event) { 
+        // 페이지 로드 완료 후 실행
+        var marketPostStatus = getQueryParam('marketPostStatus'); // URL에서 파라미터 값을 읽어옴
+        if (marketPostStatus) {
+            document.getElementById('marketPostStatus').value = marketPostStatus; // input 태그에 값 설정
+        }
+    });
+</script>
+
+
+<script>
+	$('input[type=radio][name=marketPostDate]').change(function() {
+		console.log("aaaaaaaaaaaaaaaaaaa")
+	});
+
+</script>
 </body>
 </html>
