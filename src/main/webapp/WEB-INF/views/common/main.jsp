@@ -190,10 +190,24 @@
                                         </h2>
                                         <pre class="latestPostContent">${latestHeadHuntPost.headHuntPostContent}</pre>
                                         <footer>
-                                            <a href="#" class="love"><i
-                                                    class="ion-android-favorite-outline"></i>
-                                                <div>${latestHeadHuntPost.recommendCnt}</div>
-                                            </a>
+                                            <c:if test="${member == null}">
+										<a onclick="message()" class="love" style="margin-top:0%">
+								        	<i class="ion-android-favorite-outline"></i><div id="recommendCnt">${latestHeadHuntPost.recommendCnt}</div>
+								   	 	</a>
+									</c:if>
+									<c:if test="${member != null}">
+											<c:if test="${member != recommendInfoHeadHunt.memberId}">
+												<a id="recommendBtn_${latestHeadHuntPost.headHuntPostId}" class="love" style="margin-top:0%" data-postid="${latestHeadHuntPost.headHuntPostId}" data-memberid="${member}">
+								        		<i class="ion-android-favorite-outline"></i><div id="recommendCnt">${latestHeadHuntPost.recommendCnt}</div>
+								   	 			</a>
+											</c:if>
+											<c:if test="${member == recommendInfoHeadHunt.memberId}">
+												<a id="recommendBtn_${latestHeadHuntPost.headHuntPostId}" class="love active" style="margin-top:0%" data-postid="${latestHeadHuntPost.headHuntPostId}" data-memberid="${member}">
+								        		<i class="ion-android-favorite"></i><div id="recommendCnt">${latestHeadHuntPost.recommendCnt}</div>
+								   	 			</a>
+											</c:if>
+									</c:if>
+
                                             <a class="btn btn-primary more"
                                                href="headHuntPostSingle?headHuntPostId=${latestHeadHuntPost.headHuntPostId}">
                                                 <div>More</div>
@@ -223,10 +237,23 @@
                                         <p class="latestPostContent">${latestMarketPost.marketPostContent}
                                         </p>
                                         <footer>
-                                            <a href="#" class="love"><i
-                                                    class="ion-android-favorite-outline"></i>
-                                                <div>${latestMarketPost.recommendCnt}</div>
-                                            </a>
+                                            <c:if test="${member == null}">
+										<a onclick="message()" class="love" style="margin-top:0%">
+								        	<i class="ion-android-favorite-outline"></i><div id="recommendCnt">${latestMarketPost.recommendCnt}</div>
+								   	 	</a>
+									</c:if>
+									<c:if test="${member != null}">
+											<c:if test="${member != recommendInfoMarket.memberId}">
+												<a id="recommendBtn_${latestMarketPost.marketPostId}" class="love" style="margin-top:0%" data-postid="${latestMarketPost.marketPostId}" data-memberid="${member}">
+								        		<i class="ion-android-favorite-outline"></i><div id="recommendCnt">${latestMarketPost.recommendCnt}</div>
+								   	 			</a>
+											</c:if>
+											<c:if test="${member == recommendInfoMarket.memberId}">
+												<a id="recommendBtn_${latestMarketPost.marketPostId}" class="love active" style="margin-top:0%" data-postid="${latestMarketPost.marketPostId}" data-memberid="${member}">
+								        		<i class="ion-android-favorite"></i><div id="recommendCnt">${latestMarketPost.recommendCnt}</div>
+								   	 			</a>
+											</c:if>
+									</c:if>
                                             <a class="btn btn-primary more"
                                                href="marketPostSingle?marketPostId=${latestMarketPost.marketPostId}">
                                                 <div>More</div>
@@ -259,10 +286,23 @@
                                         <p class="latestPostContent">${latestJobHuntPost.jobHuntPostContent}
                                         </p>
                                         <footer>
-                                            <a href="#" class="love"><i
-                                                    class="ion-android-favorite-outline"></i>
-                                                <div>${latestJobHuntPost.recommendCnt}</div>
-                                            </a>
+                                            <c:if test="${member == null}">
+										<a onclick="message()" class="love" style="margin-top:0%">
+								        	<i class="ion-android-favorite-outline"></i><div id="recommendCnt">${latestJobHuntPost.recommendCnt}</div>
+								   	 	</a>
+									</c:if>
+									<c:if test="${member != null}">
+											<c:if test="${member != recommendInfoJobHunt.memberId}">
+												<a id="recommendBtn_${latestJobHuntPost.jobHuntPostId}" class="love" style="margin-top:0%" data-postid="${latestJobHuntPost.jobHuntPostId}" data-memberid="${member}">
+								        		<i class="ion-android-favorite-outline"></i><div id="recommendCnt">${latestJobHuntPost.recommendCnt}</div>
+								   	 			</a>
+											</c:if>
+											<c:if test="${member == recommendInfoJobHunt.memberId}">
+												<a id="recommendBtn_${latestJobHuntPost.jobHuntPostId}" class="love active" style="margin-top:0%" data-postid="${latestJobHuntPost.jobHuntPostId}" data-memberid="${member}">
+								        		<i class="ion-android-favorite"></i><div id="recommendCnt">${latestJobHuntPost.recommendCnt}</div>
+								   	 			</a>
+											</c:if>
+									</c:if>
                                             <a class="btn btn-primary more"
                                                href="jobHuntPostSingle?jobHuntPostId=${latestJobHuntPost.jobHuntPostId}">
                                                 <div>More</div>
@@ -291,10 +331,23 @@
                                         <p class="latestPostContent">${latestFreePost.freePostContent}
                                         </p>
                                         <footer>
-                                            <a href="#" class="love"><i
-                                                    class="ion-android-favorite-outline"></i>
-                                                <div>${latestFreePost.recommendCnt}</div>
-                                            </a>
+                                            <c:if test="${member == null}">
+										<a onclick="message()" class="love" style="margin-top:0%">
+								        	<i class="ion-android-favorite-outline"></i><div id="recommendCnt">${latestFreePost.recommendCnt}</div>
+								   	 	</a>
+									</c:if>
+									<c:if test="${member != null}">
+											<c:if test="${member != recommendInfoFree.memberId}">
+												<a id="recommendBtn_${latestFreePost.freePostId}" class="love" style="margin-top:0%" data-postid="${latestFreePost.freePostId}" data-memberid="${member}">
+								        		<i class="ion-android-favorite-outline"></i><div id="recommendCnt">${latestFreePost.recommendCnt}</div>
+								   	 			</a>
+											</c:if>
+											<c:if test="${member == recommendInfoFree.memberId}">
+												<a id="recommendBtn_${latestFreePost.freePostId}" class="love active" style="margin-top:0%" data-postid="${latestFreePost.freePostId}" data-memberid="${member}">
+								        		<i class="ion-android-favorite"></i><div id="recommendCnt">${latestFreePost.recommendCnt}</div>
+								   	 			</a>
+											</c:if>
+									</c:if>
                                             <a class="btn btn-primary more"
                                                href="freePostSingle?freePostId=${latestFreePost.freePostId}">
                                                 <div>More</div>
@@ -652,10 +705,128 @@
                     </div>
                 </article>
             </c:forEach>
+            <c:forEach items="${jobHuntPostWeeklyBestList}" var="jobHuntPostWeeklyBestList">
+                <article class="article">
+                    <div class="inner">
+                        <figure>
+                            <a href="jobHuntPostSingle?jobHuntPostId=${jobHuntPostWeeklyBestList.jobHuntPostId}">
+                                <img class="latestPostImg"
+                                     src="postImg/${jobHuntPostWeeklyBestList.postImgName}"
+                                     alt="Sample Article">
+                            </a>
+                        </figure>
+                        <div class="padding">
+                            <div class="detail">
+                                <div class="category"><a
+                                        href="jobHuntPostSingle?jobHuntPostId=${jobHuntPostWeeklyBestList.jobHuntPostId}">JOBHUNTPOST</a>
+                                </div>
+                                <div class="time">${jobHuntPostWeeklyBestList.memberNickname}</div>
+                            </div>
+                            <h2>
+                                <a href="jobHuntPostSingle?jobHuntPostId=${jobHuntPostWeeklyBestList.jobHuntPostId}">${jobHuntPostWeeklyBestList.jobHuntPostTitle}</a>
+                            </h2>
+                            <p class="latestPostContent">${jobHuntPostWeeklyBestList.jobHuntPostContent}</p>
+                        </div>
+                    </div>
+                </article>
+            </c:forEach>
+            <c:forEach items="${marketPostWeeklyBestList}" var="marketPostWeeklyBestList">
+                <article class="article">
+                    <div class="inner">
+                        <figure>
+                            <a href="marketPostSingle?marketPostId=${marketPostWeeklyBestList.marketPostId}">
+                                <img class="latestPostImg"
+                                     src="postImg/${marketPostWeeklyBestList.postImgName}"
+                                     alt="Sample Article">
+                            </a>
+                        </figure>
+                        <div class="padding">
+                            <div class="detail">
+                                <div class="category"><a
+                                        href="marketPostSingle?marketPostId=${marketPostWeeklyBestList.marketPostId}">MARKETPOST</a>
+                                </div>
+                                <div class="time">${marketPostWeeklyBestList.memberNickname}</div>
+                            </div>
+                            <h2>
+                                <a href="marketPostSingle?marketPostId=${marketPostWeeklyBestList.marketPostId}">${marketPostWeeklyBestList.marketPostTitle}</a>
+                            </h2>
+                            <p class="latestPostContent">${marketPostWeeklyBestList.marketPostContent}</p>
+                        </div>
+                    </div>
+                </article>
+            </c:forEach>
+            <c:forEach items="${freePostWeeklyBestList}" var="freePostWeeklyBestList">
+                <article class="article">
+                    <div class="inner">
+                        <figure>
+                            <a href="freePostSingle?freePostId=${freePostWeeklyBestList.freePostId}">
+                                <img class="latestPostImg"
+                                     src="postImg/${freePostWeeklyBestList.postImgName}"
+                                     alt="Sample Article">
+                            </a>
+                        </figure>
+                        <div class="padding">
+                            <div class="detail">
+                                <div class="category"><a
+                                        href="freePostSingle?freePostId=${freePostWeeklyBestList.freePostId}">FREEPOST</a>
+                                </div>
+                                <div class="time">${freePostWeeklyBestList.memberNickname}</div>
+                            </div>
+                            <h2>
+                                <a href="freePostSingle?freePostId=${freePostWeeklyBestList.freePostId}">${freePostWeeklyBestList.freePostTitle}</a>
+                            </h2>
+                            <p class="latestPostContent">${freePostWeeklyBestList.freePostContent}</p>
+                        </div>
+                    </div>
+                </article>
+            </c:forEach>
         </div>
     </div>
 </section>
-
 <chalKagTags:webFooter/>
+<script>
+    
+      
+   
+$( document ).ready(function() {
+    $('[id^="recommendBtn_"]').on('click', function(){
+	// data- 속성에서 데이터 읽어오기
+    var postId = $(this).data('postid');
+    var memberId = $(this).data('memberid');
+
+    console.log("postId : " + postId);
+    console.log("memberId : " + memberId);
+
+    // AJAX 요청을 통해 서버에 요청
+    $.ajax({
+        type: "GET",
+        url: "/recommendUpDown",
+        data: {'postId': postId, 'memberId': memberId},
+        success: function(data){
+            history.go(0);
+        },
+        error: function(){
+            console.log("에러발생!");
+        }
+    });
+});
+});
+
+function message() {
+	    swal({
+	        title: "fail",
+	        text: "로그인 후 이용해주세요.",
+	        type: "error",
+	        showCancelButton: false,
+	        confirmButtonColor: "#DD6B55",
+	        confirmButtonText: "OK",
+	        closeOnConfirm: true
+	    }, function() {
+	        // "OK" 버튼 누르면 실행될 코드
+	        window.location.href = "/signIn"; // 로그인 페이지로 이동
+	    });
+	}
+
+</script>
 </body>
 </html>
