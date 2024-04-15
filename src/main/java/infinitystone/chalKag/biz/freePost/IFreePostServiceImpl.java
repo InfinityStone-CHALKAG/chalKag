@@ -19,6 +19,7 @@ public class IFreePostServiceImpl implements IFreePostService{
 	public List<FreePostDTO> selectAll(FreePostDTO freePostDTO) {
 		Map<String, Object> map = new HashMap<String,Object>();
 		
+		map.put("memberId", freePostDTO.getMemberId());
 		map.put("freePostId", freePostDTO.getFreePostId());
 		map.put("freePostTitle", freePostDTO.getFreePostTitle());
 		map.put("freePostContent", freePostDTO.getFreePostContent());
@@ -34,7 +35,9 @@ public class IFreePostServiceImpl implements IFreePostService{
 		// 검색어 필터
 		map.put("searchField", freePostDTO.getSearchField());
 		map.put("searchInput", freePostDTO.getSearchInput());
-
+		System.out.println(map);
+		System.out.println("@#@!#!@#!@"+freePostDTO.getFromday());
+		System.out.println("##@#@!#!@#!@"+freePostDTO.getToday());
 		return iFreePostDAO.selectAll(map);
 	}
 

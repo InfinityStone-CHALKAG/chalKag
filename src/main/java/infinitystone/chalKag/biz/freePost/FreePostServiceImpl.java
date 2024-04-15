@@ -12,8 +12,10 @@ public class FreePostServiceImpl implements FreePostService{
 	private FreePostDAO freePostDAO;
 	@Override
 	public List<FreePostDTO> selectAll(FreePostDTO freePostDTO) {
+		System.out.println("FREEPOSTDTO"+freePostDTO);
 		// TODO Auto-generated method stub
 		return freePostDAO.selectAll(freePostDTO);
+		
 	}
 
 	@Override

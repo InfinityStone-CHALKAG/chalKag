@@ -14,6 +14,7 @@ public class FreePostDTO {
 	private String freePostTitle;		// 자유글 제목
 	private String freePostContent;		// 자유글 내용
 	private String freePostViewcnt;		// 자유글 조회수
+	private int    myRecommend;			// 로그인한 회원이 좋아요를 눌렀는지 체크
 	
 	private String postId;					// 게시글 아이디
 	
