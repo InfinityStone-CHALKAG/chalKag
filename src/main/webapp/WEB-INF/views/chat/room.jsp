@@ -17,9 +17,6 @@
 <section class="login first grey">
     <div class="container">
         <div class="box-wrapper">
-            <div class="col-6">
-                <h1>${room.name}</h1>
-            </div>
             <div>
                 <div id="msgArea" class="col"></div>
                 <div class="col-6">

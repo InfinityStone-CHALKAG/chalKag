@@ -23,11 +23,11 @@
                     </c:forEach>
                 </ul>
             </div>
+            <form action="/room" method="post">
+                <input type="text" name="name" class="form-control">
+                <button class="btn btn-secondary">개설하기</button>
+            </form>
         </div>
-        <form action="/room" method="post">
-            <input type="text" name="name" class="form-control">
-            <button class="btn btn-secondary">개설하기</button>
-        </form>
     </div>
 </section>
 

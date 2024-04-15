@@ -46,13 +46,17 @@ public class RoomController {
 
   //채팅방 조회
   @GetMapping("/room")
-  public void getRoom(String roomId, Model model) {
+  public String getRoom(String roomId, Model model) {
 
     System.out.println("RoomController(room GET) In로그");
 
     model.addAttribute("room", chatRoomDAO.findRoomById(roomId));
 
     System.out.println("RoomController(room GET) Out로그" + model.getAttribute("room"));
+
+    return "chat/room";
   }
 
 }
+
+
