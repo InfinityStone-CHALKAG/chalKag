@@ -25,6 +25,7 @@ input[type="range"] {
 	<!-- End header tag로 출력 -->
 
 <input type="hidden" id="sessionId" value="${member}">
+<input type="hidden" id="marketPostStatus" >
 
 	<!-- 필터 검색 용 메뉴 -->
 	<section class="search">
@@ -210,11 +211,12 @@ input[type="range"] {
 	<script src="css/user/scripts/owlcarousel/dist/owl.carousel.min.js"></script>
 	<script
 		src="css/user/scripts/magnific-popup/dist/jquery.magnific-popup.min.js"></script>
-	<script src="css/user/scripts/easescroll/jquery.easeScroll.js"></script>
 	<script src="css/user/scripts/sweetalert/dist/sweetalert.min.js"></script>
 	<script src="css/user/scripts/toast/jquery.toast.min.js"></script>
 	<script src="js/user/marketPostPagination.js"></script>
 	<script src="js/user/marketPostFilterSearch.js"></script>
+	
+	
 	<script src="css/user/js/demo.js"></script>
 	<script src="css/user/js/e-magz.js"></script>
 	<script src="css/user/scripts/icheck/icheck.min.js"></script>
@@ -267,6 +269,21 @@ input[type="range"] {
     }
 </script>
 
+<script>
+	// 주소창의 status 값을 가져오는 함수
+	function getQueryParam(param) {
+    	var searchParams = new URLSearchParams(window.location.search);
+    	return searchParams.get(param);
+	}
+	
+    document.addEventListener("DOMContentLoaded", function(event) { 
+        // 페이지 로드 완료 후 실행
+        var marketPostStatus = getQueryParam('marketPostStatus'); // URL에서 파라미터 값을 읽어옴
+        if (marketPostStatus) {
+            document.getElementById('marketPostStatus').value = marketPostStatus; // input 태그에 값 설정
+        }
+    });
+</script>
 
 
 <script>

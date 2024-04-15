@@ -22,7 +22,7 @@
                          </a>
                     </figure>
 					<div class="details">
-						<h1>
+						<h1 style="width: 255px; max-height: 44px; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1;">
 							 <a href="jobHuntPostSingle?jobHuntPostId=${latestJobHuntPost.jobHuntPostId}">${latestJobHuntPost.jobHuntPostTitle}</a>
 						</h1>
 						 <p class="latestPostContent">${latestJobHuntPost.jobHuntPostContent}</p>

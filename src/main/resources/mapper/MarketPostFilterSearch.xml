@@ -32,13 +32,13 @@
 	LEFT JOIN  
 	    RECOMMEND ON MARKETPOST.MARKETPOST_id = RECOMMEND.POST_id  
 	WHERE  
-	<if test="marketPostStatus.equals('sell')">
+	<if test="marketPostStatus.equals('Sell')">
 		MARKETPOST.MARKETPOST_status = 'sell'
 	</if>    
-	<if test="marketPostStatus.equals('buy')">
+	<if test="marketPostStatus.equals('Buy')">
 		MARKETPOST.MARKETPOST_status = 'buy'
 	</if>  
-	<if test="marketPostStatus.equals('freecycle')">
+	<if test="marketPostStatus.equals('Freecycle')">
 		MARKETPOST.MARKETPOST_status = 'freecycle'
 	</if>  
 	
@@ -72,7 +72,7 @@
 	</if>
 	
 	<if test="fromday != null and fromday != '' ">
-			AND DATE(MARKETOST_date) BETWEEN #{fromday} AND #{today}
+			AND DATE(MARKETPOST_date) BETWEEN #{fromday} AND #{today}
 	</if>
 	
 	ORDER BY
