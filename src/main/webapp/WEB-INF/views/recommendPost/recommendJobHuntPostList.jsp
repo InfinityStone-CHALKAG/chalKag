@@ -4,47 +4,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
+
 <head>
 <!-- 페이지 이동 및 필터검색 CSS 파일 링크 달기 & Jsp로 작성할때 링크 프로젝트내 링크와 맞추기 -->
 <chalKagTags:webCss />
 <style>
-[type="radio"], span {
-	vertical-align: middle;
+/* Min Max 스타일 */
+input[type='range']::-webkit-slider-thumb {
+	background-color: #F73F52;
 }
-
-[type="radio"] {
-	appearance: none;
-	border: max(2px, 0.1em) solid gray;
-	border-radius: 50%;
-	width: 1.25em;
-	height: 1.25em;
-	transition: border 0.5s ease-in-out;
-}
-
-[type="radio"]:checked {
-	border: 0.4em solid #F73F52;
-}
-
-[type="radio"]:focus-visible {
-	outline-offset: max(2px, 0.1em);
-	outline: max(2px, 0.1em) dotted #F73F52;
-}
-
-[type="radio"]:hover {
-	box-shadow: 0 0 0 max(4px, 0.2em) lightgray;
-	cursor: pointer;
-}
-
-[type="checkbox"] {
-	accent-color: red;
-}
-
-[type="range"] {
-	accent-color: red;
-}
-
-div .inner p {
-	margin-left: 5%;
+/* 범위 설정 css */
+input[type="range"] {
+	accent-color: #F73F52;
 }
 </style>
 </head>
@@ -53,6 +24,9 @@ div .inner p {
 	<!-- Start header tag로 출력 -->
 	<chalKagTags:webHeader />
 	<!-- End header tag로 출력 -->
+
+<input type="hidden" id="sessionId" value="${member}">
+
 	<!-- 필터 검색 용 메뉴 -->
 	<section class="search">
 		<div class="container">
@@ -106,23 +80,23 @@ div .inner p {
 								style="font-weight: bold; margin-bottom: 2%;">DATE</div>
 							<div class="form-group">
 								<!-- 모든 시간 selectAll -->
-								<label><input type="radio" name="jobHuntPostDate" id="Anytime"
-									checked>&nbsp; Anytime</label>
+								<label><input type="radio" name="jobHuntPostDate"
+									id="Anytime" value="Anytime" checked> Anytime</label>
 							</div>
 							<div class="form-group">
 								<!-- 오늘 하루 동안 작성한 글들 selectAll_today -->
-								<label><input type="radio" name="jobHuntPostDate" id="Today">&nbsp;
-									Today</label>
+								<label><input type="radio" name="jobHuntPostDate"
+									id="Today" value="Today"> Today</label>
 							</div>
 							<div class="form-group">
 								<!-- 지난주 동안 작성한 글들 selectAll_today -->
-								<label><input type="radio" name="jobHuntPostDate" id="LastWeek">&nbsp;
-									Last Week</label>
+								<label><input type="radio" name="jobHuntPostDate"
+									id="LastWeek" value="Last Week"> Last Week</label>
 							</div>
 							<div class="form-group">
 								<!-- 전 달동안 작성한 글들 selectAll_today -->
-								<label><input type="radio" name="jobHuntPostDate" id="LastMonth">&nbsp;
-									Last Month</label>
+								<label><input type="radio" name="jobHuntPostDate"
+									id="LastMonth" value="Last Month"> Last Month</label>
 							</div>
 							<br>
 
@@ -130,7 +104,8 @@ div .inner p {
 							<div class="group-title"
 								style="font-weight: bold; margin-bottom: 2%;">ROLE</div>
 							<div class="form-group">
-								<select style="width: 100%; height: 40px;" id="role" name="jobHuntPostRole">
+								<select style="width: 100%; height: 40px;" id="role"
+									name="jobHuntPostRole">
 									<option value="" disabled selected>Select</option>
 									<option value="Model">Model</option>
 									<option value="Photographer">Photographer</option>
@@ -142,8 +117,8 @@ div .inner p {
 							<div class="group-title"
 								style="font-weight: bold; margin-bottom: 2%;">REGION</div>
 							<div class="form-group">
-								<select style="width: 100%; height: 40px;"
-									id="region" name="jobHuntPostRegion">
+								<select style="width: 100%; height: 40px;" id="region"
+									name="jobHuntPostRegion">
 									<option value="" disabled selected>Select</option>
 									<option value="SEOUL">SEOUL</option>
 									<option value="GYEONGGI">GYEONGGI</option>
@@ -157,24 +132,27 @@ div .inner p {
 							<br>
 
 							<!-- Pay 필터 -->
-							<div class="group-title"
-								style="font-weight: bold; margin-bottom: 2%;">PAY</div>
-							<div class="form-group">
-								<label for="minPay">Min</label> <input type="range" id="minPay"
-									name="minPay" min="0" max="1000000" value="1"> <label
-									for="maxPay">Max</label> <input type="range" id="maxPay"
-									name="maxPay" min="0" max="1000000" value="1">
-							</div>
+							<div class="group-title" style="font-weight: bold; margin-bottom: 2%;">PAY</div>
+<div class="form-group">
+    <label for="minPrice">Min</label>
+    <input type="range" id="minPay" name="minPay" min="0" max="1000000" value="0" oninput="updateTextInput('minPay', 'minPayText')">
+    <input type="text" id="minPayText" readonly style="border:0; color:#f6931f; font-weight:bold;">
+	<br>
+    <label for="maxPrice">Max</label>
+    <input type="range" id="maxPay" name="maxPay" min="0" max="1000000" value="0" oninput="updateTextInput('maxPay', 'maxPayText')">
+    <input type="text" id="maxPayText" readonly style="border:0; color:#f6931f; font-weight:bold;">
+</div>
 							<br>
 
 							<!--  작업 날짜 필터 -->
 							<div class="group-title"
 								style="font-weight: bold; margin-bottom: 2%;">WORK DATE</div>
 							<div class="form-group">
-								<label for="workdate" style="margin-bottom: 2%;">Start</label> 
-								<input style="width: 100%; height: 40px; margin-bottom: 2%;" type="date" id="startDate" name="startWorkDate"> 
-									<label for="workdate" style="margin-bottom: 2%;">End</label> 
-								<input style="width: 100%; height: 40px; margin-bottom: 2%;"
+								<label for="workdate" style="margin-bottom: 2%;">Start</label> <input
+									style="width: 100%; height: 40px; margin-bottom: 2%;"
+									type="date" id="startDate" name="startWorkDate" value=""> <label
+									for="workdate" style="margin-bottom: 2%;">End</label> <input
+									style="width: 100%; height: 40px; margin-bottom: 2%;"
 									type="date" id="endDate" name="endWorkDate">
 							</div>
 							<br>
@@ -204,8 +182,7 @@ div .inner p {
 						</div>
 					</aside>
 				</div>
-
-
+				
 				<div class="col-md-9">
 					<div class="nav-tabs-group">
 						<ul class="nav-tabs-list">
@@ -218,23 +195,21 @@ div .inner p {
 						<div class="nav-tabs-right">
 							<!-- 오름차순, 내림차순 정렬 -->
 							<select class="form-control" id="sortOrder">
-								<option value="DESC">Descending</option>
-								<option value="ASC">Ascending</option>
+								<option value="desc">Descending</option>
+								<option value="asc">Ascending</option>
 							</select>
 						</div>
 					</div>
 
 					<div class="search-result">Define style with your exceptional
 						models.</div>
-
-
+			
 					<!-- 게시글 전체 갯수가 출력되게 처리 -->
 					<div class="row">
 						<!-- 게시글 목록 출력 장소 시작 게시판마다 명이 다르다. -->
 						<div id="postDatasContainer"
 							data-displayreviewdata='${jobHuntPostList}'></div>
 						<!-- 게시글 목록 출력 장소 종료-->
-
 						<!-- 페이지 이동 버튼 -->
 						<!-- 페이징처리 시 1~10 까지 출력 글이 적으면 1~a 만 출력할 수 있게 처리  -->
 						<div class="col-md-12 text-center">
@@ -264,13 +239,15 @@ div .inner p {
 	<script src="css/user/scripts/owlcarousel/dist/owl.carousel.min.js"></script>
 	<script
 		src="css/user/scripts/magnific-popup/dist/jquery.magnific-popup.min.js"></script>
-	<script src="css/user/scripts/easescroll/jquery.easeScroll.js"></script>
 	<script src="css/user/scripts/sweetalert/dist/sweetalert.min.js"></script>
 	<script src="css/user/scripts/toast/jquery.toast.min.js"></script>
 	<script src="js/user/jobHuntPostPagination.js"></script>
 	<script src="js/user/jobHuntPostFilterSearch.js"></script>
+	
+	
 	<script src="css/user/js/e-magz.js"></script>
 	<script src="css/user/js/demo.js"></script>
+	<script src="css/user/scripts/icheck/icheck.min.js"></script>
 	<script>
 		$("input").iCheck({
 			checkboxClass : 'icheckbox_square-red',
@@ -294,5 +271,70 @@ div .inner p {
 			});
 		}
 	</script>
+
+<script>
+    function updateTextInput(rangeId, inputId) {
+        var range = document.getElementById(rangeId);
+        var input = document.getElementById(inputId);
+        var step = 1000; // 1000 단위로 움직이도록 설정
+        var newValue = Math.floor(range.value / step) * step;
+        range.value = newValue;
+        input.value = newValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); // 콤마 추가
+
+        // MIN 값이 MAX값을 넘어가지 않도록 확인
+        var minPay = document.getElementById("minPay").value;
+        var maxPay = document.getElementById("maxPay").value;
+        if (parseInt(minPay) > parseInt(maxPay)) {
+            document.getElementById(rangeId).value = maxPay;
+            document.getElementById(inputId).value = maxPay.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        // MAX 값이 MIN 값보다 작지 않도록 확인
+        if (parseInt(maxPay) < parseInt(minPay)) {
+            document.getElementById("maxPay").value = minPay;
+            document.getElementById("maxPayText").value = minPay.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+    }
+</script>
+
+
+<script>
+    // Get references to the input fields
+    var startDateInput = document.getElementById('startDate');
+    var endDateInput = document.getElementById('endDate');
+
+    // Add event listener to the endDate input field
+    endDateInput.addEventListener('change', function() {
+        // Parse the dates
+        var startDate = new Date(startDateInput.value);
+        var endDate = new Date(endDateInput.value);
+
+        // If endDate is before startDate, reset the value of endDate
+        if (endDate < startDate) {
+            endDateInput.value = '';
+        }
+    });
+
+    // Add event listener to the startDate input field
+    startDateInput.addEventListener('change', function() {
+        // Parse the dates
+        var startDate = new Date(startDateInput.value);
+        var endDate = new Date(endDateInput.value);
+
+        // If startDate is after endDate, reset the value of startDate
+        if (startDate > endDate) {
+            startDateInput.value = '';
+        }
+    });
+</script>
+
+
+<script>
+	$('input[type=radio][name=jobHuntPostDate]').change(function() {
+		console.log("aaaaaaaaaaaaaaaaaaa")
+	});
+
+</script>
 </body>
+
 </html>

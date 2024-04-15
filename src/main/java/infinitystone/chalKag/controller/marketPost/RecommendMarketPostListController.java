@@ -21,7 +21,7 @@ public class RecommendMarketPostListController {
 		recommendDTO.setSearchCondition("marketPostRecommendList");
 		String marketPostDatas = gson.toJson(recommendService.selectAll(recommendDTO));
 
-		model.addAttribute("MarketPostList", marketPostDatas);
+		model.addAttribute("marketPostList", marketPostDatas);
 
 
 		return "recommendPost/recommendMarketPostList";
