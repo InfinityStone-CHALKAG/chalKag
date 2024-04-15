@@ -22,7 +22,7 @@
                          </a>
                     </figure>
                <div class="details">
-                  <h1>
+                  <h1 style="width: 255px; max-height: 44px; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1;">
                       <a href="marketPostSingle?marketPostId=${latestMarketPost.marketPostId}">${latestMarketPost.marketPostTitle}</a>
                   </h1>
                    <p class="latestPostContent">${latestMarketPost.marketPostContent}</p>
