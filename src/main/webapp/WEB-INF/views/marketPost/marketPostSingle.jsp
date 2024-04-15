@@ -71,7 +71,7 @@
 			<div class="container">
 				<div class="row">
 					<!-- 사이드 배너 태그 파일 호출 -->
-					<chalKagTags:webSider />
+					<chalKagTags:webMarketPostSider />
 
 					<div class="col-md-8">
 						<article class="article main-article">
@@ -144,7 +144,23 @@
 							</div>
 							<footer>
 								<div class="col" style="width:54.4%;">
-									<a href="#" class="love" style="margin-top:0%"><i class="ion-android-favorite-outline"></i><div>${jobHuntPostList.recommendCnt}</div></a>
+									<c:if test="${member == null}">
+										<a id="recommendBtnMessage" onclick="message()" class="love" style="margin-top:0%">
+								        	<i class="ion-android-favorite-outline"></i><div id="recommendCnt">${marketPostSingle.recommendCnt}</div>
+								   	 	</a>
+									</c:if>
+									<c:if test="${member != null}">
+											<c:if test="${member != recommendInfo.memberId}">
+												<a id="recommendBtn" class="love" style="margin-top:0%" data-postid="${marketPostSingle.marketPostId}" data-memberid="${member}">
+								        		<i class="ion-android-favorite-outline"></i><div id="recommendCnt">${marketPostSingle.recommendCnt}</div>
+								   	 			</a>
+											</c:if>
+											<c:if test="${member == recommendInfo.memberId}">
+												<a id="recommendBtn" class="love active" style="margin-top:0%" data-postid="${marketPostSingle.marketPostId}" data-memberid="${member}">
+								        		<i class="ion-android-favorite-outline"></i><div id="recommendCnt">${marketPostSingle.recommendCnt}</div>
+								   	 			</a>
+											</c:if>
+									</c:if>
 								</div>
 							</footer>
 						</article>

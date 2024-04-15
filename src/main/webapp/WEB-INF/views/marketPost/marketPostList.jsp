@@ -53,9 +53,9 @@ input[type="range"] {
 							<!-- 검색창 옵션(제목, 내용, 작성자, 제목 + 작성자) -->
 							<select id="searchField" name="searchField" class="searchOption"
 								style="margin-bottom: 5%; padding-left: 10px; border-color: gray; border-radius: 5px; height: 40px; width: 100%;">
-								<option value="title">title</option>
-								<option value="contents">contents</option>
-								<option value="writer">writer</option>
+								<option value="marketPostTitle">title</option>
+								<option value="marketPostcontent">contents</option>
+								<option value="memberNickname">writer</option>
 								<option value="titleAndContents">title + contents</option>
 							</select>
 							<div class="form-group">
@@ -267,36 +267,6 @@ input[type="range"] {
     }
 </script>
 
-
-<script>
-    // Get references to the input fields
-    var startDateInput = document.getElementById('startDate');
-    var endDateInput = document.getElementById('endDate');
-
-    // Add event listener to the endDate input field
-    endDateInput.addEventListener('change', function() {
-        // Parse the dates
-        var startDate = new Date(startDateInput.value);
-        var endDate = new Date(endDateInput.value);
-
-        // If endDate is before startDate, reset the value of endDate
-        if (endDate < startDate) {
-            endDateInput.value = '';
-        }
-    });
-
-    // Add event listener to the startDate input field
-    startDateInput.addEventListener('change', function() {
-        // Parse the dates
-        var startDate = new Date(startDateInput.value);
-        var endDate = new Date(endDateInput.value);
-
-        // If startDate is after endDate, reset the value of startDate
-        if (startDate > endDate) {
-            startDateInput.value = '';
-        }
-    });
-</script>
 
 
 <script>

@@ -57,48 +57,55 @@ public class MarketPostDAO {
 	 // 게시글 이미지는 테이블을 따로 나누었으며 서브 쿼리를 사용해 게시글 이미지 중 대표 이미지로 보여줄 이미지를 설정하고, 그 결과를 "POSTIMG_name"라는 별칭으로 반환
 	 
 	// 주간 추천순 장터글 목록 출력 (2개만 출력).전미지
-	 private static final String SELECTALL_MARKETPOSTWEEKLYBEST = "SELECT "
-			  + "DISTINCT " // 중복 제거 함수	 
-			  + "	'MARKETPost' AS POST_category, " // 게시판 카테고리 설정
-			  + "	MARKETPOST.MARKETPOST_id, "
-			  + "	MARKETPOST.MEMBER_id, "
-			  + "	MEMBER.MEMBER_nickname, "
-			  + "	MARKETPOST.MARKETPOST_title, "
-			  + "	MARKETPOST.MARKETPOST_content, "
-			  + "	MARKETPOST.MARKETPOST_date, "
-			  + "	( " // 게시글의 좋아요 수를 합산
-			  + "		SELECT "
-			  + "            COUNT(*) " // 해당 게시글에 대한 좋아요 수를 COUNT 함수를 사용해 합산
-			  + "		FROM "
-			  + "            RECOMMEND " // 좋아요 테이블에서 가져옴
-			  + "		WHERE "
-			  + "            RECOMMEND.POST_id = MARKETPOST.MARKETPOST_id " // 게시글 아이디와 좋아요 테이블의 게시글 아이디가 동일한 것을 선택
-			  + "	) AS RECOMMEND_cnt, " // 좋아요 수
-			  + "	( " // 대표 이미지 설정
-			  + "		SELECT "
-			  + "			POSTIMG.POSTIMG_name " // 게시글 이미지를 선택
-			  + "		FROM "
-			  + "			POSTIMG " // 게시글 이미지 테이블
-			  + "		WHERE "
-			  + "			POSTIMG.POST_id = MARKETPOST.MARKETPOST_id " // 게시글 아이디와 이미지 테이블의 게시글 아이디가 동일한 것을 선택
-			  + "		ORDER BY "
-			  + "			POSTIMG.POSTIMG_id ASC " // 이미지 아이디를 기준으로 오름차순 정렬
-			  + "		LIMIT 1 " // 이미지를 1개만 가져오도록 설정
-			  + "	 ) AS POSTIMG_name " // 대표 이미지의 이름
-			  + "FROM "
-			  + "	MARKETPOST " // 장터글 테이블
-			  + "INNER JOIN  "
-			  + "	MEMBER ON MARKETPOST.MEMBER_id = MEMBER.MEMBER_id " // 회원 정보와 INNER JOIN
-			  + "LEFT JOIN "
-			  + "	RECOMMEND ON MARKETPOST.MARKETPOST_id = RECOMMEND.POST_id " // 좋아요 정보와 LEFT JOIN
-			  + "WHERE "
-			  + "	MARKETPOST.MARKETPOST_date >= DATE_SUB(NOW(), INTERVAL 1 WEEK) "
-			  + "GROUP BY "
-			  + "	MARKETPOST.MARKETPOST_id "
-			  + "ORDER BY "
-			  + "	COUNT(RECOMMEND.POST_id) DESC, " // (1) 좋아요 수가 많은 순으로 정렬한 뒤
-			  + "	MARKETPOST.MARKETPOST_date DESC " // (2) 다음 작성일이 최신인 순으로 정렬
-			  + "LIMIT 2 ";
+		private static final String SELECTALL_MARKETPOSTWEEKLYBEST = "SELECT " 
+				+ "DISTINCT " // 중복 제거 함수
+				+ "		'MarketPost' AS POST_category, " // 게시판 카테고리 설정
+				+ "		MARKETPOST.MARKETPOST_id, " 
+				+ "		MARKETPOST.MEMBER_id, " 
+				+ "		MEMBER.MEMBER_nickname, "
+				+ "		MARKETPOST.MARKETPOST_title, " 
+				+ "		MARKETPOST.MARKETPOST_content, "
+				+ "		MARKETPOST.MARKETPOST_date, " 
+				+ "		( " // 특정 구인글에 대해 로그인한 회원이 좋아요를 눌렀는지 여부를 확인
+				+ " 		SELECT " 
+				+ "				CASE WHEN COUNT(*) > 0 THEN TRUE ELSE FALSE END " // 좋아요를 눌렀으면 TRUE, 아니면 FALSE를 반환
+				+ "			FROM "
+				+ "				RECOMMEND " // 좋아요 테이블
+				+ "			WHERE "
+				+ "				RECOMMEND.POST_id = MARKETPOST.MARKETPOST_id " // 구인글에 좋아요가 눌렸는지 확인 후
+				+ "				AND RECOMMEND.MEMBER_id = ? " // 현재 로그인한 회원의 아이디와 일치하는 좋아요만 선택
+				+ "		) AS myRecommend, " // 로그인한 회원이 좋아요를 눌렀는지 중복 체크
+				+ "		( " // 게시글의 좋아요 수를 합산
+				+ "			SELECT " 
+				+ "				COUNT(*) " // 해당 게시글에 대한 좋아요 수를 COUNT 함수를 사용해 합산
+				+ "			FROM " 
+				+ "				RECOMMEND " // 좋아요 테이블에서 가져옴
+				+ "			WHERE " 
+				+ "				RECOMMEND.POST_id = MARKETPOST.MARKETPOST_id " // 게시글 아이디와 좋아요 테이블의 게시글 아이디가 동일한 것을 선택
+				+ "		) AS RECOMMEND_cnt, " // 좋아요 수
+				+ "		( " // 대표 이미지 설정
+				+ "			SELECT " 
+				+ "				POSTIMG.POSTIMG_name " // 게시글 이미지를 선택
+				+ "			FROM " 
+				+ "				POSTIMG " // 게시글 이미지 테이블
+				+ "			WHERE " 
+				+ "				POSTIMG.POST_id = MARKETPOST.MARKETPOST_id " // 게시글 아이디와 이미지 테이블의 게시글 아이디가 동일한 것을 선택
+				+ "			ORDER BY "																			
+				+ "				POSTIMG.POSTIMG_id ASC " // 이미지 아이디를 기준으로 오름차순 정렬
+				+ "			LIMIT 1 " // 이미지를 1개만 가져오도록 설정
+				+ "		) AS POSTIMG_name " // 대표 이미지의 이름
+				+ "FROM " 
+				+ "		MARKETPOST " // 구인글 테이블
+				+ "INNER JOIN  " 
+				+ "		MEMBER ON MARKETPOST.MEMBER_id = MEMBER.MEMBER_id " // 회원 정보와 INNER JOIN
+				+ "LEFT JOIN " 
+				+ "		RECOMMEND ON MARKETPOST.MARKETPOST_id = RECOMMEND.POST_id " // 좋아요 정보와 LEFT JOIN
+				+ "WHERE " 
+				+ "		MARKETPOST.MARKETPOST_date >= DATE_SUB(NOW(), INTERVAL 1 WEEK) " // 최근 1주일간 작성된 글만 선택
+				+ "ORDER BY " 
+				+ "		RECOMMEND_cnt DESC, " // (1) 좋아요 수가 많은 순으로 1차 정렬 후
+				+ "		MARKETPOST.MARKETPOST_date DESC " // (2) 최근 작성일 순으로 2차 정렬
+				+ "LIMIT 2 ";
 	 // 사용한 테이블 : 장터글 테이블, 회원 테이블, 좋아요 테이블, 게시글 이미지 테이블
 	 // 사용한 컬럼 (출력 내용) : 카테고리, 장터글 아이디, 회원 아이디, 회원 닉네임(회원 테이블), 제목, 내용, 작성일, 좋아요 수(좋아요 테이블), 대표 이미지(게시글 이미지 테이블)
 	 // 쿼리문 설명 :
@@ -110,154 +117,155 @@ public class MarketPostDAO {
 	 
 	 
 	 
-	 // 프리미엄 회원이 작성한지 한 달 이내의 글 목록 출력.전미지
-	 private static final String SELECTALL_MARKETPOSTPREMIUM1MONTH = "SELECT "
-			  + "DISTINCT " // 중복 제거 함수
-			  + "	'MARKETPost' AS POST_category, " // 게시판 카테고리 설정
-			  + "	MARKETPOST.MARKETPOST_id, "
-			  + "	MARKETPOST.MEMBER_id, "
-			  + "	MEMBER.MEMBER_nickname, "
-			  + "	MARKETPOST.MARKETPOST_title, "
-			  + "	MARKETPOST.MARKETPOST_content, "
-			  + "	MARKETPOST.MARKETPOST_date, "
-			  + "	MARKETPOST.MARKETPOST_viewcnt, "
-			  + "	( " // 대표 이미지 설정
-			  + "		SELECT "
-			  + "			POSTIMG.POSTIMG_name " // 게시글 이미지를 선택
-			  + "		FROM "
-			  + "			POSTIMG " // 게시글 이미지 테이블
-			  + "		WHERE "
-			  + "			POSTIMG.POST_id = MARKETPOST.MARKETPOST_id " // 게시글 아이디와 이미지 테이블의 게시글 아이디가 동일한 것을 선택
-			  + "		ORDER BY "
-			  + "			POSTIMG.POSTIMG_id ASC " // 이미지 아이디를 기준으로 오름차순 정렬
-			  + "		LIMIT 1 " // 이미지를 1개만 가져오도록 설정
-			  + "	 ) AS POSTIMG_name, " // 대표 이미지의 이름
-			  + "	( " // 게시글의 좋아요 수를 합산
-			  + "		SELECT "
-			  + "            COUNT(*) " // 해당 게시글에 대한 좋아요 수를 COUNT 함수를 사용해 합산
-			  + "		FROM "
-			  + "            RECOMMEND " // 좋아요 테이블에서 가져옴
-			  + "		WHERE "
-			  + "            RECOMMEND.POST_id = MARKETPOST.MARKETPOST_id " // 게시글 아이디와 좋아요 테이블의 게시글 아이디가 동일한 것을 선택
-			  + "	) AS RECOMMEND_cnt " // 좋아요 수
-			  + "FROM "
-			  + "	MARKETPOST " // 장터글 테이블
-			  + "INNER JOIN "
-			  + "	MEMBER ON MARKETPOST.MEMBER_id = MEMBER.MEMBER_id " // 회원 정보와 INNER JOIN
-			  + "LEFT JOIN "
-			  + "	RECOMMEND ON MARKETPOST.MARKETPOST_id = RECOMMEND.POST_id " // 좋아요 정보와 LEFT JOIN
-			  + "WHERE "
-			  + "	MEMBER.MEMBER_grade = 'PREMIUM' " // 회원 등급이 'PREMIUM' 회원 이면서
-			  + "	AND MARKETPOST.MARKETPOST_date >= DATE_SUB(NOW(), INTERVAL 1 MONTH) " // 작성일이 한 달 이내인 경우
-			  + "ORDER BY "
-			  + "   MARKETPOST.MARKETPOST_date DESC "; // 작성일을 기준으로 내림차순 정렬
-	 // 사용한 테이블 : 장터글 테이블, 회원 테이블, 좋아요 테이블, 게시글 이미지 테이블
-	 // 사용한 컬럼 (출력 내용) : 카테고리, 게시글 아이디, 회원 아이디, 회원 닉네임(회원 테이블), 제목, 내용, 작성일, 좋아요 수(좋아요 테이블), 대표 이미지 (게시글 이미지 테이블)
-	 // 쿼리문 설명 :
-	 // INNER JOIN을 사용해 장터글 테이블과 회원 테이블을 연결하고, 또 다른 LEFT JOIN을 사용해 장터글 테이블과 좋아요 테이블을 연결
-	 // 게시글 이미지는 테이블을 따로 나누었으며 서브 쿼리를 사용해 게시글 이미지 중 대표 이미지로 보여줄 이미지를 설정하고, 그 결과를 "POSTIMG_name"라는 별칭으로 반환
+	// 팝니다 글 전체 출력
+		private static final String SELECTALL_MARKETPOSTSELLLIST = "SELECT " 
+				+ "DISTINCT " // 중복 제거 함수
+				+ "		'MarketPost' AS POST_category, " // 게시판 카테고리 설정
+				+ "		MARKETPOST.MARKETPOST_id, " 
+				+ "		MARKETPOST.MEMBER_id, " 
+				+ "		MEMBER.MEMBER_nickname, "
+				+ "		MARKETPOST.MARKETPOST_title, " 
+				+ "		MARKETPOST.MARKETPOST_content, "
+				+ "		MARKETPOST.MARKETPOST_date, " 
+				+ "		MARKETPOST.MARKETPOST_viewcnt, " 
+				+ "		( " // 특정 구인글에 대해 로그인한 회원이 좋아요를 눌렀는지 여부를 확인
+				+ " 		SELECT " 
+				+ "				CASE WHEN COUNT(*) > 0 THEN TRUE ELSE FALSE END " // 좋아요를 눌렀으면 TRUE, 아니면 FALSE를 반환
+				+ "			FROM "
+				+ "				RECOMMEND " // 좋아요 테이블
+				+ "			WHERE "
+				+ "				RECOMMEND.POST_id = MARKETPOST.MARKETPOST_id " // 구인글에 좋아요가 눌렸는지 확인 후
+				+ "				AND RECOMMEND.MEMBER_id = ? " // 현재 로그인한 회원의 아이디와 일치하는 좋아요만 선택
+				+ "		) AS myRecommend, " // 로그인한 회원이 좋아요를 눌렀는지 중복 체크
+				+ "		( " // 게시글의 좋아요 수를 합산
+				+ "			SELECT " 
+				+ " 			COUNT(*) " // 해당 게시글에 대한 좋아요 수를 COUNT 함수를 사용해 합산
+				+ "			FROM " 
+				+ "				RECOMMEND " // 좋아요 테이블에서 가져옴
+				+ "			WHERE " 
+				+ "				RECOMMEND.POST_id = MARKETPOST.MARKETPOST_id " // 게시글 아이디와 좋아요 테이블의 게시글 아이디가 동일한 것을 선택
+				+ "		) AS RECOMMEND_cnt, " // 좋아요 수
+				+ "		( " // 대표 이미지 설정
+				+ "			SELECT " 
+				+ "				POSTIMG.POSTIMG_name " // 게시글 이미지를 선택
+				+ "			FROM " 
+				+ "				POSTIMG " // 게시글 이미지 테이블
+				+ "			WHERE " 
+				+ "				POSTIMG.POST_id = MARKETPOST.MARKETPOST_id " // 게시글 아이디와 이미지 테이블의 게시글 아이디가 동일한 것을 선택
+				+ "			ORDER BY " 
+				+ "				POSTIMG.POSTIMG_id ASC " // 이미지 아이디를 기준으로 오름차순 정렬
+				+ "			LIMIT 1 " // 이미지를 1개만 가져오도록 설정
+				+ "		) AS POSTIMG_name " // 대표 이미지의 이름
+				+ "FROM " 
+				+ "		MARKETPOST " // 구인글 테이블
+				+ "INNER JOIN " 
+				+ "		MEMBER ON MARKETPOST.MEMBER_id = MEMBER.MEMBER_id " // 회원 정보와 INNER JOIN
+				+ "LEFT JOIN " 
+				+ "		RECOMMEND ON MARKETPOST.MARKETPOST_id = RECOMMEND.POST_id " // 좋아요 정보와 LEFT JOIN
+				+ "WHERE"
+				+ "		MARKETPOST.MARKETPOST_status = 'sell'"
+				+ "ORDER BY " 
+				+ "		MARKETPOST.MARKETPOST_id DESC ";
 	
 	// 삽니다 글 전체 출력
-	private static final String SELECTALL_MARKETPOSTSELLLIST = "SELECT   "
-			+ "    MARKETPOST.MARKETPOST_id,   "
-			+ "    MARKETPOST.MEMBER_id,   "
-			+ "    ( "
-			+ "        SELECT POSTIMG.POSTIMG_name   "
-			+ "        FROM POSTIMG   "
-			+ "        WHERE POSTIMG.POST_id = MARKETPOST.MARKETPOST_id   "
-			+ "        ORDER BY POSTIMG.POSTIMG_id ASC   "
-			+ "        LIMIT 1 "
-			+ "    ) AS POSTIMG_name,   "
-			+ "    MEMBER.MEMBER_nickname,   "
-			+ "    MARKETPOST.MARKETPOST_title,   "
-			+ "    MARKETPOST.MARKETPOST_content,   "
-			+ "    MARKETPOST.MARKETPOST_date,   "
-			+ "    MARKETPOST.MARKETPOST_viewcnt,   "
-			+ "    ( "
-			+ "		SELECT "
-			+ "			COUNT(*)  "
-			+ "		FROM  "
-			+ "			RECOMMEND  "
-			+ "		WHERE  "
-			+ "			RECOMMEND.POST_id = MARKETPOST.MARKETPOST_id "
-			+ "	) AS RECOMMEND_cnt "
-			+ "FROM   "
-			+ "    MARKETPOST  "
-			+ "INNER JOIN   "
-			+ "    MEMBER ON MARKETPOST.MEMBER_id = MEMBER.MEMBER_id   "
-			+ "LEFT JOIN   "
-			+ "    RECOMMEND ON MARKETPOST.MARKETPOST_id = RECOMMEND.POST_id   "
-			+ "WHERE   "
-			+ "    MARKETPOST.MARKETPOST_status = 'sell' "
-			+ "GROUP BY  "
-			+ "    MARKETPOST.MARKETPOST_id,  "
-			+ "    MEMBER.MEMBER_nickname  "
-			+ "ORDER BY  "
-			+ "    MARKETPOST.MARKETPOST_id DESC";
-	
-	// 팝니다 글 전체 출력
-	private static final String SELECTALL_MARKETPOSTBUYLIST="SELECT  "
-			+ "    'MarketPost' AS POST_category,  "
-			+ "    MARKETPOST.MARKETPOST_id,  "
-			+ "    MARKETPOST.MEMBER_id,  "
-			+ "    ( "
-			+ "        SELECT POSTIMG.POSTIMG_name  "
-			+ "        FROM POSTIMG  "
-			+ "        WHERE POSTIMG.POST_id = MARKETPOST.MARKETPOST_id  "
-			+ "        ORDER BY POSTIMG.POSTIMG_id ASC  "
-			+ "        LIMIT 1 "
-			+ "    ) AS POSTIMG_name,  "
-			+ "    MEMBER.MEMBER_nickname,  "
-			+ "    MARKETPOST.MARKETPOST_title,  "
-			+ "    MARKETPOST.MARKETPOST_content,  "
-			+ "    MARKETPOST.MARKETPOST_date,  "
-			+ "    MARKETPOST.MARKETPOST_viewcnt,  "
-			+ "    COUNT(RECOMMEND.POST_id) AS RECOMMEND_cnt  "
-			+ "FROM  "
-			+ "    MARKETPOST "
-			+ "INNER JOIN  "
-			+ "    MEMBER ON MARKETPOST.MEMBER_id = MEMBER.MEMBER_id  "
-			+ "LEFT JOIN  "
-			+ "    RECOMMEND ON MARKETPOST.MARKETPOST_id = RECOMMEND.POST_id  "
-			+ "WHERE  "
-			+ "	MARKETPOST.MARKETPOST_status = 'buy'"
-			+ "GROUP BY  "
-			+ "    MARKETPOST.MARKETPOST_id,  "
-			+ "    MEMBER.MEMBER_nickname  "
-			+ "ORDER BY  "
-			+ "    MARKETPOST.MARKETPOST_id DESC";
+		private static final String SELECTALL_MARKETPOSTBUYLIST = "SELECT " 
+				+ "DISTINCT " // 중복 제거 함수
+				+ "		'MarketPost' AS POST_category, " // 게시판 카테고리 설정
+				+ "		MARKETPOST.MARKETPOST_id, " 
+				+ "		MARKETPOST.MEMBER_id, " 
+				+ "		MEMBER.MEMBER_nickname, "
+				+ "		MARKETPOST.MARKETPOST_title, " 
+				+ "		MARKETPOST.MARKETPOST_content, "
+				+ "		MARKETPOST.MARKETPOST_date, " 
+				+ "		MARKETPOST.MARKETPOST_viewcnt, " 
+				+ "		( " // 특정 구인글에 대해 로그인한 회원이 좋아요를 눌렀는지 여부를 확인
+				+ " 		SELECT " 
+				+ "				CASE WHEN COUNT(*) > 0 THEN TRUE ELSE FALSE END " // 좋아요를 눌렀으면 TRUE, 아니면 FALSE를 반환
+				+ "			FROM "
+				+ "				RECOMMEND " // 좋아요 테이블
+				+ "			WHERE "
+				+ "				RECOMMEND.POST_id = MARKETPOST.MARKETPOST_id " // 구인글에 좋아요가 눌렸는지 확인 후
+				+ "				AND RECOMMEND.MEMBER_id = ? " // 현재 로그인한 회원의 아이디와 일치하는 좋아요만 선택
+				+ "		) AS myRecommend, " // 로그인한 회원이 좋아요를 눌렀는지 중복 체크
+				+ "		( " // 게시글의 좋아요 수를 합산
+				+ "			SELECT " 
+				+ " 			COUNT(*) " // 해당 게시글에 대한 좋아요 수를 COUNT 함수를 사용해 합산
+				+ "			FROM " 
+				+ "				RECOMMEND " // 좋아요 테이블에서 가져옴
+				+ "			WHERE " 
+				+ "				RECOMMEND.POST_id = MARKETPOST.MARKETPOST_id " // 게시글 아이디와 좋아요 테이블의 게시글 아이디가 동일한 것을 선택
+				+ "		) AS RECOMMEND_cnt, " // 좋아요 수
+				+ "		( " // 대표 이미지 설정
+				+ "			SELECT " 
+				+ "				POSTIMG.POSTIMG_name " // 게시글 이미지를 선택
+				+ "			FROM " 
+				+ "				POSTIMG " // 게시글 이미지 테이블
+				+ "			WHERE " 
+				+ "				POSTIMG.POST_id = MARKETPOST.MARKETPOST_id " // 게시글 아이디와 이미지 테이블의 게시글 아이디가 동일한 것을 선택
+				+ "			ORDER BY " 
+				+ "				POSTIMG.POSTIMG_id ASC " // 이미지 아이디를 기준으로 오름차순 정렬
+				+ "			LIMIT 1 " // 이미지를 1개만 가져오도록 설정
+				+ "		) AS POSTIMG_name " // 대표 이미지의 이름
+				+ "FROM " 
+				+ "		MARKETPOST " // 구인글 테이블
+				+ "INNER JOIN " 
+				+ "		MEMBER ON MARKETPOST.MEMBER_id = MEMBER.MEMBER_id " // 회원 정보와 INNER JOIN
+				+ "LEFT JOIN " 
+				+ "		RECOMMEND ON MARKETPOST.MARKETPOST_id = RECOMMEND.POST_id " // 좋아요 정보와 LEFT JOIN
+				+ "WHERE"
+				+ "		MARKETPOST.MARKETPOST_status = 'buy'"
+				+ "ORDER BY " 
+				+ "		MARKETPOST.MARKETPOST_id DESC ";
 	
 	// 무료나눔 글 전체 출력
-	private static final String SELECTALL_MARKETPOSTFREECYCLELIST="SELECT  "
-			+ "    'MarketPost' AS POST_category,  "
-			+ "    MARKETPOST.MARKETPOST_id,  "
-			+ "    MARKETPOST.MEMBER_id,  "
-			+ "    ( "
-			+ "        SELECT POSTIMG.POSTIMG_name  "
-			+ "        FROM POSTIMG  "
-			+ "        WHERE POSTIMG.POST_id = MARKETPOST.MARKETPOST_id  "
-			+ "        ORDER BY POSTIMG.POSTIMG_id ASC  "
-			+ "        LIMIT 1 "
-			+ "    ) AS POSTIMG_name,  "
-			+ "    MEMBER.MEMBER_nickname,  "
-			+ "    MARKETPOST.MARKETPOST_title,  "
-			+ "    MARKETPOST.MARKETPOST_content,  "
-			+ "    MARKETPOST.MARKETPOST_date,  "
-			+ "    MARKETPOST.MARKETPOST_viewcnt,  "
-			+ "    COUNT(RECOMMEND.POST_id) AS RECOMMEND_cnt  "
-			+ "FROM  "
-			+ "    MARKETPOST "
-			+ "INNER JOIN  "
-			+ "    MEMBER MEMBER ON MARKETPOST.MEMBER_id = MEMBER.MEMBER_id  "
-			+ "LEFT JOIN  "
-			+ "    RECOMMEND ON MARKETPOST.MARKETPOST_id = RECOMMEND.POST_id  "
-			+ "WHERE  "
-			+ "	MARKETPOST.MARKETPOST_status = 'freecycle' "
-			+ "GROUP BY  "
-			+ "    MARKETPOST.MARKETPOST_id,  "
-			+ "    MEMBER.MEMBER_nickname  "
-			+ "ORDER BY  "
-			+ "    MARKETPOST.MARKETPOST_id DESC";
+		private static final String SELECTALL_MARKETPOSTFREECYCLELIST = "SELECT " 
+				+ "DISTINCT " // 중복 제거 함수
+				+ "		'MarketPost' AS POST_category, " // 게시판 카테고리 설정
+				+ "		MARKETPOST.MARKETPOST_id, " 
+				+ "		MARKETPOST.MEMBER_id, " 
+				+ "		MEMBER.MEMBER_nickname, "
+				+ "		MARKETPOST.MARKETPOST_title, " 
+				+ "		MARKETPOST.MARKETPOST_content, "
+				+ "		MARKETPOST.MARKETPOST_date, " 
+				+ "		MARKETPOST.MARKETPOST_viewcnt, " 
+				+ "		( " // 특정 구인글에 대해 로그인한 회원이 좋아요를 눌렀는지 여부를 확인
+				+ " 		SELECT " 
+				+ "				CASE WHEN COUNT(*) > 0 THEN TRUE ELSE FALSE END " // 좋아요를 눌렀으면 TRUE, 아니면 FALSE를 반환
+				+ "			FROM "
+				+ "				RECOMMEND " // 좋아요 테이블
+				+ "			WHERE "
+				+ "				RECOMMEND.POST_id = MARKETPOST.MARKETPOST_id " // 구인글에 좋아요가 눌렸는지 확인 후
+				+ "				AND RECOMMEND.MEMBER_id = ? " // 현재 로그인한 회원의 아이디와 일치하는 좋아요만 선택
+				+ "		) AS myRecommend, " // 로그인한 회원이 좋아요를 눌렀는지 중복 체크
+				+ "		( " // 게시글의 좋아요 수를 합산
+				+ "			SELECT " 
+				+ " 			COUNT(*) " // 해당 게시글에 대한 좋아요 수를 COUNT 함수를 사용해 합산
+				+ "			FROM " 
+				+ "				RECOMMEND " // 좋아요 테이블에서 가져옴
+				+ "			WHERE " 
+				+ "				RECOMMEND.POST_id = MARKETPOST.MARKETPOST_id " // 게시글 아이디와 좋아요 테이블의 게시글 아이디가 동일한 것을 선택
+				+ "		) AS RECOMMEND_cnt, " // 좋아요 수
+				+ "		( " // 대표 이미지 설정
+				+ "			SELECT " 
+				+ "				POSTIMG.POSTIMG_name " // 게시글 이미지를 선택
+				+ "			FROM " 
+				+ "				POSTIMG " // 게시글 이미지 테이블
+				+ "			WHERE " 
+				+ "				POSTIMG.POST_id = MARKETPOST.MARKETPOST_id " // 게시글 아이디와 이미지 테이블의 게시글 아이디가 동일한 것을 선택
+				+ "			ORDER BY " 
+				+ "				POSTIMG.POSTIMG_id ASC " // 이미지 아이디를 기준으로 오름차순 정렬
+				+ "			LIMIT 1 " // 이미지를 1개만 가져오도록 설정
+				+ "		) AS POSTIMG_name " // 대표 이미지의 이름
+				+ "FROM " 
+				+ "		MARKETPOST " // 구인글 테이블
+				+ "INNER JOIN " 
+				+ "		MEMBER ON MARKETPOST.MEMBER_id = MEMBER.MEMBER_id " // 회원 정보와 INNER JOIN
+				+ "LEFT JOIN " 
+				+ "		RECOMMEND ON MARKETPOST.MARKETPOST_id = RECOMMEND.POST_id " // 좋아요 정보와 LEFT JOIN
+				+ "WHERE"
+				+ "		MARKETPOST.MARKETPOST_status = 'freecycle'"
+				+ "ORDER BY " 
+				+ "		MARKETPOST.MARKETPOST_id DESC ";
 	
 	// ----------------------------------------------------------------- 회원 페이지 SELECTALL -----------------------------------------------------------------
 	  
@@ -312,43 +320,52 @@ public class MarketPostDAO {
 	private static final String SELECTONE_MAXPOSTID = "SELECT MAX(MARKETPOST_id) FROM MARKETPOST";
 	
 	 // 메인 페이지 - 최신 게시글 1개 출력.전미지
-	  private static final String SELECTONE_MARKETPOSTRECENT= "SELECT "
-			  + "DISTINCT " // 중복 제거 함수
-			  + "	'MARKETPost' AS POST_category, " // 게시판 카테고리 설정
-			  + "	MARKETPOST.MARKETPOST_id, "	
-			  + "	MARKETPOST.MEMBER_id, "
-			  + "	MEMBER.MEMBER_nickname, "
-			  + "	MARKETPOST.MARKETPOST_title, "
-			  + "	MARKETPOST.MARKETPOST_content, "
-			  + "	MARKETPOST.MARKETPOST_date, "
-			  + "	( " // 게시글의 좋아요 수를 합산
-			  + "		SELECT "
-			  + "            COUNT(*) " // 해당 게시글에 대한 좋아요 수를 COUNT 함수를 사용해 합산
-			  + "		FROM "
-			  + "            RECOMMEND " // 좋아요 테이블에서 가져옴
-			  + "		WHERE "
-			  + "            RECOMMEND.POST_id = MARKETPOST.MARKETPOST_id " // 게시글 아이디와 좋아요 테이블의 게시글 아이디가 동일한 것을 선택
-			  + "	) AS RECOMMEND_cnt, " // 좋아요 수
-			  + "	( " // 대표 이미지 설정
-			  + "		SELECT "
-			  + "			POSTIMG.POSTIMG_name " // 게시글 이미지를 선택
-			  + "		FROM "
-			  + "			POSTIMG " // 게시글 이미지 테이블
-			  + "		WHERE "
-			  + "			POSTIMG.POST_id = MARKETPOST.MARKETPOST_id " // 게시글 아이디와 이미지 테이블의 게시글 아이디가 동일한 것을 선택
-			  + "		ORDER BY "
-			  + "			POSTIMG.POSTIMG_id ASC " // 이미지 아이디를 기준으로 오름차순 정렬
-			  + "		LIMIT 1 " // 이미지를 1개만 가져오도록 설정
-			  + "	 ) AS POSTIMG_name " // 대표 이미지의 이름
-			  + "FROM "
-			  + "	MARKETPOST " // 장터글 테이블
-			  + "INNER JOIN  "
-			  + "	MEMBER ON MARKETPOST.MEMBER_id = MEMBER.MEMBER_id " // 회원 정보와 INNER JOIN
-			  + "LEFT JOIN "
-			  + "	RECOMMEND ON MARKETPOST.MARKETPOST_id = RECOMMEND.POST_id " // 좋아요 정보와 LEFT JOIN
-			  + "ORDER BY "
-			  + "    MARKETPOST.MARKETPOST_date DESC " // 작성일을 기준으로 내림차순 정렬
-			  + "LIMIT 1 "; // 글을 1개만 가져오도록 설정
+	private static final String SELECTONE_MARKETPOSTRECENT = "SELECT " 
+			+ "DISTINCT " // 중복 제거 함수
+			+ "		'MarketPost' AS POST_category, " // 게시판 카테고리 설정
+			+ "		MARKETPOST.MARKETPOST_id, " 
+			+ "		MARKETPOST.MEMBER_id, " 
+			+ "		MEMBER.MEMBER_nickname, "
+			+ "		MARKETPOST.MARKETPOST_title, " 
+			+ "		MARKETPOST.MARKETPOST_content, "
+			+ "		MARKETPOST.MARKETPOST_date, " 
+			+ "		( " // 특정 구인글에 대해 로그인한 회원이 좋아요를 눌렀는지 여부를 확인
+			+ " 		SELECT " 
+			+ "				CASE WHEN COUNT(*) > 0 THEN TRUE ELSE FALSE END " // 좋아요를 눌렀으면 TRUE, 아니면 FALSE를 반환
+			+ "			FROM "
+			+ "				RECOMMEND " // 좋아요 테이블
+			+ "			WHERE "
+			+ "				RECOMMEND.POST_id = MARKETPOST.MARKETPOST_id " // 구인글에 좋아요가 눌렸는지 확인 후
+			+ "				AND RECOMMEND.MEMBER_id = ? " // 현재 로그인한 회원의 아이디와 일치하는 좋아요만 선택
+			+ "		) AS myRecommend, " // 로그인한 회원이 좋아요를 눌렀는지 중복 체크
+			+ "		( " // 게시글의 좋아요 수를 합산
+			+ "			SELECT " 
+			+ " 			COUNT(*) " // 해당 게시글에 대한 좋아요 수를 COUNT 함수를 사용해 합산
+			+ "			FROM " 
+			+ "				RECOMMEND " // 좋아요 테이블에서 가져옴
+			+ "			WHERE " 
+			+ "				RECOMMEND.POST_id = MARKETPOST.MARKETPOST_id " // 게시글 아이디와 좋아요 테이블의 게시글 아이디가 동일한 것을 선택
+			+ "		) AS RECOMMEND_cnt, " // 좋아요 수
+			+ "		( " // 대표 이미지 설정
+			+ "			SELECT " 
+			+ "				POSTIMG.POSTIMG_name " // 게시글 이미지를 선택
+			+ "			FROM " 
+			+ "				POSTIMG " // 게시글 이미지 테이블
+			+ "			WHERE " 
+			+ "				POSTIMG.POST_id = MARKETPOST.MARKETPOST_id " // 게시글 아이디와 이미지 테이블의 게시글 아이디가 동일한 것을 선택
+			+ "			ORDER BY " 
+			+ "				POSTIMG.POSTIMG_id ASC " // 이미지 아이디를 기준으로 오름차순 정렬
+			+ "			LIMIT 1 " // 이미지를 1개만 가져오도록 설정
+			+ "		) AS POSTIMG_name " // 대표 이미지의 이름
+			+ "FROM " 
+			+ "		MARKETPOST " // 구인글 테이블
+			+ "INNER JOIN  " 
+			+ "		MEMBER ON MARKETPOST.MEMBER_id = MEMBER.MEMBER_id " // 회원 정보와 INNER JOIN
+			+ "LEFT JOIN " 
+			+ "		RECOMMEND ON MARKETPOST.MARKETPOST_id = RECOMMEND.POST_id " // 좋아요 정보와 LEFT JOIN
+			+ "ORDER BY " 
+			+ "		MARKETPOST.MARKETPOST_date DESC " // 작성일을 기준으로 내림차순 정렬
+			+ "LIMIT 1 "; // 글을 1개만 가져오도록 설정
 	  // 사용한 테이블 : 장터글 테이블, 회원 테이블, 좋아요 테이블, 게시글 이미지 테이블
 	  // 사용한 컬럼 (출력 내용) : 카테고리, 게시글 아이디, 회원 아이디, 회원 닉네임(회원 테이블), 제목, 내용, 작성일, 좋아요 수(좋아요 테이블), 대표 이미지(게시글 이미지 테이블)
 	  // 쿼리문 설명 :
@@ -424,39 +441,37 @@ public class MarketPostDAO {
 		try {
 			// 팝니다 글 상태 글 출력
 			if (marketPostDTO.getSearchCondition().equals("marketPostSellList")) {
-				result = (List<MarketPostDTO>) jdbcTemplate.query(SELECTALL_MARKETPOSTSELLLIST, new MarketPostSelectAllRowMapper());
+				Object[] args = { marketPostDTO.getMemberId() };
+				result = (List<MarketPostDTO>) jdbcTemplate.query(SELECTALL_MARKETPOSTSELLLIST, args, new MarketPostRowMapper());
 				System.out.println("MarketPostDAO(SellselectAll) 로그 = [" + result + "]");
 				return result;
 			}
 			// 삽니다 글 상태 글 출력
 			else if (marketPostDTO.getSearchCondition().equals("marketPostBuyList")) {
-				result = (List<MarketPostDTO>) jdbcTemplate.query(SELECTALL_MARKETPOSTBUYLIST, new MarketPostSelectAllRowMapper());
+				Object[] args = { marketPostDTO.getMemberId() };
+				result = (List<MarketPostDTO>) jdbcTemplate.query(SELECTALL_MARKETPOSTBUYLIST, args, new MarketPostRowMapper());
 				System.out.println("MarketPostDAO(BuyselectAll) 로그 = [" + result + "]");
 				return result;
 			}
 			// 무료나눔 글 상태 글 출력
 			else if (marketPostDTO.getSearchCondition().equals("marketPostFreecycleList")) {
-				result = (List<MarketPostDTO>) jdbcTemplate.query(SELECTALL_MARKETPOSTFREECYCLELIST, new MarketPostSelectAllRowMapper());
+				Object[] args = { marketPostDTO.getMemberId() };
+				result = (List<MarketPostDTO>) jdbcTemplate.query(SELECTALL_MARKETPOSTFREECYCLELIST, args, new MarketPostRowMapper());
 				System.out.println("MarketPostDAO(FreecycleSelectAll) 로그 = [" + result + "]");
 				return result;
 			}
-			//  프리미엄 회원 글 출력
+			// 메인 페이지 - 프리미엄 회원 게시글 목록 출력
 			else if (marketPostDTO.getSearchCondition().equals("marketPostPremiumList")) {
 					  result = jdbcTemplate.query(SELECTALL_MARKETPOSTPREMIUM, new MarketPostPremiumRowMapper());
 					  System.out.println("marketPostDAO(selectAll) Out로그 = [" + result + "]");
 					  return result;
 			}// 메인 페이지 - 주간 추천순 게시글 목록 출력
 			  else if (marketPostDTO.getSearchCondition().equals("marketPostWeeklyBestList")) {
-				  result = jdbcTemplate.query(SELECTALL_MARKETPOSTWEEKLYBEST, new MarketPostWeeklyBestRowMapper());
+				  Object[] args = { marketPostDTO.getMemberId(), marketPostDTO.getMemberId() };
+				  result = jdbcTemplate.query(SELECTALL_MARKETPOSTWEEKLYBEST, args,new MarketPostWeeklyBestRowMapper());
 				  System.out.println("marketPostDAO(selectAll) Out로그 = [" + result + "]");
 				  return result;
 			  }
-			// 장터글 페이지 - 프리미엄 회원이 작성한지 한 달 이내의 글 목록 출력
-			  else if (marketPostDTO.getSearchCondition().equals("marketPostPremium1MonthList")) {
-				  result = jdbcTemplate.query(SELECTALL_MARKETPOSTPREMIUM1MONTH, new MarketPostPremium1MonthRowMapper());
-				  System.out.println("marketPostDAO(selectAll) Out로그 = [" + result + "]");
-				  return result;
-			  }	
 			// 회원 페이지 - 특정 회원이 작성한 장터글 전체 출력
 			  else if (marketPostDTO.getSearchCondition().equals("marketPostMemberList")) {
 				  Object[] args = { marketPostDTO.getMemberId()};
@@ -487,17 +502,21 @@ public class MarketPostDAO {
 			  // 최신 게시글 출력
 			  else if (marketPostDTO.getSearchCondition().equals("marketPostRecentPostSingle")) {
 				  // SELECTONE_marketPOST 쿼리를 실행해 데이터베이스에 장터글 데이터를 불러옴
-				  result = jdbcTemplate.queryForObject(SELECTONE_MARKETPOSTRECENT, new SelectOneMarketPostRecentRowMapper());
+				  result = jdbcTemplate.queryForObject(SELECTONE_MARKETPOSTRECENT, args,new SelectOneMarketPostRecentRowMapper());
 				  System.out.println("marketPostDAO(selectOne) Out로그 = [" + result + "]");
 				  return result;
 			  }
-			  // 게시글 상세 보기 
-			  else if (marketPostDTO.getSearchCondition().equals("marketPostSingle")) {
-				  // SELECTONE_marketPOSTSINGLE 쿼리를 실행해 데이터베이스에 장터글 데이터를 불러옴
-				  result = jdbcTemplate.queryForObject(SELECTONE_MARKETPOST, args, new SelectOneMarketPostRowMapper());
-				  System.out.println("marketPostDAO(selectOne) Out로그 = [" + result + "]");
-				  return result;
-			  }
+			// 게시글 상세 보기
+				else if (marketPostDTO.getSearchCondition().equals("marketPostSingle")) {
+					// 조회수 증가
+					marketPostDTO.setSearchCondition("marketPostViewcntUpdate");
+					update(marketPostDTO);
+
+					// SELECTONE_marketPOSTSINGLE 쿼리를 실행해 데이터베이스에 구인글 데이터를 불러옴
+					result = jdbcTemplate.queryForObject(SELECTONE_MARKETPOST, args, new SelectOneMarketPostRowMapper());
+					System.out.println("marketPostDAO(selectOne) Out로그 = [" + result + "]");
+					return result;
+				}
 			 
 		  } catch (Exception e) { // 예외 발생 시
 			  e.printStackTrace(); // 예외 내용 출력
@@ -574,28 +593,7 @@ class MarketPostWeeklyBestRowMapper implements RowMapper<MarketPostDTO> {
 		marketPostDTO.setMarketPostTitle(rs.getString("MARKETPOST_title")); 		// 제목
 		marketPostDTO.setMarketPostContent(rs.getString("MARKETPOST_content")); 	// 내용
 		marketPostDTO.setMarketPostDate(rs.getString("MARKETPOST_date")); 		// 장터글 작성일
-		marketPostDTO.setRecommendCnt(rs.getInt("RECOMMEND_cnt")); 					// 좋아요 수
-		marketPostDTO.setPostImgName(rs.getString("POSTIMG_name"));					// 대표 이미지
-		return marketPostDTO; // marketPostDTO에 저장된 데이터들을 반환
-	}
-}
-
-//장터글 페이지 - 프리미엄 회원이 작성한지 한 달 이내의 글 필요한 데이터를 저장할 RowMapper 클래스.전미지
-class MarketPostPremium1MonthRowMapper implements RowMapper<MarketPostDTO> {
-	@Override // mapRow 메서드 오버라이드
-	public MarketPostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
-		// ResultSet에 저장된 데이터를 marketPostDTO 객체에 매핑(저장)하는 메서드
-
-		MarketPostDTO marketPostDTO = new MarketPostDTO(); // 새로운 marketPostDTO 객체 생성
-		// ResultSet에 저장된 데이터를 marketPostDTO 객체에 저장
-		marketPostDTO.setPostCategory(rs.getString("POST_category"));            		// 카테고리
-		marketPostDTO.setMarketPostId(rs.getString("MAREKTPOST_id")); 			// 장터글 아이디
-		marketPostDTO.setMemberId(rs.getString("MEMBER_id"));							// 회원 아이디
-		marketPostDTO.setMemberNickname(rs.getString("MEMBER_nickname"));				// 회원 닉네임
-		marketPostDTO.setMarketPostTitle(rs.getString("MARKETPOST_title")); 		// 제목
-		marketPostDTO.setMarketPostContent(rs.getString("MARKETPOST_content")); 	// 내용
-		marketPostDTO.setMarketPostDate(rs.getString("MARKETPOST_date")); 		// 작성일
-		marketPostDTO.setMarketPostViewcnt(rs.getString("MARKETPOST_viewcnt")); 	// 조회수
+		marketPostDTO.setMyRecommend(rs.getInt("myRecommend")); 
 		marketPostDTO.setRecommendCnt(rs.getInt("RECOMMEND_cnt")); 					// 좋아요 수
 		marketPostDTO.setPostImgName(rs.getString("POSTIMG_name"));					// 대표 이미지
 		return marketPostDTO; // marketPostDTO에 저장된 데이터들을 반환
@@ -618,6 +616,7 @@ class MarketPostRowMapper implements RowMapper<MarketPostDTO> {
 		marketPostDTO.setMarketPostContent(rs.getString("MARKETPOST_content")); 	// 내용
 		marketPostDTO.setMarketPostDate(rs.getString("marketPOST_date")); 		// 작성일
 		marketPostDTO.setMarketPostViewcnt(rs.getString("MARKETPOST_viewcnt")); 	// 조회수
+		marketPostDTO.setMyRecommend(rs.getInt("myRecommend"));
 		marketPostDTO.setRecommendCnt(rs.getInt("RECOMMEND_cnt")); 					// 좋아요 수
 		marketPostDTO.setPostImgName(rs.getString("POSTIMG_name"));					// 대표 이미지
 		return marketPostDTO; // marketPostDTO에 저장된 데이터들을 반환
@@ -639,78 +638,27 @@ class MarketPostMemberRowMapper implements RowMapper<MarketPostDTO> {
 		marketPostDTO.setMarketPostContent(rs.getString("MARKETPOST_content")); 	// 내용
 		marketPostDTO.setMarketPostDate(rs.getString("MARKETPOST_date")); 		// 작성일
 		marketPostDTO.setMarketPostViewcnt(rs.getString("MARKETPOST_viewcnt")); 	// 장터글 조회수
+		marketPostDTO.setMyRecommend(rs.getInt("myRecommend"));
 		marketPostDTO.setRecommendCnt(rs.getInt("RECOMMEND_cnt")); 					// 좋아요 수
 		marketPostDTO.setPostImgName(rs.getString("POSTIMG_name"));					// 대표 이미지
 		return marketPostDTO; // marketPostDTO에 저장된 데이터들을 반환
 	}
 }
 
-class MarketPostSelectAllRowMapper implements RowMapper<MarketPostDTO> {
-
-	@Override
-	public MarketPostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
-
-		MarketPostDTO data = new MarketPostDTO();
-
-//		data.setPostCategory(rs.getString("POST_category"));
-		data.setMarketPostId(rs.getString("MARKETPOST_id"));
-		data.setMemberId(rs.getString("MEMBER_id"));
-		data.setMemberNickname(rs.getString("MEMBER_nickname"));
-		data.setMarketPostDate(rs.getString("MARKETPOST_date"));
-		data.setMarketPostTitle(rs.getString("MARKETPOST_title"));
-		data.setMarketPostContent(rs.getString("MARKETPOST_content"));
-		data.setMarketPostViewcnt(rs.getString("MARKETPOST_viewcnt"));
-		data.setRecommendCnt(rs.getInt("RECOMMEND_cnt"));
-		data.setPostImgName(rs.getString("POSTIMG_name"));
-
-		return data;
-	}
-
-}
-
 //  =====SELECTONE ========
-class MarketPostSelectOneRowMapper implements RowMapper<MarketPostDTO> {
-
-	@Override
-	public MarketPostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
-		// TODO Auto-generated method stub
-
-		MarketPostDTO data = new MarketPostDTO();
-
-		data.setMarketPostId(rs.getString("MARKETPOST_id"));
-		data.setMemberId(rs.getString("MEMBER_id"));
-		data.setMemberNickname(rs.getString("MEMBER_nickname"));
-		data.setMemberIntroduction(rs.getString("MEMBER_introduction"));
-		data.setProfileImgName(rs.getString("PROFILEIMG_name"));
-		data.setMarketPostDate(rs.getString("MARKETPOST_date"));
-		data.setMarketPostPrice(rs.getInt("MARKETPOST_price"));
-		data.setMarketPostCategory(rs.getString("MARKETPOST_category"));
-		data.setMarketPostCompany(rs.getString("MARKETPOST_company"));
-		data.setMarketPostStatus(rs.getString("MARKETPOST_status"));
-		data.setMarketPostTitle(rs.getString("MARKETPOST_title"));
-		data.setMarketPostContent(rs.getString("MARKETPOST_content"));
-		data.setMarketPostViewcnt(rs.getString("MARKETPOST_viewcnt"));
-		data.setRecommendCnt(rs.getInt("RECOMMEND_cnt"));
-		
-		return data;
-	}
-
-}
-
-//---------------------------------------------------------------------- SELECTONE ----------------------------------------------------------------------
 
 //게시글 이미지 저장 시 필요한 게시글 아이디의 최대값을 저장할 RowMapper 클래스.전미지
 class SelectOneMaxPostIdRowMapper implements RowMapper<MarketPostDTO> {
 	@Override
 	public MarketPostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
 		// ResultSet에 저장된 데이터를 marketPostDTO 객체에 매핑(저장)하는 메서드
-		
+
 		MarketPostDTO marketPostDTO = new MarketPostDTO(); // 새로운 marketPostDTO 객체 생성
-		// ResultSet에 저장된 데이터를 marketPostDTO 객체에 저장	
+		// ResultSet에 저장된 데이터를 marketPostDTO 객체에 저장
 		System.out.println("marketPostDAO (SelectOneMaxPostIdRowMapper) In로그 = [" + marketPostDTO + "]");
-		marketPostDTO.setMarketPostId(rs.getString("MAX(MARKETPOST_id)")); // 제일 최근 추가된 게시글 아이디
+		marketPostDTO.setMarketPostId(rs.getString("MAX(marketPOST_id)")); 							// 제일 최근 추가된 게시글 아이디
 		System.out.println("marketPostDAO (SelectOneMaxPostIdRowMapper) Out로그 = [" + marketPostDTO + "]");
-		return marketPostDTO; // marketPostDTO에 저장된 데이터들을 반환	
+		return marketPostDTO; // marketPostDTO에 저장된 데이터들을 반환
 	}
 }
 
@@ -728,7 +676,8 @@ class SelectOneMarketPostRecentRowMapper implements RowMapper<MarketPostDTO> {
 		marketPostDTO.setMemberNickname(rs.getString("MEMBER_nickname")); 			// 회원 닉네임
 		marketPostDTO.setMarketPostTitle(rs.getString("MARKETPOST_title")); 		// 제목
 		marketPostDTO.setMarketPostContent(rs.getString("MARKETPOST_content"));	// 내용
-		marketPostDTO.setMarketPostDate(rs.getString("MARKETPOST_date")); 		// 작성일
+		marketPostDTO.setMarketPostDate(rs.getString("MARKETPOST_date"));
+		marketPostDTO.setMyRecommend(rs.getInt("myRecommend")); // 작성일
 		marketPostDTO.setRecommendCnt(rs.getInt("RECOMMEND_cnt")); 					// 좋아요 수
 		marketPostDTO.setPostImgName(rs.getString("POSTIMG_name"));					// 대표 이미지
 		return marketPostDTO; // marketPostDTO에 저장된 데이터들을 반환

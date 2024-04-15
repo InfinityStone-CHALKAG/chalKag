@@ -21,14 +21,14 @@ public class HeadHuntPostFilterSearchController {
 
 	
 	@Autowired
-	private IHeadHuntPostService IheadHuntPostService;
+	private IHeadHuntPostService iHeadHuntPostService;
 	
 	@RequestMapping("/headHuntPostFilterSearch")
 	public @ResponseBody String filterSearchController(HeadHuntPostDTO headHuntPostDTO) {
 		// 필터링된 데이터를 가져오는 서비스 호출
 		System.out.println("HHP@@" + headHuntPostDTO);
-		System.out.println("서비스로그~!!!" + IheadHuntPostService.selectAll(headHuntPostDTO));
+		System.out.println("서비스로그~!!!" + iHeadHuntPostService.selectAll(headHuntPostDTO));
 	
-    return gson.toJson(IheadHuntPostService.selectAll(headHuntPostDTO));
+    return gson.toJson(iHeadHuntPostService.selectAll(headHuntPostDTO));
 	}
 }

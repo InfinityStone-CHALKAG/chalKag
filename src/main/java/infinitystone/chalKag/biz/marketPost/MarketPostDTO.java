@@ -17,6 +17,7 @@ public class MarketPostDTO {
 	private String marketPostTitle;		// 거래글 제목
 	private String marketPostContent;		// 거래글 내용
 	private String marketPostViewcnt;		// 거래글 조회수
+	private int    myRecommend; 			// 로그인한 회원이 좋아요를 눌렀는지 체크
 	
 	private String postId;					// 게시글 아이디
 	
