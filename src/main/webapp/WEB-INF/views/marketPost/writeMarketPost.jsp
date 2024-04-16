@@ -141,7 +141,7 @@
 		function trimInput(element) {
 			element.value = element.value.trim();
 		}
-		function validatePay(input) {
+		function validatePrice(input) {
 			var cleanInput = input.value.replace(/,/g, '');
 			
 			const priceRegex = /^[0-9]*$/; // 숫자만 입력하는 정규표현식

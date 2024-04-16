@@ -477,7 +477,7 @@ public class MarketPostDAO {
 					  return result;
 			}// 메인 페이지 - 주간 추천순 게시글 목록 출력
 			  else if (marketPostDTO.getSearchCondition().equals("marketPostWeeklyBestList")) {
-				  Object[] args = { marketPostDTO.getMemberId(), marketPostDTO.getMemberId() };
+				  Object[] args = { marketPostDTO.getMemberId()};
 				  result = jdbcTemplate.query(SELECTALL_MARKETPOSTWEEKLYBEST, args,new MarketPostWeeklyBestRowMapper());
 				  System.out.println("marketPostDAO(selectAll) Out로그 = [" + result + "]");
 				  return result;

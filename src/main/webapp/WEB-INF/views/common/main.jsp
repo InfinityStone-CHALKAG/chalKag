@@ -316,7 +316,12 @@
                                 <div class="inner">
                                     <figure>
                                         <a href="freePostSingle?freePostId=${latestFreePost.freePostId}">
-                                            <img class="latestPostImg" src="${latestFreePost.postImgName ? 'postImg/' + latestFreePost.postImgName : 'postImg/postDefault.jpg'}" alt="Sample Article">
+                                        	<c:if test="${latestFreePost.postImgName != null }">
+                                               <img src="postImg/${latestFreePost.postImgName}" alt="Sample Article">
+                                            </c:if>
+                                            <c:if test="${latestFreePost.postImgName == null}">
+                                               <img src="postImg/postDefault.jpg" alt="Sample Article">
+                                            </c:if>
                                         </a>
                                     </figure>
                                     <div class="padding">
@@ -415,7 +420,12 @@
                                         	</c:if>
                                         	<c:if test="${recommendBestData.postCategory.equals('FREEPOST')}">
                                         		<a href="/freePostSingle?freePostId=${recommendBestData.chalKagPostId}">
-                                                	<img src="${recommendBestData.postImgName ? `/postImg/${recommendBestData.postImgName}` : '/postImg/postDefault.jpg'}" alt="Sample Article">
+                                                	<c:if test="${recommendBestData.postImgName != null }">
+                                                		<img src="postImg/${recommendBestData.postImgName}" alt="Sample Article">
+                                                	</c:if>
+                                                	<c:if test="${recommendBestData.postImgName == null}">
+                                                		<img src="postImg/postDefault.jpg" alt="Sample Article">
+                                                	</c:if>
                                             	</a>
                                         	</c:if>
                                         
@@ -656,9 +666,14 @@
                                             </div>
                                             <figure>
                                                 <a href="freePostSingle?freePostId=${freePostPremiumList.freePostId}">
-                                                    <img class="latestPostImg" src="${latestFreePost.postImgName ? 'postImg/' + latestFreePost.postImgName : 'postImg/postDefault.jpg'}"
-                                                         alt="Sample Article">
-                                                </a>
+													<c:if test="${freePostPremiumList.postImgName != null }">
+														<img src="postImg/${freePostPremiumList.postImgName}"
+																alt="Sample Article">
+													</c:if> 
+													<c:if test="${freePostPremiumList.postImgName == null}">
+														<img src="postImg/postDefault.jpg" alt="Sample Article">
+													</c:if>
+												</a>
                                             </figure>
                                             <div class="padding">
                                                 <h1>
