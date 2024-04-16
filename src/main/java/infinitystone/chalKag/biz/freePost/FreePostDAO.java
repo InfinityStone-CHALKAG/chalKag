@@ -231,6 +231,7 @@ public class FreePostDAO {
 			  + "DISTINCT " // 중복 제거 함수		  
 			  + "	'FREEPost' AS POST_category, " // 게시판 카테고리 설정
 			  + "	FREEPOST.FREEPOST_id, "
+			  + "	FREEPOST.MEMBER_id, "
 			  + "	MEMBER.MEMBER_nickname, "
 			  + "	FREEPOST.FREEPOST_title, "
 			  + "	FREEPOST.FREEPOST_content, "
@@ -614,6 +615,7 @@ class FreePostMemberRowMapper implements RowMapper<FreePostDTO> {
 		// ResultSet에 저장된 데이터를 freePostDTO 객체에 저장
 		freePostDTO.setPostCategory(rs.getString("POST_category"));            		// 카테고리
 		freePostDTO.setFreePostId(rs.getString("FREEPOST_id")); 			// 자유글 아이디
+		freePostDTO.setMemberId(rs.getString("MEMBER_id"));							// 회원 아이디
 		freePostDTO.setMemberNickname(rs.getString("MEMBER_nickname"));				// 회원 닉네임
 		freePostDTO.setFreePostTitle(rs.getString("FREEPOST_title")); 		// 제목
 		freePostDTO.setFreePostContent(rs.getString("FREEPOST_content")); 	// 내용

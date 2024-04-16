@@ -18,7 +18,7 @@ public class MarketPostDAO {
 
 // ----------------------------------------------------------------- 메인 페이지 SELECTALL -----------------------------------------------------------------
 
-	 // 프리미엄 회원이 작성한 장터글 출력 (최신글 2개만 출력).전미지
+	 // 프리미엄 회원이 작성한 장터글 출력 (최신글 2개만 출력).
 	 private static final String SELECTALL_MARKETPOSTPREMIUM = "SELECT "
 			  + "DISTINCT " // 중복 제거 함수
 			  + "	'MARKETPost' AS POST_category, " // 게시판 카테고리 설정
@@ -56,7 +56,7 @@ public class MarketPostDAO {
 	 // INNER JOIN을 사용해 장터글 테이블과 회원 테이블을 연결하고, 또 다른 LEFT JOIN을 사용해 장터글 테이블과 좋아요 테이블을 연결
 	 // 게시글 이미지는 테이블을 따로 나누었으며 서브 쿼리를 사용해 게시글 이미지 중 대표 이미지로 보여줄 이미지를 설정하고, 그 결과를 "POSTIMG_name"라는 별칭으로 반환
 	 
-	// 주간 추천순 장터글 목록 출력 (2개만 출력).전미지
+	// 주간 추천순 장터글 목록 출력 (2개만 출력).
 		private static final String SELECTALL_MARKETPOSTWEEKLYBEST = "SELECT " 
 				+ "DISTINCT " // 중복 제거 함수
 				+ "		'MarketPost' AS POST_category, " // 게시판 카테고리 설정
@@ -269,16 +269,26 @@ public class MarketPostDAO {
 	
 	// ----------------------------------------------------------------- 회원 페이지 SELECTALL -----------------------------------------------------------------
 	  
-	  // 특정 회원이 작성한 장터글 목록 출력.전미지
+	  // 특정 회원이 작성한 장터글 목록 출력.
 	  private static final String SELECTALL_MARKETPOSTMEMBER = "SELECT "
 			  + "DISTINCT " // 중복 제거 함수		  
 			  + "	'MARKETPost' AS POST_category, " // 게시판 카테고리 설정
 			  + "	MARKETPOST.MARKETPOST_id, "
+			  + "		MARKETPOST.MEMBER_id, " 
 			  + "	MEMBER.MEMBER_nickname, "
 			  + "	MARKETPOST.MARKETPOST_title, "
 			  + "	MARKETPOST.MARKETPOST_content, "
 			  + "	MARKETPOST.MARKETPOST_date, "
 			  + "	MARKETPOST.MARKETPOST_viewcnt, "
+				+ "		( " // 특정 구인글에 대해 로그인한 회원이 좋아요를 눌렀는지 여부를 확인
+				+ " 		SELECT " 
+				+ "				CASE WHEN COUNT(*) > 0 THEN TRUE ELSE FALSE END " // 좋아요를 눌렀으면 TRUE, 아니면 FALSE를 반환
+				+ "			FROM "
+				+ "				RECOMMEND " // 좋아요 테이블
+				+ "			WHERE "
+				+ "				RECOMMEND.POST_id = MARKETPOST.MARKETPOST_id " // 구인글에 좋아요가 눌렸는지 확인 후
+				+ "				AND RECOMMEND.MEMBER_id = ? " // 현재 로그인한 회원의 아이디와 일치하는 좋아요만 선택
+				+ "		) AS myRecommend, " // 로그인한 회원이 좋아요를 눌렀는지 중복 체크
 			  + "	( " // 게시글의 좋아요 수를 합산
 			  + "		SELECT "
 			  + "            COUNT(*) " // 해당 게시글에 대한 좋아요 수를 COUNT 함수를 사용해 합산
@@ -319,7 +329,7 @@ public class MarketPostDAO {
 
 	private static final String SELECTONE_MAXPOSTID = "SELECT MAX(MARKETPOST_id) FROM MARKETPOST";
 	
-	 // 메인 페이지 - 최신 게시글 1개 출력.전미지
+	 // 메인 페이지 - 최신 게시글 1개 출력.
 	private static final String SELECTONE_MARKETPOSTRECENT = "SELECT " 
 			+ "DISTINCT " // 중복 제거 함수
 			+ "		'MarketPost' AS POST_category, " // 게시판 카테고리 설정
@@ -474,7 +484,7 @@ public class MarketPostDAO {
 			  }
 			// 회원 페이지 - 특정 회원이 작성한 장터글 전체 출력
 			  else if (marketPostDTO.getSearchCondition().equals("marketPostMemberList")) {
-				  Object[] args = { marketPostDTO.getMemberId()};
+				  Object[] args = { marketPostDTO.getMemberId(), marketPostDTO.getMemberId()};
 				  result = jdbcTemplate.query(SELECTALL_MARKETPOSTMEMBER, args, new MarketPostMemberRowMapper());
 				  System.out.println("marketPostDAO(selectAll) Out로그 = [" + result + "]");
 				  return result;
@@ -559,7 +569,7 @@ public class MarketPostDAO {
 
 // ====SELECTALL===== 
 
-//메인 페이지 - 프리미엄 회원이 작성한 장터글 목록 출력 시 필요한 데이터를 저장할 RowMapper 클래스.전미지
+//메인 페이지 - 프리미엄 회원이 작성한 장터글 목록 출력 시 필요한 데이터를 저장할 RowMapper 클래스.
 class MarketPostPremiumRowMapper implements RowMapper<MarketPostDTO> {
 	@Override // mapRow 메서드 오버라이드
 	public MarketPostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -578,7 +588,7 @@ class MarketPostPremiumRowMapper implements RowMapper<MarketPostDTO> {
 	}
 }
 
-//메인 페이지 - 주간 추천순 장터글 목록 출력 시 필요한 데이터를 저장할 RowMapper 클래스.전미지
+//메인 페이지 - 주간 추천순 장터글 목록 출력 시 필요한 데이터를 저장할 RowMapper 클래스.
 class MarketPostWeeklyBestRowMapper implements RowMapper<MarketPostDTO> {
 	@Override // mapRow 메서드 오버라이드
 	public MarketPostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -600,7 +610,7 @@ class MarketPostWeeklyBestRowMapper implements RowMapper<MarketPostDTO> {
 	}
 }
 
-//장터글 페이지 - 장터글 목록 출력 시 필요한 데이터를 저장할 RowMapper 클래스.전미지
+//장터글 페이지 - 장터글 목록 출력 시 필요한 데이터를 저장할 RowMapper 클래스.
 class MarketPostRowMapper implements RowMapper<MarketPostDTO> {
 	@Override // mapRow 메서드 오버라이드
 	public MarketPostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -623,7 +633,7 @@ class MarketPostRowMapper implements RowMapper<MarketPostDTO> {
 	}
 }
 
-//회원 페이지 - 특정 회원이 작성한 장터글 목록 출력 RowMapper 클래스.전미지
+//회원 페이지 - 특정 회원이 작성한 장터글 목록 출력 RowMapper 클래스.
 class MarketPostMemberRowMapper implements RowMapper<MarketPostDTO> {
 	@Override // mapRow 메서드 오버라이드
 	public MarketPostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -633,6 +643,7 @@ class MarketPostMemberRowMapper implements RowMapper<MarketPostDTO> {
 		// ResultSet에 저장된 데이터를 marketPostDTO 객체에 저장
 		marketPostDTO.setPostCategory(rs.getString("POST_category"));            		// 카테고리
 		marketPostDTO.setMarketPostId(rs.getString("MARKETPOST_id")); 			// 장터글 아이디
+		marketPostDTO.setMemberId(rs.getString("MEMBER_id"));							// 회원 아이디
 		marketPostDTO.setMemberNickname(rs.getString("MEMBER_nickname"));				// 회원 닉네임
 		marketPostDTO.setMarketPostTitle(rs.getString("MARKETPOST_title")); 		// 제목
 		marketPostDTO.setMarketPostContent(rs.getString("MARKETPOST_content")); 	// 내용
@@ -647,7 +658,7 @@ class MarketPostMemberRowMapper implements RowMapper<MarketPostDTO> {
 
 //  =====SELECTONE ========
 
-//게시글 이미지 저장 시 필요한 게시글 아이디의 최대값을 저장할 RowMapper 클래스.전미지
+//게시글 이미지 저장 시 필요한 게시글 아이디의 최대값을 저장할 RowMapper 클래스.
 class SelectOneMaxPostIdRowMapper implements RowMapper<MarketPostDTO> {
 	@Override
 	public MarketPostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -662,7 +673,7 @@ class SelectOneMaxPostIdRowMapper implements RowMapper<MarketPostDTO> {
 	}
 }
 
-//메인 페이지 - 최신 게시글 목록 출력 RowMapper 클래스.전미지
+//메인 페이지 - 최신 게시글 목록 출력 RowMapper 클래스.
 class SelectOneMarketPostRecentRowMapper implements RowMapper<MarketPostDTO> {
 	@Override // mapRow 메서드 오버라이드
 	public MarketPostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -684,7 +695,7 @@ class SelectOneMarketPostRecentRowMapper implements RowMapper<MarketPostDTO> {
 	}
 }
 
-//장터글 페이지 - 장터글 상세 출력 시 필요한 데이터를 저장할 RowMapper 클래스.전미지
+//장터글 페이지 - 장터글 상세 출력 시 필요한 데이터를 저장할 RowMapper 클래스.
 class SelectOneMarketPostRowMapper implements RowMapper<MarketPostDTO> {
 	@Override // mapRow 메서드 오버라이드
 	public MarketPostDTO mapRow(ResultSet rs, int rowNum) throws SQLException {

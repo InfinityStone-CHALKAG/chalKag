@@ -175,6 +175,7 @@ public class JobHuntPostDAO { // 구직 게시판 DAO
 			+ "DISTINCT " // 중복 제거 함수
 			+ "		'JobHuntPost' AS POST_category, " // 게시판 카테고리 설정
 			+ "		JOBHUNTPOST.JOBHUNTPOST_id, " 
+			+ "		JOBHUNTPOST.MEMBER_id, " 
 			+ "		MEMBER.MEMBER_nickname, " 
 			+ "		JOBHUNTPOST.JOBHUNTPOST_title, "
 			+ "		JOBHUNTPOST.JOBHUNTPOST_content, " 
@@ -603,6 +604,7 @@ class JobHuntPostMemberRowMapper implements RowMapper<JobHuntPostDTO> {
 		// ResultSet에 저장된 데이터를 JobHuntPostDTO 객체에 저장
 		jobHuntPostDTO.setPostCategory(rs.getString("POST_category"));				// 카테고리
 		jobHuntPostDTO.setJobHuntPostId(rs.getString("JOBHUNTPOST_id")); 			// 구직글 아이디
+		jobHuntPostDTO.setMemberId(rs.getString("MEMBER_id")); 						// 회원 아이디
 		jobHuntPostDTO.setMemberNickname(rs.getString("MEMBER_nickname"));		 	// 회원 닉네임
 		jobHuntPostDTO.setJobHuntPostTitle(rs.getString("JOBHUNTPOST_title")); 		// 제목
 		jobHuntPostDTO.setJobHuntPostContent(rs.getString("JOBHUNTPOST_content")); 	// 내용

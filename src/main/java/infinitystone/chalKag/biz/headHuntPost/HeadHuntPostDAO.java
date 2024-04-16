@@ -175,6 +175,7 @@ public class HeadHuntPostDAO { // 구인 게시판 DAO
 			+ "DISTINCT " // 중복 제거 함수
 			+ "		'HeadHuntPost' AS POST_category, " // 게시판 카테고리 설정
 			+ "		HEADHUNTPOST.HEADHUNTPOST_id, " 
+			+ "		HEADHUNTPOST.MEMBER_id, " 
 			+ "		MEMBER.MEMBER_nickname, " 
 			+ "		HEADHUNTPOST.HEADHUNTPOST_title, "
 			+ "		HEADHUNTPOST.HEADHUNTPOST_content, " 
@@ -603,6 +604,7 @@ class HeadHuntPostMemberRowMapper implements RowMapper<HeadHuntPostDTO> {
 		// ResultSet에 저장된 데이터를 HeadHuntPostDTO 객체에 저장
 		headHuntPostDTO.setPostCategory(rs.getString("POST_category"));					// 카테고리
 		headHuntPostDTO.setHeadHuntPostId(rs.getString("HEADHUNTPOST_id")); 			// 구인글 아이디
+		headHuntPostDTO.setMemberId(rs.getString("MEMBER_id")); 						// 회원 아이디
 		headHuntPostDTO.setMemberNickname(rs.getString("MEMBER_nickname"));		 		// 회원 닉네임
 		headHuntPostDTO.setHeadHuntPostTitle(rs.getString("HEADHUNTPOST_title")); 		// 제목
 		headHuntPostDTO.setHeadHuntPostContent(rs.getString("HEADHUNTPOST_content")); 	// 내용
