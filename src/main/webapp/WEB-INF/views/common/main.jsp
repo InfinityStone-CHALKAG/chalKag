@@ -415,7 +415,7 @@
                                         	</c:if>
                                         	<c:if test="${recommendBestData.postCategory.equals('FREEPOST')}">
                                         		<a href="/freePostSingle?freePostId=${recommendBestData.chalKagPostId}">
-                                                	<img src="postImg/${recommendBestData.postImgName}" alt="Sample Article">
+                                                	<img src="${recommendBestData.postImgName ? `/postImg/${recommendBestData.postImgName}` : '/postImg/postDefault.jpg'}" alt="Sample Article">
                                             	</a>
                                         	</c:if>
                                         

@@ -149,7 +149,7 @@
 								<!-- 게시글 내용 출력 -->
 								<pre style="background: none; border: none; font-size: 15px; font-style: 'Malgun Gothic'; line-height: 210%;">${jobHuntPostSingle.jobHuntPostContent}</pre>
 							</div>
-							<footer>
+								<footer>
 								<div class="col" style="width:54.4%;">
 									<c:if test="${member == null}">
 										<a id="recommendBtnMessage" onclick="message()" class="love" style="margin-top:0%">

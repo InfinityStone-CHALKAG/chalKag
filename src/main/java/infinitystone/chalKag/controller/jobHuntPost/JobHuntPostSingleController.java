@@ -60,7 +60,7 @@ public class JobHuntPostSingleController {
 		postImgDTO.setSearchCondition("jobHuntPostSingleImg");
 		postImgDTO.setPostId(jobHuntPostDTO.getJobHuntPostId());
 		
-		recommendDTO.setPostId(headHuntPostDTO.getHeadHuntPostId());
+		recommendDTO.setPostId(jobHuntPostDTO.getJobHuntPostId());
 		
 		recommendDTO.setMemberId((String)session.getAttribute("member"));
 		
