@@ -402,13 +402,13 @@
                         // checkboxTh 요소에 대한 jQuery 객체를 만듭니다.
                         var $checkboxTh = $(checkboxTh);
 
-                        // click 이벤트 리스너를 제거합니다.
+                        // click 이벤트 리스너 제거
                         $checkboxTh.off('click.DT');
 
-                        // keypress 이벤트 리스너를 제거합니다.
+                        // keypress 이벤트 리스너 제거
                         $checkboxTh.off('keypress.DT');
 
-                        // selectstart 이벤트 리스너를 제거합니다.
+                        // selectstart 이벤트 리스너 제거
                         $checkboxTh.off('selectstart.DT');
 
                         // 다른 th를 눌러도 checkbox쪽 column은 변하지 않도록 설정
@@ -440,7 +440,6 @@
                         });
 
                         $(document).on('mousedown', '.pagination .page-link', function (e) {
-                            console.log("아오")
                             if (uncheckAllCheckboxesAlert()) {
                                 e.preventDefault(); // 페이지 이동 이벤트 중지
                                 console.log("페이지 이동 중지");
@@ -474,23 +473,34 @@
                         });
 
 
-                        // 각 체크박스 요소에 대해 이벤트 리스너 추가
-                        checkboxes.forEach(function (checkbox) {
-                            checkbox.addEventListener('change', function () {
-                                // 체크된 개수 다시 계산
-                                checkedCount = document.querySelectorAll('input[name="reportId"]:checked').length;
-                                // HTML에 체크된 개수를 동적으로 출력
-                                document.getElementById('checkboxCount').textContent = 'Checked : ' + checkedCount;
-                                addIcons();
+                        function setupCheckboxListeners() {
+    // 각 체크박스 요소에 대해 이벤트 리스너 추가
+    checkboxes.forEach(function (checkbox) {
+        checkbox.addEventListener('change', function () {
+            // 체크된 개수 다시 계산
+            checkedCount = document.querySelectorAll('input[name="reportId"]:checked').length;
+            // HTML에 체크된 개수를 동적으로 출력
+            document.getElementById('checkboxCount').textContent = 'Checked : ' + checkedCount;
+            addIcons();
+
+            if (checkedCount <= 0) {
+                document.getElementById('checkboxCount').textContent = '';
+                document.getElementById("trashIcon").innerHTML = '';
+                document.getElementById("openedMailIcon").innerHTML = '';
+            }
+        });
+    });
+}
 
 
-                                if (checkedCount <= 0) {
-                                    document.getElementById('checkboxCount').textContent = '';
-                                    document.getElementById("trashIcon").innerHTML = '';
-                                    document.getElementById("openedMailIcon").innerHTML = '';
-                                }
-                            });
-                        });
+// 페이지 로드 시와 pagination으로 페이지가 변경될 때 이벤트 리스너 다시 연결
+document.addEventListener("DOMContentLoaded", setupCheckboxListeners);
+document.addEventListener("click", function (event) {
+    if (event.target.classList.contains("page-link")) {
+        // pagination 클릭 시 이벤트 리스너 다시 연결
+        setupCheckboxListeners();
+    }
+});
 
                         function uncheckAllCheckboxesAlert() {
                             var checkboxes = document.getElementsByName('reportId');
@@ -530,7 +540,7 @@
 
                             // 모든 체크된 체크박스 요소를 선택하고 각각의 값을 배열에 추가
                             $('input[type=checkbox][name=reportId]:checked').each(function () {
-                                selectedReportIds.push($(this).val()); // 체크된 체크박스의 값(보고서 ID)을 배열에 추가
+                                selectedReportIds.push($(this).val());
                             });
                             -
                                 // 선택된 보고서 ID들을 출력하여 확인
