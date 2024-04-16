@@ -181,6 +181,7 @@
 	<script src="css/user/scripts/magnific-popup/dist/jquery.magnific-popup.min.js"></script>
 	<script src="css/user/scripts/sweetalert/dist/sweetalert.min.js"></script>
 	<script src="css/user/scripts/toast/jquery.toast.min.js"></script>
+	<script src="js/user/recommendUpDown.js"></script>
 	<script src="css/user/js/demo.js"></script>
 	<script src="css/user/js/e-magz.js"></script>
 	<script>
