@@ -2,7 +2,6 @@ package infinitystone.chalKag.controller.async;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -10,6 +9,7 @@ import com.google.gson.Gson;
 
 import infinitystone.chalKag.biz.marketPost.IMarketPostService;
 import infinitystone.chalKag.biz.marketPost.MarketPostDTO;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class MarketPostFilterSearchController {
@@ -21,11 +21,18 @@ public class MarketPostFilterSearchController {
 	private IMarketPostService iMarketPostService;
 
 	@RequestMapping("/marketPostFilterSearch")
-	public @ResponseBody String filterSearchController(MarketPostDTO marketPostDTO) {
+	public @ResponseBody String filterSearchController(HttpSession session, MarketPostDTO marketPostDTO) {
 
+		String memberId = (String)session.getAttribute("member");
+	    if (memberId == null) {
+	    	memberId = null;
+		}
+	    marketPostDTO.setMemberId(memberId);
+		
 		 String status = marketPostDTO.getMarketPostStatus();
 		 System.out.println("filterSearchController 로그  status 값 : " + status);
-		    
+		   
+		 
 		    if (status != null) {
 		        if (status.equals("Sell")) {
 		            marketPostDTO.setSearchCondition("marketPostSellList");

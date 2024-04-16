@@ -71,6 +71,7 @@ WHERE 1=1
 		<result column="FREEPOST_date" property="freePostDate" jdbcType="TIMESTAMP" javaType="String"/>
 	   	<result column="FREEPOST_viewcnt" property="freePostViewcnt" jdbcType="INTEGER" javaType="String"/>
 	   	<result column="POSTIMG_name" property="postImgName" jdbcType="VARCHAR" javaType="String"/>
+	   	<result column="myRecommend" property="myRecommend" jdbcType="INTEGER" javaType="int"/>
 	   	<result column="RECOMMEND_cnt" property="recommendCnt" jdbcType="INTEGER" javaType="int"/>
 	</resultMap>
 
