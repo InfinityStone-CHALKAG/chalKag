@@ -83,7 +83,7 @@
 									<li>${marketPostSingle.marketPostDate}</li>
 										<li>
 											<!-- 글 카테고리 -->
-											<a href="marketPostList?marketPostStatus=${marketPostSingle.marketPostCategory}">Market Post List</a>
+											<a href="marketPostList?marketPostStatus=${marketPostSingle.marketPostStatus}">Market Post List</a>
 									</li>
 									<li>By 
 											<!-- 작성자 본인일 경우 myPage 아닐경우 작성자의 memberPage 로 이동 -->
@@ -117,22 +117,28 @@
 									<!-- 작성한 상품 내용 출력 -->
 									<div class="featured" style="margin-bottom: 3%; margin-top: 2%; display: block; justify-content: center;">
 										<div>
-										<figure>
-											<img src="images/news/img01.jpg">
-										</figure>
 											<div class="postInfo">
+												<i class="ion-cash"
+													style="font-size:20px;"></i>
 												<div class="postInfoTitle">Price</div>
 												<div class="postInfoContents">${marketPostSingle.marketPostPrice} </div>
 											</div>
 											<div  class="postInfo">
+													<i class="ion-ios-camera"
+													style="font-size:20px;"></i>
 												<div class="postInfoTitle">Category</div>
 												<div class="postInfoContents">${marketPostSingle.marketPostCategory}</div>
 											</div>
 											<div  class="postInfo">
+												<i class="ion-android-home"
+													style="font-size:20px;"></i>
+													
 												<div class="postInfoTitle">Company</div>
 												<div class="postInfoContents">${marketPostSingle.marketPostCompany}</div>
 											</div>
 											<div  class="postInfo">
+												<i class="ion-android-calendar"
+													style="font-size:20px;"></i>
 												<div class="postInfoTitle">Status</div>
 												<div class="postInfoContents">${marketPostSingle.marketPostStatus}</div>
 											</div>
