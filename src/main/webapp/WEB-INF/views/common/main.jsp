@@ -69,10 +69,8 @@
                                 <img src="css/user/images/mainImg01.jpg" alt="Sample Article">
                             </figure>
                             <div class="details">
-                                <div class="category"><a href="category.html">Computer</a></div>
-                                <h1><a>Phasellus iaculis quam sed est elementum vel ornare ligula
-                                    venenatis</a></h1>
-                                <div class="time">December 26, 2016</div>
+                                <h1><a>Through the lens, we capture fleeting moments, eternalizing memories</a></h1>
+                                <div class="time">March 03, 2024</div>
                             </div>
                         </article>
                     </div>
@@ -83,11 +81,9 @@
                                 <img src="css/user/images/mainImg02.jpg" alt="Sample Article">
                             </figure>
                             <div class="details">
-                                <div class="category"><a href="category.html">Travel</a></div>
-                                <h1><a href="single.html">Class aptent taciti sociosqu ad litora
-                                    torquent per conubia
+                                <h1><a href="single.html">Every click tells a story; every frame holds a memory
                                     nostra</a></h1>
-                                <div class="time">December 10, 2016</div>
+                                <div class="time">March 10, 2024</div>
                             </div>
                         </article>
                     </div>
@@ -98,10 +94,8 @@
                                 <img src="css/user/images/mainImg03.jpg" alt="Sample Article">
                             </figure>
                             <div class="details">
-                                <div class="category"><a href="category.html">International</a></div>
-                                <h1><a href="single.html">Maecenas accumsan tortor ut velit pharetra
-                                    mollis</a></h1>
-                                <div class="time">October 12, 2016</div>
+                                <h1><a href="single.html">Photographs freeze time, preserving memories to be cherished forever</a></h1>
+                                <div class="time">March 17, 2024</div>
                             </div>
                         </article>
                     </div>
@@ -112,11 +106,8 @@
                                 <img src="css/user/images/mainImg04.jpg" alt="Sample Article">
                             </figure>
                             <div class="details">
-                                <div class="category"><a href="category.html">Lifestyle</a></div>
-                                <h1><a href="single.html">Mauris elementum libero at pharetra auctor
-                                    Fusce ullamcorper
-                                    elit</a></h1>
-                                <div class="time">November 27, 2016</div>
+                                <h1><a href="single.html">In the stillness of an image, echoes of moments gone by</a></h1>
+                                <div class="time">March 26, 2024</div>
                             </div>
                         </article>
                     </div>
@@ -127,11 +118,8 @@
                                 <img src="css/user/images/mainImg05.jpg" alt="Sample Article">
                             </figure>
                             <div class="details">
-                                <div class="category"><a href="category.html">Lifestyle</a></div>
-                                <h1><a href="single.html">Mauris elementum libero at pharetra auctor
-                                    Fusce ullamcorper
-                                    elit</a></h1>
-                                <div class="time">November 27, 2016</div>
+                                <h1><a href="single.html">Each snapshot a testament to life's beautiful journey</a></h1>
+                                <div class="time">April 07, 2024</div>
                             </div>
                         </article>
                     </div>
@@ -142,11 +130,8 @@
                                 <img src="css/user/images/mainImg06.jpg" alt="Sample Article">
                             </figure>
                             <div class="details">
-                                <div class="category"><a href="category.html">Lifestyle</a></div>
-                                <h1><a href="single.html">Mauris elementum libero at pharetra auctor
-                                    Fusce ullamcorper
-                                    elit</a></h1>
-                                <div class="time">November 27, 2016</div>
+                                <h1><a href="single.html">Every photograph a chapter in the book of our lives</a></h1>
+                                <div class="time">April 13, 2024</div>
                             </div>
                         </article>
                     </div>
@@ -157,11 +142,8 @@
                                 <img src="css/user/images/mainImg07.jpg" alt="Sample Article">
                             </figure>
                             <div class="details">
-                                <div class="category"><a href="category.html">Lifestyle</a></div>
-                                <h1><a href="single.html">Mauris elementum libero at pharetra auctor
-                                    Fusce ullamcorper
-                                    elit</a></h1>
-                                <div class="time">November 27, 2016</div>
+                                <h1><a href="single.html">Through the camera's eye, we find beauty in the mundane</a></h1>
+                                <div class="time">April 17, 2024</div>
                             </div>
                         </article>
                     </div>

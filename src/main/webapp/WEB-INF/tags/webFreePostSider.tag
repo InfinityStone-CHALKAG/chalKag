@@ -18,8 +18,12 @@
             <div class="inner">
                <figure>
                          <a href="freePostSingle?freePostId=${latestFreePost.freePostId}">
-                             <img class="latestPostImg"
-                     src="${latestFreePost.postImgName ? 'postImg/' + latestFreePost.postImgName : 'postImg/postDefault.jpg'}">
+                            <c:if test="${latestFreePost.postImgName != null }">
+                                               <img src="postImg/${latestFreePost.postImgName}" alt="Sample Article">
+                                            </c:if>
+                                            <c:if test="${latestFreePost.postImgName == null}">
+                                               <img src="postImg/postDefault.jpg" alt="Sample Article">
+                                            </c:if>
                          </a>
                     </figure>
                <div class="details">

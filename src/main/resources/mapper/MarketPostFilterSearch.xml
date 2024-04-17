@@ -89,7 +89,7 @@ WHERE
 			AND DATE(MARKETPOST_date) BETWEEN #{fromday} AND #{today}
 	</if>
 	
-	 ORDER BY HEADHUNTPOST.HEADHUNTPOST_date ${sortOrder == 'asc' ? 'ASC' : 'DESC'}   
+	 ORDER BY MARKETPOST.MARKETPOST_date ${sortOrder == 'asc' ? 'ASC' : 'DESC'}   
 	
 	</select>
 

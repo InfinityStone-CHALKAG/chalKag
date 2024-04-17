@@ -84,7 +84,7 @@
 									<li>${jobHuntPostSingle.jobHuntPostDate}</li>
 									<li>
 										<!-- 글 카테고리 -->
-										<a href="/jobHuntPostList">Head Hunt Post List</a>
+										<a href="/jobHuntPostList">Job Hunt Post List</a>
 									</li>
 									<li>By 
 											
