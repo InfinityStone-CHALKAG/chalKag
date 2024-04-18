@@ -103,7 +103,7 @@ public class MemberDAO { // 회원 정보 DAO
       "MEMBER_grade, " +
       "(SELECT AVG(REVIEW_score) " +
       "FROM REVIEW " +
-      "WHERE MEMBER_id = MEMBER.MEMBER_id) AS CURRENT_score, " +
+      "WHERE REVIEW_partner = MEMBER.MEMBER_id) AS CURRENT_score, " +
       "(SELECT MAX(LEVEL_id) " +
       "FROM LEVEL " +
       "WHERE LEVEL_requiredexp <= MEMBER_exp) AS CURRENT_level, " +
@@ -152,7 +152,7 @@ public class MemberDAO { // 회원 정보 DAO
       "MEMBER_grade, " +
       "(SELECT AVG(REVIEW_score) " +
       "FROM REVIEW " +
-      "WHERE MEMBER_id = MEMBER.MEMBER_id) AS CURRENT_score, " +
+      "WHERE REVIEW_partner = MEMBER.MEMBER_id) AS CURRENT_score, " +
       "(SELECT MAX(LEVEL_id) " +
       "FROM LEVEL " +
       "WHERE LEVEL_requiredexp <= MEMBER_exp) AS CURRENT_level, " +

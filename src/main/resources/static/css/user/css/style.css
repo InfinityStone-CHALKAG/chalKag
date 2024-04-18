@@ -4834,7 +4834,7 @@ blockquote {
     word-wrap: break-word;
     overflow-x: hidden;
     display: -webkit-box;
-    -webkit-line-clamp: 6;
+    -webkit-line-clamp: 5;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
