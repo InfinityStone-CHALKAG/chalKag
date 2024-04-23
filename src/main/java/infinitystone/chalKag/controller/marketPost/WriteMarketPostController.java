@@ -1,6 +1,8 @@
 package infinitystone.chalKag.controller.marketPost;
 
 import infinitystone.chalKag.biz.marketPost.MarketPostDTO;
+import infinitystone.chalKag.biz.member.MemberDTO;
+import infinitystone.chalKag.biz.member.MemberService;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import infinitystone.chalKag.biz.marketPost.MarketPostService;
 import infinitystone.chalKag.biz.postImg.PostImgDTO;
@@ -27,13 +29,16 @@ public class WriteMarketPostController {
 	@Autowired
 	private PostImgService postImgService;
 
+	@Autowired
+	private MemberService memberService;
+
 	@RequestMapping(value = "/writeMarketPost", method = RequestMethod.GET)
 	public String writeMarketPostPage() {
 		return "marketPost/writeMarketPost";
 	}
 
 	@RequestMapping(value = "/writeMarketPost", method = RequestMethod.POST)
-	public String writeMarketPost(MarketPostDTO marketPostDTO, PostImgDTO postImgDTO, HttpSession session, @RequestParam("file") MultipartFile[] files) {
+	public String writeMarketPost(MarketPostDTO marketPostDTO, MemberDTO memberDTO, PostImgDTO postImgDTO, HttpSession session, @RequestParam("file") MultipartFile[] files) {
 
 		marketPostDTO.setMemberId((String) session.getAttribute("member"));
 
@@ -78,9 +83,12 @@ public class WriteMarketPostController {
 			}
 		}
 
+		memberDTO.setSearchCondition("writePostExp");
+		memberService.update(memberDTO);
+
 		System.out.println("WriteMarketPostController Out Log");
 		String status = marketPostDTO.getMarketPostStatus();
 		System.out.println("장터글 작성 로그 : "+status);
-		return "redirect:marketPostList?marketPostStatus=" + status; 
+		return "redirect:marketPostList?marketPostStatus=" + status;
 	}
 }
