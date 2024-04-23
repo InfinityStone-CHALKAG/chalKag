@@ -103,7 +103,7 @@ public class MemberDAO { // 회원 정보 DAO
       "MEMBER_grade, " +
       "(SELECT AVG(REVIEW_score) " +
       "FROM REVIEW " +
-      "WHERE MEMBER_id = MEMBER.MEMBER_id) AS CURRENT_score, " +
+      "WHERE REVIEW_partner = MEMBER.MEMBER_id) AS CURRENT_score, " +
       "(SELECT MAX(LEVEL_id) " +
       "FROM LEVEL " +
       "WHERE LEVEL_requiredexp <= MEMBER_exp) AS CURRENT_level, " +
@@ -152,7 +152,7 @@ public class MemberDAO { // 회원 정보 DAO
       "MEMBER_grade, " +
       "(SELECT AVG(REVIEW_score) " +
       "FROM REVIEW " +
-      "WHERE MEMBER_id = MEMBER.MEMBER_id) AS CURRENT_score, " +
+      "WHERE REVIEW_partner = MEMBER.MEMBER_id) AS CURRENT_score, " +
       "(SELECT MAX(LEVEL_id) " +
       "FROM LEVEL " +
       "WHERE LEVEL_requiredexp <= MEMBER_exp) AS CURRENT_level, " +
@@ -257,22 +257,22 @@ public class MemberDAO { // 회원 정보 DAO
 
   // 글 작성 시 경험치 100 부여
   private static final String UPDATE_WRITEPOSTEXP = "UPDATE MEMBER " +
-      "SET MEMBER_exp += 100 " +
+      "SET MEMBER_exp = MEMBER_exp + 100 " +
       "WHERE MEMBER_id = ?";
 
   // 댓글 작성 시 경험치 20 부여
   private static final String UPDATE_WRITECOMMENTEXP = "UPDATE MEMBER " +
-      "SET MEMBER_exp += 20 " +
+      "SET MEMBER_exp = MEMBER_exp + 20 " +
       "WHERE MEMBER_id = ?";
 
   // 후기 5점 받으면 경험치 50 부여
   private static final String UPDATE_GET5STAREXP = "UPDATE MEMBER " +
-      "SET MEMBER_exp += 50 " +
+      "SET MEMBER_exp = MEMBER_exp + 50 " +
       "WHERE MEMBER_id = ?";
 
   // 후기 4점 받으면 경험치 40 부여
-  private static final String UPDATE_WRITE4STAREXP = "UPDATE MEMBER " +
-      "SET MEMBER_exp += 40 " +
+  private static final String UPDATE_GET4STAREXP = "UPDATE MEMBER " +
+      "SET MEMBER_exp = MEMBER_exp + 40 " +
       "WHERE MEMBER_id = ?";
 
   // 사용 안 할 예정.안승준
@@ -416,6 +416,22 @@ public class MemberDAO { // 회원 정보 DAO
       }
     } else if (memberDTO.getSearchCondition().equals("unHold")) { // // 특정 회원의 등급을 'USER'로 변경
       if (jdbcTemplate.update(UPDATE_UNHOLD, memberDTO.getMemberId()) <= 0) {
+        return false;
+      }
+    } else if (memberDTO.getSearchCondition().equals("writePostExp")) { // // 글 작성 한 회원의 경험치 증가
+      if (jdbcTemplate.update(UPDATE_WRITEPOSTEXP, memberDTO.getMemberId()) <= 0) {
+        return false;
+      }
+    } else if (memberDTO.getSearchCondition().equals("writeCommentExp")) { // // 댓글 작성 회원 경험치 증가
+      if (jdbcTemplate.update(UPDATE_WRITECOMMENTEXP, memberDTO.getMemberId()) <= 0) {
+        return false;
+      }
+    } else if (memberDTO.getSearchCondition().equals("get5StarExp")) { // // 후기 5 받은 회원의 경험치 증가
+      if (jdbcTemplate.update(UPDATE_GET5STAREXP, memberDTO.getMemberId()) <= 0) {
+        return false;
+      }
+    } else if (memberDTO.getSearchCondition().equals("get4StarExp")) { // // 후기 4 받은 회원의 경험치 증가
+      if (jdbcTemplate.update(UPDATE_GET4STAREXP, memberDTO.getMemberId()) <= 0) {
         return false;
       }
     }

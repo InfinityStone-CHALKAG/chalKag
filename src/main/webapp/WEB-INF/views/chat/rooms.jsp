@@ -16,17 +16,27 @@
 <section class="login first grey">
     <div class="container">
         <div class="box-wrapper">
-            <div>
-                <ul>
+            <div class="box box-border">
+                <div class="box-body">
+                    <div class="line">
+                        <div>CHAT ROOMS</div>
+                    </div>
                     <c:forEach items="${list}" var="room">
-                        <li><a href="/room?roomId=${room.roomId}">${room.name}</a></li>
+                        <article class="article col-md-12">
+                            <div class="inner">
+                                <div style="text-align: center;" class="padding">
+                                    <h2><a href="/room?roomId=${room.roomId}">${room.name}</a></h2>
+                                </div>
+                            </div>
+                        </article>
                     </c:forEach>
-                </ul>
+                    <form action="/room" method="post">
+                        <input type="text" style="text-align: center; " name="name" class="form-control"
+                               placeholder="write chatroom name to create chatroom">
+                        <button class="btn btn-primary btn-block" style="margin-top: 10px;">개설하기</button>
+                    </form>
+                </div>
             </div>
-            <form action="/room" method="post">
-                <input type="text" name="name" class="form-control">
-                <button class="btn btn-secondary">개설하기</button>
-            </form>
         </div>
     </div>
 </section>

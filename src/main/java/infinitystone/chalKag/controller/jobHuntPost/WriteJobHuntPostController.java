@@ -2,6 +2,8 @@ package infinitystone.chalKag.controller.jobHuntPost;
 
 import infinitystone.chalKag.biz.jobHuntPost.JobHuntPostDTO;
 import infinitystone.chalKag.biz.jobHuntPost.JobHuntPostService;
+import infinitystone.chalKag.biz.member.MemberDTO;
+import infinitystone.chalKag.biz.member.MemberService;
 import infinitystone.chalKag.biz.postImg.PostImgDTO;
 import infinitystone.chalKag.biz.postImg.PostImgService;
 import jakarta.servlet.http.HttpSession;
@@ -26,13 +28,16 @@ public class WriteJobHuntPostController {
 	@Autowired
 	private PostImgService postImgService;
 
+	@Autowired
+	private MemberService memberService;
+
 	@RequestMapping(value = "/writeJobHuntPost", method = RequestMethod.GET)
 	public String writeJobHuntPostPage() {
 		return "jobHuntPost/writeJobHuntPost";
 	}
 
 	@RequestMapping(value = "/writeJobHuntPost", method = RequestMethod.POST)
-	public String writeJobHuntPost(JobHuntPostDTO jobHuntPostDTO, PostImgDTO postImgDTO, HttpSession session, @RequestParam("file") MultipartFile[] files) {
+	public String writeJobHuntPost(JobHuntPostDTO jobHuntPostDTO, MemberDTO memberDTO, PostImgDTO postImgDTO, HttpSession session, @RequestParam("file") MultipartFile[] files) {
 
 		jobHuntPostDTO.setMemberId((String) session.getAttribute("member"));
 
@@ -76,6 +81,9 @@ public class WriteJobHuntPostController {
 				}
 			}
 		}
+
+		memberDTO.setSearchCondition("writePostExp");
+		memberService.update(memberDTO);
 
 		System.out.println("WriteJobHuntPostController Out Log");
 

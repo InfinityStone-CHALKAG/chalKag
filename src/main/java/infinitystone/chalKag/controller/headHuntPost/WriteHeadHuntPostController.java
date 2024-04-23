@@ -2,6 +2,8 @@ package infinitystone.chalKag.controller.headHuntPost;
 
 import infinitystone.chalKag.biz.headHuntPost.HeadHuntPostDTO;
 import infinitystone.chalKag.biz.headHuntPost.HeadHuntPostService;
+import infinitystone.chalKag.biz.member.MemberDTO;
+import infinitystone.chalKag.biz.member.MemberService;
 import infinitystone.chalKag.biz.postImg.PostImgDTO;
 import infinitystone.chalKag.biz.postImg.PostImgService;
 import jakarta.servlet.http.HttpSession;
@@ -26,13 +28,16 @@ public class WriteHeadHuntPostController {
   @Autowired
   private PostImgService postImgService;
 
+  @Autowired
+  private MemberService memberService;
+
   @RequestMapping(value = "/writeHeadHuntPost", method = RequestMethod.GET)
   public String writeHeadHuntPostPage() {
     return "headHuntPost/writeHeadHuntPost";
   }
 
   @RequestMapping(value = "/writeHeadHuntPost", method = RequestMethod.POST)
-  public String writeHeadHuntPost(HeadHuntPostDTO headHuntPostDTO, PostImgDTO postImgDTO, HttpSession session, @RequestParam("file") MultipartFile[] files) {
+  public String writeHeadHuntPost(HeadHuntPostDTO headHuntPostDTO, MemberDTO memberDTO, PostImgDTO postImgDTO, HttpSession session, @RequestParam("file") MultipartFile[] files) {
 
     headHuntPostDTO.setMemberId((String) session.getAttribute("member"));
 
@@ -76,6 +81,9 @@ public class WriteHeadHuntPostController {
         }
       }
     }
+
+    memberDTO.setSearchCondition("writePostExp");
+    memberService.update(memberDTO);
 
     System.out.println("WriteHeadHuntPostController Out Log");
 

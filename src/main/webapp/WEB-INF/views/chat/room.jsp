@@ -17,13 +17,18 @@
 <section class="login first grey">
     <div class="container">
         <div class="box-wrapper">
-            <div>
-                <div id="msgArea" class="col"></div>
-                <div class="col-6">
-                    <div class="input-group mb-3">
-                        <input type="text" id="msg" class="form-control">
+            <div class="box box-border">
+                <div class="box-body">
+                    <div class="line">
+                        <div>${room.name}</div>
+                    </div>
+                    <div>
+                        <div id="msgArea" class="col"></div>
+                        <input type="text" id="msg" class="form-control" placeholder="type your message">
                         <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" type="button" id="button-send">전송</button>
+                            <button class="btn btn-primary btn-block" style="margin-top: 10px;" type="button"
+                                    id="button-send">전송
+                            </button>
                         </div>
                     </div>
                 </div>
